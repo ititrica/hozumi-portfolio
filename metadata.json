@@ -1,0 +1,6 @@
+{
+  "name": "Cathy Dolle Portfolio",
+  "description": "An immersive, single-screen photography portfolio featuring a responsive 1/4 wheel carousel with smooth scroll-wheel, pointer-drag, and spring-loaded snapping interactions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
