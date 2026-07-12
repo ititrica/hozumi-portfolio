@@ -5,7 +5,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, animate } from "motion/react";
-import { MapPin, Compass } from "lucide-react";
 import { PHOTOGRAPHY_DATA } from "../data";
 import { PhotographySeries } from "../types";
 
@@ -67,16 +66,16 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
     };
   }, []);
 
- const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
- const activeAnimationRef = useRef<any | null>(null);
-  
+  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const activeAnimationRef = useRef<any | null>(null);
+
   // Responsive scale based on container width (reference at 1400px)
   const responsiveScale = Math.min(Math.max(dimensions.width / 1400, 0.45), 1.1);
 
   // Wheel Scroll handler with automatic snapping timeout
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-    
+
     // Stop any active snapping or programmatic animations to let the wheel scroll freely
     if (activeAnimationRef.current) {
       activeAnimationRef.current.stop();
@@ -96,65 +95,61 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
         stiffness: 90,
         damping: 18,
       });
-    }, 200); // Slightly larger debounce to ensure smooth deceleration before snapping
+    }, 200);
   };
 
-  // Navigating to first series in category
-  const scrollToCategory = (category: string) => {
-    if (activeAnimationRef.current) {
-      activeAnimationRef.current.stop();
-    }
-    
-    const index = PHOTOGRAPHY_DATA.findIndex(
-      (s) => s.category.toUpperCase() === category.toUpperCase()
-    );
-    if (index !== -1) {
-      activeAnimationRef.current = animate(scrollProgress, index, { type: "spring", stiffness: 80, damping: 18 });
-    }
+  // Animate scroll to a target index
+  const scrollToIndex = (index: number) => {
+    if (activeAnimationRef.current) activeAnimationRef.current.stop();
+    activeAnimationRef.current = animate(scrollProgress, index, {
+      type: "spring",
+      stiffness: 80,
+      damping: 18,
+    });
   };
 
   // Dynamic card dimension variation for asymmetric design
- const getBaseSize = (i: number, isMobile: boolean) => {
-   const index = i % 5;
-   if (isMobile) {
-     switch (index) {
-        case 0: return { w: 180, h: 0 };
-        case 1: return { w: 190, h: 0 };
-        case 2: return { w: 200, h: 0 };
-        case 3: return { w: 220, h: 0 };
-        default: return { w: 200, h: 0 };
-     }
-   }
-   switch (index) {
-      case 0: return { w: 480, h: 0 };
-      case 1: return { w: 500, h: 0 };
-      case 2: return { w: 520, h: 0 };
-      case 3: return { w: 550, h: 0 };
-      default: return { w: 510, h: 0 };
-   }
- };
+  const getBaseSize = (i: number, isMob: boolean) => {
+    const index = i % 5;
+    if (isMob) {
+      const baseW = dimensions.width * 0.52;
+      switch (index) {
+        case 0: return { w: Math.round(baseW * 0.9), h: 0 };
+        case 1: return { w: Math.round(baseW * 0.95), h: 0 };
+        case 2: return { w: Math.round(baseW * 1.0), h: 0 };
+        case 3: return { w: Math.round(baseW * 1.05), h: 0 };
+        default: return { w: Math.round(baseW), h: 0 };
+      }
+    }
+    const baseW = dimensions.width * 0.363;
+    switch (index) {
+      case 0: return { w: Math.round(baseW * 0.94), h: 0 };
+      case 1: return { w: Math.round(baseW * 0.97), h: 0 };
+      case 2: return { w: Math.round(baseW * 1.0), h: 0 };
+      case 3: return { w: Math.round(baseW * 1.03), h: 0 };
+      default: return { w: Math.round(baseW), h: 0 };
+    }
+  };
 
   // Exact coordinates helper for L-shape corner layout hugging the left & bottom walls
- const getCardCoords = (offset: number) => {
-   const isMobile = dimensions.width < 768;
-    const s = responsiveScale;
-    const spacing = isMobile ? Math.round(140 * s) : Math.round(360 * s);
-    const cornerRadius = isMobile ? Math.round(180 * s) : Math.round(380 * s);
+  const getCardCoords = (offset: number) => {
+    const isMob = dimensions.width < 768;
+    const baseW = isMob ? dimensions.width * 0.52 : dimensions.width * 0.363;
+
+    const spacing = isMob ? Math.round(baseW * 0.7) : Math.round(baseW * 0.72);
+    const cornerRadius = isMob ? Math.round(baseW * 0.9) : Math.round(baseW * 0.76);
 
     let x = 0;
     let y = 0;
 
     if (offset < -1) {
-      // Pin along the left wall, rising vertically up
       x = 0;
       y = cornerRadius + (-offset - 1) * spacing;
     } else if (offset > 1) {
-      // Pin along the floor, sliding horizontally right
       x = cornerRadius + (offset - 1) * spacing;
       y = 0;
     } else {
-      // Smooth quarter-circle curve transit in the corner [-1, 1]
-      const t = (offset + 1) / 2; // Normalizes offset to [0, 1]
+      const t = (offset + 1) / 2;
       const radians = t * (Math.PI / 2);
       x = cornerRadius * (1 - Math.cos(radians));
       y = cornerRadius * (1 - Math.sin(radians));
@@ -170,7 +165,7 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
     <div
       ref={containerRef}
       onWheel={handleWheel}
-      className="relative w-full h-full overflow-hidden select-none bg-[#0e0c0b] text-neutral-200 cursor-default flex flex-col justify-between"
+      className="relative w-full h-full overflow-hidden select-none bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-200 cursor-default flex flex-col justify-between transition-colors duration-1000"
       id="home-wheel-viewport"
     >
       {/* Immersive blurred ambient background cross-fade */}
@@ -179,10 +174,10 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
           <motion.div
             key={activeIndex}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.35 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-0 w-full h-full opacity-60 dark:opacity-30 transition-all duration-1000"
           >
             <img
               src={activeSeries.coverImage}
@@ -192,87 +187,12 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
             />
           </motion.div>
         </AnimatePresence>
-        <div className="absolute inset-0 bg-neutral-950/40 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-white/20 dark:bg-neutral-950/60 transition-all duration-1000" />
       </div>
-
 
       {/* Background ambient lighting vignette */}
-      <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#12100e]/30 to-[#0e0c0b] pointer-events-none z-0" />
-      
-      
-
-      {/* Decorative ultra-fine layout lines */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-5 z-0" xmlns="http://www.w3.org/2000/svg">
-        <line x1="120" y1="0" x2="120" y2="100%" stroke="white" strokeWidth="0.5" />
-        <line x1="0" y1={dimensions.height - 120} x2="100%" y2={dimensions.height - 120} stroke="white" strokeWidth="0.5" />
-      </svg>
-
-      {/* Floating Typography Details Panel (Top-Right Quadrant for Desktop, Top-Left for Mobile) */}
-      <div className="absolute top-36 md:top-28 right-6 md:right-16 w-[90vw] md:w-[440px] z-30 pointer-events-none flex flex-col space-y-5 md:space-y-6 text-right md:text-right items-end">
-        <div className="space-y-1 md:space-y-2">
-          <div className="flex items-center justify-end space-x-2.5">
-            <span className="font-mono text-[9px] tracking-[0.3em] text-neutral-400 uppercase">
-              SERIES // 0{activeIndex + 1} OF 0{PHOTOGRAPHY_DATA.length}
-            </span>
-            <div className="h-[1px] w-6 bg-neutral-700" />
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light tracking-tight text-neutral-100 leading-none">
-                {activeSeries.title}
-              </h1>
-              <p className="font-serif italic text-sm text-neutral-400 mt-1">
-                {activeSeries.subtitle}
-              </p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Location & EXIF parameters block */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 0.85, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap justify-end gap-x-5 gap-y-2 font-mono text-[9px] tracking-widest text-neutral-400 py-3 border-t border-b border-white/5 w-full"
-          >
-            <span className="flex items-center space-x-1.5">
-              <MapPin className="w-3 h-3 text-neutral-500" />
-              <span>{activeSeries.location.toUpperCase()}</span>
-            </span>
-            <span>•</span>
-            <span className="flex items-center space-x-1.5">
-              <Compass className="w-3 h-3 text-neutral-500" />
-              <span>{activeSeries.coordinates}</span>
-            </span>
-            <span>•</span>
-            <span>YEAR: {activeSeries.year}</span>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Interactive Description */}
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={activeIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.7, x: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="font-serif text-xs font-light text-neutral-300 leading-relaxed max-w-sm"
-          >
-            {activeSeries.description}
-          </motion.p>
-        </AnimatePresence>
-      </div>
+      <div className="absolute inset-0 bg-radial-gradient from-transparent via-neutral-100/20 to-[#fdfdfd] pointer-events-none z-0 transition-opacity duration-1000 opacity-100 dark:opacity-0" />
+      <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#12100e]/30 to-[#0e0c0b] pointer-events-none z-0 transition-opacity duration-1000 opacity-0 dark:opacity-100" />
 
       {/* Main Interactive Stage: The L-Shape Corner Curve */}
       <div className="absolute inset-0 z-10 overflow-visible pointer-events-none">
@@ -280,28 +200,33 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
           const offset = idx - currentVal;
           const { x, y } = getCardCoords(offset);
 
-          // Get raw dimensions of the card
           const baseSize = getBaseSize(idx, isMobile);
 
-          // Dynamic scale: active is massive (1.0), side ones shrink exponentially
           const diff = Math.abs(offset);
           const scale = 0.28 + 0.72 * Math.exp(-Math.pow(diff / 1.35, 2));
 
-         const displayWidth = (series.id === "inscapes" ? baseSize.w * 0.8 : baseSize.w) * responsiveScale;
-                    const height = baseSize.h * scale;
+          const displayWidth = series.id === "inscapes" ? baseSize.w * 0.8 : baseSize.w;
 
-          // Fade items out as they get extremely far to keep DOM clean and elegant
           const blurAmount = Math.min(12, Math.pow(diff, 2) * 12);
 
           if (Math.abs(offset) > 3.2) return null;
           const opacity = Math.max(0, Math.min(1, 1.1 - Math.abs(offset) / 3.2));
-
           if (opacity <= 0.01) return null;
 
           const isSelfActive = idx === activeIndex;
 
-          // Dynamic blur values for depth of field and transitions
-          // Highly responsive quadratic drop-off: as soon as scrolling starts, the target card starts getting clear very quickly
+          // Parallax: image inside the masked frame is enlarged and offset
+          // so the frame arrives at position first and the image "catches up"
+          const clampedOffset = Math.max(-1.3, Math.min(1.3, offset));
+          // Use Math.max/min so transition is continuous with no conditional discontinuity at 0
+          const parallaxX = Math.max(0, clampedOffset) * 28;
+          const parallaxY = Math.min(0, clampedOffset) * 28;
+
+          // All image properties are continuous functions of diff — no discrete jumps
+          const imgScale   = 1.20 - 0.07 * Math.exp(-Math.pow(diff / 0.5, 2));
+          const imgOpacity = 0.60 + 0.40 * Math.exp(-Math.pow(diff / 0.9, 2));
+          const imgGray    = 40  * (1  - Math.exp(-Math.pow(diff / 0.9, 2)));
+
           return (
             <div
               key={series.id}
@@ -309,63 +234,92 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
                 if (isSelfActive) {
                   onSelectSeries(series);
                 } else {
-                  if (activeAnimationRef.current) {
-                    activeAnimationRef.current.stop();
-                  }
-                  activeAnimationRef.current = animate(scrollProgress, idx, {
-                    type: "spring",
-                    stiffness: 90,
-                    damping: 18,
-                  });
+                  scrollToIndex(idx);
                 }
               }}
               className="absolute pointer-events-auto transition-shadow duration-500"
-             style={{
-               width: `${displayWidth}px`,
-               left: `0px`,
-               bottom: `0px`,
-               transform: `translate3d(${x}px, ${-y}px, 0)`,
-               willChange: "transform",
-               opacity: opacity,
-                zIndex: isSelfActive ? 100 : 50 - Math.abs(Math.round(offset * 10)),
+              style={{
+                width: `${displayWidth}px`,
+                left: `0px`,
+                bottom: `0px`,
+                transform: `translate3d(${x}px, ${-y}px, 0)`,
+                willChange: "transform",
+                opacity: opacity,
+                // z-index is a continuous function of proximity — no discrete flip when activeIndex changes
+                zIndex: Math.round(90 - Math.abs(offset) * 16),
                 cursor: "pointer",
               }}
               data-cursor={isSelfActive ? "home-card" : ""}
             >
               {/* Image Frame Container */}
-              <div style={{transform: `scale(${scale})`, transformOrigin: "bottom left", willChange: "transform"}}>
-              <div 
-              className={`relative w-full overflow-hidden bg-neutral-900 border rounded-none shadow-2xl group transition-all duration-500 ${
-                  isSelfActive 
-                    ? "border-white/20 scale-100 hover:border-white/40" 
-                    : "border-white/5 hover:border-white/15"
-                }`}
+              <div
+                className="relative"
+                style={{
+                  transform: `scale(${scale})`,
+                  transformOrigin: "bottom left",
+                  willChange: "transform",
+                }}
               >
-                {/* Lazy-loaded imagery with real-time hardware-accelerated blur transition */}
-                <img
-                  src={series.coverImage}
-                  alt={series.title}
-                 referrerPolicy="no-referrer"
-                 className={`w-full block select-none pointer-events-none transition-[opacity,transform] duration-500 ease-out`}
-                                    style={{
-                    filter: `blur(${blurAmount}px) grayscale(${isSelfActive ? 0 : 40}%)`,
-                    transform: isSelfActive ? "scale(1)" : "scale(0.98)",
-                    opacity: isSelfActive ? 1 : 0.45,
-                  }}
-                />
-                
-                {/* Dynamic vignette overlay on the card */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-60 pointer-events-none" />
-
-
+                <div className="relative w-full overflow-hidden bg-neutral-950 shadow-2xl group">
+                  {/* Lazy-loaded imagery — all transforms driven by continuous spring value, no CSS transition needed */}
+                  <img
+                    src={series.coverImage}
+                    alt={series.title}
+                    referrerPolicy="no-referrer"
+                    className="w-full block select-none pointer-events-none transition-[filter,opacity,transform] duration-600 ease-out"
+                    style={{
+                      filter: `blur(${blurAmount}px) grayscale(${imgGray}%)`,
+                      transform: `translateX(${parallaxX}px) translateY(${parallaxY}px) scale(${imgScale})`,
+                      opacity: imgOpacity,
+                      willChange: "transform, filter, opacity",
+                    }}
+                  />
+                  {/* Dynamic vignette overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-60 pointer-events-none" />
+                </div>
               </div>
-    
-              </div>
-              </div>
+            </div>
           );
         })}
       </div>
-
+
+      {/* Right-side vertical series title list — all titles always visible, active one highlighted */}
+      <div className="absolute top-1/2 -translate-y-1/2 right-8 md:right-14 z-30 flex flex-col items-stretch space-y-5 w-44 md:w-52">
+        {PHOTOGRAPHY_DATA.map((series, idx) => {
+          const isActive = idx === activeIndex;
+          return (
+            <button
+              key={series.id}
+              onClick={() => scrollToIndex(idx)}
+              className="flex items-baseline justify-between w-full gap-3 group cursor-pointer"
+            >
+              <span
+                className={`font-mono text-[8px] tracking-[0.2em] transition-colors duration-[1400ms] ease-in-out ${
+                  isActive
+                    ? "text-neutral-500 dark:text-neutral-400"
+                    : "text-neutral-300 dark:text-neutral-700"
+                }`}
+              >
+                0{idx + 1}/
+              </span>
+              <span
+                className={`font-serif uppercase leading-none text-right transition-colors duration-[1400ms] ease-in-out ${
+                  isActive
+                    ? "text-neutral-900 dark:text-neutral-100"
+                    : "text-neutral-300 dark:text-neutral-700 group-hover:text-neutral-500 dark:group-hover:text-neutral-400"
+                }`}
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 300,
+                  letterSpacing: "0.1em",
+                }}
+              >
+                {series.title}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
