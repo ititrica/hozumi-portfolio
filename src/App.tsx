@@ -28,6 +28,7 @@ export default function App() {
   const [selectedSeries, setSelectedSeries] = useState<PhotographySeries | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [lightboxPhotos, setLightboxPhotos] = useState<Photo[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Force dark mode globally
@@ -55,6 +56,17 @@ export default function App() {
   };
 
   const isHome = currentView === "home";
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <iframe src="/loading/index.html" className="fixed inset-0 w-full h-full border-0 z-[9999]" title="Loading" />
+    );
+  }
 
   return (
     <div className={`font-sans bg-neutral-950 text-neutral-100 selection:bg-white selection:text-neutral-900 ${

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加载动画 - 独立演示</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. 极简、高质感全屏加载动画遮罩层 -->
+    <div id="preloader-overlay" class="preloader-overlay">
+        <div class="preloader-container">
+            <!-- 2x2 字符网格 -->
+            <div class="letter-grid">
+                <!-- 单元格 1 -->
+                <div class="grid-cell" id="cell-0"></div>
+                <!-- 单元格 2 -->
+                <div class="grid-cell" id="cell-1"></div>
+                <!-- 单元格 3 -->
+                <div class="grid-cell" id="cell-2"></div>
+                <!-- 单元格 4 -->
+                <div class="grid-cell" id="cell-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 主页面示例内容 (加载完成后渐显) -->
+    <main id="main-content" class="main-content">
+        <div class="demo-card">
+            <h1>主页面内容已就绪</h1>
+            <p>这是一个独立的 HTML / CSS / JS 演示页面。加载动画已经顺利播放完毕！</p>
+            <button onclick="location.reload()" class="replay-btn">重新播放动画</button>
+        </div>
+    </main>
+
+    <!-- 导入控制时间轴和动画逻辑的脚本 -->
+    <script src="script.js"></script>
+</body>
+</html>
