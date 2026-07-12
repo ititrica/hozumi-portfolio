@@ -51,7 +51,7 @@ export default function AboutContact() {
               CREATIVE BIO // PHILOSOPHY
             </span>
             <h3 className="font-serif text-3xl font-light text-neutral-950 dark:text-white">
-              Cathy Dolle is a French digital visual artist & photographer based in Paris, creating at the intersection of structure and void.
+              Hozumi is a French digital visual artist & photographer based in Paris, creating at the intersection of structure and void.
             </h3>
             <p className="font-serif text-sm font-light leading-relaxed text-neutral-600 dark:text-neutral-300">
               With a background in both front-end creative development and architecture, her photographic works bridge the gap between digital precision and tactile film mediumism. She handles analog Pentax 67 systems and high-density Leica formats, framing raw structural monoliths and human profiles like mathematical planes of silence.
@@ -105,8 +105,8 @@ export default function AboutContact() {
         <div className="lg:col-span-5 flex flex-col space-y-6">
           <div className="aspect-[4/5] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-500/10 rounded-none">
             <img
-              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=85&w=1000"
-              alt="Cathy Dolle Portrait"
+              src="/images/about-profile.webp"
+              alt="Hozumi Portrait"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-[1s] ease-in-out"
             />

@@ -199,29 +199,7 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
       {/* Background ambient lighting vignette */}
       <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#12100e]/30 to-[#0e0c0b] pointer-events-none z-0" />
       
-      {/* Absolute Header Overlay with Top Center Filters (excluding "ALL") */}
-      <div className="absolute top-24 md:top-24 left-0 right-0 z-40 flex justify-center pointer-events-none">
-        <div className="flex flex-wrap gap-x-5 gap-y-2 justify-center items-center px-6 py-2 bg-black/25 backdrop-blur-md rounded-none border border-white/5 pointer-events-auto shadow-lg max-w-[90vw]">
-          {CATEGORIES.map((cat) => {
-            const isSelected = activeSeries.category.toUpperCase() === cat.value;
-
-            return (
-              <button
-                key={cat.value}
-                onClick={() => scrollToCategory(cat.value)}
-                className={`font-mono text-[9px] tracking-[0.2em] px-2.5 py-1 rounded-none transition-all duration-300 ${
-                  isSelected
-                    ? "text-white font-medium bg-white/10"
-                    : "text-neutral-400 hover:text-white hover:bg-white/5"
-                }`}
-                data-cursor="pointer"
-              >
-                {cat.label}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      
 
       {/* Decorative ultra-fine layout lines */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-5 z-0" xmlns="http://www.w3.org/2000/svg">
@@ -387,17 +365,7 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
           );
         })}
       </div>
-
-      {/* Fine-art Bottom Rail Metadata */}
-      <div className="w-full px-6 md:px-12 py-5 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-3 text-neutral-400 relative z-30 pointer-events-none mt-auto">
-        <div className="flex items-center space-x-2.5 font-mono text-[8px] md:text-[9px] tracking-widest uppercase">
-          <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-          <span>USE YOUR SCROLL WHEEL TO CHRONOLOGICALLY NAVIGATE</span>
-        </div>
-        <div className="flex items-center space-x-6 font-mono text-[8px] md:text-[9px] tracking-widest uppercase">
-          <span>SYSTEM STATUS: OPTIMAL</span>
-        </div>
-      </div>
+
     </div>
   );
 }

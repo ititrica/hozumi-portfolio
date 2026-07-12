@@ -137,7 +137,7 @@ export default function App() {
             {/* Logo & Slogan */}
             <div className="md:col-span-5 space-y-4">
               <span className="font-serif text-xl tracking-[0.15em] font-medium uppercase text-neutral-900 dark:text-neutral-100">
-                Cathy Dolle
+                Hozumi
               </span>
               <p className="font-serif text-xs font-light text-neutral-400 dark:text-neutral-500 leading-relaxed max-w-sm">
                 Documenting architectural concrete gravity, fine art portrait geometries, and nocturnal European street aesthetics through analog and high-resolution digital systems.
@@ -191,7 +191,7 @@ export default function App() {
                 </a>
               </div>
               <span className="font-mono text-[9px] text-neutral-400 mt-2">
-                © 2026 CATHY DOLLE. ALL RIGHTS RESERVED.
+                © 2026 HOZUMI. ALL RIGHTS RESERVED.
               </span>
             </div>
 
