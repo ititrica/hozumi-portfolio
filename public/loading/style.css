@@ -1,0 +1,243 @@
+/* 
+ * 字体配置与全局变量 
+ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@700&display=swap');
+
+:root {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-sans: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #030303;
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    overflow: hidden; /* 动画播放期间防止滚动 */
+    height: 100vh;
+}
+
+/* ==========================================================================
+   1. 加载动画遮罩样式 (Preloader Overlay)
+   ========================================================================== */
+.preloader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                visibility 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 隐藏动画时的渐淡效果类 */
+.preloader-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.preloader-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   2. 字符网格布局与单元格样式 (Letter Grid & Cells)
+   ========================================================================== */
+.letter-grid {
+    display: grid;
+    grid-cols: 2; /* 现代栅格 */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 96px;   /* gap-x-24 sm:gap-x-40 等 */
+    row-gap: 64px;      /* gap-y-16 sm:gap-y-24 */
+    font-family: var(--font-mono);
+    text-align: center;
+}
+
+@media (min-width: 640px) {
+    .letter-grid {
+        column-gap: 120px;
+        row-gap: 80px;
+    }
+}
+
+@media (min-width: 768px) {
+    .letter-grid {
+        column-gap: 160px;
+        row-gap: 96px;
+    }
+}
+
+/* 单元格占位框架 */
+.grid-cell {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: var(--text-color);
+}
+
+@media (min-width: 640px) {
+    .grid-cell {
+        width: 112px;
+        height: 112px;
+    }
+}
+
+@media (min-width: 768px) {
+    .grid-cell {
+        width: 144px;
+        height: 144px;
+    }
+}
+
+/* ==========================================================================
+   3. 字符元素及淡入淡出动画 (Dynamic Character Animations)
+   ========================================================================== */
+.grid-char {
+    position: absolute;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    
+    /* 默认触发动画效果 */
+    animation: charEnter 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@media (min-width: 640px) {
+    .grid-char {
+        font-size: 64px;
+    }
+}
+
+@media (min-width: 768px) {
+    .grid-char {
+        font-size: 96px;
+    }
+}
+
+/* 正在淡出销毁状态 */
+.grid-char.exit {
+    animation: charExit 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* 优雅淡入、缩放与略微向上浮动动效 */
+@keyframes charEnter {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* 优雅淡出、缩放并向更上方浮出动效 */
+@keyframes charExit {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-10px);
+    }
+}
+
+
+/* ==========================================================================
+   4. 主页面样式 (仅示例用)
+   ========================================================================== */
+.main-content {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #080808;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+/* 当加载动画结束后赋予的显示状态 */
+body.loaded {
+    overflow: auto;
+}
+
+body.loaded .main-content {
+    opacity: 1;
+}
+
+.demo-card {
+    background-color: #111;
+    border: 1px solid #222;
+    padding: 40px;
+    border-radius: 4px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+.demo-card h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.demo-card p {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.replay-btn {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.replay-btn:hover {
+    background-color: #e5e5e5;
+}
+
+.replay-btn:active {
+    transform: scale(0.98);
+}
