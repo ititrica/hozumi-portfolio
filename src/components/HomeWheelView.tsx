@@ -188,7 +188,7 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
               src={activeSeries.coverImage}
               alt=""
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover scale-110 blur-[80px] grayscale-[30%]"
+              className="w-full h-full object-cover scale-110 blur-[40px] grayscale-[30%]"
             />
           </motion.div>
         </AnimatePresence>
@@ -309,11 +309,14 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
           const diff = Math.abs(offset);
           const scale = 0.28 + 0.72 * Math.exp(-Math.pow(diff / 1.35, 2));
 
-         const width = baseSize.w * scale * responsiveScale;
-          const height = baseSize.h * scale;
+         const displayWidth = (series.id === "inscapes" ? baseSize.w * 0.8 : baseSize.w) * responsiveScale;
+                    const height = baseSize.h * scale;
 
           // Fade items out as they get extremely far to keep DOM clean and elegant
-          const opacity = Math.max(0, Math.min(1, 1.25 - Math.abs(offset) / 3.8));
+          const blurAmount = Math.min(12, Math.pow(diff, 2) * 12);
+
+          if (Math.abs(offset) > 3.2) return null;
+          const opacity = Math.max(0, Math.min(1, 1.1 - Math.abs(offset) / 3.2));
 
           if (opacity <= 0.01) return null;
 
@@ -321,8 +324,6 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
 
           // Dynamic blur values for depth of field and transitions
           // Highly responsive quadratic drop-off: as soon as scrolling starts, the target card starts getting clear very quickly
-          const blurAmount = Math.min(12, Math.pow(diff, 2) * 12);
-
           return (
             <div
               key={series.id}
@@ -340,11 +341,13 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
                   });
                 }
               }}
-              className="absolute pointer-events-auto origin-bottom-left transition-shadow duration-500"
+              className="absolute pointer-events-auto transition-shadow duration-500"
              style={{
-               left: `${x}px`,
-               bottom: `${y}px`,
-               width: `${width}px`,
+               width: `${displayWidth}px`,
+               left: `0px`,
+               bottom: `0px`,
+               transform: `translate3d(${x}px, ${-y}px, 0)`,
+               willChange: "transform",
                opacity: opacity,
                 zIndex: isSelfActive ? 100 : 50 - Math.abs(Math.round(offset * 10)),
                 cursor: "pointer",
@@ -352,8 +355,9 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
               data-cursor={isSelfActive ? "home-card" : ""}
             >
               {/* Image Frame Container */}
+              <div style={{transform: `scale(${scale})`, transformOrigin: "bottom left", willChange: "transform"}}>
               <div 
-               className={`relative w-full overflow-hidden bg-neutral-900 border rounded-none shadow-2xl group transition-all duration-500 ${
+              className={`relative w-full overflow-hidden bg-neutral-900 border rounded-none shadow-2xl group transition-all duration-500 ${
                   isSelfActive 
                     ? "border-white/20 scale-100 hover:border-white/40" 
                     : "border-white/5 hover:border-white/15"
@@ -365,7 +369,7 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
                   alt={series.title}
                  referrerPolicy="no-referrer"
                  className={`w-full block select-none pointer-events-none transition-[opacity,transform] duration-500 ease-out`}
-                  style={{
+                                    style={{
                     filter: `blur(${blurAmount}px) grayscale(${isSelfActive ? 0 : 40}%)`,
                     transform: isSelfActive ? "scale(1)" : "scale(0.98)",
                     opacity: isSelfActive ? 1 : 0.45,
@@ -375,19 +379,11 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
                 {/* Dynamic vignette overlay on the card */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-60 pointer-events-none" />
 
-                {/* Corner text labels: 01. Series Title (proportional text scale matches the card) */}
-                <div
-                  className="absolute left-full top-0 ml-3.5 text-neutral-300 font-mono tracking-widest whitespace-nowrap pointer-events-none origin-left flex items-center"
-                  style={{
-                    fontSize: `${Math.max(8, Math.min(11, 10 * scale))}px`,
-                    opacity: 0.35 + 0.65 * scale,
-                  }}
-                >
-                  <span className="text-white/40 mr-1.5">0{idx + 1}.</span>
-                  <span>{series.title.toUpperCase()}</span>
-                </div>
+
               </div>
-            </div>
+    
+              </div>
+              </div>
           );
         })}
       </div>
