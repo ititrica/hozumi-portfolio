@@ -1,12 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'DM Sans Local';
+  src: url('/DMSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Plus Jakarta Sans", "Inter", sans-serif;
-  --font-serif: "Playfair Display", serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-sans: "DM Sans", "DM Sans Local", "Inter", sans-serif;
+  --font-serif: "DM Sans", "DM Sans Local", "Playfair Display", serif;
+  --font-mono: "DM Sans", "DM Sans Local", "JetBrains Mono", monospace;
 }
 
 /* Hide native system cursor globally on desktop devices to show only our custom cursor */
@@ -14,4 +22,51 @@
   html, body, *, *::before, *::after {
     cursor: none !important;
   }
+}
+
+/* Force lock document body/html height and disable system-level global scrollbar */
+html, body {
+  overflow: hidden !important;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Global ultra-minimalist architectural scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(10, 10, 10, 0.15);
+  border-radius: 0px;
+  transition: background-color 0.3s ease;
+}
+
+.dark ::-webkit-scrollbar-thumb,
+html.dark::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(10, 10, 10, 0.35);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover,
+html.dark::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Firefox native styling compatibility */
+html, * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(10, 10, 10, 0.15) transparent;
+}
+
+html.dark, html.dark * {
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
