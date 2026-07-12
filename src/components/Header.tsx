@@ -66,28 +66,20 @@ export default function Header({ currentView, setView }: HeaderProps) {
       <header className="fixed top-0 left-0 w-full z-[90] border-b border-white/5 backdrop-blur-md transition-colors duration-500 bg-black/10">
         <div className="max-w-[1600px] mx-auto px-6 h-20 flex items-center justify-between">
           
-          {/* Logo */}
-          <div 
-            onClick={() => handleNavClick("home")}
-            className="flex flex-col items-start cursor-pointer group"
-            data-cursor="nav"
-          >
-            <span className="font-serif text-lg tracking-[0.15em] font-medium transition-transform duration-300 group-hover:translate-x-1 uppercase text-neutral-100">
-              Cathy Dolle
-            </span>
-            <span className="font-mono text-[9px] tracking-widest text-neutral-400 uppercase mt-0.5">
-              Digital Art & Photography
-            </span>
-          </div>
-
-          {/* Desktop Live Metadata */}
-          <div className="hidden lg:flex items-center space-x-12 font-mono text-[10px] tracking-widest text-neutral-400">
-            <div className="flex items-center space-x-2">
+          {/* Logo + Time */}
+          <div className="flex items-center space-x-6">
+            <div
+              onClick={() => handleNavClick("home")}
+              className="cursor-pointer group"
+              data-cursor="nav"
+            >
+              <span className="font-serif text-lg tracking-[0.15em] font-medium transition-transform duration-300 group-hover:translate-x-1 uppercase text-neutral-100">
+                Hozumi
+              </span>
+            </div>
+            <div className="hidden lg:flex items-center space-x-2 font-mono text-[10px] tracking-widest text-neutral-400">
               <span className="inline-block w-1.5 h-1.5 rounded-none bg-emerald-500 animate-pulse" />
               <span>BEIJING / {localTime || "12:00:00"} CST</span>
-            </div>
-            <div>
-              <span>ARTIST PORTFOLIO</span>
             </div>
           </div>
 
@@ -151,11 +143,9 @@ export default function Header({ currentView, setView }: HeaderProps) {
             <div className="flex items-center justify-between">
               <div>
                 <span className="font-serif text-lg tracking-widest font-medium text-white">
-                  CATHY DOLLE
+                  HOZUMI
                 </span>
-                <span className="block font-mono text-[8px] tracking-widest text-neutral-400 mt-0.5">
-                  Art & Space
-                </span>
+
               </div>
               <button
                 onClick={() => setIsMenuOpen(false)}
