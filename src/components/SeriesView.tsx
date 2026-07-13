@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { motion } from "motion/react";
 import { PhotographySeries, Photo } from "../types";
 import { Language, UI_TRANSLATIONS } from "../i18n";
@@ -13,10 +13,15 @@ interface SeriesViewProps {
   onBack: () => void;
   onSelectPhoto: (photo: Photo, photos: Photo[]) => void;
   lang: Language;
+  key?: string | number;
 }
 
 export default function SeriesView({ series, onBack, onSelectPhoto, lang }: SeriesViewProps) {
   const t = UI_TRANSLATIONS[lang];
+  const [activeIdx, setActiveIdx] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   // Prevent body scroll when active
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -25,19 +30,147 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
     };
   }, []);
 
+  const handleScroll = () => {
+    const el = containerRef.current;
+    if (!el) return;
+    const { scrollTop, scrollHeight, clientHeight } = el;
+    const totalScroll = scrollHeight - clientHeight;
+    if (totalScroll <= 0) return;
+    setScrollProgress(scrollTop / totalScroll);
+  };
+
+  // Combine cover image and other images
+  const { allPhotos, hasVirtualCover } = useMemo(() => {
+    const hasCoverInImages = series.images.some(img => img.url === series.coverImage);
+    if (hasCoverInImages) {
+      return { allPhotos: series.images, hasVirtualCover: false };
+    }
+    
+    const coverPhoto: Photo = {
+      id: `${series.id}-cover`,
+      url: series.coverImage,
+      title: series.title,
+      caption: series.description,
+      aspectRatio: "landscape",
+      location: series.location,
+      date: series.year
+    };
+    return { allPhotos: [coverPhoto, ...series.images], hasVirtualCover: true };
+  }, [series]);
+
+  // Set up intersection observer for scroll spy
+  useEffect(() => {
+    const observerOptions = {
+      root: null, // viewport
+      rootMargin: "-25% 0px -45% 0px", // middle quadrant trigger area
+      threshold: 0.05,
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const idStr = entry.target.getAttribute("data-photo-idx");
+          if (idStr !== null) {
+            setActiveIdx(parseInt(idStr, 10));
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, observerOptions);
+    
+    // We observe after a tiny delay to let images paint and offsets stabilize
+    const timer = setTimeout(() => {
+      const elements = document.querySelectorAll("[data-photo-idx]");
+      elements.forEach((el) => observer.observe(el));
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [series, allPhotos]);
+
+  const scrollToPhoto = (idx: number) => {
+    const el = document.getElementById(`photo-row-${idx}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  const photosList = useMemo(() => {
+    return (
+      <div className="col-span-12 lg:col-span-10 flex flex-col space-y-3">
+        {allPhotos.map((photo, index) => {
+          const isCover = photo.id === `${series.id}-cover`;
+          const plateNumber = hasVirtualCover ? index : index + 1;
+          
+          return (
+            <div
+              key={photo.id}
+              id={`photo-row-${index}`}
+              data-photo-idx={index}
+              className="grid grid-cols-1 lg:grid-cols-10 gap-8 items-start scroll-mt-28"
+            >
+              {/* Left Column: Photo details (Minimalist: only plate index, title, caption) */}
+              <div className="col-span-10 lg:col-span-3 flex flex-col space-y-3 pt-4 lg:pr-6 text-left">
+                <div className="flex items-baseline justify-between pb-1 transition-colors duration-1000">
+                  <span className="font-mono text-[9px] tracking-[0.1em] text-neutral-450 uppercase">
+                    {isCover 
+                      ? (lang === "zh" ? "封面图" : lang === "ja" ? "カバー" : "COVER PLATES")
+                      : `[ ${t.plates} #${plateNumber} ]`
+                    }
+                  </span>
+                </div>
+
+                <div className="space-y-1.5">
+                  <h3 className="font-sans text-[13.5px] tracking-[0.08em] font-medium text-neutral-900 dark:text-neutral-100 uppercase transition-colors duration-1000">
+                    {photo.title}
+                  </h3>
+                  <p className="font-serif text-[12px] font-light text-neutral-600 dark:text-neutral-400 leading-relaxed transition-colors duration-1000">
+                    {photo.caption}
+                  </p>
+                </div>
+              </div>
+
+              {/* Middle Column: Photo itself */}
+              <div 
+                className="col-span-10 lg:col-span-7 group relative cursor-pointer overflow-hidden bg-neutral-100 dark:bg-neutral-900/40 select-none shadow-xs transition-colors duration-1000"
+                onClick={() => onSelectPhoto(photo, allPhotos)}
+                data-cursor="view"
+              >
+                {/* Visual filter overlay */}
+                <div className="absolute inset-0 bg-neutral-950/2 group-hover:bg-transparent transition-all duration-300 z-10" />
+
+                <img
+                  src={photo.url}
+                  alt={photo.title}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-auto block transition-transform duration-[1.2s] group-hover:scale-101.5"
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }, [allPhotos, hasVirtualCover, lang, onSelectPhoto, series.id, t.plates]);
+
   return (
     <motion.div
+      ref={containerRef}
+      onScroll={handleScroll}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-0 z-50 overflow-y-auto bg-neutral-50 dark:bg-neutral-950 flex flex-col pt-24 transition-colors duration-1000"
+      transition={{ duration: 0.6 }}
+      className="fixed inset-0 z-50 overflow-y-auto bg-[#fafafa] dark:bg-neutral-950 flex flex-col pt-24 transition-colors duration-1000 scrollbar-none"
     >
       {/* Static header backdrop wrapper */}
       <div className="max-w-[1600px] mx-auto w-full px-6 flex flex-col pb-32">
         
         {/* Navigation back and details */}
-        <div className="flex items-center justify-between py-6 mb-12 transition-colors duration-1000">
+        <div className="flex items-center justify-between py-6 mb-8 transition-colors duration-1000">
           <button
             onClick={onBack}
             className="group text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white transition-colors duration-1000 py-2"
@@ -48,165 +181,91 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
             </span>
           </button>
         </div>
-
-        {/* Hero Section of Series */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-24">
-          {/* Poetic description / Specs */}
-          <div className="lg:col-span-5 flex flex-col space-y-6">
+            {/* Page Header (Minimalist Editorial Layout: Info on Left, Specs on Right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20 pb-12 transition-colors duration-1000">
+          {/* Left Side: Category, Year, Title, Subtitle & Description */}
+          <div className="lg:col-span-8 flex flex-col space-y-4">
             <div>
-              <span className="font-mono text-[9.5px] tracking-[0.1em] text-neutral-600 dark:text-neutral-455 uppercase block mb-2 transition-colors duration-1000">
-                {series.category} — {series.year}
+              <span className="font-mono text-[9px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase block transition-colors duration-1000">
+                {series.category} // {series.year}
               </span>
-              <h1 className="font-serif text-3xl sm:text-4xl font-light tracking-[0.05em] text-neutral-950 dark:text-neutral-50 leading-none uppercase transition-colors duration-1000">
+              <h1 className="font-serif text-3xl sm:text-4xl font-light tracking-[0.03em] text-neutral-900 dark:text-white leading-tight uppercase mt-1 mb-2 transition-colors duration-1000">
                 {series.title}
               </h1>
-              <span className="font-mono text-[11.5px] tracking-[0.06em] text-neutral-700 dark:text-neutral-400 uppercase block mt-1.5 transition-colors duration-1000">
+              <span className="font-mono text-[10.5px] tracking-[0.12em] text-neutral-500 dark:text-neutral-400 uppercase block transition-colors duration-1000">
                 {series.subtitle}
               </span>
             </div>
 
-            <p className="font-serif text-[12.5px] leading-snug font-light text-neutral-750 dark:text-neutral-350 max-w-md transition-colors duration-1000">
+            <p className="font-serif text-[13.5px] leading-relaxed font-light text-neutral-600 dark:text-neutral-400 max-w-2xl transition-colors duration-1000">
               {series.description}
             </p>
-
-            {/* Structured Specifications Panel */}
-            <div className="py-5 grid grid-cols-2 gap-y-3.5 gap-x-6 transition-colors duration-1000">
-              <div className="flex flex-col text-neutral-500 dark:text-neutral-400">
-                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">{t.location}</span>
-                <span className="font-mono text-[9.5px] text-neutral-850 dark:text-neutral-200 transition-colors duration-1000">{series.location}</span>
-              </div>
-
-              <div className="flex flex-col text-neutral-500 dark:text-neutral-400">
-                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">{t.coordinates}</span>
-                <span className="font-mono text-[9.5px] text-neutral-850 dark:text-neutral-200 truncate transition-colors duration-1000">{series.coordinates}</span>
-              </div>
-
-              <div className="flex flex-col text-neutral-500 dark:text-neutral-400">
-                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">{t.timeline}</span>
-                <span className="font-mono text-[9.5px] text-neutral-850 dark:text-neutral-200 transition-colors duration-1000">2024 — {series.year}</span>
-              </div>
-
-              <div className="flex flex-col text-neutral-500 dark:text-neutral-400">
-                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">{t.medium}</span>
-                <span className="font-mono text-[9.5px] text-neutral-850 dark:text-neutral-200 transition-colors duration-1000">Sony ILCE-7CM2 System</span>
-              </div>
-            </div>
           </div>
 
-          {/* Big Featured Cover Image */}
-          <div className="lg:col-span-7">
-            <div className="w-full bg-neutral-100 dark:bg-neutral-900 rounded-none flex items-center justify-center">
-              <img
-                src={series.coverImage}
-                alt={series.title}
-                referrerPolicy="no-referrer"
-                className="w-full object-contain shadow-sm max-h-[75vh]"
-              />
+          {/* Right Side: Technical Specs / Roles */}
+          <div className="lg:col-span-4 grid grid-cols-2 gap-y-6 gap-x-8 lg:pl-12 pt-6 lg:pt-10 transition-colors duration-1000">
+            <div className="flex flex-col space-y-1">
+              <span className="font-mono text-[7px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase">{t.location}</span>
+              <span className="font-sans text-[10px] tracking-wide font-medium text-neutral-850 dark:text-neutral-200 uppercase transition-colors duration-1000">{series.location}</span>
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <span className="font-mono text-[7px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase">{t.coordinates}</span>
+              <span className="font-mono text-[9.5px] text-neutral-850 dark:text-neutral-200 transition-colors duration-1000 truncate">{series.coordinates}</span>
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <span className="font-mono text-[7px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase">{t.timeline}</span>
+              <span className="font-sans text-[10px] tracking-wide font-medium text-neutral-850 dark:text-neutral-200 transition-colors duration-1000">2024 — {series.year}</span>
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <span className="font-mono text-[7px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase">{t.medium}</span>
+              <span className="font-sans text-[10px] tracking-wide font-medium text-neutral-850 dark:text-neutral-200 uppercase transition-colors duration-1000">Sony ILCE-7CM2</span>
             </div>
           </div>
         </div>
 
-        {/* Photographic Grid items */}
-        <div className="pt-16">
-          <div className="mb-12">
-            <span className="font-mono text-[8px] tracking-[0.1em] text-neutral-400 dark:text-neutral-500 uppercase block mb-2">
-              {lang === "zh" ? "画面与捕捉" : lang === "ja" ? "キャプチャ" : "FRAMES & CAPTURES"}
-            </span>
-            <h3 className="font-serif text-lg font-light tracking-[0.05em] text-neutral-900 dark:text-neutral-100 uppercase">
-              {t.seriesIndex} ({series.images.length} {t.works})
-            </h3>
-          </div>
+        {/* Main Content Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative items-start">
+          {/* Photos list (Left text + Middle photo) */}
+          {photosList}
 
-          {/* Staggered Masonry-style Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {series.images.map((photo, pIdx) => {
-              const isLandscape = photo.aspectRatio === "landscape";
-              const colSpan = isLandscape ? "md:col-span-2" : "md:col-span-1";
+          {/* Empty spacer column to reserve grid layout space */}
+          <div className="hidden lg:block lg:col-span-2" />
+        </div>
+
+        {/* Fixed Progress Navigation Overlay (pixel-perfect mirrored grid layout) */}
+        <div className="fixed inset-0 pointer-events-none z-40 hidden lg:block">
+          <div className="max-w-[1600px] mx-auto w-full px-6 h-full grid grid-cols-12 gap-8 items-center">
+            <div className="col-start-11 col-span-2 flex justify-center pointer-events-auto">
               
-              return (
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  key={photo.id}
-                  onClick={() => onSelectPhoto(photo, series.images)}
-                  className={`flex flex-col group cursor-pointer ${colSpan}`}
-                  data-cursor="view"
-                >
-                  <div 
-                    className="relative w-full bg-neutral-100 dark:bg-neutral-900 rounded-none overflow-hidden"
+              {/* Relative buttons wrapper block - 96x72 per thumbnail, stacked closely */}
+              <div className="relative flex flex-col space-y-0">
+                {allPhotos.map((photo, index) => (
+                  <button
+                    key={`thumb-${photo.id}`}
+                    onClick={() => scrollToPhoto(index)}
+                    className="w-[96px] h-[72px] overflow-hidden opacity-50 hover:opacity-85 transition-opacity block focus:outline-none"
+                    data-cursor="nav"
                   >
-                    {/* Visual filter overlay */}
-                    <div className="absolute inset-0 bg-neutral-950/5 group-hover:bg-transparent transition-all duration-300 z-10" />
-
                     <img
-                      src={photo.url}
-                      alt={photo.title}
+                      src={photo.url.replace(/\.webp$/, ".thumb.webp")}
+                      alt={`Thumbnail ${index}`}
                       referrerPolicy="no-referrer"
-                      className="w-full block transition-transform duration-[1.2s] group-hover:scale-102"
+                      className="w-full h-full object-cover"
                     />
+                  </button>
+                ))}
 
-                    {/* Left overlay badge containing order index */}
-                    <div className="absolute top-4 left-4 z-20 mix-blend-difference font-mono text-[8px] tracking-[0.08em] text-white/60">
-                      [ {t.plates} #{pIdx + 1} ]
-                    </div>
-
-                    {/* Beautiful hover EXIF dashboard on top overlay */}
-                    {photo.exif && (
-                      <div className="absolute inset-0 bg-black/60 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-450 z-20 flex flex-col justify-between p-6 text-white font-mono">
-                        <div className="flex justify-between items-start border-b border-white/10 pb-4">
-                          <div className="flex flex-col">
-                            <span className="text-[7.5px] tracking-wider text-white/50 uppercase">TECHNICAL SPECIFICATIONS</span>
-                            <span className="text-[10px] text-white uppercase font-sans font-medium mt-1">{photo.title}</span>
-                          </div>
-                          <span className="text-[8.5px] text-emerald-400 font-sans tracking-[0.1em]">EXIF ORIGINAL</span>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4 text-[8px] tracking-[0.15em] uppercase my-auto py-4">
-                          <div className="flex flex-col">
-                            <span className="text-[7px] text-white/40">Camera Body</span>
-                            <span className="text-white font-medium mt-0.5 truncate">{photo.exif.camera}</span>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-[7px] text-white/40">Lens Optics</span>
-                            <span className="text-white font-medium mt-0.5 truncate">{photo.exif.lens}</span>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-[7px] text-white/40">Focal / Aperture</span>
-                            <span className="text-white font-medium mt-0.5">{photo.exif.focalLength} @ {photo.exif.aperture}</span>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-[7px] text-white/40">Shutter / ISO</span>
-                            <span className="text-white font-medium mt-0.5">{photo.exif.shutterSpeed} // ISO {photo.exif.iso}</span>
-                          </div>
-                        </div>
-
-                        <div className="flex justify-between items-center pt-4 border-t border-white/10 text-[8px] text-white/50">
-                          <span>LOC: {photo.location || series.location}</span>
-                          <span>DATE: {photo.date || "2025"}</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Caption under item */}
-                  <div className="mt-4 flex flex-col space-y-1">
-                    <div className="flex items-baseline justify-between">
-                      <h4 className="font-sans text-[12.5px] tracking-[0.08em] font-medium text-neutral-900 dark:text-neutral-100 uppercase group-hover:text-neutral-500 dark:group-hover:text-neutral-400 transition-colors duration-1000">
-                        {photo.title}
-                      </h4>
-                      <span className="font-mono text-[9px] tracking-[0.1em] text-neutral-500 dark:text-neutral-400 transition-colors duration-1000">
-                        {photo.exif?.shutterSpeed} — {photo.exif?.aperture}
-                      </span>
-                    </div>
-                    <p className="font-serif text-[11.5px] font-light text-neutral-600 dark:text-neutral-400 leading-snug italic transition-colors duration-1000">
-                      {photo.caption}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
+                {/* Freely moving stepless indicator frame */}
+                <motion.div
+                  className="absolute top-0 left-0 w-[96px] h-[72px] border-2 border-neutral-950 dark:border-white pointer-events-none z-10"
+                  animate={{ y: scrollProgress * (allPhotos.length - 1) * 72 }}
+                  transition={{ type: "spring", stiffness: 180, damping: 25, mass: 0.35 }}
+                />
+              </div>
+            </div>
           </div>
         </div>
 

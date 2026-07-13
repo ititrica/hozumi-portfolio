@@ -217,7 +217,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
             className="absolute inset-0 w-full h-full opacity-60 dark:opacity-30 transition-all duration-1000"
           >
             <img
-              src={activeSeries.coverImage}
+              src={activeSeries.coverImage.replace(".webp", ".card.webp")}
               alt=""
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover scale-110 blur-[40px] grayscale-[30%]"
@@ -242,7 +242,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
           const diff = Math.abs(offset);
           const scale = 0.28 + 0.72 * Math.exp(-Math.pow(diff / 1.35, 2));
 
-          const displayWidth = series.id === "inscapes" ? baseSize.w * 0.8 : baseSize.w;
+          const displayWidth = series.id === "xiao-yuanhang" ? baseSize.w * 0.8 : baseSize.w;
 
           const blurAmount = Math.min(12, Math.pow(diff, 2) * 12);
 
@@ -286,7 +286,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
                 zIndex: Math.round(90 - Math.abs(offset) * 16),
                 cursor: "pointer",
               }}
-              data-cursor={isSelfActive ? "home-card" : ""}
+              data-cursor={isSelfActive ? "home-card" : undefined}
             >
               {/* Image Frame Container */}
               <div
@@ -300,10 +300,10 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
                 <div className="relative w-full overflow-hidden bg-neutral-950 shadow-2xl group">
                   {/* Lazy-loaded imagery — all transforms driven by continuous spring value, no CSS transition needed */}
                   <img
-                    src={series.coverImage}
+                    src={series.coverImage.replace(".webp", ".card.webp")}
                     alt={series.title}
                     referrerPolicy="no-referrer"
-                    className="w-full block select-none pointer-events-none transition-[filter,opacity,transform] duration-600 ease-out"
+                    className="w-full block select-none pointer-events-none"
                     style={{
                       filter: `blur(${blurAmount}px) grayscale(${imgGray}%)`,
                       transform: `translateX(${parallaxX}px) translateY(${parallaxY}px) scale(${imgScale})`,

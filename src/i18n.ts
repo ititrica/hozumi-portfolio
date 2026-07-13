@@ -12,6 +12,7 @@ export const UI_TRANSLATIONS = {
   en: {
     selectedWork: "SELECTED WORK",
     biography: "BIOGRAPHY",
+    playground: "PLAYGROUND",
     backToCollections: "Back to collections",
     location: "Location",
     coordinates: "Coordinates",
@@ -29,12 +30,12 @@ export const UI_TRANSLATIONS = {
     plates: "PLATES",
     viewFullSeries: "View full series",
     portraitBy: "PORTRAIT BY LÉON SIMON",
-    parisStudio: "PARIS STUDIO — JULY 2025",
+    parisStudio: "VARIOUS LOCATIONS — JULY 2025",
     bioPhilosophyTitle: "Biography & Philosophy",
     creativeBioTitle: "CREATIVE BIO & PHILOSOPHY",
-    bioLead: "Hozumi is a French digital visual artist & photographer based in Paris, creating at the intersection of structure and void.",
-    bioParagraph1: "With a background in both front-end creative development and architecture, her photographic works bridge the gap between digital precision and tactile film mediumism. She handles high-resolution Sony ILCE-7CM2 systems, framing raw structural monoliths and human profiles like mathematical planes of silence.",
-    bioParagraph2: "Her design language favors extreme minimalism, precise typography pairings, and structured spatial grids. This portfolio exists as a quiet, interactive digital canvas designed to let photographs breathe, warp, and tell their nocturnal or coastal stories.",
+    bioLead: "Hozumi is a Chinese digital visual artist & photographer, creating at the intersection of structure and void.",
+    bioParagraph1: "With a background in both front-end creative development and architecture, his photographic works bridge the gap between digital precision and tactile film mediumism. He handles high-resolution Sony ILCE-7CM2 systems, framing raw structural monoliths and human profiles like mathematical planes of silence during his travels in various locations.",
+    bioParagraph2: "His design language favors extreme minimalism, precise typography pairings, and structured spatial grids. This portfolio exists as a quiet, interactive digital canvas designed to let photographs breathe, warp, and tell their nocturnal or coastal stories.",
     philosophyPoints: [
       {
         title: "Architectural Gravity",
@@ -52,87 +53,89 @@ export const UI_TRANSLATIONS = {
     copyright: "© 2026 HOZUMI. ALL RIGHTS RESERVED."
   },
   zh: {
-    selectedWork: "精选作品 SELECTED WORK",
-    biography: "个人简介 BIOGRAPHY",
-    backToCollections: "返回画廊目录 Back to collections",
-    location: "地点 Location",
-    coordinates: "经纬度 Coordinates",
-    timeline: "时间 Timeline",
-    medium: "媒介 Medium",
-    techSpecs: "技术参数 TECHNICAL SPECIFICATIONS",
-    exifOriginal: "原始 EXIF ORIGINAL",
-    cameraBody: "相机机身 Camera Body",
-    lensOptics: "镜头 Optics",
-    focalAperture: "焦距/光圈 Focal / Aperture",
-    shutterIso: "快门/感光度 Shutter / ISO",
-    returnToCatalogue: "返回画廊目录 Return to Catalogue",
-    seriesIndex: "系列索引 Series Index",
-    works: "幅作品 works",
-    plates: "图版 PLATES",
-    viewFullSeries: "查看完整系列 View full series",
-    portraitBy: "摄影：LÉON SIMON PORTRAIT BY",
-    parisStudio: "巴黎工作室 PARIS STUDIO — 2025年7月",
-    bioPhilosophyTitle: "简介与创作理念 Biography & Philosophy",
-    creativeBioTitle: "艺术简历与哲学 CREATIVE BIO & PHILOSOPHY",
-    bioLead: "Hozumi 是一位常驻巴黎的法国数字视觉艺术家与摄影师，致力于在“结构”与“虚无”的交界处进行创作。",
-    bioParagraph1: "凭借创意前端开发与建筑学的双重背景，她的摄影作品跨越了数字精准与胶片质感介质之间的界限。她使用高分辨率的索尼 ILCE-7CM2 系统，将粗粝的建筑巨石与人物轮廓框定为如同数学平面般的静默空间。",
-    bioParagraph2: "她的设计语言倾向于极致的极简主义、精准的排版搭配以及网格化的空间布局。这个作品集是一个安静的、交互式的数字画布，旨在让照片自由呼吸、扭转，并诉说属于它们的夜间或海岸故事。",
+    selectedWork: "精选作品",
+    biography: "个人简介",
+    playground: "操场",
+    backToCollections: "返回画廊目录",
+    location: "地点",
+    coordinates: "经纬度",
+    timeline: "时间",
+    medium: "媒介",
+    techSpecs: "技术参数",
+    exifOriginal: "原始 EXIF",
+    cameraBody: "相机机身",
+    lensOptics: "镜头",
+    focalAperture: "焦距/光圈",
+    shutterIso: "快门/感光度",
+    returnToCatalogue: "返回画廊目录",
+    seriesIndex: "系列索引",
+    works: "幅作品",
+    plates: "图版",
+    viewFullSeries: "查看完整系列",
+    portraitBy: "摄影：LÉON SIMON",
+    parisStudio: "各地取景 — 2025年7月",
+    bioPhilosophyTitle: "简介与创作理念",
+    creativeBioTitle: "艺术简历与哲学",
+    bioLead: "Hozumi 是一位中国数字视觉艺术家与摄影师，致力于在“结构”与“虚无”的交界处进行创作。",
+    bioParagraph1: "凭借创意前端开发与建筑学的双重背景，他的摄影作品跨越了数字精准与胶片质感介质之间的界限。他使用高分辨率的索尼 ILCE-7CM2 系统，在各地取景，将粗粝的建筑巨石与人物轮廓框定为如同数学平面般的静默空间。",
+    bioParagraph2: "他的设计语言倾向于极致的极简主义、精准的排版搭配以及网格化的空间布局。这个作品集是一个安静的、交互式的数字画布，旨在让照片自由呼吸、扭转，并诉说属于它们的夜间或海岸故事。",
     philosophyPoints: [
       {
-        title: "建筑重力 Architectural Gravity",
+        title: "建筑重力",
         desc: "平面、阴影和粗粝的混凝土承载着历史。我们将纪念碑记录为平衡光线的生命形式。"
       },
       {
-        title: "静默叙事 The Silent Narrative",
+        title: "静默叙事",
         desc: "摒弃杂噪以显现本质。通过快门速度与颗粒感的配置，与内心的情感留白达成共鸣。"
       }
     ],
-    timeZone: "北京时间 BEIJING",
+    timeZone: "北京时间",
     footerSlogan: "记录建筑混凝土重力、纯艺人像几何，以及通过胶片与高分辨率数字系统捕捉的地域街头美学。",
-    sections: "板块 SECTIONS",
-    resourcesConnect: "资源与联系 RESOURCES & CONNECT",
+    sections: "板块",
+    resourcesConnect: "资源与联系",
     copyright: "© 2026 HOZUMI. 保留所有权利。"
   },
   ja: {
-    selectedWork: "作品選 SELECTED WORK",
-    biography: "プロフィール BIOGRAPHY",
-    backToCollections: "カタログに戻る Back to collections",
-    location: "ロケーション Location",
-    coordinates: "座標 Coordinates",
-    timeline: "期間 Timeline",
-    medium: "メディア Medium",
-    techSpecs: "技術仕様 TECHNICAL SPECIFICATIONS",
-    exifOriginal: "オリジナル EXIF ORIGINAL",
-    cameraBody: "カメラ機材 Camera Body",
-    lensOptics: "使用レンズ Optics",
-    focalAperture: "焦点距離/絞り値 Focal / Aperture",
-    shutterIso: "シャッタースピード/ISO Shutter / ISO",
-    returnToCatalogue: "カタログに戻る Return to Catalogue",
-    seriesIndex: "シリーズ目次 Series Index",
-    works: "作品 works",
-    plates: "図版 PLATES",
-    viewFullSeries: "シリーズを見る View full series",
-    portraitBy: "撮影：LÉON SIMON PORTRAIT BY",
-    parisStudio: "パリスタジオ PARIS STUDIO — 2025年7月",
-    bioPhilosophyTitle: "プロフィールとコンセプト Biography & Philosophy",
-    creativeBioTitle: "芸術経歴＆哲学 CREATIVE BIO & PHILOSOPHY",
-    bioLead: "Hozumiは、パリを拠点に活動するフランス人デジタルヴィジュアルアーティスト兼写真家であり、「構造」と「空虚」の境界線で創作を行っています。",
-    bioParagraph1: "フロントエンド開発と建築学の双方のバックグラウンドを持ち、彼女の写真作品はデジタルの精密さとアナログフィルムの触覚的な質感との架け橋となっています。高解像度のソニー ILCE-7CM2 システムを扱い、コンクリートの巨大な記念碑や人々の輪廓を、静寂の数学的な平面のように切り取ります。",
+    selectedWork: "作品選",
+    biography: "プロフィール",
+    playground: "プレイグラウンド",
+    backToCollections: "カタログに戻る",
+    location: "ロケーション",
+    coordinates: "座標",
+    timeline: "期間",
+    medium: "メディア",
+    techSpecs: "技術仕様",
+    exifOriginal: "オリジナル EXIF",
+    cameraBody: "カメラ機材",
+    lensOptics: "使用レンズ",
+    focalAperture: "焦点距離/絞り値",
+    shutterIso: "シャッタースピード/ISO",
+    returnToCatalogue: "カタログに戻る",
+    seriesIndex: "シリーズ目次",
+    works: "作品",
+    plates: "図版",
+    viewFullSeries: "シリーズを見る",
+    portraitBy: "撮影：LÉON SIMON",
+    parisStudio: "各地での撮影 — 2025年7月",
+    bioPhilosophyTitle: "プロフィールとコンセプト",
+    creativeBioTitle: "芸術経歴＆哲学",
+    bioLead: "Hozumiは、中国のヴィジュアルアーティスト兼写真家であり、デジタルの精密さと構造的な空虚の境界線を探求しています。",
+    bioParagraph1: "フロントエンド開発と建築学の双方のバックグラウンドを持ち、彼の写真作品はデジタルの精密さとアナログフィルムの触覚的な質感との架け橋となっています。高解像度のソニー ILCE-7CM2 システムを扱い、各地で撮影を行い、コンクリートの巨大な記念碑や人々の輪郭を、静寂の数学的な平面のように切り取ります。",
     bioParagraph2: "そのデザイン言語は、極限のミニマリズム、精密なタイポグラフィの組み合わせ、そして整然とした空間グリッドを好みます。このポートフォリオは、写真が呼吸し、変容し、その夜や海岸の物語を語るために設計された、静かでインタラクティブなデジタルのキャンバスです。",
     philosophyPoints: [
       {
-        title: "建築的重力 Architectural Gravity",
+        title: "建築的重力",
         desc: "平面、影、そして粗いコンクリートは歴史を保持します。私たちは光のバランスを保ちながら、生きた形としてモニュメントを記録します。"
       },
       {
-        title: "静かなる叙事 The Silent Narrative",
+        title: "静かなる叙事",
         desc: "本質を明らかにするためにノイズを取り除きます。感情の余白に響くよう、シャッタースピードや粒子感のノイズが調整されています。"
       }
     ],
-    timeZone: "北京時間 BEIJING",
-    footerSlogan: "コンクリートの建築的重力、美術的なポートレートの幾何学、そしてアナログと高解像度のデジタルシステムを通じて、地域的な街路の美学を記録します。",
-    sections: "セクション SECTIONS",
-    resourcesConnect: "リソース＆連絡 RESOURCES & CONNECT",
+    timeZone: "北京時間",
+    footerSlogan: "コンクリートの建築的重力、美術的なポートレートの幾何学、そしてアナログと高解像度のデジタル系统を通じて、地域的な街路の美学を記録します。",
+    sections: "セクション",
+    resourcesConnect: "リソース＆連絡",
     copyright: "© 2026 HOZUMI. ALL RIGHTS RESERVED."
   }
 };
@@ -150,9 +153,9 @@ interface SeriesTranslation {
   }>;
 }
 
-const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, SeriesTranslation>> = {
+export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, SeriesTranslation>> = {
   zh: {
-    "silent-monoliths": {
+    "solitary-drift": {
       title: "孤独飘流",
       subtitle: "电影感肖像",
       description: "一部捕捉北海道各地宁静沉思瞬间、孤独漫步和城市几何结构的视觉随笔。",
@@ -165,7 +168,7 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "sm-4": { title: "夜流", caption: "在模糊的城市灯光和穿梭车辆中独自前行。", location: "日本札幌" }
       }
     },
-    "paris-spleen": {
+    "monochrome-studies": {
       title: "黑白习作",
       subtitle: "黑白叙事",
       description: "一组高反差黑白摄影作品，探索结构线条、人类存在以及宁静的海岸。",
@@ -178,7 +181,7 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "ps-4": { title: "海洋结构", caption: "伫立在海浪中的旧混凝土平台。", location: "日本冲绳" }
       }
     },
-    "ethereal-shores": {
+    "expressions": {
       title: "表情",
       subtitle: "角色研究",
       description: "一组探寻面部表情、衣物纹理和纯粹人类情感的亲密肖像系列。",
@@ -191,7 +194,7 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "es-4": { title: "真情", caption: "展现真实情感的生动特写快照。", location: "日本东京" }
       }
     },
-    "human-landscapes": {
+    "urban-connection": {
       title: "城市连接",
       subtitle: "互动与肖像",
       description: "捕捉城市公共公园和街道上陪伴、笑声与反思的坦率瞬间。",
@@ -204,10 +207,10 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "hl-4": { title: "凝视", caption: "双手在运动中的直接近距离肖像。", location: "日本东京" }
       }
     },
-    "interstate-chronicles": {
+    "winter-illusion": {
       title: "冬与幻影",
       subtitle: "创意人像",
-      description: "对创意双重曝光肖像和日本北部宁静雪景的探索。",
+      description: "对创意双重曝光肖像 and 日本北部宁静雪景的探索。",
       location: "日本北海道",
       category: "人像",
       images: {
@@ -218,7 +221,7 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "ic-5": { title: "积雪", caption: "平躺在辽阔的积雪山丘上。", location: "日本旭川" }
       }
     },
-    "thresholds": {
+    "northern-fragments": {
       title: "北方断章",
       subtitle: "北海道小记",
       description: "一组记录北海道静谧角落与瞬间邂逅的纪实摄影。从临海公路上显眼的蓝色牛奶咖啡车、海边饱经风霜的木屋，到雪夜商街中意外出现的巨型毛绒熊，以及尘土飞扬的北地赛马，展现了日本最北端岛屿特有的质朴与诗意。",
@@ -231,7 +234,7 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "th-4": { title: "泥地赛道", caption: "在北方苍白温和的阳光下，马匹在泥地比赛中扬起沙尘。" }
       }
     },
-    "ephemera": {
+    "tracks-and-tides": {
       title: "铁道与潮汐",
       subtitle: "地方铁道与海岸日记",
       description: "摄影日记的形式，追踪记录了日本地方铁道、海岸边缘与人文地标的静谧律动。从乡村小站值守的铁路员，到拍击着太平洋礁石的汹涌海浪，画面勾勒出地方省份日常交通与自然风物的怀旧气息。",
@@ -246,7 +249,7 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "ep-6": { title: "红砖与天空", caption: "历史悠久的红砖教堂白色钟楼直插云霄。" }
       }
     },
-    "inscapes": {
+    "xiao-yuanhang": {
       title: "肖远航",
       subtitle: "小樽的冬日",
       description: "这是一组在小樽不同光影与场景下为模特“肖远航”拍摄的亲密肖像写生。通过粗颗粒的黑白双重曝光、霓虹街灯下的局部特写，以及质朴的自然光影，探索单一拍摄对象内敛、沉静而深邃的内心世界。",
@@ -261,7 +264,7 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "in-6": { title: "交叠的双手", caption: "黑色高领衫，双手交叠坐在桌前，呈现安静肃穆的黑白肖像状态。" }
       }
     },
-    "outskirts": {
+    "okinawa-breeze": {
       title: "冲绳微风",
       subtitle: "冲绳街头纪事",
       description: "冲绳独特文化景观的街头观察。在这里，当地的海岛日常生活、游客的好奇探寻，与历史遗留的美军驻地印记交织共存。镜头捕捉下了午间休憩、孩童玩耍以及日本最南端县份特有的建筑图景。",
@@ -273,7 +276,7 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "ou-3": { title: "莱斯特营大门", caption: "一名守卫站在莱斯特营（Camp Lester）大门口，折射出冲绳土地的双重属性。" }
       }
     },
-    "vistas": {
+    "transient-states": {
       title: "流动状态",
       subtitle: "灵魂的旅途",
       description: "一份追踪年轻旅行者穿梭于截然不同环境中的视觉日志。从曼谷寺庙色彩斑斓的瓷砖墙壁、热带岛屿清澈漂浮的浅海，到静密居所中的斜射日光、手指紧握提手的手感特写，以及东京天桥夜间飞驰的汽车光轨，展现了青春与运动中那流动的生命状态。",
@@ -287,7 +290,7 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "vi-5": { title: "光之流", caption: "靠在天桥栏杆上，俯瞰黑夜下长曝光的汽车尾灯光轨。" }
       }
     },
-    "pairing": {
+    "diptych-of-her": {
       title: "关于她的双联画",
       subtitle: "两个瞬间",
       description: "双联画的形式，捕捉了同一位身着细条纹连衣裙年轻女子的两个对比瞬间。第一幅画面展现了她在日照充足的日式木质庭院中，坐在铺着红布的木长椅上静静小憩；第二幅画面则是深夜在道路标线上，回眸面对闪光灯展现出的随性肖像。静谧传统与即兴都市之夜在此展开了有趣的对话。",
@@ -296,13 +299,41 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
       images: {
         "pa-1": { title: "即兴之夜", caption: "闪光灯下，被摄对象在深夜人行横道线上蹲着的回眸生动肖像。" }
       }
+    },
+    "analog-hokkaido": {
+      title: "模拟北海道",
+      subtitle: "颗粒与纹理",
+      description: "胶片摄影捕捉北海道最北端、札幌夜市中热气腾腾的拉面，以及冬日小樽静谧的雪景。",
+      location: "日本北海道",
+      category: "风景",
+      images: {
+        "ah001": { title: "札幌手工拉面", caption: "札幌一家温馨的小饭馆里，一碗热气腾腾的新鲜拉面。" },
+        "ah002": { title: "小樽雪街", caption: "冬日小樽街道上飘落的细雪。" },
+        "ah003": { title: "北方铁道线", caption: "延伸至北海道北部辽阔雪原的铁轨。" },
+        "ah004": { title: "冬日静谧", caption: "冬日小樽，路灯柔和地照亮着高高的雪墙。" },
+        "ah005": { title: "札幌深夜热气", caption: "深夜的札幌拉面店里，升腾着融融的暖气。" },
+        "ah006": { title: "最北端纪念碑", caption: "设立在日本最北端宗谷岬的标志性纪念碑。" }
+      }
+    },
+    "transient-geographies": {
+      title: "流变地理",
+      subtitle: "亚洲转角",
+      description: "记录泰国街头的错综网络、千叶赛马场上的动态飞扬，以及台湾传统店铺门前怀旧的布质门帘。",
+      location: "泰国、千叶与台湾",
+      category: "街头",
+      images: {
+        "tg001": { title: "曼谷街头色彩", caption: "曼谷繁华市中心交织的电线与色彩斑斓的突突车。" },
+        "tg002": { title: "千叶赛马场赛道", caption: "在千叶赛马场的泥地赛道上，扬起尘土与泥沙的奔马特写。" },
+        "tg003": { title: "台湾暖帘纹理", caption: "台湾传统商铺门前，一幅充满怀旧气息的蓝色布质门帘。" },
+        "tg004": { title: "台湾门廊细节", caption: "台湾小巷深处，斑驳陆离的墙面与挂在门框上的布帘。" }
+      }
     }
   },
   ja: {
-    "silent-monoliths": {
+    "solitary-drift": {
       title: "孤独な漂流",
       subtitle: "シネマティック・ポートレート",
-      description: "北海道各地での静かな思索の瞬間、孤独な歩み、そして都市の幾何学を捉えたビジュアル・エッセイ。",
+      description: "北海道各地での静かな思索の瞬間、孤独な歩み、と都市の幾何学を捉えたビジュアル・エッセイ。",
       location: "日本、北海道",
       category: "ポートレート",
       images: {
@@ -312,7 +343,7 @@ const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string, Series
         "sm-4": { title: "夜の流れ", caption: "にじむ街の光と行き交う車の中での孤独な歩み。", location: "日本、札幌" }
       }
     },
-    "paris-spleen": {
+    "monochrome-studies": {
       title: "モノクローム研究",
       subtitle: "白と黒の物語",
       description: "構造的なライン、人間の存在、装置、そして静かな海岸線を探索する、コントラストの高い白黒写真シリーズ。",

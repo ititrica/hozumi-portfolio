@@ -41,4 +41,4 @@ export interface PhotographySeries {
   };
 }
 
-export type ViewState = "home" | "about" | "series";
+export type ViewState = "home" | "about" | "series" | "playground";

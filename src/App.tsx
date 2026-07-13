@@ -22,6 +22,7 @@ import HomeWheelView from "./components/HomeWheelView";
 import SeriesView from "./components/SeriesView";
 import Lightbox from "./components/Lightbox";
 import AboutContact from "./components/AboutContact";
+import Playground from "./components/Playground";
 import { Language, getLocalizedData, UI_TRANSLATIONS } from "./i18n";
 
 export default function App() {
@@ -108,7 +109,10 @@ export default function App() {
             >
               {/* Interactive 1/4 Wheel Showcase */}
               <HomeWheelView 
-                onSelectSeries={(series) => setSelectedSeries(series)} 
+                onSelectSeries={(series) => {
+                  setSelectedSeries(series);
+                  setView("series");
+                }} 
                 photographyData={localizedData}
               />
             </motion.div>
@@ -197,20 +201,39 @@ export default function App() {
               </footer>
             </motion.div>
           )}
+          {currentView === "playground" && (
+            <motion.div
+              key="playground"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6 }}
+              className="fixed inset-0 z-45"
+            >
+              <Playground 
+                photographyData={localizedData} 
+                onSelectPhoto={handleSelectPhoto} 
+                lang={lang} 
+              />
+            </motion.div>
+          )}
+
+          {currentView === "series" && activeSeries && (
+            <SeriesView 
+              key="series"
+              series={activeSeries}
+              onBack={() => {
+                setView("home");
+                setSelectedSeries(null);
+              }}
+              onSelectPhoto={handleSelectPhoto}
+              lang={lang}
+            />
+          )}
         </AnimatePresence>
       </main>
 
-      {/* Immersive Series Overlay Details Page */}
-      <AnimatePresence>
-        {activeSeries && (
-          <SeriesView 
-            series={activeSeries}
-            onBack={() => setSelectedSeries(null)}
-            onSelectPhoto={handleSelectPhoto}
-            lang={lang}
-          />
-        )}
-      </AnimatePresence>
+
 
       {/* Full-screen Lightbox with Zoom & EXIF toggle */}
       <AnimatePresence>
