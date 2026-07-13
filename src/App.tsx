@@ -153,12 +153,12 @@ export default function App() {
     };
   }, [isMuted]);
 
-  const [routeLoading, setRouteLoading] = useState(false);
-  const [prevPath, setPrevPath] = useState(location.pathname);
-
   const shouldLoadRoute = (path: string) => {
     return path.startsWith("/series") || path === "/playground";
   };
+
+  const [routeLoading, setRouteLoading] = useState(shouldLoadRoute(location.pathname));
+  const [prevPath, setPrevPath] = useState(location.pathname);
 
   // Synchronous route interception to prevent paint flash
   if (location.pathname !== prevPath) {
@@ -167,52 +167,64 @@ export default function App() {
   }
 
   useEffect(() => {
-    if (!shouldLoadRoute(location.pathname)) {
+    const path = location.pathname;
+    if (!shouldLoadRoute(path)) {
       setRouteLoading(false);
       return;
     }
 
     let active = true;
 
-    const checkImages = () => {
-      if (!active) return;
-      const images = Array.from(document.querySelectorAll("main img, img")) as HTMLImageElement[];
-      const pendingImages = images.filter((img) => !img.complete);
+    // Gather all URLs to preload
+    const urlsToPreload: string[] = [];
 
-      if (pendingImages.length === 0) {
-        setTimeout(() => {
-          if (active) {
-            setRouteLoading(false);
-          }
-        }, 300); // Small buffer for rendering smooth out
-      } else {
-        let loadedCount = 0;
-        const onImageLoad = () => {
-          loadedCount++;
-          if (loadedCount >= pendingImages.length) {
-            setTimeout(() => {
-              if (active) {
-                setRouteLoading(false);
-              }
-            }, 300);
-          }
-        };
-
-        pendingImages.forEach((img) => {
-          img.addEventListener("load", onImageLoad);
-          img.addEventListener("error", onImageLoad); // handle broken links gracefully
+    if (path.startsWith("/series/")) {
+      const seriesId = path.substring("/series/".length);
+      const series = localizedData.find((s) => s.id === seriesId);
+      if (series) {
+        series.images.forEach((img) => {
+          urlsToPreload.push(img.url);
+          urlsToPreload.push(img.url.replace(/\.webp$/, ".thumb.webp"));
         });
       }
+    } else if (path === "/playground") {
+      localizedData.forEach((series) => {
+        series.images.forEach((img) => {
+          urlsToPreload.push(img.url.replace(/\.webp$/, ".thumb.webp"));
+        });
+      });
+    }
+
+    if (urlsToPreload.length === 0) {
+      setRouteLoading(false);
+      return;
+    }
+
+    // Helper to preload a single image
+    const preloadImage = (url: string) => {
+      return new Promise<void>((resolve) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => resolve();
+        img.onerror = () => resolve(); // Avoid blocking indefinitely on broken links
+      });
     };
 
-    // Small delay to let React construct/mount the elements for the new route
-    const timer = setTimeout(checkImages, 150);
+    // Preload all assets in parallel
+    Promise.all(urlsToPreload.map(preloadImage)).then(() => {
+      if (!active) return;
+      // Small buffer for smooth animations
+      setTimeout(() => {
+        if (active) {
+          setRouteLoading(false);
+        }
+      }, 350);
+    });
 
     return () => {
       active = false;
-      clearTimeout(timer);
     };
-  }, [location.pathname]);
+  }, [location.pathname, localizedData]);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 5000);
