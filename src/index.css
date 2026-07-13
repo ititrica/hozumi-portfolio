@@ -70,3 +70,12 @@ html, * {
 html.dark, html.dark * {
   scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
+
+/* Hide scrollbars utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+}
+.scrollbar-none {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}

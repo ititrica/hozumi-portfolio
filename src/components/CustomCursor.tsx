@@ -42,15 +42,15 @@ export default function CustomCursor() {
       
       // Look up tree to find if hovering over pointer or interactive element
       const interactiveEl = target.closest("[data-cursor]");
-      if (interactiveEl) {
-        const type = interactiveEl.getAttribute("data-cursor");
+      const type = interactiveEl?.getAttribute("data-cursor");
+      if (interactiveEl && type) {
         if (type === "hide-custom" || type === "hidden") {
           setIsCursorHidden(true);
           return;
         }
         setIsCursorHidden(false);
         setIsHovered(true);
-        setCursorType(type || "");
+        setCursorType(type);
         if (type === "view") {
           setCursorText("VIEW");
         } else if (type === "drag") {
@@ -132,7 +132,7 @@ export default function CustomCursor() {
           scale: isClicking 
             ? 0.8 
             : isHovered 
-              ? (cursorText ? 4.5 : 1.8) 
+              ? (cursorText ? 3.0 : (cursorType === "home-card" ? 1.8 : 1.3)) 
               : 1,
         }}
         transition={{ type: "tween", duration: 0.15 }}
@@ -143,7 +143,9 @@ export default function CustomCursor() {
             className={`rounded-full transition-all duration-300 relative overflow-hidden flex items-center justify-center ${
               cursorText 
                 ? "bg-white text-black w-16 h-16" 
-                : "border border-white w-8 h-8"
+                : isHovered
+                  ? "border border-white w-8 h-8 bg-transparent"
+                  : "bg-white w-3 h-3"
             }`}
           >
             {/* White background filling effect radiating from center */}
@@ -153,7 +155,7 @@ export default function CustomCursor() {
               }`}
             />
             {cursorText && (
-              <span className="text-[9px] font-mono tracking-widest font-semibold uppercase select-none relative z-10">
+              <span className="text-[11px] font-mono tracking-widest font-semibold uppercase select-none relative z-10">
                 {cursorText}
               </span>
             )}
@@ -165,21 +167,6 @@ export default function CustomCursor() {
           </div>
         </div>
       </motion.div>
-
-      {/* Tiny inner pinpoint dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-[10000] mix-blend-difference"
-        style={{
-          x: mouseX,
-          y: mouseY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-        animate={{
-          scale: isHovered ? 0 : 1,
-        }}
-        transition={{ type: "tween", duration: 0.1 }}
-      />
     </>
   );
 }

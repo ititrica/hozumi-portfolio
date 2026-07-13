@@ -20,7 +20,6 @@ interface HeaderProps {
 
 export default function Header({ currentView, setView, theme, setTheme, lang, setLang }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [localTime, setLocalTime] = useState("");
 
   // Live Beijing clock ticking
@@ -40,24 +39,14 @@ export default function Header({ currentView, setView, theme, setTheme, lang, se
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll Progress listener
-  useEffect(() => {
-    const handleScroll = () => {
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (docHeight > 0) {
-        const scrolled = (window.scrollY / docHeight) * 100;
-        setScrollProgress(scrolled);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+
 
   const t = UI_TRANSLATIONS[lang];
 
   const navItems: { label: string; view: ViewState }[] = [
     { label: t.selectedWork, view: "home" },
     { label: t.biography, view: "about" },
+    { label: t.playground, view: "playground" },
   ];
 
   const handleNavClick = (view: ViewState) => {
@@ -87,7 +76,7 @@ export default function Header({ currentView, setView, theme, setTheme, lang, se
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => {
-              const isActive = currentView === item.view;
+              const isActive = currentView === item.view || (item.view === "home" && currentView === "series");
               return (
                 <button
                   key={item.view}
@@ -174,13 +163,7 @@ export default function Header({ currentView, setView, theme, setTheme, lang, se
 
         </div>
 
-        {/* Scroll Progress Bar */}
-        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-neutral-950/5 dark:bg-white/5 transition-colors duration-1000">
-          <motion.div 
-            className="h-full bg-neutral-900 dark:bg-white transition-colors duration-1000 origin-left"
-            style={{ width: `${scrollProgress}%` }}
-          />
-        </div>
+
       </header>
 
       {/* Fullscreen Mobile Navigation Menu overlay */}
