@@ -113,16 +113,31 @@ export default function App() {
     }
   };
 
+  // Only clear the active fade interval when the application actually unmounts
   useEffect(() => {
-    // Attempt play on mount
+    return () => {
+      if (fadeIntervalRef.current) {
+        clearInterval(fadeIntervalRef.current);
+      }
+    };
+  }, []);
+
+  // Sync state and handle browser autoplay constraints with document interaction listeners
+  useEffect(() => {
     const audio = audioRef.current;
     if (audio && !isMuted) {
-      audio.volume = 0;
-      audio.play()
-        .then(() => fadeAudio(0.20))
-        .catch(() => {
-          // Autoplay blocked by browser. Handled via interaction.
-        });
+      // If unmuted, attempt play
+      if (audio.paused) {
+        audio.volume = 0;
+        audio.play()
+          .then(() => fadeAudio(0.20))
+          .catch(() => {
+            // Autoplay blocked. We wait for user interaction to resume.
+          });
+      } else {
+        // If already playing, fade it back up
+        fadeAudio(0.20);
+      }
     }
 
     const handleFirstInteraction = () => {
@@ -134,6 +149,7 @@ export default function App() {
           .catch((err) => console.log("Play failed on gesture:", err));
       }
       
+      // Remove listeners once gesture is captured
       document.removeEventListener("click", handleFirstInteraction);
       document.removeEventListener("keydown", handleFirstInteraction);
       document.removeEventListener("touchstart", handleFirstInteraction);
@@ -144,9 +160,6 @@ export default function App() {
     document.addEventListener("touchstart", handleFirstInteraction);
 
     return () => {
-      if (fadeIntervalRef.current) {
-        clearInterval(fadeIntervalRef.current);
-      }
       document.removeEventListener("click", handleFirstInteraction);
       document.removeEventListener("keydown", handleFirstInteraction);
       document.removeEventListener("touchstart", handleFirstInteraction);
@@ -231,11 +244,6 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
-    return (
-      <iframe src="/loading/index.html" className="fixed inset-0 w-full h-full border-0 z-[9999]" title="Loading" />
-    );
-  }
 
   // Footer component reused across About page
   const Footer = () => (
@@ -307,6 +315,15 @@ export default function App() {
 
   return (
     <div className="font-sans bg-[#fdfdfd] dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 dark:selection:bg-white selection:text-white dark:selection:text-neutral-900 transition-colors duration-1000 min-h-screen flex flex-col">
+      {/* Entrance loading iframe on top, pointer-events-none lets clicks pass through to capture autoplay gestures */}
+      {loading && (
+        <iframe
+          src="/loading/index.html"
+          className="fixed inset-0 w-full h-full border-0 z-[9999] pointer-events-none"
+          title="Loading"
+        />
+      )}
+
       {/* Premium Interactive Cursor */}
       <CustomCursor lang={lang} />
 
