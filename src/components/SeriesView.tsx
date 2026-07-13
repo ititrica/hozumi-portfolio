@@ -6,14 +6,17 @@
 import React, { useEffect } from "react";
 import { motion } from "motion/react";
 import { PhotographySeries, Photo } from "../types";
+import { Language, UI_TRANSLATIONS } from "../i18n";
 
 interface SeriesViewProps {
   series: PhotographySeries;
   onBack: () => void;
   onSelectPhoto: (photo: Photo, photos: Photo[]) => void;
+  lang: Language;
 }
 
-export default function SeriesView({ series, onBack, onSelectPhoto }: SeriesViewProps) {
+export default function SeriesView({ series, onBack, onSelectPhoto, lang }: SeriesViewProps) {
+  const t = UI_TRANSLATIONS[lang];
   // Prevent body scroll when active
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -41,7 +44,7 @@ export default function SeriesView({ series, onBack, onSelectPhoto }: SeriesView
             data-cursor="nav"
           >
             <span className="font-mono text-[9.5px] tracking-[0.18em] uppercase font-medium transition-colors duration-1000">
-              Back to collections
+              {t.backToCollections}
             </span>
           </button>
         </div>
@@ -51,40 +54,40 @@ export default function SeriesView({ series, onBack, onSelectPhoto }: SeriesView
           {/* Poetic description / Specs */}
           <div className="lg:col-span-5 flex flex-col space-y-6">
             <div>
-              <span className="font-mono text-[9.5px] tracking-[0.2em] text-neutral-600 dark:text-neutral-450 uppercase block mb-2 transition-colors duration-1000">
+              <span className="font-mono text-[9.5px] tracking-[0.1em] text-neutral-600 dark:text-neutral-455 uppercase block mb-2 transition-colors duration-1000">
                 {series.category} — {series.year}
               </span>
-              <h1 className="font-serif text-3xl sm:text-4xl font-light tracking-[0.1em] text-neutral-950 dark:text-neutral-50 leading-none uppercase transition-colors duration-1000">
+              <h1 className="font-serif text-3xl sm:text-4xl font-light tracking-[0.05em] text-neutral-950 dark:text-neutral-50 leading-none uppercase transition-colors duration-1000">
                 {series.title}
               </h1>
-              <span className="font-mono text-[11.5px] tracking-[0.12em] text-neutral-700 dark:text-neutral-400 uppercase block mt-1.5 transition-colors duration-1000">
+              <span className="font-mono text-[11.5px] tracking-[0.06em] text-neutral-700 dark:text-neutral-400 uppercase block mt-1.5 transition-colors duration-1000">
                 {series.subtitle}
               </span>
             </div>
 
-            <p className="font-serif text-[12.5px] leading-relaxed font-light text-neutral-750 dark:text-neutral-350 max-w-md transition-colors duration-1000">
+            <p className="font-serif text-[12.5px] leading-snug font-light text-neutral-750 dark:text-neutral-350 max-w-md transition-colors duration-1000">
               {series.description}
             </p>
 
             {/* Structured Specifications Panel */}
             <div className="py-5 grid grid-cols-2 gap-y-3.5 gap-x-6 transition-colors duration-1000">
               <div className="flex flex-col text-neutral-500 dark:text-neutral-400">
-                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">Location</span>
+                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">{t.location}</span>
                 <span className="font-mono text-[9.5px] text-neutral-850 dark:text-neutral-200 transition-colors duration-1000">{series.location}</span>
               </div>
 
               <div className="flex flex-col text-neutral-500 dark:text-neutral-400">
-                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">Coordinates</span>
+                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">{t.coordinates}</span>
                 <span className="font-mono text-[9.5px] text-neutral-850 dark:text-neutral-200 truncate transition-colors duration-1000">{series.coordinates}</span>
               </div>
 
               <div className="flex flex-col text-neutral-500 dark:text-neutral-400">
-                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">Timeline</span>
+                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">{t.timeline}</span>
                 <span className="font-mono text-[9.5px] text-neutral-850 dark:text-neutral-200 transition-colors duration-1000">2024 — {series.year}</span>
               </div>
 
               <div className="flex flex-col text-neutral-500 dark:text-neutral-400">
-                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">Medium</span>
+                <span className="font-mono text-[7.5px] tracking-wider text-neutral-500 dark:text-neutral-455 uppercase">{t.medium}</span>
                 <span className="font-mono text-[9.5px] text-neutral-850 dark:text-neutral-200 transition-colors duration-1000">Sony ILCE-7CM2 System</span>
               </div>
             </div>
@@ -106,11 +109,11 @@ export default function SeriesView({ series, onBack, onSelectPhoto }: SeriesView
         {/* Photographic Grid items */}
         <div className="pt-16">
           <div className="mb-12">
-            <span className="font-mono text-[8px] tracking-[0.2em] text-neutral-400 dark:text-neutral-500 uppercase block mb-2">
-              FRAMES & CAPTURES
+            <span className="font-mono text-[8px] tracking-[0.1em] text-neutral-400 dark:text-neutral-500 uppercase block mb-2">
+              {lang === "zh" ? "画面与捕捉" : lang === "ja" ? "キャプチャ" : "FRAMES & CAPTURES"}
             </span>
-            <h3 className="font-serif text-lg font-light tracking-[0.1em] text-neutral-900 dark:text-neutral-100 uppercase">
-              Series Index ({series.images.length} works)
+            <h3 className="font-serif text-lg font-light tracking-[0.05em] text-neutral-900 dark:text-neutral-100 uppercase">
+              {t.seriesIndex} ({series.images.length} {t.works})
             </h3>
           </div>
 
@@ -145,8 +148,8 @@ export default function SeriesView({ series, onBack, onSelectPhoto }: SeriesView
                     />
 
                     {/* Left overlay badge containing order index */}
-                    <div className="absolute top-4 left-4 z-20 mix-blend-difference font-mono text-[8px] tracking-[0.15em] text-white/60">
-                      [ PLATES #{pIdx + 1} ]
+                    <div className="absolute top-4 left-4 z-20 mix-blend-difference font-mono text-[8px] tracking-[0.08em] text-white/60">
+                      [ {t.plates} #{pIdx + 1} ]
                     </div>
 
                     {/* Beautiful hover EXIF dashboard on top overlay */}
@@ -193,11 +196,11 @@ export default function SeriesView({ series, onBack, onSelectPhoto }: SeriesView
                       <h4 className="font-sans text-[12.5px] tracking-[0.08em] font-medium text-neutral-900 dark:text-neutral-100 uppercase group-hover:text-neutral-500 dark:group-hover:text-neutral-400 transition-colors duration-1000">
                         {photo.title}
                       </h4>
-                      <span className="font-mono text-[9px] tracking-widest text-neutral-500 dark:text-neutral-400 transition-colors duration-1000">
+                      <span className="font-mono text-[9px] tracking-[0.1em] text-neutral-500 dark:text-neutral-400 transition-colors duration-1000">
                         {photo.exif?.shutterSpeed} — {photo.exif?.aperture}
                       </span>
                     </div>
-                    <p className="font-serif text-[11.5px] font-light text-neutral-600 dark:text-neutral-400 leading-relaxed italic transition-colors duration-1000">
+                    <p className="font-serif text-[11.5px] font-light text-neutral-600 dark:text-neutral-400 leading-snug italic transition-colors duration-1000">
                       {photo.caption}
                     </p>
                   </div>
@@ -213,7 +216,7 @@ export default function SeriesView({ series, onBack, onSelectPhoto }: SeriesView
             onClick={onBack}
             className="px-8 py-3 bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100 font-mono text-[8.5px] tracking-[0.18em] uppercase transition-colors rounded-none"
           >
-            Return to Catalogue
+            {t.returnToCatalogue}
           </button>
         </div>
 

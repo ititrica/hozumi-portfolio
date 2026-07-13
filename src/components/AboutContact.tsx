@@ -3,27 +3,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from "react";
 import { motion } from "motion/react";
+import { Language, UI_TRANSLATIONS } from "../i18n";
 
-export default function AboutContact() {
-  const bioAwards = [
-    { name: "Awwwards Site of the Year - Nominee", year: "2025" },
-    { name: "LensCulture Fine Art Photography Awards - Winner", year: "2024" },
-    { name: "Paris Photo Festival - Selected Artist", year: "2024" },
-    { name: "CSS Design Awards - Best UI/UX Design", year: "2025" },
-  ];
+interface AboutContactProps {
+  lang: Language;
+}
 
-  const philosophyPoints = [
-    {
-      title: "Architectural Gravity",
-      desc: "Planes, shadows, and raw concrete hold histories. We document monuments as living forms balancing light."
-    },
-    {
-      title: "The Silent Narrative",
-      desc: "Removing noise to reveal essence. Stutter speeds and grain settings are configured to echo emotional voids."
-    }
-  ];
+export default function AboutContact({ lang }: AboutContactProps) {
+  const t = UI_TRANSLATIONS[lang];
+  const philosophyPoints = t.philosophyPoints;
 
   return (
     <section className="py-24 max-w-[1400px] mx-auto px-6 w-full">
@@ -31,7 +20,7 @@ export default function AboutContact() {
       {/* Subheader */}
       <div className="pb-6 mb-16 transition-colors duration-1000">
         <h2 className="font-serif text-xl font-light tracking-[0.12em] text-neutral-950 dark:text-white uppercase transition-colors duration-1000">
-          Biography & Philosophy
+          {t.bioPhilosophyTitle}
         </h2>
       </div>
 
@@ -44,17 +33,17 @@ export default function AboutContact() {
         {/* Biography text & details */}
         <div className="lg:col-span-7 space-y-12">
           <div className="space-y-6">
-            <span className="font-mono text-[9px] tracking-[0.2em] text-neutral-600 dark:text-neutral-400 uppercase block transition-colors duration-1000">
-              CREATIVE BIO & PHILOSOPHY
+            <span className="font-mono text-[9px] tracking-[0.1em] text-neutral-600 dark:text-neutral-400 uppercase block transition-colors duration-1000">
+              {t.creativeBioTitle}
             </span>
-            <h3 className="font-serif text-xl font-light text-neutral-950 dark:text-white leading-relaxed transition-colors duration-1000">
-              Hozumi is a French digital visual artist & photographer based in Paris, creating at the intersection of structure and void.
+            <h3 className="font-serif text-xl font-light text-neutral-950 dark:text-white leading-snug transition-colors duration-1000">
+              {t.bioLead}
             </h3>
-            <p className="font-serif text-[13px] font-light leading-relaxed text-neutral-700 dark:text-neutral-350 max-w-xl transition-colors duration-1000">
-              With a background in both front-end creative development and architecture, her photographic works bridge the gap between digital precision and tactile film mediumism. She handles high-resolution Sony ILCE-7CM2 systems, framing raw structural monoliths and human profiles like mathematical planes of silence.
+            <p className="font-serif text-[13px] font-light leading-snug text-neutral-700 dark:text-neutral-350 max-w-xl transition-colors duration-1000">
+              {t.bioParagraph1}
             </p>
-            <p className="font-serif text-[13px] font-light leading-relaxed text-neutral-700 dark:text-neutral-350 max-w-xl transition-colors duration-1000">
-              Her design language favors extreme minimalism, precise typography pairings, and structured spatial grids. This portfolio exists as a quiet, interactive digital canvas designed to let photographs breathe, warp, and tell their nocturnal or coastal stories.
+            <p className="font-serif text-[13px] font-light leading-snug text-neutral-700 dark:text-neutral-350 max-w-xl transition-colors duration-1000">
+              {t.bioParagraph2}
             </p>
           </div>
 
@@ -66,7 +55,7 @@ export default function AboutContact() {
                   <div className="text-neutral-900 dark:text-neutral-100 transition-colors duration-1000">
                     <h4 className="font-mono text-[11px] tracking-wider uppercase font-medium transition-colors duration-1000">{pt.title}</h4>
                   </div>
-                  <p className="font-serif text-[11px] font-light leading-relaxed text-neutral-600 dark:text-neutral-400 transition-colors duration-1000">
+                  <p className="font-serif text-[11px] font-light leading-snug text-neutral-600 dark:text-neutral-400 transition-colors duration-1000">
                     {pt.desc}
                   </p>
                 </div>
@@ -74,25 +63,7 @@ export default function AboutContact() {
             })}
           </div>
 
-          {/* Awards and Exhibitions */}
-          <div className="pt-8 space-y-6 transition-colors duration-1000">
-            <div className="flex items-center space-x-3">
-              <span className="font-mono text-[11px] tracking-wider uppercase font-medium text-neutral-900 dark:text-neutral-100 transition-colors duration-1000">
-                EXHIBITIONS & RECOGNITIONS
-              </span>
-            </div>
-            
-            <div className="space-y-4">
-              {bioAwards.map((aw, idx) => (
-                <div key={idx} className="flex justify-between items-baseline pb-2 transition-colors duration-1000">
-                  <span className="font-serif text-[13px] font-light text-neutral-700 dark:text-neutral-350 transition-colors duration-1000">
-                    {aw.name}
-                  </span>
-                  <span className="font-mono text-[9.5px] text-neutral-500 dark:text-neutral-450 transition-colors duration-1000">{aw.year}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+
         </div>
 
         {/* Profile image column */}
@@ -106,8 +77,8 @@ export default function AboutContact() {
             />
           </div>
           <div className="flex justify-between items-baseline font-mono text-[8px] text-neutral-400 dark:text-neutral-500 uppercase tracking-[0.18em]">
-            <span>PORTRAIT BY LÉON SIMON</span>
-            <span>PARIS STUDIO — JULY 2025</span>
+            <span>{t.portraitBy}</span>
+            <span>{t.parisStudio}</span>
           </div>
         </div>
       </motion.div>

@@ -94,7 +94,7 @@ export default function GalleryGrid({ onSelectSeries }: GalleryGridProps) {
 
                   {/* Top-right index counter */}
                   <div className="absolute top-4 right-4 z-20 mix-blend-difference font-mono text-[9px] tracking-widest text-white/70">
-                    [ 0{index + 1} // {series.images.length} SHOTS ]
+                    [ {index + 1 < 10 ? `0${index + 1}` : index + 1} // {series.images.length} SHOTS ]
                   </div>
 
                   {/* Hover full screen vignette overlay */}

@@ -28,7 +28,7 @@ export interface PhotographySeries {
   title: string;
   subtitle: string;
   description: string;
-  category: "Architecture" | "Street" | "Landscape" | "Portrait" | "Cinematic";
+  category: string;
   year: string;
   location: string;
   coordinates: string;

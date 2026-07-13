@@ -22,6 +22,7 @@ import HomeWheelView from "./components/HomeWheelView";
 import SeriesView from "./components/SeriesView";
 import Lightbox from "./components/Lightbox";
 import AboutContact from "./components/AboutContact";
+import { Language, getLocalizedData, UI_TRANSLATIONS } from "./i18n";
 
 export default function App() {
   const [currentView, setView] = useState<ViewState>("home");
@@ -32,6 +33,11 @@ export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [lang, setLang] = useState<Language>("en");
+
+  const localizedData = getLocalizedData(lang);
+  const activeSeries = selectedSeries ? localizedData.find((s) => s.id === selectedSeries.id) || selectedSeries : null;
+  const t = UI_TRANSLATIONS[lang];
 
   // Toggle dark class on document when theme changes
   useEffect(() => {
@@ -84,6 +90,8 @@ export default function App() {
         }} 
         theme={theme}
         setTheme={setTheme}
+        lang={lang}
+        setLang={setLang}
       />
 
       {/* Main Orchestrated Contents */}
@@ -101,6 +109,7 @@ export default function App() {
               {/* Interactive 1/4 Wheel Showcase */}
               <HomeWheelView 
                 onSelectSeries={(series) => setSelectedSeries(series)} 
+                photographyData={localizedData}
               />
             </motion.div>
           )}
@@ -119,7 +128,7 @@ export default function App() {
               className="fixed inset-0 z-40 overflow-y-auto pt-20 flex flex-col bg-[#fdfdfd] dark:bg-[#0e0c0b] transition-colors duration-1000"
             >
               <div className="flex-grow">
-                <AboutContact />
+                <AboutContact lang={lang} />
               </div>
               <footer className="border-t border-neutral-500/10 py-16 bg-neutral-100/40 dark:bg-neutral-950/20 transition-colors duration-1000">
                 <div className="max-w-[1600px] mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
@@ -129,59 +138,59 @@ export default function App() {
                     <span className="font-serif text-xl tracking-[0.15em] font-medium uppercase text-neutral-900 dark:text-neutral-100">
                       Hozumi
                     </span>
-                    <p className="font-serif text-xs font-light text-neutral-400 dark:text-neutral-500 leading-relaxed max-w-sm">
-                      Documenting architectural concrete gravity, fine art portrait geometries, and nocturnal European street aesthetics through analog and high-resolution digital systems.
+                    <p className="font-serif text-xs font-light text-neutral-400 dark:text-neutral-500 leading-snug max-w-sm">
+                      {t.footerSlogan}
                     </p>
                   </div>
 
                   {/* Quick links map */}
                   <div className="md:col-span-3 flex flex-col space-y-3 font-mono text-[10px] tracking-widest uppercase">
-                    <span className="text-neutral-400 dark:text-neutral-600">SECTIONS</span>
+                    <span className="text-neutral-400 dark:text-neutral-600">{t.sections}</span>
                     <button onClick={() => { setView("home"); setSelectedSeries(null); }} className="text-left text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white py-1">
-                      Selected Work
+                      {t.selectedWork}
                     </button>
                     <button onClick={() => { setView("about"); setSelectedSeries(null); }} className="text-left text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white py-1">
-                      Biography
+                      {t.biography}
                     </button>
                   </div>
 
                   {/* Connect social icons */}
                   <div className="md:col-span-4 flex flex-col space-y-4">
                     <span className="font-mono text-[10px] tracking-widest text-neutral-400 dark:text-neutral-600 uppercase">
-                      RESOURCES & CONNECT
+                      {t.resourcesConnect}
                     </span>
                     <div className="flex space-x-4">
                       <a 
-                        href="https://instagram.com" 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        className="p-3 bg-neutral-500/5 hover:bg-neutral-500/10 text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white rounded-none transition-all duration-300"
-                        aria-label="Instagram"
-                        data-cursor="pointer"
+                         href="https://instagram.com" 
+                         target="_blank" 
+                         rel="noreferrer" 
+                         className="p-3 bg-neutral-500/5 hover:bg-neutral-500/10 text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white rounded-none transition-all duration-300"
+                         aria-label="Instagram"
+                         data-cursor="pointer"
                       >
                         <Instagram className="w-4 h-4" />
                       </a>
                       <a 
-                        href="https://twitter.com" 
-                        target="_blank" 
-                        rel="noreferrer" 
-                        className="p-3 bg-neutral-500/5 hover:bg-neutral-500/10 text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white rounded-none transition-all duration-300"
-                        aria-label="Twitter"
-                        data-cursor="pointer"
+                         href="https://twitter.com" 
+                         target="_blank" 
+                         rel="noreferrer" 
+                         className="p-3 bg-neutral-500/5 hover:bg-neutral-500/10 text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white rounded-none transition-all duration-300"
+                         aria-label="Twitter"
+                         data-cursor="pointer"
                       >
                         <Twitter className="w-4 h-4" />
                       </a>
                       <a 
-                        href="mailto:ititrica@gmail.com" 
-                        className="p-3 bg-neutral-500/5 hover:bg-neutral-500/10 text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white rounded-none transition-all duration-300"
-                        aria-label="Email"
-                        data-cursor="pointer"
+                         href="mailto:ititrica@gmail.com" 
+                         className="p-3 bg-neutral-500/5 hover:bg-neutral-500/10 text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white rounded-none transition-all duration-300"
+                         aria-label="Email"
+                         data-cursor="pointer"
                       >
                         <Mail className="w-4 h-4" />
                       </a>
                     </div>
                     <span className="font-mono text-[9px] text-neutral-400 mt-2">
-                      © 2026 HOZUMI. ALL RIGHTS RESERVED.
+                      {t.copyright}
                     </span>
                   </div>
                 </div>
@@ -193,11 +202,12 @@ export default function App() {
 
       {/* Immersive Series Overlay Details Page */}
       <AnimatePresence>
-        {selectedSeries && (
+        {activeSeries && (
           <SeriesView 
-            series={selectedSeries}
+            series={activeSeries}
             onBack={() => setSelectedSeries(null)}
             onSelectPhoto={handleSelectPhoto}
+            lang={lang}
           />
         )}
       </AnimatePresence>
@@ -210,6 +220,7 @@ export default function App() {
             photos={lightboxPhotos}
             onClose={() => setSelectedPhoto(null)}
             onNavigate={(photo) => setSelectedPhoto(photo)}
+            lang={lang}
           />
         )}
       </AnimatePresence>
