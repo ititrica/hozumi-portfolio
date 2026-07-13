@@ -5,11 +5,11 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, animate } from "motion/react";
-import { PHOTOGRAPHY_DATA } from "../data";
 import { PhotographySeries } from "../types";
 
 interface HomeWheelViewProps {
   onSelectSeries: (series: PhotographySeries) => void;
+  photographyData: PhotographySeries[];
 }
 
 // Categories list for the top-center filter menu (excluding the "ALL" button)
@@ -21,7 +21,7 @@ const CATEGORIES = [
   { label: "电影 CINEMATIC", value: "CINEMATIC" },
 ];
 
-export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
+export default function HomeWheelView({ onSelectSeries, photographyData }: HomeWheelViewProps) {
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -43,7 +43,7 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
     return () => unsubscribe();
   }, [smoothProgress]);
 
-  const activeIndex = Math.max(0, Math.min(PHOTOGRAPHY_DATA.length - 1, Math.round(currentVal)));
+  const activeIndex = Math.max(0, Math.min(photographyData.length - 1, Math.round(currentVal)));
 
   // Listen to container resizing
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
 
     const currentTarget = scrollProgress.get();
     const step = e.deltaY * 0.0018;
-    const newTarget = Math.max(0, Math.min(PHOTOGRAPHY_DATA.length - 1, currentTarget + step));
+    const newTarget = Math.max(0, Math.min(photographyData.length - 1, currentTarget + step));
     scrollProgress.set(newTarget);
 
     if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
@@ -104,6 +104,40 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
     activeAnimationRef.current = animate(scrollProgress, index, {
       type: "spring",
       stiffness: 80,
+      damping: 18,
+    });
+  };
+
+  const touchStartRef = useRef<number | null>(null);
+  const scrollStartRef = useRef<number>(0);
+
+  // Swipe / Drag Gestures support for mobile browsers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (activeAnimationRef.current) {
+      activeAnimationRef.current.stop();
+      activeAnimationRef.current = null;
+    }
+    touchStartRef.current = e.touches[0].clientX;
+    scrollStartRef.current = scrollProgress.get();
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartRef.current === null) return;
+    const touchCurrent = e.touches[0].clientX;
+    const delta = touchStartRef.current - touchCurrent;
+    // Map screen-swipe distance to card-scroll progress
+    const scrollDelta = (delta / dimensions.width) * 3.0;
+    const newTarget = Math.max(0, Math.min(photographyData.length - 1, scrollStartRef.current + scrollDelta));
+    scrollProgress.set(newTarget);
+  };
+
+  const handleTouchEnd = () => {
+    touchStartRef.current = null;
+    // Kinetic snapping to the closest series card index
+    const nearest = Math.round(scrollProgress.get());
+    activeAnimationRef.current = animate(scrollProgress, nearest, {
+      type: "spring",
+      stiffness: 90,
       damping: 18,
     });
   };
@@ -136,8 +170,8 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
     const isMob = dimensions.width < 768;
     const baseW = isMob ? dimensions.width * 0.52 : dimensions.width * 0.363;
 
-    const spacing = isMob ? Math.round(baseW * 0.7) : Math.round(baseW * 0.72);
-    const cornerRadius = isMob ? Math.round(baseW * 0.9) : Math.round(baseW * 0.76);
+    const spacing = isMob ? Math.round(baseW * 0.78) : Math.round(baseW * 0.72);
+    const cornerRadius = isMob ? Math.round(baseW * 1.22) : Math.round(baseW * 0.76);
 
     let x = 0;
     let y = 0;
@@ -158,13 +192,16 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
     return { x, y };
   };
 
-  const activeSeries = PHOTOGRAPHY_DATA[activeIndex];
+  const activeSeries = photographyData[activeIndex];
   const isMobile = dimensions.width < 768;
 
   return (
     <div
       ref={containerRef}
       onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       className="relative w-full h-full overflow-hidden select-none bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-200 cursor-default flex flex-col justify-between transition-colors duration-1000"
       id="home-wheel-viewport"
     >
@@ -196,7 +233,7 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
 
       {/* Main Interactive Stage: The L-Shape Corner Curve */}
       <div className="absolute inset-0 z-10 overflow-visible pointer-events-none">
-        {PHOTOGRAPHY_DATA.map((series, idx) => {
+        {photographyData.map((series, idx) => {
           const offset = idx - currentVal;
           const { x, y } = getCardCoords(offset);
 
@@ -283,9 +320,9 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
         })}
       </div>
 
-      {/* Right-side vertical series title list — all titles always visible, active one highlighted */}
-      <div className="absolute top-1/2 -translate-y-1/2 right-8 md:right-14 z-30 flex flex-col items-stretch space-y-5 w-44 md:w-52">
-        {PHOTOGRAPHY_DATA.map((series, idx) => {
+      {/* Right-side vertical series title list — hidden on mobile, active one highlighted on desktop */}
+      <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-14 z-30 flex-col items-stretch space-y-5 w-52">
+        {photographyData.map((series, idx) => {
           const isActive = idx === activeIndex;
           return (
             <button
@@ -294,13 +331,13 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
               className="flex items-baseline justify-between w-full gap-3 group cursor-pointer"
             >
               <span
-                className={`font-mono text-[8px] tracking-[0.2em] transition-colors duration-[1400ms] ease-in-out ${
+                className={`font-mono text-[8px] tracking-[0.1em] tabular-nums inline-block w-6 text-left transition-colors duration-[1400ms] ease-in-out ${
                   isActive
                     ? "text-neutral-500 dark:text-neutral-400"
                     : "text-neutral-300 dark:text-neutral-700"
                 }`}
               >
-                0{idx + 1}/
+                {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}/
               </span>
               <span
                 className={`font-serif uppercase leading-none text-right transition-colors duration-[1400ms] ease-in-out ${
@@ -311,7 +348,7 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
                 style={{
                   fontSize: "0.75rem",
                   fontWeight: 300,
-                  letterSpacing: "0.1em",
+                  letterSpacing: "0.04em",
                 }}
               >
                 {series.title}
@@ -320,6 +357,21 @@ export default function HomeWheelView({ onSelectSeries }: HomeWheelViewProps) {
           );
         })}
       </div>
+
+      {/* Mobile Title display anchored in the bottom-right corner */}
+      {isMobile && activeSeries && (
+        <div className="absolute bottom-10 right-6 z-30 flex flex-col items-end text-right select-text pointer-events-none">
+          <span className="font-mono text-[9px] tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">
+            {activeIndex + 1 < 10 ? `0${activeIndex + 1}` : activeIndex + 1} / {photographyData.length}
+          </span>
+          <h2 className="font-serif text-[18px] tracking-[0.06em] uppercase text-neutral-900 dark:text-white leading-none">
+            {activeSeries.title}
+          </h2>
+          <span className="font-mono text-[8px] tracking-[0.15em] text-neutral-400 dark:text-neutral-500 uppercase mt-1">
+            {activeSeries.category} — {activeSeries.year}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

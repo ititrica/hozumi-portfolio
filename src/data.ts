@@ -456,14 +456,14 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
 
   {
     id: "thresholds",
-    title: "Thresholds",
-    subtitle: "Open Territory",
-    category: "Landscape",
+    title: "Northern Fragments",
+    subtitle: "Hokkaido Vignettes",
+    category: "Street",
     year: "2025",
     location: "Hokkaido, Japan",
     coordinates: "43.0646° N, 141.3468° E",
     coverImage: "/images/6/cover.webp",
-    description: "An exploration of spatial thresholds and transitional spaces where interior meets exterior, land meets sky, and solid meets void. These wide-frame compositions draw the eye toward distant horizons and architectural edges, capturing the quiet drama of open landscapes and the structures that define their boundaries.",
+    description: "A documentary collection capturing the quiet corners and fleeting encounters of Hokkaido. From a blue cafe truck overlooking the ocean and weathered seaside homes to unexpected street installations and the dust-kicking energy of northern horse racing, these frames document the rustic poetry of Japan's northernmost island.",
     colorTheme: {
       bg: "bg-stone-100",
       text: "text-stone-900",
@@ -473,10 +473,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "th-1",
         url: "/images/6/th-1.webp",
-        title: "Open Reach",
-        caption: "Expansive landscape stretching toward a distant mountain silhouette.",
+        title: "Seaside Respite",
+        caption: "A blue-grey house perched at the water's edge with a lone subcompact car, Hokkaido coast.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Hokkaido, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -490,10 +490,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "th-2",
         url: "/images/6/th-2.webp",
-        title: "Layered Ground",
-        caption: "Textural foreground leading into layered middle and far distances.",
+        title: "Weathered Frame",
+        caption: "A collapsed wooden shack slowly returning to the earth, contrasting with modern housing behind it.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Hokkaido, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -507,10 +507,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "th-3",
         url: "/images/6/th-3.webp",
-        title: "Dividing Line",
-        caption: "A sharp horizon line bisecting textural earth and soft sky.",
+        title: "Sun Mall Companion",
+        caption: "A giant plush bear sits quietly at an outdoor table in a snowy shopping arcade, Otaru.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Otaru, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -524,10 +524,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "th-4",
         url: "/images/6/th-4.webp",
-        title: "Distant Vantage",
-        caption: "Wide-angle view from an elevated position overlooking open terrain.",
+        title: "The Dirt Track",
+        caption: "Horses kick up dust under the pale northern sun during a local race.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Hokkaido, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -542,14 +542,14 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
   },
   {
     id: "ephemera",
-    title: "Ephemera",
-    subtitle: "Wandering Frames",
+    title: "Tracks and Tides",
+    subtitle: "Regional Japan Diaries",
     category: "Street",
     year: "2025",
-    location: "Kobe, Japan",
-    coordinates: "34.6901° N, 135.1955° E",
+    location: "Choshi, Japan",
+    coordinates: "35.7347° N, 140.8268° E",
     coverImage: "/images/7/cover.webp",
-    description: "A collection of fleeting moments captured in motion across urban landscapes. Passersby, street corners, unexpected reflections, and the poetry of everyday encounters. These frames celebrate the ephemeral nature of city life -- the transient gestures and shifting lights that compose the rhythm of the street.",
+    description: "A photographic diary tracking the quiet rhythms of Japan's local railways, coastal edges, and regional landmarks. From the solitary guard at a country station to the crashing tides of the Pacific, these frames capture the nostalgic transit of everyday life in the provinces.",
     colorTheme: {
       bg: "bg-slate-950",
       text: "text-slate-100",
@@ -559,10 +559,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "ep-1",
         url: "/images/7/ep-1.webp",
-        title: "Morning Passerby",
-        caption: "A lone figure crossing an intersection in golden morning light.",
+        title: "Tokawa Dispatch",
+        caption: "A station guard holding flag batons waits at a quiet local station on the Choshi line.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Choshi, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -576,10 +576,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "ep-2",
         url: "/images/7/ep-2.webp",
-        title: "Street Geometry",
-        caption: "Architectural lines framing an everyday urban scene.",
+        title: "Parasol by the Shore",
+        caption: "A woman holds a parasol, looking out over the rocky coast as a girl walks nearby.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Choshi, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -593,10 +593,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "ep-3",
         url: "/images/7/ep-3.webp",
-        title: "Silhouette Alley",
-        caption: "Narrow alleyway with a figure caught in backlight.",
+        title: "Pacific Surge",
+        caption: "Waves crashing violently against the volcanic rocks under a bright blue sky.",
         aspectRatio: "portrait",
-        location: "Unknown",
+        location: "Choshi, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -610,10 +610,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "ep-4",
         url: "/images/7/ep-4.webp",
-        title: "Evening Drift",
-        caption: "Blurred motion of a cyclist passing under street lamps.",
+        title: "Iron Horse Consultation",
+        caption: "Railway workers discuss operations beside a classic orange DE10 diesel locomotive.",
         aspectRatio: "portrait",
-        location: "Unknown",
+        location: "Tochigi, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -627,10 +627,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "ep-5",
         url: "/images/7/ep-5.webp",
-        title: "Shadows Cast",
-        caption: "Long afternoon shadows stretching across a cobblestone plaza.",
+        title: "Evening Over the Fields",
+        caption: "A dramatic purple twilight sky stretching over solar panels and local houses.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Chiba, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -644,10 +644,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "ep-6",
         url: "/images/7/ep-6.webp",
-        title: "Rain Reflection",
-        caption: "Wet pavement mirroring a neon storefront sign.",
+        title: "Brick and Sky",
+        caption: "The white bell tower of a historic red-brick church rising toward passing clouds.",
         aspectRatio: "portrait",
-        location: "Unknown",
+        location: "Otaru, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -662,14 +662,14 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
   },
   {
     id: "inscapes",
-    title: "Inscapes",
-    subtitle: "Interior Silences",
+    title: "Xiao Yuanhang",
+    subtitle: "A Winter in Otaru",
     category: "Portrait",
     year: "2025",
-    location: "Hokkaido, Japan",
-    coordinates: "43.0646° N, 141.3468° E",
+    location: "Otaru, Japan",
+    coordinates: "43.1907° N, 140.9947° E",
     coverImage: "/images/8/cover.webp",
-    description: "An intimate series of interior portraits and quiet studies. Focusing on the subtle geometries of the human form and the spaces we inhabit, these frames explore introspective stillness, soft window light, and the unspoken narratives carried in posture and expression.",
+    description: "An intimate portrait study of Xiao Yuanhang, captured across various locations and light conditions in Otaru. Through grainy black-and-white double exposures, neon-lit close-ups, and direct natural light, this series explores the quiet moods, intensity, and introspective character of a single subject.",
     colorTheme: {
       bg: "bg-amber-50/30",
       text: "text-amber-950",
@@ -679,10 +679,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "in-1",
         url: "/images/8/in-1.webp",
-        title: "Window Study I",
-        caption: "Soft northern light falling across a figure in quiet repose.",
+        title: "Raincoat and Glass",
+        caption: "A high-contrast black-and-white profile of Xiao Yuanhang wearing a clear plastic jacket.",
         aspectRatio: "portrait",
-        location: "Studio Paris",
+        location: "Otaru, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -696,10 +696,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "in-2",
         url: "/images/8/in-2.webp",
-        title: "Turned Away",
-        caption: "A profile half-veiled in shadow, lost in thought.",
+        title: "Warm Neon",
+        caption: "Warm streetlights illuminating the profile of the subject under the city lights.",
         aspectRatio: "portrait",
-        location: "Studio Paris",
+        location: "Otaru, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -713,10 +713,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "in-3",
         url: "/images/8/in-3.webp",
-        title: "Wide Interior",
-        caption: "A room corner with a lone figure creating spatial balance.",
+        title: "Concrete Shadow",
+        caption: "Golden hour sunlight raking across the face of the subject next to a weathered pillar.",
         aspectRatio: "landscape",
-        location: "Studio Paris",
+        location: "Otaru, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -730,10 +730,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "in-4",
         url: "/images/8/in-4.webp",
-        title: "Hands at Rest",
-        caption: "Close detail of clasped hands resting on fabric.",
+        title: "Reflected Gaze",
+        caption: "A direct portrait of Xiao Yuanhang seen through a pane of glass with soft reflections.",
         aspectRatio: "portrait",
-        location: "Studio Paris",
+        location: "Otaru, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -747,10 +747,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "in-5",
         url: "/images/8/in-5.webp",
-        title: "Veiled Glance",
-        caption: "Eyes meeting the lens through a sheer fabric barrier.",
+        title: "The Diner",
+        caption: "An intense, candid look from the subject holding a spoon at a local eatery.",
         aspectRatio: "portrait",
-        location: "Studio Paris",
+        location: "Otaru, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -764,10 +764,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "in-6",
         url: "/images/8/in-6.webp",
-        title: "Still Life",
-        caption: "An unpeopled interior corner with soft light and shadow-play.",
+        title: "Clasped Hands",
+        caption: "A formal black-and-white portrait capturing the subject's quiet posture and clasped hands.",
         aspectRatio: "portrait",
-        location: "Studio Paris",
+        location: "Otaru, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -782,14 +782,14 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
   },
   {
     id: "outskirts",
-    title: "Outskirts",
-    subtitle: "Peripheral Views",
-    category: "Landscape",
+    title: "Okinawa Breeze",
+    subtitle: "Okinawa Street Journal",
+    category: "Street",
     year: "2025",
     location: "Okinawa, Japan",
-    coordinates: "26.3344° N, 127.8056° E",
+    coordinates: "26.2124° N, 127.6809° E",
     coverImage: "/images/9/cover.webp",
-    description: "A photographic journey to the edges -- where the urban grid dissolves into open countryside, and the built environment gives way to natural forms. These peripheral views capture the transitional beauty of liminal landscapes, where something ends and something else begins.",
+    description: "A street-level study of Okinawa's unique cultural landscape, where local island life, tourist curiosity, and historical military presence coexist. These snapshots capture the quiet moments of rest, youthful play, and the distinct architecture of Japan's southern prefecture.",
     colorTheme: {
       bg: "bg-sky-50/50",
       text: "text-sky-950",
@@ -799,10 +799,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "ou-1",
         url: "/images/9/ou-1.webp",
-        title: "Single Tree",
-        caption: "A solitary tree standing against a vast, open horizon.",
+        title: "The Conductor",
+        caption: "A boy wearing a paper Yui Rail monorail hat checks his phone while waiting on a platform.",
         aspectRatio: "portrait",
-        location: "Unknown",
+        location: "Okinawa, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -816,10 +816,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "ou-2",
         url: "/images/9/ou-2.webp",
-        title: "Field Lines",
-        caption: "Parallel agricultural lines receding toward a distant treeline.",
+        title: "Sightseers",
+        caption: "Tourists with luggage look up and take photos on a quiet street next to parked scooters.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Okinawa, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -833,10 +833,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "ou-3",
         url: "/images/9/ou-3.webp",
-        title: "Edge of Town",
-        caption: "The last buildings giving way to open countryside.",
+        title: "Camp Lester Gate",
+        caption: "A guard stands at the entrance of Camp Lester, capturing the dual character of Okinawa's land.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Chatan, Okinawa",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -851,14 +851,14 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
   },
   {
     id: "vistas",
-    title: "Vistas",
-    subtitle: "Wide Horizons",
-    category: "Landscape",
+    title: "Transient States",
+    subtitle: "Travels of the Soul",
+    category: "Street",
     year: "2025",
     location: "Tokyo, Japan",
     coordinates: "35.6762° N, 139.6503° E",
     coverImage: "/images/10/cover.webp",
-    description: "Expansive panoramic landscapes captured in the golden hours of dawn and dusk. These wide compositions emphasize the grandeur of natural spaces -- sweeping coastlines, rolling hills, and dramatic cloud formations -- inviting the viewer to breathe in the scale and mood of the open world.",
+    description: "A visual journal tracing a young traveler’s journey across contrasting environments. From the vibrant tiled facades of Bangkok temples and the clear float of tropical seas to quiet domestic shadows, close details of touch, and the rushing light trails of Tokyo bridges at night, these frames explore the fluid states of youth and motion.",
     colorTheme: {
       bg: "bg-orange-50/40",
       text: "text-amber-950",
@@ -868,10 +868,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "vi-1",
         url: "/images/10/vi-1.webp",
-        title: "First Light",
-        caption: "Dawn breaking over a still, mist-covered valley.",
+        title: "Temple Wall",
+        caption: "Standing in front of the ornate, colorful porcelain details of Wat Arun, Bangkok.",
         aspectRatio: "portrait",
-        location: "Unknown",
+        location: "Bangkok, Thailand",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -885,10 +885,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "vi-2",
         url: "/images/10/vi-2.webp",
-        title: "Golden Slope",
-        caption: "Late afternoon light raking across a grassy hillside.",
+        title: "Weightless",
+        caption: "Floating peacefully in the shallow, clear turquoise sea of a tropical island.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Koh Samui, Thailand",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -902,10 +902,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "vi-3",
         url: "/images/10/vi-3.webp",
-        title: "Cloud Cathedral",
-        caption: "Dramatic cumulus formations towering over a flat landscape.",
+        title: "Sleeping Engine",
+        caption: "A motorcycle covered in plastic stands silently under neon lights in a Tokyo backstreet.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Tokyo, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -919,10 +919,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "vi-4",
         url: "/images/10/vi-4.webp",
-        title: "Coastal Reach",
-        caption: "A rocky coastline stretching toward a hazy sea horizon.",
+        title: "The Grip",
+        caption: "An intimate close-up of a hand clutching a bag strap against the soft bokeh of city lights.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Tokyo, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -936,10 +936,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "vi-5",
         url: "/images/10/vi-5.webp",
-        title: "Dusk Plain",
-        caption: "The last light fading over an open plain, sky and earth merging.",
+        title: "Light Streams",
+        caption: "Leaning on a bridge overlooking long-exposure light trails of traffic under the city night sky.",
         aspectRatio: "landscape",
-        location: "Unknown",
+        location: "Tokyo, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",
@@ -954,14 +954,14 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
   },
   {
     id: "pairing",
-    title: "Pairing",
+    title: "Diptych of Her",
     subtitle: "Two Moments",
-    category: "Street",
-    year: "2023",
-    location: "Osaka, Japan",
-    coordinates: "34.6937° N, 135.5023° E",
+    category: "Portrait",
+    year: "2025",
+    location: "Tokyo, Japan",
+    coordinates: "35.6762° N, 139.6503° E",
     coverImage: "/images/11/cover.webp",
-    description: "A diptych of urban moments -- two frames that speak to each other across time and space. A study in contrasts: wide and intimate, day and twilight, motion and stillness. Together they form a dialogue about the way cities hold both the vast and the personal within the same streets.",
+    description: "A diptych capturing two contrasting moments of a young woman in a striped dress. The first frame presents her in a quiet, sunlit traditional garden sitting on a red bench; the second frame is a candid flash portrait of her crouching on a street crosswalk at night. Together they form a dialogue between quiet tradition and spontaneous urban night.",
     colorTheme: {
       bg: "bg-neutral-950",
       text: "text-neutral-100",
@@ -971,10 +971,10 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         id: "pa-1",
         url: "/images/11/pa-1.webp",
-        title: "The Second Look",
-        caption: "An urban corner seen from across the street, waiting for a passerby.",
+        title: "Spontaneous Night",
+        caption: "A playful flash portrait of the subject crouching on a street crosswalk at night.",
         aspectRatio: "portrait",
-        location: "Paris, France",
+        location: "Tokyo, Japan",
         date: "2025",
         exif: {
           camera: "ILCE-7CM2",

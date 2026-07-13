@@ -7,15 +7,18 @@ import React, { useEffect, useState } from "react";
 import { X, ChevronLeft, ChevronRight, Info } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Photo } from "../types";
+import { Language, UI_TRANSLATIONS } from "../i18n";
 
 interface LightboxProps {
   photo: Photo;
   photos: Photo[];
   onClose: () => void;
   onNavigate: (photo: Photo) => void;
+  lang: Language;
 }
 
-export default function Lightbox({ photo, photos, onClose, onNavigate }: LightboxProps) {
+export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: LightboxProps) {
+  const t = UI_TRANSLATIONS[lang];
   const [showExif, setShowExif] = useState(true);
 
   const currentIndex = photos.findIndex((p) => p.id === photo.id);
@@ -147,22 +150,22 @@ export default function Lightbox({ photo, photos, onClose, onNavigate }: Lightbo
                 className="absolute bottom-6 mx-auto bg-neutral-900/90 border border-neutral-800 backdrop-blur-md px-6 py-4 rounded-none flex flex-wrap gap-x-8 gap-y-2.5 justify-center items-center font-mono text-[9.5px] tracking-[0.15em] text-neutral-400 z-40 max-w-[90%] select-text"
               >
                 <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[8px] text-neutral-500 uppercase">Camera System</span>
+                  <span className="text-[8px] text-neutral-500 uppercase">{t.cameraBody}</span>
                   <span className="text-white font-medium mt-0.5">{photo.exif.camera}</span>
                 </div>
                 <div className="w-px h-5 bg-neutral-800 hidden sm:block" />
                 <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[8px] text-neutral-500 uppercase">Optics Lens</span>
+                  <span className="text-[8px] text-neutral-500 uppercase">{t.lensOptics}</span>
                   <span className="text-white font-medium mt-0.5">{photo.exif.lens}</span>
                 </div>
                 <div className="w-px h-5 bg-neutral-800 hidden sm:block" />
                 <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[8px] text-neutral-500 uppercase">Focal / Aperture</span>
+                  <span className="text-[8px] text-neutral-500 uppercase">{t.focalAperture}</span>
                   <span className="text-white font-medium mt-0.5">{photo.exif.focalLength} @ {photo.exif.aperture}</span>
                 </div>
                 <div className="w-px h-5 bg-neutral-800 hidden sm:block" />
                 <div className="flex flex-col items-center sm:items-start">
-                  <span className="text-[8px] text-neutral-500 uppercase">Shutter / ISO</span>
+                  <span className="text-[8px] text-neutral-500 uppercase">{t.shutterIso}</span>
                   <span className="text-white font-medium mt-0.5">{photo.exif.shutterSpeed} // ISO {photo.exif.iso}</span>
                 </div>
               </motion.div>
@@ -173,7 +176,7 @@ export default function Lightbox({ photo, photos, onClose, onNavigate }: Lightbo
 
         {/* Bottom Metadata Info panel */}
         <div className="h-16 px-6 flex items-center justify-between font-mono text-[9.5px] tracking-[0.15em] text-neutral-500 z-30 bg-gradient-to-t from-neutral-950/80 to-transparent w-full select-text">
-          <span>LOCATION: {photo.location || "EUROPE"}</span>
+          <span>{t.location.toUpperCase()}: {photo.location || "EUROPE"}</span>
           <span>DATE: {photo.date || "2025"}</span>
         </div>
 

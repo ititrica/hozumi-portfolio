@@ -12,9 +12,9 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "DM Sans", "DM Sans Local", "Inter", sans-serif;
-  --font-serif: "DM Sans", "DM Sans Local", "Playfair Display", serif;
-  --font-mono: "DM Sans", "DM Sans Local", "JetBrains Mono", monospace;
+  --font-sans: "DM Sans", "DM Sans Local", sans-serif;
+  --font-serif: "DM Sans", "DM Sans Local", serif;
+  --font-mono: "DM Sans", "DM Sans Local", monospace;
 }
 
 /* Hide native system cursor globally on desktop devices to show only our custom cursor */
