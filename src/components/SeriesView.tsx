@@ -162,7 +162,7 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
                   <h3 className="font-sans text-[13.5px] tracking-[0.08em] font-medium text-neutral-900 dark:text-neutral-100 uppercase transition-colors duration-1000">
                     {photo.title}
                   </h3>
-                  <p className="font-serif text-[12px] font-light text-neutral-600 dark:text-neutral-400 leading-relaxed transition-colors duration-1000">
+                  <p className="font-serif text-[12.5px] font-normal text-neutral-700 dark:text-neutral-300 leading-loose transition-colors duration-1000">
                     {photo.caption}
                   </p>
                 </div>
@@ -192,6 +192,7 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
   }, [allPhotos, hasVirtualCover, lang, onSelectPhoto, series.id, t.plates]);
 
   return (
+    <>
     <motion.div
       ref={containerRef}
       onScroll={handleScroll}
@@ -199,23 +200,12 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed inset-0 z-50 overflow-y-auto bg-[#fafafa] dark:bg-neutral-950 flex flex-col pt-24 transition-colors duration-1000 scrollbar-none"
+      className="fixed inset-0 z-50 overflow-y-auto bg-[#fafafa] dark:bg-neutral-950 flex flex-col pt-36 transition-colors duration-1000 scrollbar-none"
     >
       {/* Static header backdrop wrapper */}
       <div className="max-w-[1600px] mx-auto w-full px-6 flex flex-col pb-32">
         
-        {/* Navigation back and details */}
-        <div className="flex items-center justify-between py-6 mb-8 transition-colors duration-1000">
-          <button
-            onClick={onBack}
-            className="group text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white transition-colors duration-1000 py-2"
-            data-cursor="nav"
-          >
-            <span className="font-mono text-[9.5px] tracking-[0.18em] uppercase font-medium transition-colors duration-1000">
-              {t.backToCollections}
-            </span>
-          </button>
-        </div>
+
         {/* Page Header — title left, location+date right-aligned with photos */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-20 pb-12 transition-colors duration-1000">
           {/* Left: Category, Year, Title, Subtitle & Description */}
@@ -232,13 +222,13 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
               </span>
             </div>
 
-            <p className="font-serif text-[13.5px] leading-relaxed font-light text-neutral-600 dark:text-neutral-400 max-w-xl transition-colors duration-1000">
+            <p className="font-serif text-[14px] leading-loose font-normal text-neutral-700 dark:text-neutral-300 max-w-xl transition-colors duration-1000">
               {series.description}
             </p>
           </div>
 
           {/* Right: Location & Date only, right-aligned within col 7-10 */}
-          <div className="lg:col-span-4 flex flex-col items-end gap-6 pt-6 lg:pt-2 transition-colors duration-1000">
+          <div className="lg:col-span-4 flex flex-col items-end gap-6 pt-6 lg:pt-14 transition-colors duration-1000">
             <div className="flex flex-col items-end space-y-1">
               <span className="font-mono text-[7px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase">{t.location}</span>
               <span className="font-sans text-[10px] tracking-wide font-medium text-neutral-850 dark:text-neutral-200 uppercase transition-colors duration-1000">{series.location}</span>
@@ -307,17 +297,23 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
           </div>
         )}
 
-        {/* Series closing button */}
-        <div className="mt-32 pt-12 flex justify-center">
-          <button
-            onClick={onBack}
-            className="px-8 py-3 bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100 font-mono text-[8.5px] tracking-[0.18em] uppercase transition-colors rounded-none"
-          >
-            {t.returnToCatalogue}
-          </button>
-        </div>
+
 
       </div>
     </motion.div>
+
+    {/* Fixed bottom-left BACK button */}
+    <button
+      onClick={onBack}
+      className="fixed bottom-0 left-0 z-[60] px-6 pb-5 pt-4 group select-none focus:outline-none"
+      data-cursor="nav"
+      aria-label="Back"
+    >
+      <span className="relative inline-block font-serif text-2xl font-medium tracking-widest text-neutral-950 dark:text-white leading-none uppercase">
+        {t.cursorBack}
+        <span className="absolute left-0 bottom-[-2px] h-[1.5px] bg-neutral-950 dark:bg-white w-0 group-hover:w-full transition-all duration-300 ease-out block" />
+      </span>
+    </button>
+    </>
   );
 }

@@ -62,9 +62,13 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
       transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[200] bg-neutral-950/98 flex flex-col justify-between"
       onClick={onClose}
+      data-cursor="close"
     >
       {/* Top Control Bar */}
-      <div className="h-20 px-6 flex items-center justify-between z-30 bg-gradient-to-b from-neutral-950/80 to-transparent w-full">
+      <div 
+        className="h-20 px-6 flex items-center justify-between z-30 bg-gradient-to-b from-neutral-950/80 to-transparent w-full"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Title & Index */}
         <div className="font-mono text-[9.5px] tracking-[0.15em] text-neutral-400 min-w-0 flex-1 mr-4">
           <AnimatePresence mode="wait">
@@ -132,10 +136,10 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
           <ChevronRight className="w-6 h-6" />
         </button>
 
-        {/* Render Active Image with drag capabilities if zoomed */}
+        {/* Render Active Image with close capabilities */}
         <div 
           className="relative max-w-full max-h-full flex items-center justify-center select-none"
-          onClick={(e) => e.stopPropagation()}
+          data-cursor="close"
         >
           <AnimatePresence mode="wait">
             <motion.img
@@ -154,7 +158,10 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
       </div>
 
       {/* Bottom Metadata Info panel */}
-      <div className="h-24 md:h-16 px-6 flex flex-col md:flex-row items-center justify-between font-mono text-[8.5px] md:text-[9.5px] tracking-[0.12em] md:tracking-[0.15em] text-neutral-500 z-30 bg-gradient-to-t from-neutral-950/90 to-transparent w-full gap-2.5 md:gap-0 select-text pb-4 md:pb-0">
+      <div 
+        className="h-24 md:h-16 px-6 flex flex-col md:flex-row items-center justify-between font-mono text-[8.5px] md:text-[9.5px] tracking-[0.12em] md:tracking-[0.15em] text-neutral-500 z-30 bg-gradient-to-t from-neutral-950/90 to-transparent w-full gap-2.5 md:gap-0 select-text pb-4 md:pb-0"
+        onClick={(e) => e.stopPropagation()}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={photo.id}

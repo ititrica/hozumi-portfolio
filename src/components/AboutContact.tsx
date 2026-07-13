@@ -39,10 +39,10 @@ export default function AboutContact({ lang }: AboutContactProps) {
             <h3 className="font-serif text-xl font-light text-neutral-950 dark:text-white leading-snug transition-colors duration-1000">
               {t.bioLead}
             </h3>
-            <p className="font-serif text-[13px] font-light leading-snug text-neutral-700 dark:text-neutral-350 max-w-xl transition-colors duration-1000">
+            <p className="font-serif text-[14px] font-normal leading-loose text-neutral-700 dark:text-neutral-300 max-w-xl transition-colors duration-1000">
               {t.bioParagraph1}
             </p>
-            <p className="font-serif text-[13px] font-light leading-snug text-neutral-700 dark:text-neutral-350 max-w-xl transition-colors duration-1000">
+            <p className="font-serif text-[14px] font-normal leading-loose text-neutral-700 dark:text-neutral-300 max-w-xl transition-colors duration-1000">
               {t.bioParagraph2}
             </p>
           </div>
@@ -55,7 +55,7 @@ export default function AboutContact({ lang }: AboutContactProps) {
                   <div className="text-neutral-900 dark:text-neutral-100 transition-colors duration-1000">
                     <h4 className="font-mono text-[11px] tracking-wider uppercase font-medium transition-colors duration-1000">{pt.title}</h4>
                   </div>
-                  <p className="font-serif text-[11px] font-light leading-snug text-neutral-600 dark:text-neutral-400 transition-colors duration-1000">
+                  <p className="font-serif text-[12px] font-normal leading-loose text-neutral-700 dark:text-neutral-300 transition-colors duration-1000">
                     {pt.desc}
                   </p>
                 </div>

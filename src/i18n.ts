@@ -50,7 +50,10 @@ export const UI_TRANSLATIONS = {
     footerSlogan: "Documenting architectural concrete gravity, fine art portrait geometries, and nocturnal regional street aesthetics through analog and high-resolution digital systems.",
     sections: "SECTIONS",
     resourcesConnect: "RESOURCES & CONNECT",
-    copyright: "© 2026 HOZUMI. ALL RIGHTS RESERVED."
+    copyright: "© 2026 HOZUMI. ALL RIGHTS RESERVED.",
+    cursorEnter: "ENTER",
+    cursorBack: "BACK",
+    cursorView: "VIEW"
   },
   zh: {
     selectedWork: "精选作品",
@@ -93,7 +96,10 @@ export const UI_TRANSLATIONS = {
     footerSlogan: "记录建筑混凝土重力、纯艺人像几何，以及通过胶片与高分辨率数字系统捕捉的地域街头美学。",
     sections: "板块",
     resourcesConnect: "资源与联系",
-    copyright: "© 2026 HOZUMI. 保留所有权利。"
+    copyright: "© 2026 HOZUMI. 保留所有权利。",
+    cursorEnter: "进入",
+    cursorBack: "返回",
+    cursorView: "查看"
   },
   ja: {
     selectedWork: "作品選",
@@ -136,7 +142,10 @@ export const UI_TRANSLATIONS = {
     footerSlogan: "コンクリートの建築的重力、美術的なポートレートの幾何学、そしてアナログと高解像度のデジタル系统を通じて、地域的な街路の美学を記録します。",
     sections: "セクション",
     resourcesConnect: "リソース＆連絡",
-    copyright: "© 2026 HOZUMI. ALL RIGHTS RESERVED."
+    copyright: "© 2026 HOZUMI. ALL RIGHTS RESERVED.",
+    cursorEnter: "入る",
+    cursorBack: "戻る",
+    cursorView: "見る"
   }
 };
 

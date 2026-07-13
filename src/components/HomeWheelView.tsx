@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, animate } from "motion/react";
+import { useLocation } from "react-router-dom";
 import { PhotographySeries } from "../types";
 
 interface HomeWheelViewProps {
@@ -24,16 +25,23 @@ const CATEGORIES = [
 export default function HomeWheelView({ onSelectSeries, photographyData }: HomeWheelViewProps) {
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  // Restore scroll position only when returning via BACK button action
+  const restoreWheel = location.state?.restoreWheel === true;
+  const savedIndex = restoreWheel && typeof sessionStorage !== 'undefined'
+    ? parseFloat(sessionStorage.getItem('wheelIndex') || '0')
+    : 0;
 
   // Framer Motion spring scroll state for buttery kinetic movement
-  const scrollProgress = useMotionValue(0);
+  const scrollProgress = useMotionValue(savedIndex);
   const smoothProgress = useSpring(scrollProgress, {
     stiffness: 75,
     damping: 20,
     mass: 0.8,
   });
 
-  const [currentVal, setCurrentVal] = useState(0);
+  const [currentVal, setCurrentVal] = useState(savedIndex);
 
   // Track scroll position changes to trigger state updates
   useEffect(() => {
@@ -269,6 +277,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
               key={series.id}
               onClick={() => {
                 if (isSelfActive) {
+                  sessionStorage.setItem('wheelIndex', String(activeIndex));
                   onSelectSeries(series);
                 } else {
                   scrollToIndex(idx);
