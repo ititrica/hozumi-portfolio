@@ -20,7 +20,32 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
   const t = UI_TRANSLATIONS[lang];
   const [activeIdx, setActiveIdx] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const photosColRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Dynamic gutter measurement for progress bar positioning
+  const [gutterInfo, setGutterInfo] = useState({ centerX: 0, width: 0, vpHeight: 600 });
+  useEffect(() => {
+    const measure = () => {
+      const el = photosColRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const photosRight = rect.right;
+      const vpWidth = window.innerWidth;
+      const vpHeight = window.innerHeight;
+      const gutterW = vpWidth - photosRight;
+      const centerX = photosRight + gutterW / 2;
+      setGutterInfo({ centerX, width: gutterW, vpHeight });
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    const ro = new ResizeObserver(measure);
+    if (photosColRef.current) ro.observe(photosColRef.current);
+    return () => {
+      window.removeEventListener("resize", measure);
+      ro.disconnect();
+    };
+  }, []);
 
   // Prevent body scroll when active
   useEffect(() => {
@@ -98,9 +123,19 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
     }
   };
 
+  // Thumbnail size derived from gutter width (clamped 64–160px wide, 4:3 ratio)
+  const thumbW = Math.max(64, Math.min(160, Math.floor(gutterInfo.width * 0.7)));
+  const thumbH = Math.round(thumbW * 0.75);
+  const framePad = 4; // gap between indicator frame and thumbnail edge
+
+  // Scale strip down if total height exceeds viewport
+  const totalStripH = allPhotos.length * thumbH;
+  const maxStripH = gutterInfo.vpHeight * 0.78;
+  const stripScale = totalStripH > maxStripH ? maxStripH / totalStripH : 1;
+
   const photosList = useMemo(() => {
     return (
-      <div className="col-span-12 lg:col-span-10 flex flex-col space-y-3">
+      <div ref={photosColRef} className="col-span-12 lg:col-span-10 flex flex-col space-y-3">
         {allPhotos.map((photo, index) => {
           const isCover = photo.id === `${series.id}-cover`;
           const plateNumber = hasVirtualCover ? index : index + 1;
@@ -181,10 +216,10 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
             </span>
           </button>
         </div>
-            {/* Page Header (Minimalist Editorial Layout: Info on Left, Specs on Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20 pb-12 transition-colors duration-1000">
-          {/* Left Side: Category, Year, Title, Subtitle & Description */}
-          <div className="lg:col-span-8 flex flex-col space-y-4">
+        {/* Page Header — title left, location+date right-aligned with photos */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-20 pb-12 transition-colors duration-1000">
+          {/* Left: Category, Year, Title, Subtitle & Description */}
+          <div className="lg:col-span-6 flex flex-col space-y-4">
             <div>
               <span className="font-mono text-[9px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase block transition-colors duration-1000">
                 {series.category} // {series.year}
@@ -197,33 +232,26 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
               </span>
             </div>
 
-            <p className="font-serif text-[13.5px] leading-relaxed font-light text-neutral-600 dark:text-neutral-400 max-w-2xl transition-colors duration-1000">
+            <p className="font-serif text-[13.5px] leading-relaxed font-light text-neutral-600 dark:text-neutral-400 max-w-xl transition-colors duration-1000">
               {series.description}
             </p>
           </div>
 
-          {/* Right Side: Technical Specs / Roles */}
-          <div className="lg:col-span-4 grid grid-cols-2 gap-y-6 gap-x-8 lg:pl-12 pt-6 lg:pt-10 transition-colors duration-1000">
-            <div className="flex flex-col space-y-1">
+          {/* Right: Location & Date only, right-aligned within col 7-10 */}
+          <div className="lg:col-span-4 flex flex-col items-end gap-6 pt-6 lg:pt-2 transition-colors duration-1000">
+            <div className="flex flex-col items-end space-y-1">
               <span className="font-mono text-[7px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase">{t.location}</span>
               <span className="font-sans text-[10px] tracking-wide font-medium text-neutral-850 dark:text-neutral-200 uppercase transition-colors duration-1000">{series.location}</span>
             </div>
 
-            <div className="flex flex-col space-y-1">
-              <span className="font-mono text-[7px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase">{t.coordinates}</span>
-              <span className="font-mono text-[9.5px] text-neutral-850 dark:text-neutral-200 transition-colors duration-1000 truncate">{series.coordinates}</span>
-            </div>
-
-            <div className="flex flex-col space-y-1">
+            <div className="flex flex-col items-end space-y-1">
               <span className="font-mono text-[7px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase">{t.timeline}</span>
               <span className="font-sans text-[10px] tracking-wide font-medium text-neutral-850 dark:text-neutral-200 transition-colors duration-1000">2024 — {series.year}</span>
             </div>
-
-            <div className="flex flex-col space-y-1">
-              <span className="font-mono text-[7px] tracking-[0.18em] text-neutral-400 dark:text-neutral-500 uppercase">{t.medium}</span>
-              <span className="font-sans text-[10px] tracking-wide font-medium text-neutral-850 dark:text-neutral-200 uppercase transition-colors duration-1000">Sony ILCE-7CM2</span>
-            </div>
           </div>
+
+          {/* Empty spacer to match photo grid */}
+          <div className="hidden lg:block lg:col-span-2" />
         </div>
 
         {/* Main Content Layout */}
@@ -235,39 +263,49 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
           <div className="hidden lg:block lg:col-span-2" />
         </div>
 
-        {/* Fixed Progress Navigation Overlay (pixel-perfect mirrored grid layout) */}
-        <div className="fixed inset-0 pointer-events-none z-40 hidden lg:block">
-          <div className="max-w-[1600px] mx-auto w-full px-6 h-full grid grid-cols-12 gap-8 items-center">
-            <div className="col-start-11 col-span-2 flex justify-center pointer-events-auto">
-              
-              {/* Relative buttons wrapper block - 96x72 per thumbnail, stacked closely */}
-              <div className="relative flex flex-col space-y-0">
-                {allPhotos.map((photo, index) => (
-                  <button
-                    key={`thumb-${photo.id}`}
-                    onClick={() => scrollToPhoto(index)}
-                    className="w-[96px] h-[72px] overflow-hidden opacity-50 hover:opacity-85 transition-opacity block focus:outline-none"
-                    data-cursor="nav"
-                  >
-                    <img
-                      src={photo.url.replace(/\.webp$/, ".thumb.webp")}
-                      alt={`Thumbnail ${index}`}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
+        {/* Fixed Progress Navigation — dynamically centered in gutter */}
+        {gutterInfo.centerX > 0 && (
+          <div
+            className="fixed top-1/2 z-40 hidden lg:flex flex-col items-center pointer-events-auto"
+            style={{
+              left: gutterInfo.centerX,
+              transform: `translate(-50%, -50%) scale(${stripScale})`,
+              transformOrigin: 'center center',
+            }}
+          >
+            <div className="relative flex flex-col space-y-0">
+              {allPhotos.map((photo, index) => (
+                <button
+                  key={`thumb-${photo.id}`}
+                  onClick={() => scrollToPhoto(index)}
+                  className="overflow-hidden opacity-50 hover:opacity-85 transition-opacity block focus:outline-none"
+                  style={{ width: thumbW, height: thumbH }}
+                  data-cursor="nav"
+                >
+                  <img
+                    src={photo.url.replace(/\.webp$/, ".thumb.webp")}
+                    alt={`Thumbnail ${index}`}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
 
-                {/* Freely moving stepless indicator frame */}
-                <motion.div
-                  className="absolute top-0 left-0 w-[96px] h-[72px] border-2 border-neutral-950 dark:border-white pointer-events-none z-10"
-                  animate={{ y: scrollProgress * (allPhotos.length - 1) * 72 }}
-                  transition={{ type: "spring", stiffness: 180, damping: 25, mass: 0.35 }}
-                />
-              </div>
+              {/* Freely moving stepless indicator frame — larger than thumb with inner gap */}
+              <motion.div
+                className="absolute border border-neutral-950 dark:border-white pointer-events-none z-10"
+                style={{
+                  width: thumbW + framePad * 2,
+                  height: thumbH + framePad * 2,
+                  left: -framePad,
+                  top: -framePad,
+                }}
+                animate={{ y: scrollProgress * (allPhotos.length - 1) * thumbH }}
+                transition={{ type: "spring", stiffness: 180, damping: 25, mass: 0.35 }}
+              />
             </div>
           </div>
-        </div>
+        )}
 
         {/* Series closing button */}
         <div className="mt-32 pt-12 flex justify-center">
