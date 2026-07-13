@@ -356,7 +356,7 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "ps-4": { title: "海の構造物", caption: "波の中に立つ古いコンクリートのプラットフォーム。", location: "日本、沖縄" }
       }
     },
-    "ethereal-shores": {
+    "expressions": {
       title: "表情",
       subtitle: "キャラクター研究",
       description: "表情、衣服の質感、そしてありのままの人間の感情を探求する親密なポートレート集。",
@@ -369,10 +369,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "es-4": { title: "ありのままの感情", caption: "生の感情を捉えた表情豊かなクローズアップ・スナップショット。", location: "日本、東京" }
       }
     },
-    "human-landscapes": {
+    "urban-connection": {
       title: "都市の繋がり",
       subtitle: "インタラクション＆ポートレート",
-      description: "都市の公共公園や路上での連帯感、笑い、そして内省の率率な瞬間を捉える。",
+      description: "都市の公共公園や路上での連帯感、笑い、そして内省の率直な瞬間を捉える。",
       location: "日本、東京",
       category: "ポートレート",
       images: {
@@ -382,7 +382,7 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "hl-4": { title: "まなざし", caption: "動く手が写る、直接的でクローズアップされたポートレート。", location: "日本、東京" }
       }
     },
-    "interstate-chronicles": {
+    "winter-illusion": {
       title: "冬と幻想",
       subtitle: "クリエイティブ・ポートレート",
       description: "北日本各地でのクリエイティブな二重露光ポートレートと静かな雪景色の探求。",
@@ -396,20 +396,20 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "ic-5": { title: "吹き溜まり", caption: "広大な雪に覆われた丘の上に横たわる。", location: "日本、旭川" }
       }
     },
-    "thresholds": {
+    "northern-fragments": {
       title: "北の断章",
       subtitle: "北海道小記",
       description: "北海道の静かな街角や束の間の出会いを捉えたドキュメンタリー・コレクション。海を見下ろす青いカフェトラック、風化した海辺の家々から、雪の商店街に佇む巨大なクマのぬいぐるみ、そして砂塵を巻き上げる地方競馬のエネルギーまで、日本最北の島の素朴な詩情を記録する。",
       location: "日本、北海道",
       category: "ストリート",
       images: {
-        "th-1": { title: "海辺의 休息", caption: "北海道の海岸線、水辺に佇むグレーブルーの家とポツンと置かれた赤い軽自動車。" },
+        "th-1": { title: "海辺の休息", caption: "北海道の海岸線、水辺に佇むグレーブルーの家とポツンと置かれた赤い軽自動車。" },
         "th-2": { title: "風化した骨組み", caption: "崩壊しつつある古い木造の小屋が、後方の現代的な住宅と対比を成しながら土に還っていく。" },
         "th-3": { title: "サンモール一番街の相棒", caption: "雪の降る小樽の商店街で、屋外のテーブルに静かに座る巨大なクマのぬいぐるみ。" },
         "th-4": { title: "ダートコース", caption: "北の淡い太陽の下、地元のレースで馬たちが砂塵を巻き上げる。" }
       }
     },
-    "ephemera": {
+    "tracks-and-tides": {
       title: "鉄路と潮汐",
       subtitle: "ローカル線と海岸の日記",
       description: "日本のローカル鉄道、海岸線、そして地方のランドマークの静かなリズムを追った写真日記。田舎駅の孤独な駅員から、太平洋の荒波まで、地方の何気ない日常のノスタルジックな移り変わりを捉える。",
@@ -424,7 +424,7 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "ep-6": { title: "赤煉瓦と空", caption: "流れる雲に向かってそびえ立つ、歴史的な赤煉瓦教会の白い鐘楼。" }
       }
     },
-    "inscapes": {
+    "xiao-yuanhang": {
       title: "肖遠航",
       subtitle: "小樽の冬",
       description: "小樽の様々なロケーションと光の中で捉えられた、肖遠航の親密なポートレート研究。粒子感のある白黒の二重露光、ネオンに照らされたクローズアップ、そして直接的な自然光を通じて、一人の被写体の静かな質感、強度、内省的な性格を探求する。",
@@ -439,7 +439,7 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "in-6": { title: "組んだ手", caption: "被写体の静かな佇まいと組まれた手を捉えた、フォーマルな白黒ポートレート。" }
       }
     },
-    "outskirts": {
+    "okinawa-breeze": {
       title: "沖縄の風",
       subtitle: "沖縄ストリートジャーナル",
       description: "地元の島民生活、観光客の好奇心、そして歴史的な軍の存在が共存する、沖縄のユニークな文化的景観のストリートレベルの研究。静かな休息の瞬間、若者の遊び、そしてこの南の県特有の建築をスナップで捉える。",
@@ -451,7 +451,7 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "ou-3": { title: "キャンプ・レスター・ゲート", caption: "キャンプ・レスターの入り口に立つ衛兵。沖縄の土地の持つ二面性を映し出している。" }
       }
     },
-    "vistas": {
+    "transient-states": {
       title: "流動する状態",
       subtitle: "魂の旅",
       description: "対照的な環境を巡る若い旅人の旅路を追ったビジュアル・ジャーナル。バンコクの寺院の鮮やかなタイルの壁面やトロピカルな海の透明な漂いから、静かな家の中の影、手の感触のクローズアップ、そして夜の東京の橋の上の光跡まで、若さと動きの流動的な状態を探求する。",
@@ -465,7 +465,7 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "vi-5": { title: "光の川", caption: "夜空の下、車の光跡を見下ろす橋に寄りかかる。" }
       }
     },
-    "pairing": {
+    "diptych-of-her": {
       title: "彼女の二連画",
       subtitle: "2つの瞬間",
       description: "ストライプのワンピースを着た若い女性の、対照的な2つの瞬間を捉えた二連画。最初のフレームは日差しの差し込む静かな日本庭園の赤いベンチに座る彼女。2番目のフレームは、夜の交差点の横断歩道上でしゃがみ込む彼女のフラッシュによるスナップ。静かな伝統と自発的な都会の夜との対話。",
@@ -473,6 +473,34 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       category: "ポートレート",
       images: {
         "pa-1": { title: "スポンテニアスな夜", caption: "夜の交差点の横断歩道上でしゃがみ込み、こちらを振り返る彼女のフラッシュ・ポートレート。" }
+      }
+    },
+    "analog-hokkaido": {
+      title: "アナログ北海道",
+      subtitle: "粒子と質感",
+      description: "フィルム写真で捉えた北海道最北端、札幌の夜市で湯気を立てるラーメン、そして冬の小樽の静かな雪景色。",
+      location: "日本、北海道",
+      category: "風景",
+      images: {
+        "ah001": { title: "札幌手打ちラーメン", caption: "札幌の温かい小さな食堂で湯気を立てる一杯のラーメン。" },
+        "ah002": { title: "小樽の雪道", caption: "冬の小樽の通りに舞い落ちる細雪。" },
+        "ah003": { title: "北の鉄路", caption: "北海道北部の広大な雪原へと延びる線路。" },
+        "ah004": { title: "冬の静寂", caption: "冬の小樽、街灯が高い雪壁を柔らかく照らす。" },
+        "ah005": { title: "札幌深夜の湯気", caption: "深夜の札幌ラーメン店から立ち上る温かな湯気。" },
+        "ah006": { title: "最北端の碑", caption: "日本最北端、宗谷岬に建つ象徴的な記念碑。" }
+      }
+    },
+    "transient-geographies": {
+      title: "流変する地理",
+      subtitle: "アジアの街角",
+      description: "タイの路上に交錯する電線の網、千葉競馬場の躍動、そして台湾の伝統的な店先に揺れるノスタルジックな布暖簾を記録する。",
+      location: "タイ、千葉、台湾",
+      category: "ストリート",
+      images: {
+        "tg001": { title: "バンコクの街の色", caption: "バンコクの繁華街に交差する電線とカラフルなトゥクトゥク。" },
+        "tg002": { title: "千葉競馬場", caption: "千葉競馬場のダートコースで砂塵を巻き上げる競走馬のクローズアップ。" },
+        "tg003": { title: "台湾の暖簾の質感", caption: "台湾の伝統的な商店の前に掛かるノスタルジックな青い布暖簾。" },
+        "tg004": { title: "台湾の軒先", caption: "台湾の路地奥、色褪せた壁と門枠に掛かる布暖簾。" }
       }
     }
   }
