@@ -52,6 +52,26 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
   }, [smoothProgress]);
 
   const activeIndex = Math.max(0, Math.min(photographyData.length - 1, Math.round(currentVal)));
+  const activeSeries = photographyData[activeIndex];
+
+  // Immersive blurred ambient background state cross-fade configuration
+  const [bgState, setBgState] = useState({
+    prevUrl: activeSeries?.coverImage ? activeSeries.coverImage.replace(".webp", ".card.webp") : "",
+    currUrl: activeSeries?.coverImage ? activeSeries.coverImage.replace(".webp", ".card.webp") : "",
+    trigger: 0
+  });
+
+  useEffect(() => {
+    if (!activeSeries) return;
+    const nextUrl = activeSeries.coverImage.replace(".webp", ".card.webp");
+    if (nextUrl !== bgState.currUrl) {
+      setBgState(prev => ({
+        prevUrl: prev.currUrl,
+        currUrl: nextUrl,
+        trigger: prev.trigger + 1
+      }));
+    }
+  }, [activeIndex, activeSeries, bgState.currUrl]);
 
   // Listen to container resizing
   useEffect(() => {
@@ -210,7 +230,6 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
     return { x, y };
   };
 
-  const activeSeries = photographyData[activeIndex];
   const isMobile = dimensions.width < 768;
 
   return (
@@ -224,23 +243,56 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
     >
       {/* Immersive blurred ambient background cross-fade */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="absolute inset-0 w-full h-full opacity-60 dark:opacity-30 transition-all duration-1000"
-          >
-            <img
-              src={activeSeries.coverImage.replace(".webp", ".card.webp")}
-              alt=""
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover scale-110 blur-[40px] grayscale-[30%]"
-            />
-          </motion.div>
-        </AnimatePresence>
+        {/* Base Layer: previous background */}
+        <div className="absolute inset-0 w-full h-full opacity-60 dark:opacity-30">
+          <img
+            src={bgState.prevUrl}
+            alt=""
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover scale-110 grayscale-[30%]"
+            style={{
+              filter: "blur(40px)",
+              WebkitFilter: "blur(40px)",
+              willChange: "opacity, transform",
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              transform: "translate3d(0, 0, 0)",
+              WebkitTransform: "translate3d(0, 0, 0)",
+            }}
+          />
+        </div>
+
+        {/* Overlay Layer: new background fading in */}
+        <motion.div
+          key={bgState.trigger}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+          className="absolute inset-0 w-full h-full opacity-60 dark:opacity-30"
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "translate3d(0, 0, 0)",
+            WebkitTransform: "translate3d(0, 0, 0)",
+          }}
+        >
+          <img
+            src={bgState.currUrl}
+            alt=""
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover scale-110 grayscale-[30%]"
+            style={{
+              filter: "blur(40px)",
+              WebkitFilter: "blur(40px)",
+              willChange: "opacity, transform",
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              transform: "translate3d(0, 0, 0)",
+              WebkitTransform: "translate3d(0, 0, 0)",
+            }}
+          />
+        </motion.div>
+
         <div className="absolute inset-0 bg-white/20 dark:bg-neutral-950/60 transition-all duration-1000" />
       </div>
 
