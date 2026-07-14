@@ -148,6 +148,11 @@ export default function App() {
     setRouteLoading(shouldLoadRoute(location.pathname));
   }
 
+  const isAnimatedRoute = shouldLoadRoute(location.pathname);
+  const pageTransition = {
+    duration: isAnimatedRoute ? 0.6 : 0
+  };
+
   useEffect(() => {
     const path = location.pathname;
     if (!shouldLoadRoute(path)) {
@@ -477,7 +482,7 @@ export default function App() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.6 }}
+                      transition={pageTransition}
                       className="fixed inset-0 w-full h-full overflow-hidden"
                     >
                       <HomeWheelView
@@ -500,7 +505,7 @@ export default function App() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.6 }}
+                      transition={pageTransition}
                       className="fixed inset-0 z-40 overflow-y-auto pt-20 flex flex-col bg-[#fdfdfd] dark:bg-[#0e0c0b] transition-colors duration-1000"
                     >
                       <div className="flex-grow">
@@ -519,7 +524,7 @@ export default function App() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.6 }}
+                      transition={pageTransition}
                     >
                       <Playground
                         photographyData={localizedData}
@@ -538,7 +543,7 @@ export default function App() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.6 }}
+                      transition={pageTransition}
                     >
                       <SeriesRouteWrapper
                         localizedData={localizedData}
