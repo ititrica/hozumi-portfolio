@@ -54,24 +54,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
   const activeIndex = Math.max(0, Math.min(photographyData.length - 1, Math.round(currentVal)));
   const activeSeries = photographyData[activeIndex];
 
-  // Immersive blurred ambient background state cross-fade configuration
-  const [bgState, setBgState] = useState({
-    prevUrl: activeSeries?.coverImage ? activeSeries.coverImage.replace(".webp", ".card.webp") : "",
-    currUrl: activeSeries?.coverImage ? activeSeries.coverImage.replace(".webp", ".card.webp") : "",
-    trigger: 0
-  });
 
-  useEffect(() => {
-    if (!activeSeries) return;
-    const nextUrl = activeSeries.coverImage.replace(".webp", ".card.webp");
-    if (nextUrl !== bgState.currUrl) {
-      setBgState(prev => ({
-        prevUrl: prev.currUrl,
-        currUrl: nextUrl,
-        trigger: prev.trigger + 1
-      }));
-    }
-  }, [activeIndex, activeSeries, bgState.currUrl]);
 
   // Listen to container resizing
   useEffect(() => {
@@ -242,59 +225,44 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
       id="home-wheel-viewport"
     >
       {/* Immersive blurred ambient background cross-fade */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {/* Base Layer: previous background */}
-        <div className="absolute inset-0 w-full h-full opacity-60 dark:opacity-30">
-          <img
-            src={bgState.prevUrl}
-            alt=""
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover scale-110 grayscale-[30%]"
-            style={{
-              filter: "blur(40px)",
-              WebkitFilter: "blur(40px)",
-              willChange: "opacity, transform",
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-              transform: "translate3d(0, 0, 0)",
-              WebkitTransform: "translate3d(0, 0, 0)",
-            }}
-          />
-        </div>
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-60 dark:opacity-30 transition-opacity duration-1000">
+        {photographyData.map((series, idx) => {
+          const distance = Math.abs(currentVal - idx);
+          // Only render background images that are close to the current view to optimize GPU memory
+          if (distance >= 1.0) return null;
 
-        {/* Overlay Layer: new background fading in */}
-        <motion.div
-          key={bgState.trigger}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, ease: "easeInOut" }}
-          className="absolute inset-0 w-full h-full"
-          style={{
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-            transform: "translate3d(0, 0, 0)",
-            WebkitTransform: "translate3d(0, 0, 0)",
-          }}
-        >
-          <div className="w-full h-full opacity-60 dark:opacity-30">
-            <img
-              src={bgState.currUrl}
-              alt=""
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover scale-110 grayscale-[30%]"
+          const opacity = 1 - distance;
+
+          return (
+            <div
+              key={series.id}
+              className="absolute inset-0 w-full h-full"
               style={{
-                filter: "blur(40px)",
-                WebkitFilter: "blur(40px)",
-                willChange: "opacity, transform",
+                opacity: opacity,
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
                 transform: "translate3d(0, 0, 0)",
                 WebkitTransform: "translate3d(0, 0, 0)",
               }}
-            />
-          </div>
-        </motion.div>
-
+            >
+              <img
+                src={series.coverImage.replace(".webp", ".card.webp")}
+                alt=""
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover scale-110 grayscale-[30%]"
+                style={{
+                  filter: "blur(40px)",
+                  WebkitFilter: "blur(40px)",
+                  willChange: "transform",
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                  transform: "translate3d(0, 0, 0)",
+                  WebkitTransform: "translate3d(0, 0, 0)",
+                }}
+              />
+            </div>
+          );
+        })}
         <div className="absolute inset-0 bg-white/20 dark:bg-neutral-950/60 transition-all duration-1000" />
       </div>
 
