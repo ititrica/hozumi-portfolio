@@ -129,23 +129,34 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
     });
   };
 
-  const touchStartRef = useRef<number | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
   const scrollStartRef = useRef<number>(0);
 
-  // Swipe / Drag Gestures support for mobile browsers
+  // Swipe / Drag Gestures support for mobile browsers (supporting both horizontal and vertical swipes)
   const handleTouchStart = (e: React.TouchEvent) => {
     if (activeAnimationRef.current) {
       activeAnimationRef.current.stop();
       activeAnimationRef.current = null;
     }
-    touchStartRef.current = e.touches[0].clientX;
+    touchStartXRef.current = e.touches[0].clientX;
+    touchStartYRef.current = e.touches[0].clientY;
     scrollStartRef.current = scrollProgress.get();
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (touchStartRef.current === null) return;
-    const touchCurrent = e.touches[0].clientX;
-    const delta = touchStartRef.current - touchCurrent;
+    if (touchStartXRef.current === null || touchStartYRef.current === null) return;
+    const touchCurrentX = e.touches[0].clientX;
+    const touchCurrentY = e.touches[0].clientY;
+    
+    // deltaX: positive is swipe left (next), negative is swipe right (prev)
+    const deltaX = touchStartXRef.current - touchCurrentX;
+    // deltaY: positive is swipe up (next), negative is swipe down (prev)
+    const deltaY = touchStartYRef.current - touchCurrentY;
+
+    // Combine deltas: swiping left/up increases progress, swiping right/down decreases progress
+    const delta = deltaX + deltaY;
+
     // Map screen-swipe distance to card-scroll progress
     const scrollDelta = (delta / dimensions.width) * 3.0;
     const newTarget = Math.max(0, Math.min(photographyData.length - 1, scrollStartRef.current + scrollDelta));
@@ -153,7 +164,8 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
   };
 
   const handleTouchEnd = () => {
-    touchStartRef.current = null;
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
     // Kinetic snapping to the closest series card index
     const nearest = Math.round(scrollProgress.get());
     activeAnimationRef.current = animate(scrollProgress, nearest, {
