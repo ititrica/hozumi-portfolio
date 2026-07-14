@@ -139,39 +139,56 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     return { gridSlots: slots, rows: calculatedRows };
   })();
 
-  // Calculate constraints dynamically based on viewport and canvas size
-  // We expand the drag limits (overscroll buffer) so edge photos can be dragged to the center of the screen
+  // Center the canvas initially upon mount
+  useEffect(() => {
+    const viewportW = window.innerWidth;
+    const viewportH = window.innerHeight;
+    const canvasW = 3600;
+    const canvasH = rows * 350 + (rows - 1) * 96 + 320;
+    canvasX.set((viewportW - canvasW) / 2);
+    canvasY.set((viewportH - canvasH) / 2);
+  }, [rows, canvasX, canvasY]);
+
+  // Calculate drag boundaries dynamically based on current scale and resize events
+  // This keeps a 200x200px center detection area inside the canvas at all times.
+  // When pulled beyond this, it acts like a slingshot pulling it back inside.
   useEffect(() => {
     const updateConstraints = () => {
-      if (constraintsRef.current && canvasRef.current) {
-        const viewportW = constraintsRef.current.clientWidth;
-        const viewportH = constraintsRef.current.clientHeight;
-        const canvasW = canvasRef.current.scrollWidth;
-        const canvasH = canvasRef.current.scrollHeight;
+      if (canvasRef.current) {
+        const viewportW = window.innerWidth;
+        const viewportH = window.innerHeight;
+        const canvasW = 3600;
+        const canvasH = rows * 350 + (rows - 1) * 96 + 320;
 
-        // Allow centering outermost cards, but restrict overscroll so the board cannot be lost off-screen
-        const left = -(canvasW - viewportW / 2 + 100);
-        const right = viewportW / 2 - 100;
-        const top = -(canvasH - viewportH / 2 + 150);
-        const bottom = viewportH / 2 - 150;
+        const s = motionScale.get();
+
+        // Size of the detection area at the center of the window
+        const dW = Math.min(200, canvasW * s - 50);
+        const dH = Math.min(200, canvasH * s - 50);
+
+        // Calculate limits so the detection area stays completely inside the canvas
+        const left = viewportW / 2 + dW / 2 - canvasW / 2 - (canvasW * s) / 2;
+        const right = viewportW / 2 - dW / 2 - canvasW / 2 + (canvasW * s) / 2;
+        const top = viewportH / 2 + dH / 2 - canvasH / 2 - (canvasH * s) / 2;
+        const bottom = viewportH / 2 - dH / 2 - canvasH / 2 + (canvasH * s) / 2;
 
         setDragConstraints({ left, right, top, bottom });
-
-        // Center the canvas initially
-        canvasX.set((viewportW - canvasW) / 2);
-        canvasY.set((viewportH - canvasH) / 2);
       }
     };
 
     updateConstraints();
+
+    // Subscribe to both motionScale changes and window resize events
+    const unsubscribeScale = motionScale.on("change", updateConstraints);
     window.addEventListener("resize", updateConstraints);
     const timer = setTimeout(updateConstraints, 200);
 
     return () => {
+      unsubscribeScale();
       window.removeEventListener("resize", updateConstraints);
       clearTimeout(timer);
     };
-  }, [allPhotos.length, canvasX, canvasY]);
+  }, [rows, motionScale]);
 
   // Listen to wheel events for zooming the board (scroll down to zoom out, scroll up to zoom in)
   // We perform the zoom centering on the user's cursor position without changing transform origin
