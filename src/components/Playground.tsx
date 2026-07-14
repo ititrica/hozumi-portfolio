@@ -264,12 +264,9 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
             onSelectPhoto(matchedPhoto, allPhotos);
           }
         }
-
-        // Reset scale back to 1.5 after 1000ms (so it is completely hidden behind the black lightbox backdrop)
-        setTimeout(() => {
-          motionScale.set(1.5);
-          isZoomTriggeredRef.current = false;
-        }, 1000);
+      } else if (latestScale < 2.0) {
+        // Reset the trigger flag when user zooms back out below 2.0
+        isZoomTriggeredRef.current = false;
       }
     });
 
