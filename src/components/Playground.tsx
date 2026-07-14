@@ -24,18 +24,120 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
   const smoothX = useSpring(canvasX, { stiffness: 75, damping: 26, mass: 1.2 });
   const smoothY = useSpring(canvasY, { stiffness: 75, damping: 26, mass: 1.2 });
 
+  const motionScale = useMotionValue(1.0);
+  const smoothScale = useSpring(motionScale, { stiffness: 90, damping: 24 });
+
+
+
   const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0, top: 0, bottom: 0 });
   const isDraggingRef = useRef(false);
 
-  // Flatten all photos from all photography series
-  const allPhotos = photographyData.flatMap((series) =>
-    series.images.map((img) => ({
-      ...img,
-      // Pass category & series context into photo object for Lightbox references
-      location: img.location || series.location,
-      date: img.date || `${series.year}`,
-    }))
-  );
+  // Flatten and randomly shuffle all photos (including cover images) from all photography series
+  const allPhotos = React.useMemo(() => {
+    const photos: Photo[] = [];
+    
+    photographyData.forEach((series) => {
+      // 1. Add cover image if it exists
+      if (series.coverImage) {
+        photos.push({
+          id: `${series.id}-cover`,
+          url: series.coverImage,
+          title: `${series.title} (Cover)`,
+          caption: series.description,
+          aspectRatio: "landscape",
+          location: series.location,
+          date: `${series.year}`,
+          exif: {
+            camera: "ILCE-7CM2",
+            lens: "FE 35mm F1.4 GM",
+            focalLength: "35mm",
+            aperture: "f/1.4",
+            shutterSpeed: "1/125s",
+            iso: "100"
+          }
+        });
+      }
+      
+      // 2. Add series sub-images
+      series.images.forEach((img) => {
+        photos.push({
+          ...img,
+          location: img.location || series.location,
+          date: img.date || `${series.year}`,
+        });
+      });
+    });
+
+    // Fisher-Yates Shuffle Algorithm for random board layouts
+    for (let i = photos.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [photos[i], photos[j]] = [photos[j], photos[i]];
+    }
+
+    return photos;
+  }, [photographyData]);
+
+  // Generate an asymmetric/spaced-out grid layout slots
+  // We calculate rows dynamically to ensure all photos (plus spacers/decorations) are placed.
+  const { gridSlots, rows } = (() => {
+    const columns = 8;
+    const totalPhotos = allPhotos.length;
+    
+    // Target density of ~60% photos and ~40% decorations/gaps
+    const neededSlots = Math.ceil(totalPhotos / 0.60);
+    const calculatedRows = Math.max(7, Math.ceil(neededSlots / columns));
+    const totalSlots = columns * calculatedRows;
+
+    const slots: (Photo | { type: "text" | "square"; content: string })[] = Array(totalSlots).fill(null);
+
+    // Architectural/minimalist text indicators to scatter in the grid
+    const details: { type: "text" | "square"; content: string }[] = [
+      { type: "square", content: "▢" },
+      { type: "text", content: "43.06°N 141.34°E" },
+      { type: "text", content: "ILCE-7CM2" },
+      { type: "text", content: "35mm F1.4 ASPH" },
+      { type: "text", content: "HOZUMI" },
+      { type: "square", content: "▢" },
+      { type: "text", content: "SHUTTER 1/125s" },
+      { type: "text", content: "ISO 100" },
+      { type: "text", content: "CHOSHI JAPAN" },
+      { type: "text", content: "OKINAWA BREEZE" },
+      { type: "text", content: "35.67°N 139.65°E" },
+      { type: "square", content: "▢" },
+      { type: "text", content: "MINIMAL FRAME" },
+      { type: "text", content: "EXPOSURE +0.3" },
+    ];
+
+    let photoIndex = 0;
+    let detailIndex = 0;
+
+    for (let i = 0; i < totalSlots; i++) {
+      // Determine if this index qualifies as a spacer/decoration
+      const isSpacer = i % 7 === 3 || i % 9 === 5 || i === 12 || i === 31 || i === 44 || (i > 56 && i % 8 === 2);
+      
+      const remainingSlots = totalSlots - i;
+      const remainingPhotos = totalPhotos - photoIndex;
+
+      // We only insert decoration/spacer if we have enough remaining slots for the remaining photos
+      if (isSpacer && remainingSlots > remainingPhotos) {
+        if (detailIndex < details.length && Math.random() > 0.4) {
+          slots[i] = details[detailIndex++];
+        } else {
+          slots[i] = { type: "text", content: "" }; // Empty spacer
+        }
+      } else {
+        if (photoIndex < totalPhotos) {
+          slots[i] = allPhotos[photoIndex++];
+        } else if (detailIndex < details.length) {
+          slots[i] = details[detailIndex++];
+        } else {
+          slots[i] = { type: "text", content: "" };
+        }
+      }
+    }
+
+    return { gridSlots: slots, rows: calculatedRows };
+  })();
 
   // Calculate constraints dynamically based on viewport and canvas size
   useEffect(() => {
@@ -67,6 +169,102 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     };
   }, []);
 
+  // Listen to wheel events for zooming the board (scroll down to zoom out, scroll up to zoom in)
+  // We perform the zoom centering on the user's cursor position without changing transform origin
+  useEffect(() => {
+    const container = constraintsRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault(); // Stop default browser zoom/scroll
+
+      if (!container || !canvasRef.current) return;
+
+      const rawWidth = 3600;
+      const rawHeight = rows * 350 + (rows - 1) * 96 + 320;
+      
+      const rectParent = container.getBoundingClientRect();
+      
+      // Mouse coordinates relative to parent viewport container
+      const mouseParentX = e.clientX - rectParent.left;
+      const mouseParentY = e.clientY - rectParent.top;
+
+      const cx = rawWidth / 2;
+      const cy = rawHeight / 2;
+
+      const xOld = canvasX.get();
+      const yOld = canvasY.get();
+      const sOld = motionScale.get();
+
+      // Calculate the next target scale
+      const zoomSpeed = 0.0012;
+      const sNew = Math.min(2.2, Math.max(0.35, sOld - e.deltaY * zoomSpeed));
+
+      if (sOld === sNew) return;
+
+      // Apply scale transition center math (keeping origin at 0.5, 0.5 static)
+      const factor = sNew / sOld;
+      const xNew = mouseParentX - cx - (mouseParentX - cx - xOld) * factor;
+      const yNew = mouseParentY - cy - (mouseParentY - cy - yOld) * factor;
+
+      // Set translations and scale together
+      canvasX.set(xNew);
+      canvasY.set(yNew);
+      motionScale.set(sNew);
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      container.removeEventListener("wheel", handleWheel);
+    };
+  }, [rows, canvasX, canvasY, motionScale]);
+
+  // Listen to scale changes: if scale reaches 2.1 (zooming in), select the photo closest to viewport center
+  useEffect(() => {
+    const unsubscribe = motionScale.on("change", (latestScale) => {
+      if (latestScale >= 2.1) {
+        const cards = document.querySelectorAll(".playground-photo-card");
+        if (cards.length === 0) return;
+
+        const viewportCenterX = window.innerWidth / 2;
+        const viewportCenterY = window.innerHeight / 2;
+
+        let closestPhotoId: string | null = null;
+        let minDistance = Infinity;
+
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const cardCenterX = rect.left + rect.width / 2;
+          const cardCenterY = rect.top + rect.height / 2;
+
+          const dist = Math.sqrt(
+            Math.pow(cardCenterX - viewportCenterX, 2) +
+            Math.pow(cardCenterY - viewportCenterY, 2)
+          );
+
+          if (dist < minDistance) {
+            minDistance = dist;
+            closestPhotoId = card.getAttribute("data-photo-id");
+          }
+        });
+
+        if (closestPhotoId) {
+          const matchedPhoto = allPhotos.find((p) => p.id === closestPhotoId);
+          if (matchedPhoto) {
+            onSelectPhoto(matchedPhoto, allPhotos);
+          }
+        }
+
+        // Reset scale back to 1.5 with a slight bounce-back delay to prevent infinite triggers
+        setTimeout(() => {
+          motionScale.set(1.5);
+        }, 100);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [allPhotos, onSelectPhoto]);
+
   const handleDragStart = () => {
     isDraggingRef.current = true;
   };
@@ -82,52 +280,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     onSelectPhoto(photo, allPhotos);
   };
 
-  // Generate an asymmetric/spaced-out grid layout slots
-  // We have 46 photos. Let's create an grid array of size 54 (9 columns x 6 rows)
-  // We can insert photos at random slots, and fill other slots with empty values or architectural icons/coordinates
-  const gridSlots = (() => {
-    const columns = 8;
-    const rows = 7;
-    const totalSlots = columns * rows; // 56 slots
 
-    const slots: (Photo | { type: "text" | "square"; content: string })[] = Array(totalSlots).fill(null);
-
-    // Architectural/minimalist text indicators to scatter in the grid
-    const details: { type: "text" | "square"; content: string }[] = [
-      { type: "square", content: "▢" },
-      { type: "text", content: "43.06°N 141.34°E" },
-      { type: "text", content: "ILCE-7CM2" },
-      { type: "text", content: "35mm F1.4 ASPH" },
-      { type: "text", content: "HOZUMI" },
-      { type: "square", content: "▢" },
-      { type: "text", content: "SHUTTER 1/125s" },
-      { type: "text", content: "ISO 100" },
-      { type: "text", content: "CHOSHI JAPAN" },
-      { type: "text", content: "OKINAWA BREEZE" },
-    ];
-
-    let photoIndex = 0;
-    let detailIndex = 0;
-
-    for (let i = 0; i < totalSlots; i++) {
-      // Create empty gaps periodically to match screenshot spacing
-      if (i % 7 === 3 || i % 9 === 5 || i === 12 || i === 31 || i === 44) {
-        if (detailIndex < details.length && Math.random() > 0.4) {
-          slots[i] = details[detailIndex++];
-        } else {
-          slots[i] = { type: "text", content: "" }; // Empty spacer
-        }
-      } else {
-        if (photoIndex < allPhotos.length) {
-          slots[i] = allPhotos[photoIndex++];
-        } else if (detailIndex < details.length) {
-          slots[i] = details[detailIndex++];
-        }
-      }
-    }
-
-    return slots;
-  })();
 
   return (
     <div
@@ -149,8 +302,8 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
         }}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        style={{ x: smoothX, y: smoothY }}
-        className="absolute p-40 grid grid-cols-8 gap-x-28 gap-y-24 w-[3600px] h-[2800px] cursor-grab active:cursor-grabbing select-none"
+        style={{ x: smoothX, y: smoothY, scale: smoothScale, originX: 0.5, originY: 0.5, width: 3600, height: rows * 350 + (rows - 1) * 96 + 320 }}
+        className="absolute p-40 grid grid-cols-8 gap-x-28 gap-y-24 cursor-grab active:cursor-grabbing select-none"
       >
         {gridSlots.map((slot, index) => {
           if (!slot) return <div key={index} className="w-[280px] h-[350px]" />;
@@ -161,7 +314,8 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
               <div
                 key={slot.id}
                 onClick={() => handlePhotoClick(slot)}
-                className="w-[280px] h-[350px] flex flex-col justify-between group cursor-pointer"
+                className="w-[280px] h-[350px] flex flex-col justify-between group cursor-pointer playground-photo-card"
+                data-photo-id={slot.id}
               >
                 {/* Image Mask Frame */}
                 <div className="w-full h-[320px] overflow-hidden bg-neutral-100 dark:bg-neutral-900 shadow-lg group-hover:shadow-2xl transition-all duration-500 ease-out rounded-none relative">

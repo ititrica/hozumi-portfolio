@@ -28,6 +28,7 @@ export default function App() {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [lightboxPhotos, setLightboxPhotos] = useState<Photo[]>([]);
   const [hasEntered, setHasEntered] = useState(false);
+  const [isExpanding, setIsExpanding] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -208,12 +209,17 @@ export default function App() {
   }, [location.pathname, localizedData]);
 
   const handleEnterSite = () => {
+    if (isExpanding) return;
     setIsMuted(false);
-    setHasEntered(true);
-    // Start the 5-second loading animation timer
+    setIsExpanding(true);
+    // Trigger hasEntered at 350ms (midway through expansion) so loading animation mounts and starts playing earlier
     setTimeout(() => {
-      setLoading(false);
-    }, 5000);
+      setHasEntered(true);
+      // Start the 5-second loading animation timer
+      setTimeout(() => {
+        setLoading(false);
+      }, 5000);
+    }, 350);
   };
 
 
@@ -299,57 +305,129 @@ export default function App() {
             key="enter-splash"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             onClick={handleEnterSite}
             className="fixed inset-0 z-[10000] flex items-center justify-center bg-[#ffffff] select-none cursor-pointer"
           >
-            {/* Central Perfect Square Layout wrapper */}
+            {/* Center Layout wrapper */}
             <div className="relative flex items-center justify-center">
-              {/* Outer Ripple (Black outline expanding outwards into white background) */}
-              <motion.div
-                animate={{
-                  scale: [1, 1.12],
-                  opacity: [0.35, 0]
-                }}
-                transition={{
-                  duration: 2.4,
-                  repeat: Infinity,
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-                className="absolute w-[256px] h-[256px] sm:w-[344px] sm:h-[344px] md:w-[448px] md:h-[448px] border border-black pointer-events-none"
-              />
-
-              {/* Central Perfect Square - breathing in sync with the ripples */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{
-                  opacity: 1,
-                  scale: [0.98, 1.02, 0.98],
-                }}
-                transition={{
-                  opacity: { delay: 0.3, duration: 1.2, ease: [0.16, 1, 0.3, 1] },
-                  scale: {
-                    duration: 2.4,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }
-                }}
-                className="w-[256px] h-[256px] sm:w-[344px] sm:h-[344px] md:w-[448px] md:h-[448px] bg-[#000000] shadow-xl relative"
-              >
-                {/* Inner Ripple (White outline contracting inwards into black square) */}
+              {/* Dynamic Cursor Click & Ripple Guide Animation (Centered, Black) */}
+              <div className="flex items-center justify-center pointer-events-none select-none">
+                 {/* Mock Circular Cursor Dot */}
                 <motion.div
                   animate={{
-                    scale: [1, 0.88],
-                    opacity: [0.35, 0]
+                    scale: [1, 1, 0.68, 1.08, 1],
                   }}
                   transition={{
-                    duration: 2.4,
+                    duration: 4.2,
                     repeat: Infinity,
-                    ease: [0.16, 1, 0.3, 1]
+                    ease: "easeInOut",
+                    times: [0, 0.35, 0.38, 0.46, 1],
+                    repeatDelay: 1.0
                   }}
-                  className="absolute inset-0 border border-white pointer-events-none"
+                  className="w-5 h-5 bg-black rounded-full z-20 shadow-md"
                 />
-              </motion.div>
+
+                {/* Concentric Organic Ripple - Layer 1 (Instantly triggered at the start of click) */}
+                <motion.div
+                  animate={{
+                    scale: [0.1, 0.1, 0.15, 7.0, 7.0],
+                    opacity: [0, 0, 0.65, 0, 0],
+                    rotate: [0, 15, 30, 45, 45],
+                  }}
+                  transition={{
+                    duration: 4.2,
+                    repeat: Infinity,
+                    ease: "easeOut",
+                    times: [0, 0.35, 0.36, 0.90, 1],
+                    repeatDelay: 1.0
+                  }}
+                  className="absolute w-[12vmax] h-[12vmax] border-2 border-black/28 z-10"
+                  style={{ borderRadius: "48% 52% 51% 49% / 50% 49% 52% 51%" }}
+                />
+
+                {/* Concentric Organic Ripple - Layer 2 */}
+                <motion.div
+                  animate={{
+                    scale: [0.1, 0.1, 0.15, 7.0, 7.0],
+                    opacity: [0, 0, 0.55, 0, 0],
+                    rotate: [15, 30, 45, 60, 60],
+                  }}
+                  transition={{
+                    duration: 4.2,
+                    repeat: Infinity,
+                    ease: "easeOut",
+                    times: [0, 0.37, 0.38, 0.92, 1],
+                    repeatDelay: 1.0
+                  }}
+                  className="absolute w-[12vmax] h-[12vmax] border-2 border-black/22 z-10"
+                  style={{ borderRadius: "51% 49% 52% 48% / 48% 52% 50% 50%" }}
+                />
+
+                {/* Concentric Organic Ripple - Layer 3 */}
+                <motion.div
+                  animate={{
+                    scale: [0.1, 0.1, 0.15, 7.0, 7.0],
+                    opacity: [0, 0, 0.45, 0, 0],
+                    rotate: [30, 45, 60, 75, 75],
+                  }}
+                  transition={{
+                    duration: 4.2,
+                    repeat: Infinity,
+                    ease: "easeOut",
+                    times: [0, 0.39, 0.40, 0.94, 1],
+                    repeatDelay: 1.0
+                  }}
+                  className="absolute w-[12vmax] h-[12vmax] border-2 border-black/16 z-10"
+                  style={{ borderRadius: "49% 51% 48% 52% / 52% 48% 51% 49%" }}
+                />
+
+                {/* Concentric Organic Ripple - Layer 4 */}
+                <motion.div
+                  animate={{
+                    scale: [0.1, 0.1, 0.15, 7.0, 7.0],
+                    opacity: [0, 0, 0.35, 0, 0],
+                    rotate: [45, 60, 75, 90, 90],
+                  }}
+                  transition={{
+                    duration: 4.2,
+                    repeat: Infinity,
+                    ease: "easeOut",
+                    times: [0, 0.41, 0.42, 0.96, 1],
+                    repeatDelay: 1.0
+                  }}
+                  className="absolute w-[12vmax] h-[12vmax] border-2 border-black/10 z-10"
+                  style={{ borderRadius: "52% 48% 50% 50% / 49% 51% 48% 52%" }}
+                />
+
+                {/* "CLICK" Text Hint - Shrinks & expands in sync with the cursor dot */}
+                <motion.div
+                  animate={{
+                    scale: [1, 1, 0.68, 1.08, 1],
+                  }}
+                  transition={{
+                    duration: 4.2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    times: [0, 0.35, 0.38, 0.46, 1],
+                    repeatDelay: 1.0
+                  }}
+                  className="absolute font-mono text-[13px] sm:text-[16px] md:text-[19px] tracking-[0.35em] text-black font-black uppercase z-30 whitespace-nowrap"
+                  style={{ y: 42 }}
+                >
+                  CLICK
+                </motion.div>
+              </div>
+
+              {/* Expanding Black Circle Overlay for Entrance Transition */}
+              {isExpanding && (
+                <motion.div
+                  initial={{ width: 20, height: 20 }}
+                  animate={{ width: "300vmax", height: "300vmax" }}
+                  transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+                  className="absolute bg-black rounded-full z-[100] pointer-events-none -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
+                />
+              )}
             </div>
           </motion.div>
         )}
@@ -359,13 +437,22 @@ export default function App() {
       {hasEntered && (
         <>
           {/* Entrance loading iframe on top */}
-          {loading && (
-            <iframe
-              src="/loading/index.html"
-              className="fixed inset-0 w-full h-full border-0 z-[9999] pointer-events-none"
-              title="Loading"
-            />
-          )}
+          <AnimatePresence>
+            {loading && (
+              <motion.div
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                className="fixed inset-0 w-full h-full z-[9999] pointer-events-none bg-black"
+              >
+                <iframe
+                  src="/loading/index.html"
+                  className="w-full h-full border-0"
+                  title="Loading"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Persistent Menu & Headers */}
           <Header
