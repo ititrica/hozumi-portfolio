@@ -213,6 +213,11 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       const cx = rawWidth / 2;
       const cy = rawHeight / 2;
 
+      // Stop any active drag inertia or slide animations immediately when zoom starts
+      canvasX.stop();
+      canvasY.stop();
+      motionScale.stop();
+
       const xOld = smoothX.get();
       const yOld = smoothY.get();
       const sOld = smoothScale.get();
