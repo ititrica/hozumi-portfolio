@@ -262,6 +262,16 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "ep-6": { title: "红砖与天空", caption: "历史悠久的红砖教堂白色钟楼直插云霄。" }
       }
     },
+    "diptych-of-her": {
+      title: "关于她的双联画",
+      subtitle: "两个瞬间",
+      description: "双联画的形式，捕捉了同一位身着细条纹连衣裙年轻女子的两个对比瞬间。第一幅画面展现了她在日照充足的日式木质庭院中，坐在铺着红布的木长椅上静静小憩；第二幅画面则是深夜在道路标线上，回眸面对闪光灯展现出的随性肖像。静谧传统与即兴都市之夜在此展开了有趣的对话。",
+      location: "日本东京",
+      category: "人像",
+      images: {
+        "pa-1": { title: "即兴之夜", caption: "闪光灯下，被摄对象在深夜人行横道线上蹲着的回眸生动肖像。" }
+      }
+    },
     "xiao-yuanhang": {
       title: "肖远航",
       subtitle: "小樽的冬日",
@@ -302,16 +312,6 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "vi-3": { title: "沉睡的引擎", caption: "东京后街霓虹灯下，一辆用雨蓬塑料布盖着的摩托车静立着。" },
         "vi-4": { title: "紧握", caption: "以城市霓虹光晕为背景，一只手攥紧包带的局部特写。" },
         "vi-5": { title: "光之流", caption: "靠在天桥栏杆上，俯瞰黑夜下长曝光的汽车尾灯光轨。" }
-      }
-    },
-    "diptych-of-her": {
-      title: "关于她的双联画",
-      subtitle: "两个瞬间",
-      description: "双联画的形式，捕捉了同一位身着细条纹连衣裙年轻女子的两个对比瞬间。第一幅画面展现了她在日照充足的日式木质庭院中，坐在铺着红布的木长椅上静静小憩；第二幅画面则是深夜在道路标线上，回眸面对闪光灯展现出的随性肖像。静谧传统与即兴都市之夜在此展开了有趣的对话。",
-      location: "日本东京",
-      category: "人像",
-      images: {
-        "pa-1": { title: "即兴之夜", caption: "闪光灯下，被摄对象在深夜人行横道线上蹲着的回眸生动肖像。" }
       }
     },
     "analog-hokkaido": {
@@ -442,6 +442,16 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "ep-6": { title: "赤煉瓦と空", caption: "流れる雲に向かってそびえ立つ、歴史的な赤煉瓦教会の白い鐘楼。" }
       }
     },
+    "diptych-of-her": {
+      title: "彼女の二連画",
+      subtitle: "2つの瞬間",
+      description: "ストライプのワンピースを着た若い女性の、対照的な2つの瞬間を捉えた二連画。最初のフレームは日差しの差し込む静かな日本庭園の赤いベンチに座る彼女。2番目のフレームは、夜の交差点の横断歩道上でしゃがみ込む彼女のフラッシュによるスナップ。静かな伝統と自発的な都会の夜との対話。",
+      location: "日本、東京",
+      category: "ポートレート",
+      images: {
+        "pa-1": { title: "スポンテニアスな夜", caption: "夜の交差点の横断歩道上でしゃがみ込み、こちらを振り返る彼女のフラッシュ・ポートレート。" }
+      }
+    },
     "xiao-yuanhang": {
       title: "肖遠航",
       subtitle: "小樽の冬",
@@ -482,16 +492,6 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "vi-3": { title: "眠るエンジン", caption: "東京の路地のネオンの下、シートに覆われて静かに佇むバイク。" },
         "vi-4": { title: "グリップ", caption: "街の光の柔らかなボケを背景に、バッグのストラップを握る手のクローズアップ。" },
         "vi-5": { title: "光の川", caption: "夜空の下、車の光跡を見下ろす橋に寄りかかる。" }
-      }
-    },
-    "diptych-of-her": {
-      title: "彼女の二連画",
-      subtitle: "2つの瞬間",
-      description: "ストライプのワンピースを着た若い女性の、対照的な2つの瞬間を捉えた二連画。最初のフレームは日差しの差し込む静かな日本庭園の赤いベンチに座る彼女。2番目のフレームは、夜の交差点の横断歩道上でしゃがみ込む彼女のフラッシュによるスナップ。静かな伝統と自発的な都会の夜との対話。",
-      location: "日本、東京",
-      category: "ポートレート",
-      images: {
-        "pa-1": { title: "スポンテニアスな夜", caption: "夜の交差点の横断歩道上でしゃがみ込み、こちらを振り返る彼女のフラッシュ・ポートレート。" }
       }
     },
     "analog-hokkaido": {

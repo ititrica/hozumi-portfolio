@@ -728,6 +728,41 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     ]
   },
   {
+    "id": "diptych-of-her",
+    "title": "Diptych of Her",
+    "subtitle": "Two Moments",
+    "category": "Portrait",
+    "year": "2025",
+    "location": "Tokyo, Japan",
+    "coordinates": "35.6762° N, 139.6503° E",
+    "coverImage": "/images/08-diptych-of-her/cover.webp",
+    "description": "A diptych capturing two contrasting moments of a young woman in a striped dress. The first frame presents her in a quiet, sunlit traditional garden sitting on a red bench; the second frame is a candid flash portrait of her crouching on a street crosswalk at night. Together they form a dialogue between quiet tradition and spontaneous urban night.",
+    "colorTheme": {
+      "bg": "bg-neutral-950",
+      "text": "text-neutral-100",
+      "accent": "border-neutral-600"
+    },
+    "images": [
+      {
+        "id": "pa-1",
+        "url": "/images/08-diptych-of-her/pa-1.webp",
+        "title": "Spontaneous Night",
+        "caption": "A playful flash portrait of the subject crouching on a street crosswalk at night.",
+        "aspectRatio": "portrait",
+        "location": "Tokyo, Japan",
+        "date": "2025",
+        "exif": {
+          "camera": "ILCE-7CM2",
+          "lens": "E 17-70mm F2.8 B070",
+          "focalLength": "43mm",
+          "aperture": "f/2.8",
+          "shutterSpeed": "1/125s",
+          "iso": "2000"
+        }
+      }
+    ]
+  },
+  {
     "id": "xiao-yuanhang",
     "title": "Xiao Yuanhang",
     "subtitle": "A Winter in Otaru",
@@ -735,7 +770,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Otaru, Japan",
     "coordinates": "43.1907° N, 140.9947° E",
-    "coverImage": "/images/08-xiao-yuanhang/cover.webp",
+    "coverImage": "/images/09-xiao-yuanhang/cover.webp",
     "description": "An intimate portrait study of Xiao Yuanhang, captured across various locations and light conditions in Otaru. Through grainy black-and-white double exposures, neon-lit close-ups, and direct natural light, this series explores the quiet moods, intensity, and introspective character of a single subject.",
     "colorTheme": {
       "bg": "bg-amber-50/30",
@@ -745,7 +780,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "images": [
       {
         "id": "in-1",
-        "url": "/images/08-xiao-yuanhang/in-1.webp",
+        "url": "/images/09-xiao-yuanhang/in-1.webp",
         "title": "Raincoat and Glass",
         "caption": "A high-contrast black-and-white profile of Xiao Yuanhang wearing a clear plastic jacket.",
         "aspectRatio": "portrait",
@@ -762,7 +797,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "in-2",
-        "url": "/images/08-xiao-yuanhang/in-2.webp",
+        "url": "/images/09-xiao-yuanhang/in-2.webp",
         "title": "Warm Neon",
         "caption": "Warm streetlights illuminating the profile of the subject under the city lights.",
         "aspectRatio": "portrait",
@@ -779,7 +814,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "in-3",
-        "url": "/images/08-xiao-yuanhang/in-3.webp",
+        "url": "/images/09-xiao-yuanhang/in-3.webp",
         "title": "Concrete Shadow",
         "caption": "Golden hour sunlight raking across the face of the subject next to a weathered pillar.",
         "aspectRatio": "landscape",
@@ -796,7 +831,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "in-4",
-        "url": "/images/08-xiao-yuanhang/in-4.webp",
+        "url": "/images/09-xiao-yuanhang/in-4.webp",
         "title": "Reflected Gaze",
         "caption": "A direct portrait of Xiao Yuanhang seen through a pane of glass with soft reflections.",
         "aspectRatio": "portrait",
@@ -813,7 +848,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "in-5",
-        "url": "/images/08-xiao-yuanhang/in-5.webp",
+        "url": "/images/09-xiao-yuanhang/in-5.webp",
         "title": "The Diner",
         "caption": "An intense, candid look from the subject holding a spoon at a local eatery.",
         "aspectRatio": "portrait",
@@ -830,7 +865,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "in-6",
-        "url": "/images/08-xiao-yuanhang/in-6.webp",
+        "url": "/images/09-xiao-yuanhang/in-6.webp",
         "title": "Clasped Hands",
         "caption": "A formal black-and-white portrait capturing the subject's quiet posture and clasped hands.",
         "aspectRatio": "portrait",
@@ -847,7 +882,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "in-7",
-        "url": "/images/08-xiao-yuanhang/in-7.webp",
+        "url": "/images/09-xiao-yuanhang/in-7.webp",
         "title": "Alleyway Encounter",
         "caption": "Xiao Yuanhang stands in a narrow snowy alleyway, looking over his shoulder.",
         "aspectRatio": "portrait",
@@ -872,7 +907,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Okinawa, Japan",
     "coordinates": "26.2124° N, 127.6809° E",
-    "coverImage": "/images/09-okinawa-breeze/cover.webp",
+    "coverImage": "/images/10-okinawa-breeze/cover.webp",
     "description": "A street-level study of Okinawa's unique cultural landscape, where local island life, tourist curiosity, and historical military presence coexist. These snapshots capture the quiet moments of rest, youthful play, and the distinct architecture of Japan's southern prefecture.",
     "colorTheme": {
       "bg": "bg-sky-50/50",
@@ -882,7 +917,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "images": [
       {
         "id": "ou-1",
-        "url": "/images/09-okinawa-breeze/ou-1.webp",
+        "url": "/images/10-okinawa-breeze/ou-1.webp",
         "title": "The Conductor",
         "caption": "A boy wearing a paper Yui Rail monorail hat checks his phone while waiting on a platform.",
         "aspectRatio": "portrait",
@@ -899,7 +934,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "ou-2",
-        "url": "/images/09-okinawa-breeze/ou-2.webp",
+        "url": "/images/10-okinawa-breeze/ou-2.webp",
         "title": "Sightseers",
         "caption": "Tourists with luggage look up and take photos on a quiet street next to parked scooters.",
         "aspectRatio": "landscape",
@@ -916,7 +951,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "ou-3",
-        "url": "/images/09-okinawa-breeze/ou-3.webp",
+        "url": "/images/10-okinawa-breeze/ou-3.webp",
         "title": "Camp Lester Gate",
         "caption": "A guard stands at the entrance of Camp Lester, capturing the dual character of Okinawa's land.",
         "aspectRatio": "landscape",
@@ -941,7 +976,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Tokyo, Japan",
     "coordinates": "35.6762° N, 139.6503° E",
-    "coverImage": "/images/10-transient-states/cover.webp",
+    "coverImage": "/images/11-transient-states/cover.webp",
     "description": "A visual journal tracing a young traveler’s journey across contrasting environments. From the vibrant tiled facades of Bangkok temples and the clear float of tropical seas to quiet domestic shadows, close details of touch, and the rushing light trails of Tokyo bridges at night, these frames explore the fluid states of youth and motion.",
     "colorTheme": {
       "bg": "bg-orange-50/40",
@@ -951,7 +986,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "images": [
       {
         "id": "vi-1",
-        "url": "/images/10-transient-states/vi-1.webp",
+        "url": "/images/11-transient-states/vi-1.webp",
         "title": "Temple Wall",
         "caption": "Standing in front of the ornate, colorful porcelain details of Wat Arun, Bangkok.",
         "aspectRatio": "portrait",
@@ -968,7 +1003,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "vi-2",
-        "url": "/images/10-transient-states/vi-2.webp",
+        "url": "/images/11-transient-states/vi-2.webp",
         "title": "Weightless",
         "caption": "Floating peacefully in the shallow, clear turquoise sea of a tropical island.",
         "aspectRatio": "landscape",
@@ -985,7 +1020,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "vi-3",
-        "url": "/images/10-transient-states/vi-3.webp",
+        "url": "/images/11-transient-states/vi-3.webp",
         "title": "Sleeping Engine",
         "caption": "A motorcycle covered in plastic stands silently under neon lights in a Tokyo backstreet.",
         "aspectRatio": "landscape",
@@ -1002,7 +1037,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "vi-4",
-        "url": "/images/10-transient-states/vi-4.webp",
+        "url": "/images/11-transient-states/vi-4.webp",
         "title": "The Grip",
         "caption": "An intimate close-up of a hand clutching a bag strap against the soft bokeh of city lights.",
         "aspectRatio": "landscape",
@@ -1019,7 +1054,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "vi-5",
-        "url": "/images/10-transient-states/vi-5.webp",
+        "url": "/images/11-transient-states/vi-5.webp",
         "title": "Light Streams",
         "caption": "Leaning on a bridge overlooking long-exposure light trails of traffic under the city night sky.",
         "aspectRatio": "landscape",
@@ -1032,41 +1067,6 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
           "aperture": "f/3.5",
           "shutterSpeed": "1/3s",
           "iso": "200"
-        }
-      }
-    ]
-  },
-  {
-    "id": "diptych-of-her",
-    "title": "Diptych of Her",
-    "subtitle": "Two Moments",
-    "category": "Portrait",
-    "year": "2025",
-    "location": "Tokyo, Japan",
-    "coordinates": "35.6762° N, 139.6503° E",
-    "coverImage": "/images/11-diptych-of-her/cover.webp",
-    "description": "A diptych capturing two contrasting moments of a young woman in a striped dress. The first frame presents her in a quiet, sunlit traditional garden sitting on a red bench; the second frame is a candid flash portrait of her crouching on a street crosswalk at night. Together they form a dialogue between quiet tradition and spontaneous urban night.",
-    "colorTheme": {
-      "bg": "bg-neutral-950",
-      "text": "text-neutral-100",
-      "accent": "border-neutral-600"
-    },
-    "images": [
-      {
-        "id": "pa-1",
-        "url": "/images/11-diptych-of-her/pa-1.webp",
-        "title": "Spontaneous Night",
-        "caption": "A playful flash portrait of the subject crouching on a street crosswalk at night.",
-        "aspectRatio": "portrait",
-        "location": "Tokyo, Japan",
-        "date": "2025",
-        "exif": {
-          "camera": "ILCE-7CM2",
-          "lens": "E 17-70mm F2.8 B070",
-          "focalLength": "43mm",
-          "aperture": "f/2.8",
-          "shutterSpeed": "1/125s",
-          "iso": "2000"
         }
       }
     ]
