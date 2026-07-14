@@ -75,7 +75,15 @@ export default function App() {
 
   // Minimalist Background Music with Fade Transitions
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(() => {
+    if (typeof sessionStorage !== 'undefined') {
+      const hasEnteredBefore = sessionStorage.getItem('hasEnteredSite') === 'true';
+      if (hasEnteredBefore) {
+        return sessionStorage.getItem('isMutedPreference') === 'true';
+      }
+    }
+    return true;
+  });
   const fadeIntervalRef = useRef<number | null>(null);
 
   const fadeAudio = (targetVolume: number, onComplete?: () => void) => {
@@ -111,7 +119,13 @@ export default function App() {
   };
 
   const toggleMute = () => {
-    setIsMuted((prev) => !prev);
+    setIsMuted((prev) => {
+      const nextMute = !prev;
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('isMutedPreference', nextMute ? 'true' : 'false');
+      }
+      return nextMute;
+    });
   };
 
   // Only clear the active fade interval when the application actually unmounts
@@ -145,6 +159,36 @@ export default function App() {
         audio.pause();
       });
     }
+  }, [isMuted]);
+
+  // Global interaction listener to resume audio if autoplay was blocked on mount/refresh
+  useEffect(() => {
+    const resumeAudio = () => {
+      const audio = audioRef.current;
+      if (audio && !isMuted && audio.paused) {
+        audio.play()
+          .then(() => fadeAudio(0.20))
+          .catch((err) => console.log("Failed to play audio on interaction:", err));
+        
+        removeListeners();
+      }
+    };
+
+    const removeListeners = () => {
+      window.removeEventListener("click", resumeAudio);
+      window.removeEventListener("keydown", resumeAudio);
+      window.removeEventListener("touchstart", resumeAudio);
+    };
+
+    if (!isMuted) {
+      window.addEventListener("click", resumeAudio);
+      window.addEventListener("keydown", resumeAudio);
+      window.addEventListener("touchstart", resumeAudio);
+    }
+
+    return () => {
+      removeListeners();
+    };
   }, [isMuted]);
 
   const shouldLoadRoute = (path: string) => {
