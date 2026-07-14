@@ -160,9 +160,8 @@ export default function App() {
     setRouteLoading(shouldLoadRoute(location.pathname));
   }
 
-  const isAnimatedRoute = shouldLoadRoute(location.pathname);
   const pageTransition = {
-    duration: isAnimatedRoute ? 0.6 : 0
+    duration: 0.6
   };
 
   useEffect(() => {
