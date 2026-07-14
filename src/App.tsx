@@ -119,13 +119,30 @@ export default function App() {
   };
 
   const toggleMute = () => {
-    setIsMuted((prev) => {
-      const nextMute = !prev;
+    const audio = audioRef.current;
+    if (audio) {
+      const nextMute = !isMuted;
+      setIsMuted(nextMute);
+      
       if (typeof sessionStorage !== 'undefined') {
         sessionStorage.setItem('isMutedPreference', nextMute ? 'true' : 'false');
       }
-      return nextMute;
-    });
+
+      if (!nextMute) {
+        if (audio.paused) {
+          audio.volume = 0;
+          audio.play()
+            .then(() => fadeAudio(0.20))
+            .catch((err) => console.log("Safari sync play blocked:", err));
+        } else {
+          fadeAudio(0.20);
+        }
+      } else {
+        fadeAudio(0, () => {
+          audio.pause();
+        });
+      }
+    }
   };
 
   // Only clear the active fade interval when the application actually unmounts
@@ -281,7 +298,18 @@ export default function App() {
     setIsExpanding(true);
     if (typeof sessionStorage !== 'undefined') {
       sessionStorage.setItem('hasEnteredSite', 'true');
+      sessionStorage.setItem('isMutedPreference', 'false');
     }
+    
+    // Play audio synchronously on click to satisfy iOS Safari
+    const audio = audioRef.current;
+    if (audio && audio.paused) {
+      audio.volume = 0;
+      audio.play()
+        .then(() => fadeAudio(0.20))
+        .catch((err) => console.log("Audio play blocked on enter site:", err));
+    }
+
     // Trigger hasEntered at 350ms (midway through expansion) so loading animation mounts and starts playing earlier
     setTimeout(() => {
       setHasEntered(true);

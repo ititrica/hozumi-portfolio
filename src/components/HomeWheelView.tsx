@@ -164,7 +164,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
   const getBaseSize = (i: number, isMob: boolean) => {
     const index = i % 5;
     if (isMob) {
-      const baseW = dimensions.width * 0.52;
+      const baseW = dimensions.width * 0.62;
       switch (index) {
         case 0: return { w: Math.round(baseW * 0.9), h: 0 };
         case 1: return { w: Math.round(baseW * 0.95), h: 0 };
@@ -186,10 +186,10 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
   // Exact coordinates helper for L-shape corner layout hugging the left & bottom walls
   const getCardCoords = (offset: number) => {
     const isMob = dimensions.width < 768;
-    const baseW = isMob ? dimensions.width * 0.52 : dimensions.width * 0.363;
+    const baseW = isMob ? dimensions.width * 0.62 : dimensions.width * 0.363;
 
-    const spacing = isMob ? Math.round(baseW * 0.78) : Math.round(baseW * 0.72);
-    const cornerRadius = isMob ? Math.round(baseW * 1.22) : Math.round(baseW * 0.76);
+    const spacing = isMob ? Math.round(baseW * 0.85) : Math.round(baseW * 0.72);
+    const cornerRadius = isMob ? Math.round(baseW * 1.3) : Math.round(baseW * 0.76);
 
     let x = 0;
     let y = 0;
@@ -376,16 +376,16 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
         })}
       </div>
 
-      {/* Mobile Title display anchored in the bottom-right corner */}
+      {/* Mobile Title display anchored in the top-middle area */}
       {isMobile && activeSeries && (
-        <div className="absolute bottom-10 right-6 z-30 flex flex-col items-end text-right select-text pointer-events-none">
-          <span className="font-mono text-[9px] tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">
+        <div className="absolute top-[21vh] left-0 right-0 z-30 flex flex-col items-center text-center px-6 select-text pointer-events-none">
+          <span className="font-mono text-[9px] tracking-[0.25em] text-neutral-400 dark:text-neutral-500 mb-2 uppercase">
             {activeIndex + 1 < 10 ? `0${activeIndex + 1}` : activeIndex + 1} / {photographyData.length}
           </span>
-          <h2 className="font-serif text-[18px] tracking-[0.06em] uppercase text-neutral-900 dark:text-white leading-none">
+          <h2 className="font-serif text-[28px] sm:text-[32px] tracking-[0.08em] uppercase text-neutral-900 dark:text-white leading-tight max-w-[85vw] break-words">
             {activeSeries.title}
           </h2>
-          <span className="font-mono text-[8px] tracking-[0.15em] text-neutral-400 dark:text-neutral-500 uppercase mt-1">
+          <span className="font-mono text-[8px] tracking-[0.2em] text-neutral-450 dark:text-neutral-500 uppercase mt-3">
             {activeSeries.category} — {activeSeries.year}
           </span>
         </div>
