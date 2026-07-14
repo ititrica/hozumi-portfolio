@@ -268,7 +268,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
-          className="absolute inset-0 w-full h-full opacity-60 dark:opacity-30"
+          className="absolute inset-0 w-full h-full"
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
@@ -276,21 +276,23 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
             WebkitTransform: "translate3d(0, 0, 0)",
           }}
         >
-          <img
-            src={bgState.currUrl}
-            alt=""
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover scale-110 grayscale-[30%]"
-            style={{
-              filter: "blur(40px)",
-              WebkitFilter: "blur(40px)",
-              willChange: "opacity, transform",
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-              transform: "translate3d(0, 0, 0)",
-              WebkitTransform: "translate3d(0, 0, 0)",
-            }}
-          />
+          <div className="w-full h-full opacity-60 dark:opacity-30">
+            <img
+              src={bgState.currUrl}
+              alt=""
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover scale-110 grayscale-[30%]"
+              style={{
+                filter: "blur(40px)",
+                WebkitFilter: "blur(40px)",
+                willChange: "opacity, transform",
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+                transform: "translate3d(0, 0, 0)",
+                WebkitTransform: "translate3d(0, 0, 0)",
+              }}
+            />
+          </div>
         </motion.div>
 
         <div className="absolute inset-0 bg-white/20 dark:bg-neutral-950/60 transition-all duration-1000" />
