@@ -152,8 +152,8 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       [slots[i], slots[j]] = [slots[j], slots[i]];
     }
 
-    const calculatedW = calculatedN * 280 + (calculatedN - 1) * 112 + 320;
-    const calculatedH = calculatedN * 350 + (calculatedN - 1) * 96 + 320;
+    const calculatedW = calculatedN * 280 + (calculatedN - 1) * 210 + 320;
+    const calculatedH = calculatedN * 350 + (calculatedN - 1) * 262 + 320;
 
     return { gridSlots: slots, N: calculatedN, canvasW: calculatedW, canvasH: calculatedH };
   }, [allPhotos, lang]);
@@ -344,8 +344,8 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
         }}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        style={{ x: smoothX, y: smoothY, scale: smoothScale, originX: 0.5, originY: 0.5, width: canvasW, height: canvasH, gridTemplateColumns: `repeat(${N}, 280px)` }}
-        className="absolute p-40 grid gap-x-28 gap-y-24 cursor-grab active:cursor-grabbing select-none"
+        style={{ x: smoothX, y: smoothY, scale: smoothScale, originX: 0.5, originY: 0.5, width: canvasW, height: canvasH, gridTemplateColumns: `repeat(${N}, 280px)`, columnGap: "210px", rowGap: "262px" }}
+        className="absolute p-40 grid cursor-grab active:cursor-grabbing select-none"
       >
         {gridSlots.map((slot, index) => {
           if (!slot) return <div key={index} className="w-[280px] h-[350px]" />;
