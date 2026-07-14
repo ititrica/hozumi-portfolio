@@ -199,8 +199,8 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       const yOld = smoothY.get();
       const sOld = smoothScale.get();
 
-      // Calculate the next target scale
-      const zoomSpeed = 0.0012;
+      // Calculate the next target scale (speed increased for responsive wheel/touchpad zoom)
+      const zoomSpeed = 0.0032;
       const sNew = Math.min(2.2, Math.max(0.35, sOld - e.deltaY * zoomSpeed));
 
       if (sOld === sNew) return;
