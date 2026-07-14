@@ -91,11 +91,25 @@ export default function CustomCursor({ lang }: { lang: Language }) {
       return;
     }
 
-    setIsVisible(true);
+    let hasMoved = false;
+    const style = document.createElement("style");
+    style.id = "custom-cursor-hide-style";
+    style.innerHTML = `
+      html, body, *, *::before, *::after {
+        cursor: none !important;
+      }
+    `;
 
     const moveMouse = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
+
+      if (!hasMoved) {
+        hasMoved = true;
+        setIsVisible(true);
+        document.body.style.cursor = "none";
+        document.head.appendChild(style);
+      }
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -104,12 +118,19 @@ export default function CustomCursor({ lang }: { lang: Language }) {
 
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
-    const handleMouseLeaveWindow = () => setIsVisible(false);
+    
+    const handleMouseLeaveWindow = () => {
+      setIsVisible(false);
+      document.body.style.cursor = "auto";
+    };
+
     const handleMouseEnterWindow = (e: MouseEvent) => {
-      // Snap to entry position immediately to prevent spring fly-in animation
       mouseX.jump(e.clientX);
       mouseY.jump(e.clientY);
-      setIsVisible(true);
+      if (hasMoved) {
+        setIsVisible(true);
+        document.body.style.cursor = "none";
+      }
     };
 
     window.addEventListener("mousemove", moveMouse);
@@ -119,17 +140,6 @@ export default function CustomCursor({ lang }: { lang: Language }) {
     document.addEventListener("mouseleave", handleMouseLeaveWindow);
     document.addEventListener("mouseenter", handleMouseEnterWindow);
 
-    // Hide default cursor on desktop
-    document.body.style.cursor = "none";
-    // Also inject custom style to ensure child elements also have cursor none
-    const style = document.createElement("style");
-    style.innerHTML = `
-      a, button, [role='button'], input, select, textarea, [data-cursor] {
-        cursor: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-
     return () => {
       window.removeEventListener("mousemove", moveMouse);
       window.removeEventListener("mouseover", handleMouseOver);
@@ -138,7 +148,9 @@ export default function CustomCursor({ lang }: { lang: Language }) {
       document.removeEventListener("mouseleave", handleMouseLeaveWindow);
       document.removeEventListener("mouseenter", handleMouseEnterWindow);
       document.body.style.cursor = "auto";
-      document.head.removeChild(style);
+      if (style.parentNode) {
+        document.head.removeChild(style);
+      }
     };
   }, [mouseX, mouseY, updateCursorHoverState]);
 
@@ -180,12 +192,10 @@ export default function CustomCursor({ lang }: { lang: Language }) {
     <>
       {/* Main cursor dot */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] flex items-center justify-center mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[100005] flex items-center justify-center mix-blend-difference -translate-x-1/2 -translate-y-1/2"
         style={{
           x: cursorX,
           y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
         }}
         animate={{
           scale: isClicking
@@ -207,7 +217,7 @@ export default function CustomCursor({ lang }: { lang: Language }) {
       {/* Lagging label — ENTER on cards, VIEW on photos, BACK on lightbox background/image */}
       {isLabelHover && (
         <motion.div
-          className="fixed top-0 left-0 pointer-events-none z-[9998] mix-blend-difference"
+          className="fixed top-0 left-0 pointer-events-none z-[100004] mix-blend-difference"
           style={{
             x: labelX,
             y: labelY,

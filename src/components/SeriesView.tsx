@@ -302,6 +302,11 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
       </div>
     </motion.div>
 
+    {/* Scroll progress percentage indicator */}
+    <div className="fixed bottom-[48px] left-6 z-[60] font-mono text-[12px] tracking-[0.2em] text-neutral-950 dark:text-white select-none pointer-events-none uppercase transition-colors duration-1000">
+      {Math.round(scrollProgress * 100)}%
+    </div>
+
     {/* Fixed bottom-left BACK button */}
     <button
       onClick={onBack}

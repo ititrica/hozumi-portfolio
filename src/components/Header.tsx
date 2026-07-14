@@ -131,7 +131,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
             </button>
 
             {/* Language Switcher */}
-            <div className="flex items-center space-x-1 ml-4 relative select-none">
+            <div className="flex items-center space-x-5 ml-6 relative select-none">
               {(["en", "zh", "ja"] as const).map((l) => {
                 const langActive = lang === l;
                 const label = l === "en" ? "EN" : l === "zh" ? "中" : "日";
@@ -139,23 +139,21 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className="relative px-3 py-1.5 font-mono text-[9px] tracking-widest font-medium uppercase transition-colors duration-300 cursor-pointer focus:outline-none"
+                    className={`relative py-2 font-mono text-[10px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000 ${
+                      langActive
+                        ? "text-neutral-950 dark:text-neutral-100"
+                        : "text-neutral-750 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
+                    }`}
                     data-cursor="nav"
                   >
+                    {label}
                     {langActive && (
                       <motion.div
-                        layoutId="activeLangPill"
-                        className="absolute inset-0 bg-neutral-500/8 dark:bg-white/10 rounded-md z-0"
+                        layoutId="activeLangIndicator"
+                        className="absolute bottom-0 left-0 w-full h-[1px] bg-neutral-900 dark:bg-white transition-colors duration-1000"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
-                    <span className={`relative z-10 transition-colors duration-300 ${
-                      langActive
-                        ? "text-neutral-900 dark:text-white font-medium"
-                        : "text-neutral-450 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-100"
-                    }`}>
-                      {label}
-                    </span>
                   </button>
                 );
               })}
@@ -237,7 +235,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
 
             {/* Mobile Menu Footer */}
             <div className="border-t border-neutral-200 dark:border-neutral-800 pt-6 flex flex-col space-y-4">
-              <div className="flex items-center space-x-1 relative select-none">
+              <div className="flex items-center space-x-6 relative select-none">
                 {(["en", "zh", "ja"] as const).map((l) => {
                   const langActive = lang === l;
                   const label = l === "en" ? "EN" : l === "zh" ? "中文" : "日本語";
@@ -245,22 +243,20 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                     <button
                       key={l}
                       onClick={() => { setLang(l); setIsMenuOpen(false); }}
-                      className="relative px-4 py-2 font-mono text-[10px] tracking-widest font-medium uppercase transition-colors duration-300 cursor-pointer focus:outline-none"
+                      className={`relative py-2 font-mono text-[10px] tracking-[0.14em] font-medium uppercase transition-colors duration-300 ${
+                        langActive
+                          ? "text-neutral-950 dark:text-neutral-100"
+                          : "text-neutral-750 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
+                      }`}
                     >
+                      {label}
                       {langActive && (
                         <motion.div
-                          layoutId="activeLangPillMobile"
-                          className="absolute inset-0 bg-neutral-500/8 dark:bg-white/10 rounded-md z-0"
+                          layoutId="activeLangIndicatorMobile"
+                          className="absolute bottom-0 left-0 w-full h-[1px] bg-neutral-900 dark:bg-white transition-colors duration-300"
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
                         />
                       )}
-                      <span className={`relative z-10 transition-colors duration-300 ${
-                        langActive
-                          ? "text-neutral-900 dark:text-white font-medium"
-                          : "text-neutral-450 hover:text-neutral-900 dark:text-neutral-500 dark:hover:text-neutral-100"
-                      }`}>
-                        {label}
-                      </span>
                     </button>
                   );
                 })}

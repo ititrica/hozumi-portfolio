@@ -17,12 +17,6 @@
   --font-mono: "DM Sans", "DM Sans Local", monospace;
 }
 
-/* Hide native system cursor globally on desktop devices to show only our custom cursor */
-@media (pointer: fine) {
-  html, body, *, *::before, *::after {
-    cursor: none !important;
-  }
-}
 
 /* Force lock document body/html height and disable system-level global scrollbar */
 html, body {

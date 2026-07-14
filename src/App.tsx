@@ -27,6 +27,7 @@ export default function App() {
 
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [lightboxPhotos, setLightboxPhotos] = useState<Photo[]>([]);
+  const [hasEntered, setHasEntered] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -61,7 +62,7 @@ export default function App() {
 
   // Minimalist Background Music with Fade Transitions
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const fadeIntervalRef = useRef<number | null>(null);
 
   const fadeAudio = (targetVolume: number, onComplete?: () => void) => {
@@ -72,8 +73,8 @@ export default function App() {
       clearInterval(fadeIntervalRef.current);
     }
 
-    const step = 0.015;
-    const intervalTime = 25; // ms
+    const step = 0.04;
+    const intervalTime = 60; // ms (reduced frequency for Safari/Webkit CPU load reduction)
 
     fadeIntervalRef.current = window.setInterval(() => {
       let currentVol = audio.volume;
@@ -97,20 +98,7 @@ export default function App() {
   };
 
   const toggleMute = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isMuted) {
-      setIsMuted(false);
-      audio.volume = 0;
-      audio.play().catch((err) => console.log("Audio play blocked by browser:", err));
-      fadeAudio(0.20); // Softer target volume (20%)
-    } else {
-      setIsMuted(true);
-      fadeAudio(0, () => {
-        audio.pause();
-      });
-    }
+    setIsMuted((prev) => !prev);
   };
 
   // Only clear the active fade interval when the application actually unmounts
@@ -122,48 +110,28 @@ export default function App() {
     };
   }, []);
 
-  // Sync state and handle browser autoplay constraints with document interaction listeners
+  // Sync state and handle browser autoplay constraints with unified state effect
   useEffect(() => {
     const audio = audioRef.current;
-    if (audio && !isMuted) {
-      // If unmuted, attempt play
+    if (!audio) return;
+
+    if (!isMuted) {
       if (audio.paused) {
         audio.volume = 0;
         audio.play()
           .then(() => fadeAudio(0.20))
-          .catch(() => {
-            // Autoplay blocked. We wait for user interaction to resume.
+          .catch((err) => {
+            // Autoplay blocked by browser. User gesture on entry button will trigger play.
+            console.log("Audio play blocked on mount:", err);
           });
       } else {
-        // If already playing, fade it back up
         fadeAudio(0.20);
       }
+    } else {
+      fadeAudio(0, () => {
+        audio.pause();
+      });
     }
-
-    const handleFirstInteraction = () => {
-      const audioVal = audioRef.current;
-      if (audioVal && !isMuted && audioVal.paused) {
-        audioVal.volume = 0;
-        audioVal.play()
-          .then(() => fadeAudio(0.20))
-          .catch((err) => console.log("Play failed on gesture:", err));
-      }
-      
-      // Remove listeners once gesture is captured
-      document.removeEventListener("click", handleFirstInteraction);
-      document.removeEventListener("keydown", handleFirstInteraction);
-      document.removeEventListener("touchstart", handleFirstInteraction);
-    };
-
-    document.addEventListener("click", handleFirstInteraction);
-    document.addEventListener("keydown", handleFirstInteraction);
-    document.addEventListener("touchstart", handleFirstInteraction);
-
-    return () => {
-      document.removeEventListener("click", handleFirstInteraction);
-      document.removeEventListener("keydown", handleFirstInteraction);
-      document.removeEventListener("touchstart", handleFirstInteraction);
-    };
   }, [isMuted]);
 
   const shouldLoadRoute = (path: string) => {
@@ -239,10 +207,14 @@ export default function App() {
     };
   }, [location.pathname, localizedData]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 5000);
-    return () => clearTimeout(timer);
-  }, []);
+  const handleEnterSite = () => {
+    setIsMuted(false);
+    setHasEntered(true);
+    // Start the 5-second loading animation timer
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  };
 
 
   // Footer component reused across About page
@@ -314,160 +286,230 @@ export default function App() {
   );
 
   return (
-    <div className="font-sans bg-[#fdfdfd] dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 dark:selection:bg-white selection:text-white dark:selection:text-neutral-900 transition-colors duration-1000 min-h-screen flex flex-col">
-      {/* Entrance loading iframe on top, pointer-events-none lets clicks pass through to capture autoplay gestures */}
-      {loading && (
-        <iframe
-          src="/loading/index.html"
-          className="fixed inset-0 w-full h-full border-0 z-[9999] pointer-events-none"
-          title="Loading"
-        />
-      )}
+    <div className="font-sans bg-[#fdfdfd] dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 dark:selection:bg-white selection:text-white dark:selection:text-neutral-900 transition-colors duration-1000 min-h-screen flex flex-col isolate">
+      {/* Background Audio Node - always mounted so it's ready to play */}
+      <audio ref={audioRef} src="/music.mp3" loop autoPlay playsInline />
 
       {/* Premium Interactive Cursor */}
       <CustomCursor lang={lang} />
 
-      {/* Background Audio Node */}
-      <audio ref={audioRef} src="/music.mp3" loop />
-
-      {/* Persistent Menu & Headers */}
-      <Header
-        theme={theme}
-        setTheme={setTheme}
-        lang={lang}
-        setLang={setLang}
-        isMuted={isMuted}
-        toggleMute={toggleMute}
-      />
-
-      {/* Main Orchestrated Contents */}
-      <main className={`flex-grow relative flex flex-col transition-opacity duration-200 ${routeLoading ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
-        <AnimatePresence mode="wait">
-          <Routes>
-
-            {/* Home — Selected Work */}
-            <Route
-              path="/"
-              element={
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="fixed inset-0 w-full h-full overflow-hidden"
-                >
-                  <HomeWheelView
-                    onSelectSeries={(series) => navigate(`/series/${series.id}`)}
-                    photographyData={localizedData}
-                  />
-                </motion.div>
-              }
-            />
-
-            {/* About / Biography */}
-            <Route
-              path="/about"
-              element={
-                <motion.div
-                  ref={aboutContainerRef}
-                  onScroll={(e) => {
-                    setShowScrollTop(e.currentTarget.scrollTop > 500);
-                  }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="fixed inset-0 z-40 overflow-y-auto pt-20 flex flex-col bg-[#fdfdfd] dark:bg-[#0e0c0b] transition-colors duration-1000"
-                >
-                  <div className="flex-grow">
-                    <AboutContact lang={lang} />
-                  </div>
-                  <Footer />
-                </motion.div>
-              }
-            />
-
-            {/* Playground */}
-            <Route
-              path="/playground"
-              element={
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="fixed inset-0 z-45"
-                >
-                  <Playground
-                    photographyData={localizedData}
-                    onSelectPhoto={handleSelectPhoto}
-                    lang={lang}
-                  />
-                </motion.div>
-              }
-            />
-
-            {/* Series Detail */}
-            <Route
-              path="/series/:seriesId"
-              element={
-                <SeriesRouteWrapper
-                  localizedData={localizedData}
-                  onSelectPhoto={handleSelectPhoto}
-                  lang={lang}
-                />
-              }
-            />
-
-          </Routes>
-        </AnimatePresence>
-      </main>
-
-      {/* Full-screen Lightbox */}
-      <AnimatePresence>
-        {selectedPhoto && (
-          <Lightbox
-            photo={selectedPhoto}
-            photos={lightboxPhotos}
-            onClose={() => setSelectedPhoto(null)}
-            onNavigate={(photo) => setSelectedPhoto(photo)}
-            lang={lang}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Floating Scroll back to top button */}
-      <AnimatePresence>
-        {showScrollTop && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            onClick={scrollToTop}
-            className="fixed bottom-6 right-6 p-3 bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 rounded-none shadow-lg z-40 focus:outline-none transition-transform active:scale-95"
-            data-cursor="nav"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp className="w-4.5 h-4.5" />
-          </motion.button>
-        )}
-      </AnimatePresence>
-
-      {/* Elegant Minimalist Route Transition Loader */}
-      {/* Elegant Minimalist Route Transition Loader */}
-      <AnimatePresence>
-        {routeLoading && (
+      <AnimatePresence mode="wait">
+        {!hasEntered && (
           <motion.div
+            key="enter-splash"
             initial={{ opacity: 1 }}
-            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[150] flex items-center justify-center bg-white dark:bg-neutral-950 transition-colors duration-1000"
+            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            onClick={handleEnterSite}
+            className="fixed inset-0 z-[10000] flex items-center justify-center bg-[#ffffff] select-none cursor-pointer"
           >
-            <RouteLoader />
+            {/* Central Perfect Square Layout wrapper */}
+            <div className="relative flex items-center justify-center">
+              {/* Outer Ripple (Black outline expanding outwards into white background) */}
+              <motion.div
+                animate={{
+                  scale: [1, 1.12],
+                  opacity: [0.35, 0]
+                }}
+                transition={{
+                  duration: 2.4,
+                  repeat: Infinity,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                className="absolute w-[256px] h-[256px] sm:w-[344px] sm:h-[344px] md:w-[448px] md:h-[448px] border border-black pointer-events-none"
+              />
+
+              {/* Central Perfect Square - breathing in sync with the ripples */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{
+                  opacity: 1,
+                  scale: [0.98, 1.02, 0.98],
+                }}
+                transition={{
+                  opacity: { delay: 0.3, duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+                  scale: {
+                    duration: 2.4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }
+                }}
+                className="w-[256px] h-[256px] sm:w-[344px] sm:h-[344px] md:w-[448px] md:h-[448px] bg-[#000000] shadow-xl relative"
+              >
+                {/* Inner Ripple (White outline contracting inwards into black square) */}
+                <motion.div
+                  animate={{
+                    scale: [1, 0.88],
+                    opacity: [0.35, 0]
+                  }}
+                  transition={{
+                    duration: 2.4,
+                    repeat: Infinity,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  className="absolute inset-0 border border-white pointer-events-none"
+                />
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Main site contents, mounted only after entering */}
+      {hasEntered && (
+        <>
+          {/* Entrance loading iframe on top */}
+          {loading && (
+            <iframe
+              src="/loading/index.html"
+              className="fixed inset-0 w-full h-full border-0 z-[9999] pointer-events-none"
+              title="Loading"
+            />
+          )}
+
+          {/* Persistent Menu & Headers */}
+          <Header
+            theme={theme}
+            setTheme={setTheme}
+            lang={lang}
+            setLang={setLang}
+            isMuted={isMuted}
+            toggleMute={toggleMute}
+          />
+
+          {/* Main Orchestrated Contents */}
+          <main className={`flex-grow relative flex flex-col transition-opacity duration-200 ${routeLoading ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+            <AnimatePresence mode="wait">
+              <Routes>
+                {/* Home — Selected Work */}
+                <Route
+                  path="/"
+                  element={
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.6 }}
+                      className="fixed inset-0 w-full h-full overflow-hidden"
+                    >
+                      <HomeWheelView
+                        onSelectSeries={(series) => navigate(`/series/${series.id}`)}
+                        photographyData={localizedData}
+                      />
+                    </motion.div>
+                  }
+                />
+
+                {/* About / Biography */}
+                <Route
+                  path="/about"
+                  element={
+                    <motion.div
+                      ref={aboutContainerRef}
+                      onScroll={(e) => {
+                        setShowScrollTop(e.currentTarget.scrollTop > 500);
+                      }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.6 }}
+                      className="fixed inset-0 z-40 overflow-y-auto pt-20 flex flex-col bg-[#fdfdfd] dark:bg-[#0e0c0b] transition-colors duration-1000"
+                    >
+                      <div className="flex-grow">
+                        <AboutContact lang={lang} />
+                      </div>
+                      <Footer />
+                    </motion.div>
+                  }
+                />
+
+                {/* Playground */}
+                <Route
+                  path="/playground"
+                  element={
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Playground
+                        photographyData={localizedData}
+                        onSelectPhoto={handleSelectPhoto}
+                        lang={lang}
+                      />
+                    </motion.div>
+                  }
+                />
+
+                {/* Series Details wrapper */}
+                <Route
+                  path="/series/:seriesId"
+                  element={
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <SeriesRouteWrapper
+                        localizedData={localizedData}
+                        onSelectPhoto={handleSelectPhoto}
+                        lang={lang}
+                      />
+                    </motion.div>
+                  }
+                />
+              </Routes>
+            </AnimatePresence>
+          </main>
+
+          {/* Lightbox for Selected Photo */}
+          <AnimatePresence>
+            {selectedPhoto && (
+              <Lightbox
+                photo={selectedPhoto}
+                photos={lightboxPhotos}
+                onClose={() => setSelectedPhoto(null)}
+                onNavigate={(photo) => setSelectedPhoto(photo)}
+                lang={lang}
+              />
+            )}
+          </AnimatePresence>
+
+          {/* Scroll to Top for About Page */}
+          <AnimatePresence>
+            {showScrollTop && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                className="fixed bottom-8 right-8 z-50 p-3 bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 rounded-none shadow-lg hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-all duration-300 focus:outline-none"
+                onClick={scrollToTop}
+                data-cursor="nav"
+                aria-label="Scroll to top"
+              >
+                <ArrowUp className="w-4.5 h-4.5" />
+              </motion.button>
+            )}
+          </AnimatePresence>
+
+          {/* Elegant Minimalist Route Transition Loader */}
+          <AnimatePresence>
+            {routeLoading && (
+              <motion.div
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="fixed inset-0 z-[150] flex items-center justify-center bg-white dark:bg-neutral-950 transition-colors duration-1000"
+              >
+                <RouteLoader />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
+      )}
     </div>
   );
 }

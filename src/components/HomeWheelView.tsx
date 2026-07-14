@@ -80,31 +80,41 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
   // Responsive scale based on container width (reference at 1400px)
   const responsiveScale = Math.min(Math.max(dimensions.width / 1400, 0.45), 1.1);
 
-  // Wheel Scroll handler with automatic snapping timeout
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
+  // Wheel Scroll handler with automatic snapping timeout (native non-passive for Safari compatibility)
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
-    // Stop any active snapping or programmatic animations to let the wheel scroll freely
-    if (activeAnimationRef.current) {
-      activeAnimationRef.current.stop();
-      activeAnimationRef.current = null;
-    }
+    const handleNativeWheel = (e: WheelEvent) => {
+      e.preventDefault();
 
-    const currentTarget = scrollProgress.get();
-    const step = e.deltaY * 0.0018;
-    const newTarget = Math.max(0, Math.min(photographyData.length - 1, currentTarget + step));
-    scrollProgress.set(newTarget);
+      // Stop any active snapping or programmatic animations to let the wheel scroll freely
+      if (activeAnimationRef.current) {
+        activeAnimationRef.current.stop();
+        activeAnimationRef.current = null;
+      }
 
-    if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
-    wheelTimeoutRef.current = setTimeout(() => {
-      const nearest = Math.round(scrollProgress.get());
-      activeAnimationRef.current = animate(scrollProgress, nearest, {
-        type: "spring",
-        stiffness: 90,
-        damping: 18,
-      });
-    }, 200);
-  };
+      const currentTarget = scrollProgress.get();
+      const step = e.deltaY * 0.0018;
+      const newTarget = Math.max(0, Math.min(photographyData.length - 1, currentTarget + step));
+      scrollProgress.set(newTarget);
+
+      if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+      wheelTimeoutRef.current = setTimeout(() => {
+        const nearest = Math.round(scrollProgress.get());
+        activeAnimationRef.current = animate(scrollProgress, nearest, {
+          type: "spring",
+          stiffness: 90,
+          damping: 18,
+        });
+      }, 200);
+    };
+
+    container.addEventListener("wheel", handleNativeWheel, { passive: false });
+    return () => {
+      container.removeEventListener("wheel", handleNativeWheel);
+    };
+  }, [scrollProgress, photographyData.length]);
 
   // Animate scroll to a target index
   const scrollToIndex = (index: number) => {
@@ -206,7 +216,6 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
   return (
     <div
       ref={containerRef}
-      onWheel={handleWheel}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -317,7 +326,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
                       filter: `blur(${blurAmount}px) grayscale(${imgGray}%)`,
                       transform: `translateX(${parallaxX}px) translateY(${parallaxY}px) scale(${imgScale})`,
                       opacity: imgOpacity,
-                      willChange: "transform, filter, opacity",
+                      willChange: "transform",
                     }}
                   />
                   {/* Dynamic vignette overlay */}
