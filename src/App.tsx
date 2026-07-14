@@ -465,7 +465,7 @@ export default function App() {
           />
 
           {/* Main Orchestrated Contents */}
-          <main className={`flex-grow relative flex flex-col transition-opacity duration-200 ${routeLoading ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+          <main className={`flex-grow relative flex flex-col ${routeLoading ? "opacity-0 pointer-events-none" : "opacity-100 transition-opacity duration-500"}`}>
             <AnimatePresence mode="wait">
               {/* @ts-ignore */}
               <Routes location={location} key={location.pathname}>
@@ -586,11 +586,11 @@ export default function App() {
           <AnimatePresence>
             {routeLoading && (
               <motion.div
-                initial={{ opacity: 1 }}
+                initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                className="fixed inset-0 z-[150] flex items-center justify-center bg-white dark:bg-neutral-950 transition-colors duration-1000"
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                className="fixed inset-0 z-[150] flex items-center justify-center bg-white dark:bg-neutral-950"
               >
                 <RouteLoader />
               </motion.div>
