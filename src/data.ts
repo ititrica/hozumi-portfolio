@@ -420,6 +420,23 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       {
         "id": "ic-4",
         "url": "/images/05-winter-illusion/ic-4.webp",
+        "title": "Cold Whisper",
+        "caption": "A serene portrait surrounded by winter frost.",
+        "aspectRatio": "portrait",
+        "location": "Hokkaido, Japan",
+        "date": "December 2024",
+        "exif": {
+          "camera": "ILCE-7CM2",
+          "lens": "FE 35mm F1.4 GM",
+          "focalLength": "35mm",
+          "aperture": "f/1.4",
+          "shutterSpeed": "1/125s",
+          "iso": "100"
+        }
+      },
+      {
+        "id": "ic-5",
+        "url": "/images/05-winter-illusion/ic-5.webp",
         "title": "Cigarette & Cold",
         "caption": "A close-up portrait in the snow with a bandaged hand.",
         "aspectRatio": "portrait",
@@ -435,8 +452,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ic-5",
-        "url": "/images/05-winter-illusion/ic-5.webp",
+        "id": "ic-6",
+        "url": "/images/05-winter-illusion/ic-6.webp",
         "title": "Snow Drift",
         "caption": "Lying down flat on a vast, snow-covered hill.",
         "aspectRatio": "portrait",
@@ -449,6 +466,40 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
           "aperture": "f/11.0",
           "shutterSpeed": "1/1000s",
           "iso": "160"
+        }
+      },
+      {
+        "id": "ic-7",
+        "url": "/images/05-winter-illusion/ic-7.webp",
+        "title": "Frost Mirror",
+        "caption": "Reflections of light and ice on a winter profile.",
+        "aspectRatio": "portrait",
+        "location": "Hokkaido, Japan",
+        "date": "December 2024",
+        "exif": {
+          "camera": "ILCE-7CM2",
+          "lens": "FE 35mm F1.4 GM",
+          "focalLength": "35mm",
+          "aperture": "f/1.4",
+          "shutterSpeed": "1/125s",
+          "iso": "100"
+        }
+      },
+      {
+        "id": "ic-8",
+        "url": "/images/05-winter-illusion/ic-8.webp",
+        "title": "Snowy Illusion",
+        "caption": "Double-exposure silhouette blending with the falling snow.",
+        "aspectRatio": "portrait",
+        "location": "Hokkaido, Japan",
+        "date": "December 2024",
+        "exif": {
+          "camera": "ILCE-7CM2",
+          "lens": "FE 35mm F1.4 GM",
+          "focalLength": "35mm",
+          "aperture": "f/1.4",
+          "shutterSpeed": "1/125s",
+          "iso": "100"
         }
       }
     ]
@@ -534,6 +585,23 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
           "focalLength": "65mm",
           "aperture": "f/5.6",
           "shutterSpeed": "1/1600s",
+          "iso": "100"
+        }
+      },
+      {
+        "id": "th-5",
+        "url": "/images/06-northern-fragments/th-5.webp",
+        "title": "Silent Coast",
+        "caption": "A weathered breakwater extending into the misty grey sea under a pale sky.",
+        "aspectRatio": "landscape",
+        "location": "Hokkaido, Japan",
+        "date": "2025",
+        "exif": {
+          "camera": "ILCE-7CM2",
+          "lens": "FE 35mm F1.4 GM",
+          "focalLength": "35mm",
+          "aperture": "f/1.4",
+          "shutterSpeed": "1/125s",
           "iso": "100"
         }
       }
@@ -775,6 +843,23 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
           "aperture": "f/5.6",
           "shutterSpeed": "1/30s",
           "iso": "200"
+        }
+      },
+      {
+        "id": "in-7",
+        "url": "/images/08-xiao-yuanhang/in-7.webp",
+        "title": "Alleyway Encounter",
+        "caption": "Xiao Yuanhang stands in a narrow snowy alleyway, looking over his shoulder.",
+        "aspectRatio": "portrait",
+        "location": "Otaru, Japan",
+        "date": "2025",
+        "exif": {
+          "camera": "ILCE-7CM2",
+          "lens": "FE 35mm F1.4 GM",
+          "focalLength": "35mm",
+          "aperture": "f/1.4",
+          "shutterSpeed": "1/125s",
+          "iso": "100"
         }
       }
     ]

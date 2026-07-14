@@ -226,8 +226,11 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "ic-1": { title: "圆点墙", caption: "在红色圆点背景前的宁静肖像。", location: "日本东京" },
         "ic-2": { title: "双重视觉", caption: "展示两个视角的创意双重曝光肖像。", location: "日本东京" },
         "ic-3": { title: "冬日寂静", caption: "在白雪皑皑的田野中斜靠在光秃的树干上。", location: "日本美瑛" },
-        "ic-4": { title: "烟与寒冷", caption: "雪地里手缠绷带的特写肖像。", location: "日本美瑛" },
-        "ic-5": { title: "积雪", caption: "平躺在辽阔的积雪山丘上。", location: "日本旭川" }
+        "ic-4": { title: "冷风低语", caption: "在冬日霜雪环绕下的宁静人像。", location: "日本北海道" },
+        "ic-5": { title: "烟与寒冷", caption: "雪地里手缠绷带的特写肖像。", location: "日本美瑛" },
+        "ic-6": { title: "积雪", caption: "平躺在辽阔的积雪山丘上。", location: "日本旭川" },
+        "ic-7": { title: "霜镜", caption: "冬日侧影上光与冰的折射交融。", location: "日本北海道" },
+        "ic-8": { title: "雪之幻影", caption: "与漫天飞雪交相辉映的双重曝光剪影。", location: "日本北海道" }
       }
     },
     "northern-fragments": {
@@ -240,7 +243,8 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "th-1": { title: "海滨小憩", caption: "一座伫立在海边的灰蓝色房屋，旁边停放着一辆红色微型车，北海道海岸。" },
         "th-2": { title: "饱经风霜", caption: "一座逐渐坍塌回归泥土的木制废墟，与后方现代化的住宅形成对比。" },
         "th-3": { title: "商街玩伴", caption: "小樽落雪的商街中，一只巨型毛绒熊静静坐在室外桌旁。" },
-        "th-4": { title: "泥地赛道", caption: "在北方苍白温和的阳光下，马匹在泥地比赛中扬起沙尘。" }
+        "th-4": { title: "泥地赛道", caption: "在北方苍白温和的阳光下，马匹在泥地比赛中扬起沙尘。" },
+        "th-5": { title: "静谧海岸", caption: "一道风化的防波堤延伸进苍茫迷蒙的灰色海面。", location: "日本北海道" }
       }
     },
     "tracks-and-tides": {
@@ -270,7 +274,8 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "in-3": { title: "混凝土阴影", caption: "黄昏时分金色的阳光掠过靠在风化柱子旁的脸庞。" },
         "in-4": { title: "折射凝视", caption: "隔着带有些许反光的玻璃窗，直接凝视着镜头。" },
         "in-5": { title: "餐馆里", caption: "在当地餐馆里手持勺子时随性而专注的神情。" },
-        "in-6": { title: "交叠的双手", caption: "黑色高领衫，双手交叠坐在桌前，呈现安静肃穆的黑白肖像状态。" }
+        "in-6": { title: "交叠的双手", caption: "黑色高领衫，双手交叠坐在桌前，呈现安静肃穆的黑白肖像状态。" },
+        "in-7": { title: "小巷邂逅", caption: "肖远航站在落雪的狭窄小巷中，回首凝视。", location: "日本小樽" }
       }
     },
     "okinawa-breeze": {
@@ -401,8 +406,11 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "ic-1": { title: "ドットの壁", caption: "赤いドットのパターンの前での静かなポートレート。", location: "日本、東京" },
         "ic-2": { title: "ダブル・ビジョン", caption: "2つの視点を示すクリエイティブな二重露光ポートレート。", location: "日本、東京" },
         "ic-3": { title: "冬の静寂", caption: "白い雪原の中、葉のない樹木に寄りかかる。", location: "日本、美瑛" },
-        "ic-4": { title: "煙草と寒さ", caption: "雪の中、包帯を巻いた手のクローズアップ・ポートレート。", location: "日本、美瑛" },
-        "ic-5": { title: "吹き溜まり", caption: "広大な雪に覆われた丘の上に横たわる。", location: "日本、旭川" }
+        "ic-4": { title: "冷たい囁き", caption: "冬の霜に包まれた静かなポートレート。", location: "日本、北海道" },
+        "ic-5": { title: "煙草と寒さ", caption: "雪の中、包帯を巻いた手のクローズアップ・ポートレート。", location: "日本、美瑛" },
+        "ic-6": { title: "吹き溜まり", caption: "広大な雪に覆われた丘の上に横たわる。", location: "日本、旭川" },
+        "ic-7": { title: "霜の鏡", caption: "冬の横顔に映る光と氷の反射。", location: "日本、北海道" },
+        "ic-8": { title: "雪の幻想", caption: "舞い散る雪と溶け合う二重露光のシルエット。", location: "日本、北海道" }
       }
     },
     "northern-fragments": {
@@ -415,7 +423,8 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "th-1": { title: "海辺の休息", caption: "北海道の海岸線、水辺に佇むグレーブルーの家とポツンと置かれた赤い軽自動車。" },
         "th-2": { title: "風化した骨組み", caption: "崩壊しつつある古い木造の小屋が、後方の現代的な住宅と対比を成しながら土に還っていく。" },
         "th-3": { title: "サンモール一番街の相棒", caption: "雪の降る小樽の商店街で、屋外のテーブルに静かに座る巨大なクマのぬいぐるみ。" },
-        "th-4": { title: "ダートコース", caption: "北の淡い太陽の下、地元のレースで馬たちが砂塵を巻き上げる。" }
+        "th-4": { title: "ダートコース", caption: "北の淡い太陽の下、地元のレースで馬たちが砂塵を巻き上げる。" },
+        "th-5": { title: "静寂の海岸", caption: "薄暗い空の下、霧が立ち込めるグレーの海へと伸びる防波堤。", location: "日本、北海道" }
       }
     },
     "tracks-and-tides": {
@@ -445,7 +454,8 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "in-3": { title: "コンクリートの影", caption: "風化した柱の横で、被写体の顔に差し込むゴールデンアワーの光。" },
         "in-4": { title: "反射する眼差し", caption: "柔らかな反射がある窓ガラス越しに見る、肖遠航のストレートなポートレート。" },
         "in-5": { title: "食堂にて", caption: "地元の食堂でスプーンを持つ被写体の、強烈で飾らない表情。" },
-        "in-6": { title: "組んだ手", caption: "被写体の静かな佇まいと組まれた手を捉えた、フォーマルな白黒ポートレート。" }
+        "in-6": { title: "組んだ手", caption: "被写体の静かな佇まいと組まれた手を捉えた、フォーマルな白黒ポートレート。" },
+        "in-7": { title: "路地の出会い", caption: "雪の積もる狭い路地に立ち、肩越しに振り返る肖遠航。", location: "日本、小樽" }
       }
     },
     "okinawa-breeze": {
