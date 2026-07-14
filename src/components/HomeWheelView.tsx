@@ -225,7 +225,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
       id="home-wheel-viewport"
     >
       {/* Immersive blurred ambient background cross-fade */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-60 dark:opacity-30 transition-opacity duration-1000">
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-70 dark:opacity-40 transition-opacity duration-1000">
         {photographyData.map((series, idx) => {
           const distance = Math.abs(currentVal - idx);
           // Only render background images that are close to the current view to optimize GPU memory
@@ -251,8 +251,8 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover scale-110 grayscale-[30%]"
                 style={{
-                  filter: "blur(40px)",
-                  WebkitFilter: "blur(40px)",
+                  filter: "blur(30px)",
+                  WebkitFilter: "blur(30px)",
                   willChange: "transform",
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
@@ -263,7 +263,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
             </div>
           );
         })}
-        <div className="absolute inset-0 bg-white/20 dark:bg-neutral-950/60 transition-all duration-1000" />
+        <div className="absolute inset-0 bg-white/20 dark:bg-neutral-950/50 transition-all duration-1000" />
       </div>
 
       {/* Background ambient lighting vignette */}
