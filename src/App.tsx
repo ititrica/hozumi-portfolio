@@ -467,7 +467,8 @@ export default function App() {
           {/* Main Orchestrated Contents */}
           <main className={`flex-grow relative flex flex-col transition-opacity duration-200 ${routeLoading ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
             <AnimatePresence mode="wait">
-              <Routes>
+              {/* @ts-ignore */}
+              <Routes location={location} key={location.pathname}>
                 {/* Home — Selected Work */}
                 <Route
                   path="/"
