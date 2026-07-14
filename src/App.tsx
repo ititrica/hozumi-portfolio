@@ -621,6 +621,7 @@ export default function App() {
                       exit={{ opacity: 0 }}
                       transition={pageTransition}
                       style={safariTransitionFix}
+                      className="fixed inset-0 w-full h-full overflow-hidden"
                     >
                       <Playground
                         photographyData={localizedData}
@@ -641,6 +642,7 @@ export default function App() {
                       exit={{ opacity: 0 }}
                       transition={pageTransition}
                       style={safariTransitionFix}
+                      className="fixed inset-0 w-full h-full overflow-hidden"
                     >
                       <SeriesRouteWrapper
                         localizedData={localizedData}
