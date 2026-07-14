@@ -21,11 +21,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
 
   const canvasX = useMotionValue(0);
   const canvasY = useMotionValue(0);
-  const smoothX = useSpring(canvasX, { stiffness: 75, damping: 26, mass: 1.2 });
-  const smoothY = useSpring(canvasY, { stiffness: 75, damping: 26, mass: 1.2 });
-
   const motionScale = useMotionValue(1.0);
-  const smoothScale = useSpring(motionScale, { stiffness: 90, damping: 24 });
 
 
 
@@ -306,7 +302,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
         }}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        style={{ x: smoothX, y: smoothY, scale: smoothScale, originX: 0.5, originY: 0.5, width: 3600, height: rows * 350 + (rows - 1) * 96 + 320 }}
+        style={{ x: canvasX, y: canvasY, scale: motionScale, originX: 0.5, originY: 0.5, width: 3600, height: rows * 350 + (rows - 1) * 96 + 320 }}
         className="absolute p-40 grid grid-cols-8 gap-x-28 gap-y-24 cursor-grab active:cursor-grabbing select-none"
       >
         {gridSlots.map((slot, index) => {
