@@ -301,12 +301,12 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
         _dragX={canvasX}
         _dragY={canvasY}
         dragConstraints={dragConstraints}
-        dragElastic={0.06}
+        dragElastic={0.04}
         dragTransition={{
-          power: 0.3,
-          timeConstant: 500,
-          bounceStiffness: 90,
-          bounceDamping: 26,
+          power: 0.08,
+          timeConstant: 250,
+          bounceStiffness: 180,
+          bounceDamping: 30,
         }}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
