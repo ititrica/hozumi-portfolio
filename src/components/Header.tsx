@@ -51,7 +51,11 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
   ];
 
   const handleNavClick = (path: string) => {
-    navigate(path);
+    if (path === "/" && location.pathname.startsWith("/series")) {
+      navigate("/", { state: { restoreWheel: true } });
+    } else {
+      navigate(path);
+    }
     setIsMenuOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
