@@ -27,9 +27,21 @@ export default function App() {
 
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [lightboxPhotos, setLightboxPhotos] = useState<Photo[]>([]);
-  const [hasEntered, setHasEntered] = useState(false);
+  const [hasEntered, setHasEntered] = useState(() => {
+    if (typeof sessionStorage !== 'undefined') {
+      return sessionStorage.getItem('hasEnteredSite') === 'true';
+    }
+    return false;
+  });
   const [isExpanding, setIsExpanding] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    if (typeof sessionStorage !== 'undefined') {
+      if (sessionStorage.getItem('hasEnteredSite') === 'true') {
+        return false;
+      }
+    }
+    return true;
+  });
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -217,6 +229,9 @@ export default function App() {
     if (isExpanding) return;
     setIsMuted(false);
     setIsExpanding(true);
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('hasEnteredSite', 'true');
+    }
     // Trigger hasEntered at 350ms (midway through expansion) so loading animation mounts and starts playing earlier
     setTimeout(() => {
       setHasEntered(true);
