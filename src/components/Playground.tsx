@@ -21,7 +21,10 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
 
   const canvasX = useMotionValue(0);
   const canvasY = useMotionValue(0);
+  const smoothX = useSpring(canvasX, { stiffness: 90, damping: 24, mass: 1.0 });
+  const smoothY = useSpring(canvasY, { stiffness: 90, damping: 24, mass: 1.0 });
   const motionScale = useMotionValue(1.0);
+  const smoothScale = useSpring(motionScale, { stiffness: 90, damping: 24, mass: 1.0 });
 
 
 
@@ -145,11 +148,11 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
         const canvasW = canvasRef.current.scrollWidth;
         const canvasH = canvasRef.current.scrollHeight;
 
-        // Allow dragging the canvas so its borders can clear up to 80% of the viewport width/height
-        const left = -(canvasW - viewportW * 0.2);
-        const right = viewportW * 0.8;
-        const top = -(canvasH - viewportH * 0.2);
-        const bottom = viewportH * 0.8;
+        // Allow centering outermost cards, but restrict overscroll so the board cannot be lost off-screen
+        const left = -(canvasW - viewportW / 2 + 100);
+        const right = viewportW / 2 - 100;
+        const top = -(canvasH - viewportH / 2 + 150);
+        const bottom = viewportH / 2 - 150;
 
         setDragConstraints({ left, right, top, bottom });
 
@@ -192,9 +195,9 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       const cx = rawWidth / 2;
       const cy = rawHeight / 2;
 
-      const xOld = canvasX.get();
-      const yOld = canvasY.get();
-      const sOld = motionScale.get();
+      const xOld = smoothX.get();
+      const yOld = smoothY.get();
+      const sOld = smoothScale.get();
 
       // Calculate the next target scale
       const zoomSpeed = 0.0012;
@@ -207,7 +210,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       const xNew = mouseParentX - cx - (mouseParentX - cx - xOld) * factor;
       const yNew = mouseParentY - cy - (mouseParentY - cy - yOld) * factor;
 
-      // Set translations and scale together
+      // Set translations and scale together (springs will animate them smoothly in sync)
       canvasX.set(xNew);
       canvasY.set(yNew);
       motionScale.set(sNew);
@@ -217,7 +220,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     return () => {
       container.removeEventListener("wheel", handleWheel);
     };
-  }, [rows, canvasX, canvasY, motionScale]);
+  }, [rows, canvasX, canvasY, motionScale, smoothX, smoothY, smoothScale]);
 
   // Listen to scale changes: if scale reaches 2.1 (zooming in), select the photo closest to viewport center
   useEffect(() => {
@@ -302,7 +305,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
         }}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        style={{ x: canvasX, y: canvasY, scale: motionScale, originX: 0.5, originY: 0.5, width: 3600, height: rows * 350 + (rows - 1) * 96 + 320 }}
+        style={{ x: smoothX, y: smoothY, scale: smoothScale, originX: 0.5, originY: 0.5, width: 3600, height: rows * 350 + (rows - 1) * 96 + 320 }}
         className="absolute p-40 grid grid-cols-8 gap-x-28 gap-y-24 cursor-grab active:cursor-grabbing select-none"
       >
         {gridSlots.map((slot, index) => {
