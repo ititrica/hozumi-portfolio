@@ -3,10 +3,44 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { PhotographySeries, Photo } from "../types";
 import { Language, UI_TRANSLATIONS } from "../i18n";
+
+const RANDOM_PHRASES = [
+  "Chasing Shadows",
+  "Temporary Silence",
+  "Grain & Gravitation",
+  "光影的褶皱",
+  "Nocturnal Drift",
+  "The Invisible City",
+  "冬の瞬き",
+  "Existence in Grain",
+  "Resonance",
+  "Silent Monolith",
+  "Analog Memory",
+  "Time Elapsed",
+  "Portrait of an Hour",
+  "城市与潮汐",
+  "Unresolved Focus",
+  "Refracted Light",
+  "A Moment's Heaviness",
+  "颗粒之美",
+  "Shadows of the Soul",
+  "Flowing Scenes",
+  "Otaru Snowfall",
+  "Tokyo Flash",
+  "Hokkaido Frost",
+  "Bangkok Transit",
+  "Jiufen Rain",
+  "ILCE-7CM2",
+  "35mm F1.4 ASPH",
+  "SHUTTER 1/125s",
+  "ISO 100",
+  "HOZUMI",
+  "▢"
+];
 
 interface PlaygroundProps {
   photographyData: PhotographySeries[];
@@ -77,77 +111,60 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     return photos;
   }, [photographyData]);
 
-  // Generate an asymmetric/spaced-out grid layout slots
-  // We calculate rows dynamically to ensure all photos (plus spacers/decorations) are placed.
-  const { gridSlots, rows } = (() => {
-    const columns = 8;
+  // Generate a square grid layout slots (N x N)
+  // Photos are mixed with black concept cards containing random phrases.
+  const { gridSlots, N, canvasW, canvasH } = useMemo(() => {
     const totalPhotos = allPhotos.length;
     
-    // Target density of ~60% photos and ~40% decorations/gaps
-    const neededSlots = Math.ceil(totalPhotos / 0.60);
-    const calculatedRows = Math.max(7, Math.ceil(neededSlots / columns));
-    const totalSlots = columns * calculatedRows;
+    // Target ratio: photos fill ~75% of the square area.
+    // N is the grid side size (columns and rows)
+    const targetSlots = Math.ceil(totalPhotos / 0.75);
+    const calculatedN = Math.max(8, Math.ceil(Math.sqrt(targetSlots)));
+    const totalSlots = calculatedN * calculatedN;
 
-    const slots: (Photo | { type: "text" | "square"; content: string })[] = Array(totalSlots).fill(null);
+    const slots: (Photo | { type: "phrase"; content: string })[] = [];
 
-    // Architectural/minimalist text indicators to scatter in the grid
-    const details: { type: "text" | "square"; content: string }[] = [
-      { type: "square", content: "▢" },
-      { type: "text", content: "43.06°N 141.34°E" },
-      { type: "text", content: "ILCE-7CM2" },
-      { type: "text", content: "35mm F1.4 ASPH" },
-      { type: "text", content: "HOZUMI" },
-      { type: "square", content: "▢" },
-      { type: "text", content: "SHUTTER 1/125s" },
-      { type: "text", content: "ISO 100" },
-      { type: "text", content: "CHOSHI JAPAN" },
-      { type: "text", content: "OKINAWA BREEZE" },
-      { type: "text", content: "35.67°N 139.65°E" },
-      { type: "square", content: "▢" },
-      { type: "text", content: "MINIMAL FRAME" },
-      { type: "text", content: "EXPOSURE +0.3" },
-    ];
+    // Add all photos
+    allPhotos.forEach((photo) => {
+      slots.push(photo);
+    });
 
-    let photoIndex = 0;
-    let detailIndex = 0;
+    // Fill the rest with black phrase cards
+    const phraseCount = totalSlots - totalPhotos;
 
-    for (let i = 0; i < totalSlots; i++) {
-      // Determine if this index qualifies as a spacer/decoration
-      const isSpacer = i % 7 === 3 || i % 9 === 5 || i === 12 || i === 31 || i === 44 || (i > 56 && i % 8 === 2);
-      
-      const remainingSlots = totalSlots - i;
-      const remainingPhotos = totalPhotos - photoIndex;
-
-      // We only insert decoration/spacer if we have enough remaining slots for the remaining photos
-      if (isSpacer && remainingSlots > remainingPhotos) {
-        if (detailIndex < details.length && Math.random() > 0.4) {
-          slots[i] = details[detailIndex++];
-        } else {
-          slots[i] = { type: "text", content: "" }; // Empty spacer
-        }
-      } else {
-        if (photoIndex < totalPhotos) {
-          slots[i] = allPhotos[photoIndex++];
-        } else if (detailIndex < details.length) {
-          slots[i] = details[detailIndex++];
-        } else {
-          slots[i] = { type: "text", content: "" };
-        }
-      }
+    // Shuffle phrases so they are randomly selected
+    const shuffledPhrases = [...RANDOM_PHRASES];
+    for (let i = shuffledPhrases.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledPhrases[i], shuffledPhrases[j]] = [shuffledPhrases[j], shuffledPhrases[i]];
     }
 
-    return { gridSlots: slots, rows: calculatedRows };
-  })();
+    for (let i = 0; i < phraseCount; i++) {
+      slots.push({
+        type: "phrase",
+        content: shuffledPhrases[i % shuffledPhrases.length]
+      });
+    }
+
+    // Fisher-Yates shuffle the final slots array
+    for (let i = slots.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [slots[i], slots[j]] = [slots[j], slots[i]];
+    }
+
+    const calculatedW = calculatedN * 280 + (calculatedN - 1) * 112 + 320;
+    const calculatedH = calculatedN * 350 + (calculatedN - 1) * 96 + 320;
+
+    return { gridSlots: slots, N: calculatedN, canvasW: calculatedW, canvasH: calculatedH };
+  }, [allPhotos, lang]);
 
   // Center the canvas initially upon mount
   useEffect(() => {
     const viewportW = window.innerWidth;
     const viewportH = window.innerHeight;
-    const canvasW = 3600;
-    const canvasH = rows * 350 + (rows - 1) * 96 + 320;
     canvasX.set((viewportW - canvasW) / 2);
     canvasY.set((viewportH - canvasH) / 2);
-  }, [rows, canvasX, canvasY]);
+  }, [canvasW, canvasH, canvasX, canvasY]);
 
   // Calculate drag boundaries dynamically based on current scale and resize events
   // This keeps a 200x200px center detection area inside the canvas at all times.
@@ -157,8 +174,6 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       if (canvasRef.current) {
         const viewportW = window.innerWidth;
         const viewportH = window.innerHeight;
-        const canvasW = 3600;
-        const canvasH = rows * 350 + (rows - 1) * 96 + 320;
 
         const s = motionScale.get();
 
@@ -188,7 +203,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       window.removeEventListener("resize", updateConstraints);
       clearTimeout(timer);
     };
-  }, [rows, motionScale]);
+  }, [canvasW, canvasH, motionScale]);
 
   // Listen to wheel events for zooming the board (scroll down to zoom out, scroll up to zoom in)
   // We perform the zoom centering on the user's cursor position without changing transform origin
@@ -201,17 +216,14 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
 
       if (!container || !canvasRef.current) return;
 
-      const rawWidth = 3600;
-      const rawHeight = rows * 350 + (rows - 1) * 96 + 320;
-      
       const rectParent = container.getBoundingClientRect();
       
       // Mouse coordinates relative to parent viewport container
       const mouseParentX = e.clientX - rectParent.left;
       const mouseParentY = e.clientY - rectParent.top;
 
-      const cx = rawWidth / 2;
-      const cy = rawHeight / 2;
+      const cx = canvasW / 2;
+      const cy = canvasH / 2;
 
       // Stop any active drag inertia or slide animations immediately when zoom starts
       canvasX.stop();
@@ -243,7 +255,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     return () => {
       container.removeEventListener("wheel", handleWheel);
     };
-  }, [rows, canvasX, canvasY, motionScale, smoothX, smoothY, smoothScale]);
+  }, [canvasW, canvasH, canvasX, canvasY, motionScale, smoothX, smoothY, smoothScale]);
 
   // Listen to scale changes: if scale reaches 2.1 (zooming in), select the photo closest to viewport center
   useEffect(() => {
@@ -332,8 +344,8 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
         }}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        style={{ x: smoothX, y: smoothY, scale: smoothScale, originX: 0.5, originY: 0.5, width: 3600, height: rows * 350 + (rows - 1) * 96 + 320 }}
-        className="absolute p-40 grid grid-cols-8 gap-x-28 gap-y-24 cursor-grab active:cursor-grabbing select-none"
+        style={{ x: smoothX, y: smoothY, scale: smoothScale, originX: 0.5, originY: 0.5, width: canvasW, height: canvasH, gridTemplateColumns: `repeat(${N}, 280px)` }}
+        className="absolute p-40 grid gap-x-28 gap-y-24 cursor-grab active:cursor-grabbing select-none"
       >
         {gridSlots.map((slot, index) => {
           if (!slot) return <div key={index} className="w-[280px] h-[350px]" />;
@@ -371,14 +383,36 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
             );
           }
 
-          // If it is an architectural/text segment slot
+          // If it is a phrase card
+          if ("type" in slot && slot.type === "phrase") {
+            return (
+              <div
+                key={index}
+                className="w-[280px] h-[350px] flex flex-col justify-between group select-none pointer-events-none"
+              >
+                {/* Black Page Frame */}
+                <div className="w-full h-[320px] overflow-hidden bg-neutral-950 dark:bg-black border border-neutral-900 dark:border-neutral-800/60 shadow-lg flex items-center justify-center p-6 rounded-none relative">
+                  <span className="font-serif text-[10px] tracking-[0.2em] text-neutral-350 dark:text-neutral-500 uppercase text-center leading-relaxed">
+                    {slot.content}
+                  </span>
+                </div>
+                {/* Under-label */}
+                <div className="h-6 flex items-center justify-between font-mono text-[8px] tracking-widest text-neutral-400 dark:text-neutral-500 uppercase mt-2">
+                  <span>Concept</span>
+                  <span>
+                    {(index + 1 < 10 ? "0" : "") + (index + 1)}
+                  </span>
+                </div>
+              </div>
+            );
+          }
+
+          // Fallback
           return (
             <div
               key={index}
-              className="w-[280px] h-[350px] flex items-center justify-center font-mono text-[9px] tracking-[0.25em] text-neutral-350 dark:text-neutral-600 select-none uppercase pointer-events-none"
-            >
-              {slot.content}
-            </div>
+              className="w-[280px] h-[350px]"
+            />
           );
         })}
       </motion.div>
