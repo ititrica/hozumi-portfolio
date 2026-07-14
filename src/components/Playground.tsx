@@ -30,6 +30,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
 
   const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0, top: 0, bottom: 0 });
   const isDraggingRef = useRef(false);
+  const isZoomTriggeredRef = useRef(false);
 
   // Flatten and randomly shuffle all photos (including cover images) from all photography series
   const allPhotos = React.useMemo(() => {
@@ -226,8 +227,14 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
   useEffect(() => {
     const unsubscribe = motionScale.on("change", (latestScale) => {
       if (latestScale >= 2.1) {
+        if (isZoomTriggeredRef.current) return;
+        isZoomTriggeredRef.current = true;
+
         const cards = document.querySelectorAll(".playground-photo-card");
-        if (cards.length === 0) return;
+        if (cards.length === 0) {
+          isZoomTriggeredRef.current = false;
+          return;
+        }
 
         const viewportCenterX = window.innerWidth / 2;
         const viewportCenterY = window.innerHeight / 2;
@@ -258,10 +265,11 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
           }
         }
 
-        // Reset scale back to 1.5 with a slight bounce-back delay to prevent infinite triggers
+        // Reset scale back to 1.5 after 1000ms (so it is completely hidden behind the black lightbox backdrop)
         setTimeout(() => {
           motionScale.set(1.5);
-        }, 100);
+          isZoomTriggeredRef.current = false;
+        }, 1000);
       }
     });
 
