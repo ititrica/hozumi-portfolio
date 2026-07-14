@@ -73,7 +73,8 @@ npm run build
 Feel free to reach out for collaboration (photography, web development, etc.):
 
 - **微信 WeChat:** 扫描下方二维码 | Scan the QR code
-![Uploading 0503d990b7af2c739cb0b2b49272e032.jpg…]()
+<img width="888" height="1131" alt="0503d990b7af2c739cb0b2b49272e032" src="https://github.com/user-attachments/assets/8e106276-619c-4460-909d-ccdfe7679b00" />
+
 
 
 
