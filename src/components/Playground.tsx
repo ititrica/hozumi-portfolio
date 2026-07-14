@@ -140,6 +140,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
   })();
 
   // Calculate constraints dynamically based on viewport and canvas size
+  // We expand the drag limits (overscroll buffer) so edge photos can be dragged to the center of the screen
   useEffect(() => {
     const updateConstraints = () => {
       if (constraintsRef.current && canvasRef.current) {
@@ -148,14 +149,17 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
         const canvasW = canvasRef.current.scrollWidth;
         const canvasH = canvasRef.current.scrollHeight;
 
-        const left = -(canvasW - viewportW);
-        const top = -(canvasH - viewportH);
+        // Allow dragging the canvas so its borders can clear up to 80% of the viewport width/height
+        const left = -(canvasW - viewportW * 0.2);
+        const right = viewportW * 0.8;
+        const top = -(canvasH - viewportH * 0.2);
+        const bottom = viewportH * 0.8;
 
-        setDragConstraints({ left, right: 0, top, bottom: 0 });
+        setDragConstraints({ left, right, top, bottom });
 
         // Center the canvas initially
-        canvasX.set(left / 2);
-        canvasY.set(top / 2);
+        canvasX.set((viewportW - canvasW) / 2);
+        canvasY.set((viewportH - canvasH) / 2);
       }
     };
 
@@ -167,7 +171,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       window.removeEventListener("resize", updateConstraints);
       clearTimeout(timer);
     };
-  }, []);
+  }, [allPhotos.length, canvasX, canvasY]);
 
   // Listen to wheel events for zooming the board (scroll down to zoom out, scroll up to zoom in)
   // We perform the zoom centering on the user's cursor position without changing transform origin
