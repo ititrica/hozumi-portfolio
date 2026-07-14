@@ -208,6 +208,13 @@ export default function App() {
     duration: 0.6
   };
 
+  const safariTransitionFix = {
+    backfaceVisibility: "hidden" as const,
+    WebkitBackfaceVisibility: "hidden" as const,
+    transform: "translate3d(0, 0, 0)",
+    WebkitTransform: "translate3d(0, 0, 0)"
+  };
+
   useEffect(() => {
     const path = location.pathname;
     if (!shouldLoadRoute(path)) {
@@ -355,7 +362,7 @@ export default function App() {
   );
 
   return (
-    <div className="font-sans bg-[#fdfdfd] dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 dark:selection:bg-white selection:text-white dark:selection:text-neutral-900 transition-colors duration-1000 min-h-screen flex flex-col isolate">
+    <div className="font-sans bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 dark:selection:bg-white selection:text-white dark:selection:text-neutral-900 transition-colors duration-1000 min-h-screen flex flex-col isolate">
       {/* Background Audio Node - always mounted so it's ready to play */}
       <audio ref={audioRef} src="/music.mp3" loop autoPlay playsInline />
 
@@ -541,6 +548,7 @@ export default function App() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={pageTransition}
+                      style={safariTransitionFix}
                       className="fixed inset-0 w-full h-full overflow-hidden"
                     >
                       <HomeWheelView
@@ -564,6 +572,7 @@ export default function App() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={pageTransition}
+                      style={safariTransitionFix}
                       className="fixed inset-0 z-40 overflow-y-auto pt-20 flex flex-col bg-[#fdfdfd] dark:bg-[#0e0c0b] transition-colors duration-1000"
                     >
                       <div className="flex-grow">
@@ -583,6 +592,7 @@ export default function App() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={pageTransition}
+                      style={safariTransitionFix}
                     >
                       <Playground
                         photographyData={localizedData}
@@ -602,6 +612,7 @@ export default function App() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={pageTransition}
+                      style={safariTransitionFix}
                     >
                       <SeriesRouteWrapper
                         localizedData={localizedData}
@@ -653,7 +664,7 @@ export default function App() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="fixed inset-0 z-[150] flex items-center justify-center bg-white dark:bg-neutral-950"
+                className="fixed inset-0 z-[150] flex items-center justify-center bg-white dark:bg-[#0e0c0b]"
               >
                 <RouteLoader />
               </motion.div>

@@ -200,7 +200,7 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed inset-0 z-50 overflow-y-auto bg-[#fafafa] dark:bg-neutral-950 flex flex-col pt-36 transition-colors duration-1000 scrollbar-none"
+      className="fixed inset-0 z-50 overflow-y-auto bg-[#fafafa] dark:bg-[#0e0c0b] flex flex-col pt-36 transition-colors duration-1000 scrollbar-none"
     >
       {/* Static header backdrop wrapper */}
       <div className="max-w-[1600px] mx-auto w-full px-6 flex flex-col pb-32">

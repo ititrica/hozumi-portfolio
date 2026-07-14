@@ -327,7 +327,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
   return (
     <div
       ref={constraintsRef}
-      className="fixed inset-0 pt-20 w-full h-full overflow-hidden bg-[#fdfdfd] dark:bg-neutral-950 transition-colors duration-1000 z-10 select-none"
+      className="fixed inset-0 pt-20 w-full h-full overflow-hidden bg-[#fdfdfd] dark:bg-[#0e0c0b] transition-colors duration-1000 z-10 select-none"
     >
       <motion.div
         ref={canvasRef}
