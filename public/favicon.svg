@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <style>
+      .s { stroke: #0e0c0b; stroke-width: 1.5; fill: none; stroke-linecap: square; stroke-linejoin: miter; }
+      .f { fill: #0e0c0b; }
+      @media (prefers-color-scheme: dark) {
+        .s { stroke: #fdfdfd; }
+        .f { fill: #fdfdfd; }
+      }
+    </style>
+  </defs>
+  <!-- Outer framing bracket — top-left -->
+  <path class="s" d="M6 4H4v5"/>
+  <!-- Outer framing bracket — top-right -->
+  <path class="s" d="M26 4h2v5"/>
+  <!-- Outer framing bracket — bottom-right -->
+  <path class="s" d="M28 23v5h-5"/>
+  <!-- Outer framing bracket — bottom-left -->
+  <path class="s" d="M6 28H4v-5"/>
+  <!-- Inner square frame -->
+  <path class="s" d="M10 10h12v12H10z"/>
+  <!-- Center focal point -->
+  <circle class="f" cx="16" cy="16" r="1.5"/>
+</svg>
