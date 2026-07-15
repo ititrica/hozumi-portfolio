@@ -7,10 +7,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, animate } from "motion/react";
 import { useLocation } from "react-router-dom";
 import { PhotographySeries } from "../types";
+import { Language } from "../i18n";
 
 interface HomeWheelViewProps {
   onSelectSeries: (series: PhotographySeries) => void;
   photographyData: PhotographySeries[];
+  lang: Language;
 }
 
 // Categories list for the top-center filter menu (excluding the "ALL" button)
@@ -22,7 +24,7 @@ const CATEGORIES = [
   { label: "电影 CINEMATIC", value: "CINEMATIC" },
 ];
 
-export default function HomeWheelView({ onSelectSeries, photographyData }: HomeWheelViewProps) {
+export default function HomeWheelView({ onSelectSeries, photographyData, lang }: HomeWheelViewProps) {
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
   const containerRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
@@ -275,11 +277,11 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
             </div>
           );
         })}
-        <div className="absolute inset-0 bg-white/20 dark:bg-neutral-950/50 transition-all duration-1000" />
+        <div className="absolute inset-0 bg-white/10 dark:bg-neutral-950/50 transition-all duration-1000" />
       </div>
 
       {/* Background ambient lighting vignette */}
-      <div className="absolute inset-0 bg-radial-gradient from-transparent via-neutral-100/20 to-[#fdfdfd] pointer-events-none z-0 transition-opacity duration-1000 opacity-100 dark:opacity-0" />
+      <div className="absolute inset-0 bg-radial-gradient from-transparent via-neutral-100/10 to-[#fdfdfd] pointer-events-none z-0 transition-opacity duration-1000 opacity-100 dark:opacity-0" />
       <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#12100e]/30 to-[#0e0c0b] pointer-events-none z-0 transition-opacity duration-1000 opacity-0 dark:opacity-100" />
 
       {/* Main Interactive Stage: The L-Shape Corner Curve */}
@@ -398,8 +400,8 @@ export default function HomeWheelView({ onSelectSeries, photographyData }: HomeW
                     : "text-neutral-300 dark:text-neutral-700 group-hover:text-neutral-500 dark:group-hover:text-neutral-400"
                 }`}
                 style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 300,
+                  fontSize: lang === "ja" ? "0.78rem" : "0.75rem",
+                  fontWeight: lang === "ja" ? 400 : 300,
                   letterSpacing: "0.04em",
                 }}
               >

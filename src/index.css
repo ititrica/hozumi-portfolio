@@ -9,6 +9,38 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Plus Jakarta Sans Local';
+  src: url('/Plus Jakarta Sans.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans Local';
+  src: url('/Plus Jakarta Sans.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tsukushi Mincho';
+  src: url('/筑紫明朝-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tsukushi Mincho';
+  src: url('/筑紫明朝-Medium.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -17,6 +49,19 @@
   --font-mono: "DM Sans", "DM Sans Local", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", monospace;
 }
 
+/* Chinese (zh) — switch to Plus Jakarta Sans */
+html[lang="zh"] body {
+  --font-sans: "Plus Jakarta Sans Local", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  --font-serif: "Plus Jakarta Sans Local", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", serif;
+  --font-mono: "Plus Jakarta Sans Local", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", monospace;
+}
+
+/* Japanese (ja) — switch to Tsukushi Mincho */
+html[lang="ja"] body {
+  --font-sans: "Tsukushi Mincho", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "MS PGothic", sans-serif;
+  --font-serif: "Tsukushi Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "Yu Mincho", "MS PMincho", serif;
+  --font-mono: "Tsukushi Mincho", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "MS PGothic", monospace;
+}
 
 /* Force lock document body/html height and disable system-level global scrollbar */
 html, body {

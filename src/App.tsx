@@ -46,7 +46,13 @@ export default function App() {
   });
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof localStorage !== 'undefined') {
+      const saved = localStorage.getItem('themePreference');
+      if (saved === 'light' || saved === 'dark') return saved;
+    }
+    return "dark";
+  });
   const [lang, setLang] = useState<Language>("en");
 
   const localizedData = getLocalizedData(lang);
@@ -59,7 +65,13 @@ export default function App() {
     } else {
       document.documentElement.classList.remove("dark");
     }
+    localStorage.setItem('themePreference', theme);
   }, [theme]);
+
+  // Update html lang attribute for CSS font switching
+  useEffect(() => {
+    document.documentElement.lang = lang === "zh" ? "zh" : lang === "ja" ? "ja" : "en";
+  }, [lang]);
 
   const aboutContainerRef = useRef<HTMLDivElement>(null);
 
@@ -533,6 +545,7 @@ export default function App() {
                       <HomeWheelView
                         onSelectSeries={(series) => navigate(`/series/${series.id}`)}
                         photographyData={localizedData}
+                        lang={lang}
                       />
                     </motion.div>
                   }
@@ -713,14 +726,15 @@ function RouteLoader() {
   const currentGrid = LOADER_STEPS[stepIndex].grid;
 
   return (
-    <div className="grid grid-cols-2 gap-x-16 sm:gap-x-24 md:gap-x-32 gap-y-12 sm:gap-y-16 md:gap-y-20 font-mono text-center">
+    <div className="grid grid-cols-2 gap-x-16 sm:gap-x-24 md:gap-x-32 gap-y-12 sm:gap-y-16 md:gap-y-20 text-center">
       {currentGrid.map((char, index) => (
         <div key={index} className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 flex items-center justify-center relative">
           <AnimatePresence mode="wait">
             {char && (
               <motion.span
                 key={char}
-                className="absolute text-4xl sm:text-6xl md:text-7xl font-bold tracking-[0.2em] text-neutral-950 dark:text-white select-none"
+                className="absolute text-4xl sm:text-6xl md:text-7xl font-light tracking-[0.2em] text-neutral-950 dark:text-white select-none"
+                style={{ fontFamily: "'Tsukushi Mincho', serif", fontWeight: 300 }}
                 initial={{ opacity: 0, scale: 0.8, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8, y: -10 }}

@@ -69,6 +69,14 @@ function updateCellDOM(cellIndex, nextChar) {
     const cellEl = document.getElementById(`cell-${cellIndex}`);
     if (!cellEl) return;
 
+    // Determine if the character is Latin (P F O L) — use mono for those, Tsukushi Mincho for ホズミ＃
+    const isLatin = /^[A-Z]$/.test(nextChar);
+    if (isLatin) {
+        cellEl.classList.add("latin");
+    } else {
+        cellEl.classList.remove("latin");
+    }
+
     // 1. 如果新字符为空，代表需要把当前的字符执行退出淡出效果并从 DOM 中销毁
     if (nextChar === "") {
         const existingSpan = cellEl.querySelector(".grid-char");

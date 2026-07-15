@@ -78,7 +78,8 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
               onClick={() => handleNavClick("/")}
               onMouseEnter={() => setLogoHovered(true)}
               onMouseLeave={() => setLogoHovered(false)}
-              className="cursor-pointer group flex items-center font-serif text-[19px] tracking-[0.16em] font-medium uppercase text-neutral-900 dark:text-neutral-100"
+              className="cursor-pointer group flex items-center text-[19px] tracking-[0.16em] font-medium uppercase text-neutral-900 dark:text-neutral-100"
+              style={{ fontFamily: "'DM Sans', 'DM Sans Local', sans-serif" }}
               data-cursor="nav"
             >
               <LogoSegment english="HO" japanese="ホ" isHovered={logoHovered} index={0} />
@@ -135,7 +136,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
             </button>
 
             {/* Language Switcher */}
-            <div className="flex items-center space-x-5 ml-6 relative select-none">
+            <div className="flex items-center space-x-5 ml-6 relative select-none" style={{ fontFamily: "'DM Sans', 'DM Sans Local', sans-serif" }}>
               {(["en", "zh", "ja"] as const).map((l) => {
                 const langActive = lang === l;
                 const label = l === "en" ? "EN" : l === "zh" ? "中" : "日";
@@ -143,11 +144,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className={`relative py-2 font-mono text-[10px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000 ${
-                      langActive
-                        ? "text-neutral-950 dark:text-neutral-100"
-                        : "text-neutral-750 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
-                    }`}
+                    className={`relative py-2 text-[10px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000`}
                     data-cursor="nav"
                   >
                     {label}
@@ -281,7 +278,7 @@ function LogoSegment({ english, japanese, isHovered, index }: { english: string;
     <span className="relative inline-block h-[1.15em] overflow-hidden leading-none select-none align-middle">
       {/* English state */}
       <motion.span
-        animate={{ 
+        animate={{
           y: isHovered ? "-100%" : "0%",
           opacity: isHovered ? 0 : 1
         }}
@@ -291,12 +288,13 @@ function LogoSegment({ english, japanese, isHovered, index }: { english: string;
           delay: index * 0.08
         }}
         className="inline-block"
+        style={{ fontFamily: "'DM Sans', 'DM Sans Local', sans-serif" }}
       >
         {english}
       </motion.span>
       {/* Japanese state */}
       <motion.span
-        animate={{ 
+        animate={{
           y: isHovered ? "-100%" : "0%",
           opacity: isHovered ? 1 : 0
         }}
@@ -305,7 +303,8 @@ function LogoSegment({ english, japanese, isHovered, index }: { english: string;
           ease: [0.16, 1, 0.3, 1],
           delay: index * 0.08
         }}
-        className="absolute left-0 top-full inline-block font-sans text-[17.5px]"
+        className="absolute left-0 top-full inline-block"
+        style={{ fontFamily: "'Hiragino Mincho ProN', 'Noto Serif JP', 'Yu Mincho', 'MS PMincho', serif" }}
       >
         {japanese}
       </motion.span>
