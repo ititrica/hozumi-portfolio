@@ -14,7 +14,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Hokkaido, Japan",
     "coordinates": "43.0646° N, 141.3468° E",
-    "coverImage": "/images/01-solitary-drift/cover.webp",
+    "coverImage": "/images/01-solitary-drift/01.webp",
     "description": "A visual essay capturing quiet moments of reflection, solitary walks, and urban geometries across Hokkaido.",
     "colorTheme": {
       "bg": "bg-stone-100",
@@ -23,8 +23,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "sm-1",
-        "url": "/images/01-solitary-drift/sm-1.webp",
+        "id": "02",
+        "url": "/images/01-solitary-drift/02.webp",
         "title": "Warm Light",
         "caption": "A quiet moment under the soft glow of streetlights.",
         "aspectRatio": "landscape",
@@ -40,8 +40,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "sm-2",
-        "url": "/images/01-solitary-drift/sm-2.webp",
+        "id": "03",
+        "url": "/images/01-solitary-drift/03.webp",
         "title": "Above the Steps",
         "caption": "A view from the stairs under the blue winter sky.",
         "aspectRatio": "portrait",
@@ -57,8 +57,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "sm-3",
-        "url": "/images/01-solitary-drift/sm-3.webp",
+        "id": "04",
+        "url": "/images/01-solitary-drift/04.webp",
         "title": "Passage",
         "caption": "Leaning against the cold concrete walls in the shadows.",
         "aspectRatio": "portrait",
@@ -74,8 +74,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "sm-4",
-        "url": "/images/01-solitary-drift/sm-4.webp",
+        "id": "05",
+        "url": "/images/01-solitary-drift/05.webp",
         "title": "Nocturnal Flow",
         "caption": "A solitary walk amidst blurred city lights and passing traffic.",
         "aspectRatio": "landscape",
@@ -100,7 +100,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Okinawa, Japan",
     "coordinates": "26.2124° N, 127.6809° E",
-    "coverImage": "/images/02-monochrome-studies/cover.webp",
+    "coverImage": "/images/02-monochrome-studies/01.webp",
     "description": "A series of high-contrast black and white photographs exploring structural lines, human presence, and quiet shores.",
     "colorTheme": {
       "bg": "bg-slate-950",
@@ -109,8 +109,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "ps-1",
-        "url": "/images/02-monochrome-studies/ps-1.webp",
+        "id": "02",
+        "url": "/images/02-monochrome-studies/02.webp",
         "title": "Anteroom Naha",
         "caption": "Geometric shadows at the entrance of a concrete hotel.",
         "aspectRatio": "landscape",
@@ -126,8 +126,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ps-2",
-        "url": "/images/02-monochrome-studies/ps-2.webp",
+        "id": "03",
+        "url": "/images/02-monochrome-studies/03.webp",
         "title": "Street Musician",
         "caption": "A busker performing on the sidewalk at night.",
         "aspectRatio": "portrait",
@@ -143,8 +143,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ps-3",
-        "url": "/images/02-monochrome-studies/ps-3.webp",
+        "id": "04",
+        "url": "/images/02-monochrome-studies/04.webp",
         "title": "Solitary Crow",
         "caption": "A bird perched on a white metal railing by the sea.",
         "aspectRatio": "portrait",
@@ -160,8 +160,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ps-4",
-        "url": "/images/02-monochrome-studies/ps-4.webp",
+        "id": "05",
+        "url": "/images/02-monochrome-studies/05.webp",
         "title": "Sea Structure",
         "caption": "An old concrete platform standing in the waves.",
         "aspectRatio": "portrait",
@@ -186,7 +186,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2026",
     "location": "Tokyo, Japan",
     "coordinates": "35.6762° N, 139.6503° E",
-    "coverImage": "/images/03-expressions/cover.webp",
+    "coverImage": "/images/03-expressions/01.webp",
     "description": "A collection of intimate portraits exploring facial expressions, textures of clothing, and raw human emotion.",
     "colorTheme": {
       "bg": "bg-sky-50/50",
@@ -195,8 +195,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "es-1",
-        "url": "/images/03-expressions/es-1.webp",
+        "id": "02",
+        "url": "/images/03-expressions/02.webp",
         "title": "Neutrality",
         "caption": "A clean studio portrait in dark draped clothing.",
         "aspectRatio": "portrait",
@@ -212,8 +212,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "es-2",
-        "url": "/images/03-expressions/es-2.webp",
+        "id": "03",
+        "url": "/images/03-expressions/03.webp",
         "title": "Details",
         "caption": "A close-up of hands holding a metal carabiner.",
         "aspectRatio": "landscape",
@@ -229,8 +229,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "es-3",
-        "url": "/images/03-expressions/es-3.webp",
+        "id": "04",
+        "url": "/images/03-expressions/04.webp",
         "title": "Spiral Steps",
         "caption": "Sitting on a concrete spiral staircase looking upward.",
         "aspectRatio": "portrait",
@@ -246,8 +246,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "es-4",
-        "url": "/images/03-expressions/es-4.webp",
+        "id": "05",
+        "url": "/images/03-expressions/05.webp",
         "title": "Raw Emotion",
         "caption": "An expressive, close-up snapshot showing raw feeling.",
         "aspectRatio": "landscape",
@@ -272,7 +272,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2026",
     "location": "Tokyo, Japan",
     "coordinates": "35.6762° N, 139.6503° E",
-    "coverImage": "/images/04-urban-connection/cover.webp",
+    "coverImage": "/images/04-urban-connection/01.webp",
     "description": "Capturing candid moments of companionship, laughter, and reflection in urban public parks and streets.",
     "colorTheme": {
       "bg": "bg-amber-50/30",
@@ -281,8 +281,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "hl-1",
-        "url": "/images/04-urban-connection/hl-1.webp",
+        "id": "02",
+        "url": "/images/04-urban-connection/02.webp",
         "title": "The Bench",
         "caption": "Sitting together in a quiet city garden surrounded by green leaves.",
         "aspectRatio": "landscape",
@@ -298,8 +298,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "hl-2",
-        "url": "/images/04-urban-connection/hl-2.webp",
+        "id": "03",
+        "url": "/images/04-urban-connection/03.webp",
         "title": "A Moment",
         "caption": "A candid close-up of a shared, playful kiss.",
         "aspectRatio": "landscape",
@@ -315,8 +315,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "hl-3",
-        "url": "/images/04-urban-connection/hl-3.webp",
+        "id": "04",
+        "url": "/images/04-urban-connection/04.webp",
         "title": "Looking Up",
         "caption": "Standing on the pathway with arms crossed under modern skyscrapers.",
         "aspectRatio": "portrait",
@@ -332,8 +332,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "hl-4",
-        "url": "/images/04-urban-connection/hl-4.webp",
+        "id": "05",
+        "url": "/images/04-urban-connection/05.webp",
         "title": "Gaze",
         "caption": "A direct, close-up portrait with hands in motion.",
         "aspectRatio": "landscape",
@@ -358,7 +358,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Hokkaido, Japan",
     "coordinates": "43.0646° N, 141.3468° E",
-    "coverImage": "/images/05-winter-illusion/cover.webp",
+    "coverImage": "/images/05-winter-illusion/01.webp",
     "description": "An exploration of creative double-exposure portraiture and quiet, snowy scenes across northern Japan.",
     "colorTheme": {
       "bg": "bg-orange-50/40",
@@ -367,8 +367,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "ic-1",
-        "url": "/images/05-winter-illusion/ic-1.webp",
+        "id": "02",
+        "url": "/images/05-winter-illusion/02.webp",
         "title": "Dot Wall",
         "caption": "A quiet portrait set against a pattern of red dots.",
         "aspectRatio": "portrait",
@@ -384,8 +384,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ic-2",
-        "url": "/images/05-winter-illusion/ic-2.webp",
+        "id": "03",
+        "url": "/images/05-winter-illusion/03.webp",
         "title": "Double Vision",
         "caption": "A creative double-exposure portrait showing two perspectives.",
         "aspectRatio": "portrait",
@@ -401,8 +401,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ic-3",
-        "url": "/images/05-winter-illusion/ic-3.webp",
+        "id": "04",
+        "url": "/images/05-winter-illusion/04.webp",
         "title": "Winter Silence",
         "caption": "Leaning against a bare tree trunk in a white snowy field.",
         "aspectRatio": "portrait",
@@ -418,8 +418,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ic-4",
-        "url": "/images/05-winter-illusion/ic-4.webp",
+        "id": "05",
+        "url": "/images/05-winter-illusion/05.webp",
         "title": "Cold Whisper",
         "caption": "A serene portrait surrounded by winter frost.",
         "aspectRatio": "portrait",
@@ -435,8 +435,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ic-5",
-        "url": "/images/05-winter-illusion/ic-5.webp",
+        "id": "06",
+        "url": "/images/05-winter-illusion/06.webp",
         "title": "Cigarette & Cold",
         "caption": "A close-up portrait in the snow with a bandaged hand.",
         "aspectRatio": "portrait",
@@ -452,8 +452,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ic-6",
-        "url": "/images/05-winter-illusion/ic-6.webp",
+        "id": "07",
+        "url": "/images/05-winter-illusion/07.webp",
         "title": "Snow Drift",
         "caption": "Lying down flat on a vast, snow-covered hill.",
         "aspectRatio": "portrait",
@@ -469,8 +469,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ic-7",
-        "url": "/images/05-winter-illusion/ic-7.webp",
+        "id": "08",
+        "url": "/images/05-winter-illusion/08.webp",
         "title": "Frost Mirror",
         "caption": "Reflections of light and ice on a winter profile.",
         "aspectRatio": "portrait",
@@ -486,8 +486,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ic-8",
-        "url": "/images/05-winter-illusion/ic-8.webp",
+        "id": "09",
+        "url": "/images/05-winter-illusion/09.webp",
         "title": "Snowy Illusion",
         "caption": "Double-exposure silhouette blending with the falling snow.",
         "aspectRatio": "portrait",
@@ -512,7 +512,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Hokkaido, Japan",
     "coordinates": "43.0646° N, 141.3468° E",
-    "coverImage": "/images/06-northern-fragments/cover.webp",
+    "coverImage": "/images/06-northern-fragments/01.webp",
     "description": "A documentary collection capturing the quiet corners and fleeting encounters of Hokkaido. From a blue cafe truck overlooking the ocean and weathered seaside homes to unexpected street installations and the dust-kicking energy of northern horse racing, these frames document the rustic poetry of Japan's northernmost island.",
     "colorTheme": {
       "bg": "bg-stone-100",
@@ -521,8 +521,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "th-1",
-        "url": "/images/06-northern-fragments/th-1.webp",
+        "id": "02",
+        "url": "/images/06-northern-fragments/02.webp",
         "title": "Seaside Respite",
         "caption": "A blue-grey house perched at the water's edge with a lone subcompact car, Hokkaido coast.",
         "aspectRatio": "landscape",
@@ -538,8 +538,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "th-2",
-        "url": "/images/06-northern-fragments/th-2.webp",
+        "id": "03",
+        "url": "/images/06-northern-fragments/03.webp",
         "title": "Weathered Frame",
         "caption": "A collapsed wooden shack slowly returning to the earth, contrasting with modern housing behind it.",
         "aspectRatio": "landscape",
@@ -555,8 +555,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "th-3",
-        "url": "/images/06-northern-fragments/th-3.webp",
+        "id": "04",
+        "url": "/images/06-northern-fragments/04.webp",
         "title": "Sun Mall Companion",
         "caption": "A giant plush bear sits quietly at an outdoor table in a snowy shopping arcade, Otaru.",
         "aspectRatio": "landscape",
@@ -572,8 +572,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "th-4",
-        "url": "/images/06-northern-fragments/th-4.webp",
+        "id": "05",
+        "url": "/images/06-northern-fragments/05.webp",
         "title": "The Dirt Track",
         "caption": "Horses kick up dust under the pale northern sun during a local race.",
         "aspectRatio": "landscape",
@@ -589,8 +589,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "th-5",
-        "url": "/images/06-northern-fragments/th-5.webp",
+        "id": "06",
+        "url": "/images/06-northern-fragments/06.webp",
         "title": "Silent Coast",
         "caption": "A weathered breakwater extending into the misty grey sea under a pale sky.",
         "aspectRatio": "landscape",
@@ -615,7 +615,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Choshi, Japan",
     "coordinates": "35.7347° N, 140.8268° E",
-    "coverImage": "/images/07-tracks-and-tides/cover.webp",
+    "coverImage": "/images/07-tracks-and-tides/01.webp",
     "description": "A photographic diary tracking the quiet rhythms of Japan's local railways, coastal edges, and regional landmarks. From the solitary guard at a country station to the crashing tides of the Pacific, these frames capture the nostalgic transit of everyday life in the provinces.",
     "colorTheme": {
       "bg": "bg-slate-950",
@@ -624,8 +624,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "ep-1",
-        "url": "/images/07-tracks-and-tides/ep-1.webp",
+        "id": "02",
+        "url": "/images/07-tracks-and-tides/02.webp",
         "title": "Tokawa Dispatch",
         "caption": "A station guard holding flag batons waits at a quiet local station on the Choshi line.",
         "aspectRatio": "landscape",
@@ -641,8 +641,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ep-2",
-        "url": "/images/07-tracks-and-tides/ep-2.webp",
+        "id": "03",
+        "url": "/images/07-tracks-and-tides/03.webp",
         "title": "Parasol by the Shore",
         "caption": "A woman holds a parasol, looking out over the rocky coast as a girl walks nearby.",
         "aspectRatio": "landscape",
@@ -658,8 +658,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ep-3",
-        "url": "/images/07-tracks-and-tides/ep-3.webp",
+        "id": "04",
+        "url": "/images/07-tracks-and-tides/04.webp",
         "title": "Pacific Surge",
         "caption": "Waves crashing violently against the volcanic rocks under a bright blue sky.",
         "aspectRatio": "portrait",
@@ -675,8 +675,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ep-4",
-        "url": "/images/07-tracks-and-tides/ep-4.webp",
+        "id": "05",
+        "url": "/images/07-tracks-and-tides/05.webp",
         "title": "Iron Horse Consultation",
         "caption": "Railway workers discuss operations beside a classic orange DE10 diesel locomotive.",
         "aspectRatio": "portrait",
@@ -692,8 +692,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ep-5",
-        "url": "/images/07-tracks-and-tides/ep-5.webp",
+        "id": "06",
+        "url": "/images/07-tracks-and-tides/06.webp",
         "title": "Evening Over the Fields",
         "caption": "A dramatic purple twilight sky stretching over solar panels and local houses.",
         "aspectRatio": "landscape",
@@ -709,8 +709,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ep-6",
-        "url": "/images/07-tracks-and-tides/ep-6.webp",
+        "id": "07",
+        "url": "/images/07-tracks-and-tides/07.webp",
         "title": "Brick and Sky",
         "caption": "The white bell tower of a historic red-brick church rising toward passing clouds.",
         "aspectRatio": "portrait",
@@ -735,7 +735,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Tokyo, Japan",
     "coordinates": "35.6762° N, 139.6503° E",
-    "coverImage": "/images/08-diptych-of-her/cover.webp",
+    "coverImage": "/images/08-diptych-of-her/01.webp",
     "description": "A diptych capturing two contrasting moments of a young woman in a striped dress. The first frame presents her in a quiet, sunlit traditional garden sitting on a red bench; the second frame is a candid flash portrait of her crouching on a street crosswalk at night. Together they form a dialogue between quiet tradition and spontaneous urban night.",
     "colorTheme": {
       "bg": "bg-neutral-950",
@@ -744,8 +744,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "pa-1",
-        "url": "/images/08-diptych-of-her/pa-1.webp",
+        "id": "02",
+        "url": "/images/08-diptych-of-her/02.webp",
         "title": "Spontaneous Night",
         "caption": "A playful flash portrait of the subject crouching on a street crosswalk at night.",
         "aspectRatio": "portrait",
@@ -770,7 +770,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Otaru, Japan",
     "coordinates": "43.1907° N, 140.9947° E",
-    "coverImage": "/images/09-xiao-yuanhang/cover.webp",
+    "coverImage": "/images/09-xiao-yuanhang/01.webp",
     "description": "An intimate portrait study of Xiao Yuanhang, captured across various locations and light conditions in Otaru. Through grainy black-and-white double exposures, neon-lit close-ups, and direct natural light, this series explores the quiet moods, intensity, and introspective character of a single subject.",
     "colorTheme": {
       "bg": "bg-amber-50/30",
@@ -779,8 +779,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "in-1",
-        "url": "/images/09-xiao-yuanhang/in-1.webp",
+        "id": "02",
+        "url": "/images/09-xiao-yuanhang/02.webp",
         "title": "Raincoat and Glass",
         "caption": "A high-contrast black-and-white profile of Xiao Yuanhang wearing a clear plastic jacket.",
         "aspectRatio": "portrait",
@@ -796,8 +796,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "in-2",
-        "url": "/images/09-xiao-yuanhang/in-2.webp",
+        "id": "03",
+        "url": "/images/09-xiao-yuanhang/03.webp",
         "title": "Warm Neon",
         "caption": "Warm streetlights illuminating the profile of the subject under the city lights.",
         "aspectRatio": "portrait",
@@ -813,8 +813,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "in-3",
-        "url": "/images/09-xiao-yuanhang/in-3.webp",
+        "id": "04",
+        "url": "/images/09-xiao-yuanhang/04.webp",
         "title": "Concrete Shadow",
         "caption": "Golden hour sunlight raking across the face of the subject next to a weathered pillar.",
         "aspectRatio": "landscape",
@@ -830,8 +830,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "in-4",
-        "url": "/images/09-xiao-yuanhang/in-4.webp",
+        "id": "05",
+        "url": "/images/09-xiao-yuanhang/05.webp",
         "title": "Reflected Gaze",
         "caption": "A direct portrait of Xiao Yuanhang seen through a pane of glass with soft reflections.",
         "aspectRatio": "portrait",
@@ -847,8 +847,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "in-5",
-        "url": "/images/09-xiao-yuanhang/in-5.webp",
+        "id": "06",
+        "url": "/images/09-xiao-yuanhang/06.webp",
         "title": "The Diner",
         "caption": "An intense, candid look from the subject holding a spoon at a local eatery.",
         "aspectRatio": "portrait",
@@ -864,8 +864,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "in-6",
-        "url": "/images/09-xiao-yuanhang/in-6.webp",
+        "id": "07",
+        "url": "/images/09-xiao-yuanhang/07.webp",
         "title": "Clasped Hands",
         "caption": "A formal black-and-white portrait capturing the subject's quiet posture and clasped hands.",
         "aspectRatio": "portrait",
@@ -881,8 +881,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "in-7",
-        "url": "/images/09-xiao-yuanhang/in-7.webp",
+        "id": "08",
+        "url": "/images/09-xiao-yuanhang/08.webp",
         "title": "Alleyway Encounter",
         "caption": "Xiao Yuanhang stands in a narrow snowy alleyway, looking over his shoulder.",
         "aspectRatio": "portrait",
@@ -907,7 +907,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Okinawa, Japan",
     "coordinates": "26.2124° N, 127.6809° E",
-    "coverImage": "/images/10-okinawa-breeze/cover.webp",
+    "coverImage": "/images/10-okinawa-breeze/01.webp",
     "description": "A street-level study of Okinawa's unique cultural landscape, where local island life, tourist curiosity, and historical military presence coexist. These snapshots capture the quiet moments of rest, youthful play, and the distinct architecture of Japan's southern prefecture.",
     "colorTheme": {
       "bg": "bg-sky-50/50",
@@ -916,8 +916,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "ou-1",
-        "url": "/images/10-okinawa-breeze/ou-1.webp",
+        "id": "02",
+        "url": "/images/10-okinawa-breeze/02.webp",
         "title": "The Conductor",
         "caption": "A boy wearing a paper Yui Rail monorail hat checks his phone while waiting on a platform.",
         "aspectRatio": "portrait",
@@ -933,8 +933,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ou-2",
-        "url": "/images/10-okinawa-breeze/ou-2.webp",
+        "id": "03",
+        "url": "/images/10-okinawa-breeze/03.webp",
         "title": "Sightseers",
         "caption": "Tourists with luggage look up and take photos on a quiet street next to parked scooters.",
         "aspectRatio": "landscape",
@@ -950,8 +950,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ou-3",
-        "url": "/images/10-okinawa-breeze/ou-3.webp",
+        "id": "04",
+        "url": "/images/10-okinawa-breeze/04.webp",
         "title": "Camp Lester Gate",
         "caption": "A guard stands at the entrance of Camp Lester, capturing the dual character of Okinawa's land.",
         "aspectRatio": "landscape",
@@ -976,7 +976,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2025",
     "location": "Tokyo, Japan",
     "coordinates": "35.6762° N, 139.6503° E",
-    "coverImage": "/images/11-transient-states/cover.webp",
+    "coverImage": "/images/11-transient-states/01.webp",
     "description": "A visual journal tracing a young traveler’s journey across contrasting environments. From the vibrant tiled facades of Bangkok temples and the clear float of tropical seas to quiet domestic shadows, close details of touch, and the rushing light trails of Tokyo bridges at night, these frames explore the fluid states of youth and motion.",
     "colorTheme": {
       "bg": "bg-orange-50/40",
@@ -985,8 +985,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "vi-1",
-        "url": "/images/11-transient-states/vi-1.webp",
+        "id": "02",
+        "url": "/images/11-transient-states/02.webp",
         "title": "Temple Wall",
         "caption": "Standing in front of the ornate, colorful porcelain details of Wat Arun, Bangkok.",
         "aspectRatio": "portrait",
@@ -1002,8 +1002,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "vi-2",
-        "url": "/images/11-transient-states/vi-2.webp",
+        "id": "03",
+        "url": "/images/11-transient-states/03.webp",
         "title": "Weightless",
         "caption": "Floating peacefully in the shallow, clear turquoise sea of a tropical island.",
         "aspectRatio": "landscape",
@@ -1019,8 +1019,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "vi-3",
-        "url": "/images/11-transient-states/vi-3.webp",
+        "id": "04",
+        "url": "/images/11-transient-states/04.webp",
         "title": "Sleeping Engine",
         "caption": "A motorcycle covered in plastic stands silently under neon lights in a Tokyo backstreet.",
         "aspectRatio": "landscape",
@@ -1036,8 +1036,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "vi-4",
-        "url": "/images/11-transient-states/vi-4.webp",
+        "id": "05",
+        "url": "/images/11-transient-states/05.webp",
         "title": "The Grip",
         "caption": "An intimate close-up of a hand clutching a bag strap against the soft bokeh of city lights.",
         "aspectRatio": "landscape",
@@ -1053,8 +1053,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "vi-5",
-        "url": "/images/11-transient-states/vi-5.webp",
+        "id": "06",
+        "url": "/images/11-transient-states/06.webp",
         "title": "Light Streams",
         "caption": "Leaning on a bridge overlooking long-exposure light trails of traffic under the city night sky.",
         "aspectRatio": "landscape",
@@ -1079,7 +1079,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2026",
     "location": "Hokkaido, Japan",
     "coordinates": "45.5230° N, 141.9366° E",
-    "coverImage": "/images/12-analog-hokkaido/cover.webp",
+    "coverImage": "/images/12-analog-hokkaido/01.webp",
     "description": "Film photography capturing the northernmost points of Hokkaido, steaming ramen in Sapporo nights, and silent snowscapes of winter Otaru.",
     "colorTheme": {
       "bg": "bg-stone-50",
@@ -1088,8 +1088,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "ah001",
-        "url": "/images/12-analog-hokkaido/ah001.webp",
+        "id": "02",
+        "url": "/images/12-analog-hokkaido/02.webp",
         "title": "Sapporo Ramen Craft",
         "caption": "A steaming bowl of fresh ramen prepared in a cozy Sapporo eatery.",
         "aspectRatio": "landscape",
@@ -1105,8 +1105,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ah002",
-        "url": "/images/12-analog-hokkaido/ah002.webp",
+        "id": "03",
+        "url": "/images/12-analog-hokkaido/03.webp",
         "title": "Otaru Snow Street",
         "caption": "Falling snow dusting the streets of Otaru during winter.",
         "aspectRatio": "landscape",
@@ -1122,8 +1122,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ah003",
-        "url": "/images/12-analog-hokkaido/ah003.webp",
+        "id": "04",
+        "url": "/images/12-analog-hokkaido/04.webp",
         "title": "Northern Transit Line",
         "caption": "Railway tracks extending into the vast white snowlands of northern Hokkaido.",
         "aspectRatio": "landscape",
@@ -1139,8 +1139,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ah004",
-        "url": "/images/12-analog-hokkaido/ah004.webp",
+        "id": "05",
+        "url": "/images/12-analog-hokkaido/05.webp",
         "title": "Winter Silence",
         "caption": "Quiet lamplight illuminating high snow walls in Otaru.",
         "aspectRatio": "landscape",
@@ -1156,8 +1156,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ah005",
-        "url": "/images/12-analog-hokkaido/ah005.webp",
+        "id": "06",
+        "url": "/images/12-analog-hokkaido/06.webp",
         "title": "Sapporo Night Steam",
         "caption": "Warm rising steam inside a late-night Sapporo ramen shop.",
         "aspectRatio": "landscape",
@@ -1173,8 +1173,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "ah006",
-        "url": "/images/12-analog-hokkaido/ah006.webp",
+        "id": "07",
+        "url": "/images/12-analog-hokkaido/07.webp",
         "title": "Northernmost Monument",
         "caption": "The landmark monument designating the northernmost point of Japan at Soya Cape.",
         "aspectRatio": "landscape",
@@ -1199,7 +1199,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2026",
     "location": "Thailand, Chiba & Taiwan",
     "coordinates": "13.7563° N, 100.5018° E",
-    "coverImage": "/images/13-transient-geographies/cover.webp",
+    "coverImage": "/images/13-transient-geographies/01.webp",
     "description": "A travelogue of street corners across Thailand, dynamic actions at Chiba racecourse, and nostalgic fabric door curtains in Taiwan.",
     "colorTheme": {
       "bg": "bg-zinc-100",
@@ -1208,8 +1208,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     },
     "images": [
       {
-        "id": "tg001",
-        "url": "/images/13-transient-geographies/tg001.webp",
+        "id": "02",
+        "url": "/images/13-transient-geographies/02.webp",
         "title": "Bangkok Transit Colors",
         "caption": "Tangled power lines and colorful tuk-tuks in Bangkok's bustling center.",
         "aspectRatio": "landscape",
@@ -1225,8 +1225,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "tg002",
-        "url": "/images/13-transient-geographies/tg002.webp",
+        "id": "03",
+        "url": "/images/13-transient-geographies/03.webp",
         "title": "Chiba Racecourse Track",
         "caption": "Wind and mud flying by the racing track at Chiba racecourse.",
         "aspectRatio": "portrait",
@@ -1242,8 +1242,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "tg003",
-        "url": "/images/13-transient-geographies/tg003.webp",
+        "id": "04",
+        "url": "/images/13-transient-geographies/04.webp",
         "title": "Taiwan Curtain Textures",
         "caption": "Nostalgic blue fabric door curtains at a traditional shop doorway in Taiwan.",
         "aspectRatio": "landscape",
@@ -1259,8 +1259,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       },
       {
-        "id": "tg004",
-        "url": "/images/13-transient-geographies/tg004.webp",
+        "id": "05",
+        "url": "/images/13-transient-geographies/05.webp",
         "title": "Taiwan Doorway Detail",
         "caption": "Battered walls and fabric curtains hanging over a door frame in a Taiwan alleyway.",
         "aspectRatio": "landscape",

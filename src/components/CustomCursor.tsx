@@ -156,18 +156,21 @@ export default function CustomCursor({ lang }: { lang: Language }) {
 
   // MutationObserver to detect modal mount/unmount and immediately update cursor state without mouse moves
   useEffect(() => {
+    const pendingTimeouts: number[] = [];
+
     const observer = new MutationObserver(() => {
       // Use short timeouts so React renders the modal components first
-      const t1 = setTimeout(forceUpdateCursorAtCurrentPos, 50);
-      const t2 = setTimeout(forceUpdateCursorAtCurrentPos, 150);
-      return () => {
-        clearTimeout(t1);
-        clearTimeout(t2);
-      };
+      pendingTimeouts.push(
+        window.setTimeout(forceUpdateCursorAtCurrentPos, 50),
+        window.setTimeout(forceUpdateCursorAtCurrentPos, 150),
+      );
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      pendingTimeouts.forEach(clearTimeout);
+    };
   }, [forceUpdateCursorAtCurrentPos]);
 
   // Click listener fallback to trigger recalculation when views change via user action

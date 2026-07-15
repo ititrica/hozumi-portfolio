@@ -171,10 +171,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本北海道",
       category: "人像",
       images: {
-        "sm-1": { title: "温光", caption: "路灯柔和光芒下的宁静时刻。", location: "日本札幌" },
-        "sm-2": { title: "台阶之上", caption: "蓝色冬空下从楼梯上望去的景色。", location: "日本小樽" },
-        "sm-3": { title: "通道", caption: "在阴影中斜靠着冰冷的混凝土墙面。", location: "日本旭川" },
-        "sm-4": { title: "夜流", caption: "在模糊的城市灯光和穿梭车辆中独自前行。", location: "日本札幌" }
+        "02": { title: "温光", caption: "路灯柔和光芒下的宁静时刻。", location: "日本札幌" },
+        "03": { title: "台阶之上", caption: "蓝色冬空下从楼梯上望去的景色。", location: "日本小樽" },
+        "04": { title: "通道", caption: "在阴影中斜靠着冰冷的混凝土墙面。", location: "日本旭川" },
+        "05": { title: "夜流", caption: "在模糊的城市灯光和穿梭车辆中独自前行。", location: "日本札幌" }
       }
     },
     "monochrome-studies": {
@@ -184,10 +184,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本冲绳",
       category: "黑白",
       images: {
-        "ps-1": { title: "那霸前厅", caption: "混凝土酒店入口处的几何阴影。", location: "日本那霸" },
-        "ps-2": { title: "街头乐手", caption: "夜间在人行道上表演的街头艺人。", location: "日本那霸" },
-        "ps-3": { title: "独鸦", caption: "一只栖息在海边白色金属栏杆上的鸟。", location: "日本冲绳海岸" },
-        "ps-4": { title: "海洋结构", caption: "伫立在海浪中的旧混凝土平台。", location: "日本冲绳" }
+        "02": { title: "那霸前厅", caption: "混凝土酒店入口处的几何阴影。", location: "日本那霸" },
+        "03": { title: "街头乐手", caption: "夜间在人行道上表演的街头艺人。", location: "日本那霸" },
+        "04": { title: "独鸦", caption: "一只栖息在海边白色金属栏杆上的鸟。", location: "日本冲绳海岸" },
+        "05": { title: "海洋结构", caption: "伫立在海浪中的旧混凝土平台。", location: "日本冲绳" }
       }
     },
     "expressions": {
@@ -197,10 +197,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本东京",
       category: "人像",
       images: {
-        "es-1": { title: "中立", caption: "身着深色悬垂衣物的纯净棚拍肖像。", location: "日本东京" },
-        "es-2": { title: "细节", caption: "双手握着金属登山扣的特写。", location: "日本东京" },
-        "es-3": { title: "螺旋台阶", caption: "坐在混凝土螺旋楼梯上仰望。", location: "日本东京" },
-        "es-4": { title: "真情", caption: "展现真实情感的生动特写快照。", location: "日本东京" }
+        "02": { title: "中立", caption: "身着深色悬垂衣物的纯净棚拍肖像。", location: "日本东京" },
+        "03": { title: "细节", caption: "双手握着金属登山扣的特写。", location: "日本东京" },
+        "04": { title: "螺旋台阶", caption: "坐在混凝土螺旋楼梯上仰望。", location: "日本东京" },
+        "05": { title: "真情", caption: "展现真实情感的生动特写快照。", location: "日本东京" }
       }
     },
     "urban-connection": {
@@ -210,10 +210,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本东京",
       category: "人像",
       images: {
-        "hl-1": { title: "长椅", caption: "在被绿叶环绕的宁静城市花园中坐在一起。", location: "日本东京" },
-        "hl-2": { title: "瞬间", caption: "一个温柔亲吻的坦率特写。", location: "日本东京" },
-        "hl-3": { title: "仰望", caption: "双手交叉站在现代摩天大楼下的小路上。", location: "日本东京" },
-        "hl-4": { title: "凝视", caption: "双手在运动中的直接近距离肖像。", location: "日本东京" }
+        "02": { title: "长椅", caption: "在被绿叶环绕的宁静城市花园中坐在一起。", location: "日本东京" },
+        "03": { title: "瞬间", caption: "一个温柔亲吻的坦率特写。", location: "日本东京" },
+        "04": { title: "仰望", caption: "双手交叉站在现代摩天大楼下的小路上。", location: "日本东京" },
+        "05": { title: "凝视", caption: "双手在运动中的直接近距离肖像。", location: "日本东京" }
       }
     },
     "winter-illusion": {
@@ -223,14 +223,14 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本北海道",
       category: "人像",
       images: {
-        "ic-1": { title: "圆点墙", caption: "在红色圆点背景前的宁静肖像。", location: "日本东京" },
-        "ic-2": { title: "双重视觉", caption: "展示两个视角的创意双重曝光肖像。", location: "日本东京" },
-        "ic-3": { title: "冬日寂静", caption: "在白雪皑皑的田野中斜靠在光秃的树干上。", location: "日本美瑛" },
-        "ic-4": { title: "冷风低语", caption: "在冬日霜雪环绕下的宁静人像。", location: "日本北海道" },
-        "ic-5": { title: "烟与寒冷", caption: "雪地里手缠绷带的特写肖像。", location: "日本美瑛" },
-        "ic-6": { title: "积雪", caption: "平躺在辽阔的积雪山丘上。", location: "日本旭川" },
-        "ic-7": { title: "霜镜", caption: "冬日侧影上光与冰的折射交融。", location: "日本北海道" },
-        "ic-8": { title: "雪之幻影", caption: "与漫天飞雪交相辉映的双重曝光剪影。", location: "日本北海道" }
+        "02": { title: "圆点墙", caption: "在红色圆点背景前的宁静肖像。", location: "日本东京" },
+        "03": { title: "双重视觉", caption: "展示两个视角的创意双重曝光肖像。", location: "日本东京" },
+        "04": { title: "冬日寂静", caption: "在白雪皑皑的田野中斜靠在光秃的树干上。", location: "日本美瑛" },
+        "05": { title: "冷风低语", caption: "在冬日霜雪环绕下的宁静人像。", location: "日本北海道" },
+        "06": { title: "烟与寒冷", caption: "雪地里手缠绷带的特写肖像。", location: "日本美瑛" },
+        "07": { title: "积雪", caption: "平躺在辽阔的积雪山丘上。", location: "日本旭川" },
+        "08": { title: "霜镜", caption: "冬日侧影上光与冰的折射交融。", location: "日本北海道" },
+        "09": { title: "雪之幻影", caption: "与漫天飞雪交相辉映的双重曝光剪影。", location: "日本北海道" }
       }
     },
     "northern-fragments": {
@@ -240,11 +240,11 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本北海道",
       category: "街头",
       images: {
-        "th-1": { title: "海滨小憩", caption: "一座伫立在海边的灰蓝色房屋，旁边停放着一辆红色微型车，北海道海岸。" },
-        "th-2": { title: "饱经风霜", caption: "一座逐渐坍塌回归泥土的木制废墟，与后方现代化的住宅形成对比。" },
-        "th-3": { title: "商街玩伴", caption: "小樽落雪的商街中，一只巨型毛绒熊静静坐在室外桌旁。" },
-        "th-4": { title: "泥地赛道", caption: "在北方苍白温和的阳光下，马匹在泥地比赛中扬起沙尘。" },
-        "th-5": { title: "静谧海岸", caption: "一道风化的防波堤延伸进苍茫迷蒙的灰色海面。", location: "日本北海道" }
+        "02": { title: "海滨小憩", caption: "一座伫立在海边的灰蓝色房屋，旁边停放着一辆红色微型车，北海道海岸。" },
+        "03": { title: "饱经风霜", caption: "一座逐渐坍塌回归泥土的木制废墟，与后方现代化的住宅形成对比。" },
+        "04": { title: "商街玩伴", caption: "小樽落雪的商街中，一只巨型毛绒熊静静坐在室外桌旁。" },
+        "05": { title: "泥地赛道", caption: "在北方苍白温和的阳光下，马匹在泥地比赛中扬起沙尘。" },
+        "06": { title: "静谧海岸", caption: "一道风化的防波堤延伸进苍茫迷蒙的灰色海面。", location: "日本北海道" }
       }
     },
     "tracks-and-tides": {
@@ -254,12 +254,12 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本铫子",
       category: "街头",
       images: {
-        "ep-1": { title: "外川发车", caption: "铫子电铁小站上，手持信号旗的铁路员在站房旁值守等待。" },
-        "ep-2": { title: "海滩阳伞", caption: "一位打着阳伞的女性在礁石海滩上眺望，旁边有一名女孩在岩石间漫步。" },
-        "ep-3": { title: "太平洋海浪", caption: "在晴空下，海浪猛烈撞击火山岩喷涌出白色浪花。" },
-        "ep-4": { title: "铁马探讨", caption: "在经典橙色 DE10 柴油机车旁，工作人员正在商讨工作。" },
-        "ep-5": { title: "原野暮光", caption: "壮丽的暮色天空中，粉紫晚霞延伸在太阳能电池板和民居之上。" },
-        "ep-6": { title: "红砖与天空", caption: "历史悠久的红砖教堂白色钟楼直插云霄。" }
+        "02": { title: "外川发车", caption: "铫子电铁小站上，手持信号旗的铁路员在站房旁值守等待。" },
+        "03": { title: "海滩阳伞", caption: "一位打着阳伞的女性在礁石海滩上眺望，旁边有一名女孩在岩石间漫步。" },
+        "04": { title: "太平洋海浪", caption: "在晴空下，海浪猛烈撞击火山岩喷涌出白色浪花。" },
+        "05": { title: "铁马探讨", caption: "在经典橙色 DE10 柴油机车旁，工作人员正在商讨工作。" },
+        "06": { title: "原野暮光", caption: "壮丽的暮色天空中，粉紫晚霞延伸在太阳能电池板和民居之上。" },
+        "07": { title: "红砖与天空", caption: "历史悠久的红砖教堂白色钟楼直插云霄。" }
       }
     },
     "diptych-of-her": {
@@ -269,7 +269,7 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本东京",
       category: "人像",
       images: {
-        "pa-1": { title: "即兴之夜", caption: "闪光灯下，被摄对象在深夜人行横道线上蹲着的回眸生动肖像。" }
+        "02": { title: "即兴之夜", caption: "闪光灯下，被摄对象在深夜人行横道线上蹲着的回眸生动肖像。" }
       }
     },
     "xiao-yuanhang": {
@@ -279,13 +279,13 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本小樽",
       category: "人像",
       images: {
-        "in-1": { title: "雨衣与玻璃", caption: "肖远航身穿透明雨衣的高反差黑白侧面特写。" },
-        "in-2": { title: "温暖霓虹", caption: "夜晚温暖的街灯照亮了霓虹灯下拍摄对象的侧面轮廓。" },
-        "in-3": { title: "混凝土阴影", caption: "黄昏时分金色的阳光掠过靠在风化柱子旁的脸庞。" },
-        "in-4": { title: "折射凝视", caption: "隔着带有些许反光的玻璃窗，直接凝视着镜头。" },
-        "in-5": { title: "餐馆里", caption: "在当地餐馆里手持勺子时随性而专注的神情。" },
-        "in-6": { title: "交叠的双手", caption: "黑色高领衫，双手交叠坐在桌前，呈现安静肃穆的黑白肖像状态。" },
-        "in-7": { title: "小巷邂逅", caption: "肖远航站在落雪的狭窄小巷中，回首凝视。", location: "日本小樽" }
+        "02": { title: "雨衣与玻璃", caption: "肖远航身穿透明雨衣的高反差黑白侧面特写。" },
+        "03": { title: "温暖霓虹", caption: "夜晚温暖的街灯照亮了霓虹灯下拍摄对象的侧面轮廓。" },
+        "04": { title: "混凝土阴影", caption: "黄昏时分金色的阳光掠过靠在风化柱子旁的脸庞。" },
+        "05": { title: "折射凝视", caption: "隔着带有些许反光的玻璃窗，直接凝视着镜头。" },
+        "06": { title: "餐馆里", caption: "在当地餐馆里手持勺子时随性而专注的神情。" },
+        "07": { title: "交叠的双手", caption: "黑色高领衫，双手交叠坐在桌前，呈现安静肃穆的黑白肖像状态。" },
+        "08": { title: "小巷邂逅", caption: "肖远航站在落雪的狭窄小巷中，回首凝视。", location: "日本小樽" }
       }
     },
     "okinawa-breeze": {
@@ -295,9 +295,9 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本冲绳",
       category: "街头",
       images: {
-        "ou-1": { title: "列车长", caption: "戴着“Yui Rail”冲绳单轨电车折纸乘务员帽子的少年，在站台旁等待时玩手机。" },
-        "ou-2": { title: "游客们", caption: "拉着行李箱的游客在停放的摩托车旁抬头拍照。" },
-        "ou-3": { title: "莱斯特营大门", caption: "一名守卫站在莱斯特营（Camp Lester）大门口，折射出冲绳土地的双重属性。" }
+        "02": { title: "列车长", caption: "戴着“Yui Rail”冲绳单轨电车折纸乘务员帽子的少年，在站台旁等待时玩手机。" },
+        "03": { title: "游客们", caption: "拉着行李箱的游客在停放的摩托车旁抬头拍照。" },
+        "04": { title: "莱斯特营大门", caption: "一名守卫站在莱斯特营（Camp Lester）大门口，折射出冲绳土地的双重属性。" }
       }
     },
     "transient-states": {
@@ -307,11 +307,11 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本东京",
       category: "街头",
       images: {
-        "vi-1": { title: "寺庙之墙", caption: "站在曼谷郑王庙（Wat Arun）精美多彩的陶瓷细节前。" },
-        "vi-2": { title: "无重状态", caption: "安静地漂浮在热带海岛清澈见底的浅绿海水中。" },
-        "vi-3": { title: "沉睡的引擎", caption: "东京后街霓虹灯下，一辆用雨蓬塑料布盖着的摩托车静立着。" },
-        "vi-4": { title: "紧握", caption: "以城市霓虹光晕为背景，一只手攥紧包带的局部特写。" },
-        "vi-5": { title: "光之流", caption: "靠在天桥栏杆上，俯瞰黑夜下长曝光的汽车尾灯光轨。" }
+        "02": { title: "寺庙之墙", caption: "站在曼谷郑王庙（Wat Arun）精美多彩的陶瓷细节前。" },
+        "03": { title: "无重状态", caption: "安静地漂浮在热带海岛清澈见底的浅绿海水中。" },
+        "04": { title: "沉睡的引擎", caption: "东京后街霓虹灯下，一辆用雨蓬塑料布盖着的摩托车静立着。" },
+        "05": { title: "紧握", caption: "以城市霓虹光晕为背景，一只手攥紧包带的局部特写。" },
+        "06": { title: "光之流", caption: "靠在天桥栏杆上，俯瞰黑夜下长曝光的汽车尾灯光轨。" }
       }
     },
     "analog-hokkaido": {
@@ -321,12 +321,12 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本北海道",
       category: "风景",
       images: {
-        "ah001": { title: "札幌手工拉面", caption: "札幌一家温馨的小饭馆里，一碗热气腾腾的新鲜拉面。" },
-        "ah002": { title: "小樽雪街", caption: "冬日小樽街道上飘落的细雪。" },
-        "ah003": { title: "北方铁道线", caption: "延伸至北海道北部辽阔雪原的铁轨。" },
-        "ah004": { title: "冬日静谧", caption: "冬日小樽，路灯柔和地照亮着高高的雪墙。" },
-        "ah005": { title: "札幌深夜热气", caption: "深夜的札幌拉面店里，升腾着融融的暖气。" },
-        "ah006": { title: "最北端纪念碑", caption: "设立在日本最北端宗谷岬的标志性纪念碑。" }
+        "02": { title: "札幌手工拉面", caption: "札幌一家温馨的小饭馆里，一碗热气腾腾的新鲜拉面。" },
+        "03": { title: "小樽雪街", caption: "冬日小樽街道上飘落的细雪。" },
+        "04": { title: "北方铁道线", caption: "延伸至北海道北部辽阔雪原的铁轨。" },
+        "05": { title: "冬日静谧", caption: "冬日小樽，路灯柔和地照亮着高高的雪墙。" },
+        "06": { title: "札幌深夜热气", caption: "深夜的札幌拉面店里，升腾着融融的暖气。" },
+        "07": { title: "最北端纪念碑", caption: "设立在日本最北端宗谷岬的标志性纪念碑。" }
       }
     },
     "transient-geographies": {
@@ -336,10 +336,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "泰国、千叶与台湾",
       category: "街头",
       images: {
-        "tg001": { title: "曼谷街头色彩", caption: "曼谷繁华市中心交织的电线与色彩斑斓的突突车。" },
-        "tg002": { title: "千叶赛马场赛道", caption: "在千叶赛马场的泥地赛道上，扬起尘土与泥沙的奔马特写。" },
-        "tg003": { title: "台湾暖帘纹理", caption: "台湾传统商铺门前，一幅充满怀旧气息的蓝色布质门帘。" },
-        "tg004": { title: "台湾门廊细节", caption: "台湾小巷深处，斑驳陆离的墙面与挂在门框上的布帘。" }
+        "02": { title: "曼谷街头色彩", caption: "曼谷繁华市中心交织的电线与色彩斑斓的突突车。" },
+        "03": { title: "千叶赛马场赛道", caption: "在千叶赛马场的泥地赛道上，扬起尘土与泥沙的奔马特写。" },
+        "04": { title: "台湾暖帘纹理", caption: "台湾传统商铺门前，一幅充满怀旧气息的蓝色布质门帘。" },
+        "05": { title: "台湾门廊细节", caption: "台湾小巷深处，斑驳陆离的墙面与挂在门框上的布帘。" }
       }
     }
   },
@@ -351,10 +351,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、北海道",
       category: "ポートレート",
       images: {
-        "sm-1": { title: "温かい光", caption: "街灯の柔らかな光の下での静かな瞬間。", location: "日本、札幌" },
-        "sm-2": { title: "階段の上から", caption: "青い冬空の下、階段からの眺め。", location: "日本、小樽" },
-        "sm-3": { title: "通路", caption: "影の中、冷たいコンクリートの壁に寄りかかる。", location: "日本、旭川" },
-        "sm-4": { title: "夜の流れ", caption: "にじむ街の光と行き交う車の中での孤独な歩み。", location: "日本、札幌" }
+        "02": { title: "温かい光", caption: "街灯の柔らかな光の下での静かな瞬間。", location: "日本、札幌" },
+        "03": { title: "階段の上から", caption: "青い冬空の下、階段からの眺め。", location: "日本、小樽" },
+        "04": { title: "通路", caption: "影の中、冷たいコンクリートの壁に寄りかかる。", location: "日本、旭川" },
+        "05": { title: "夜の流れ", caption: "にじむ街の光と行き交う車の中での孤独な歩み。", location: "日本、札幌" }
       }
     },
     "monochrome-studies": {
@@ -364,10 +364,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、沖縄",
       category: "モノクロ",
       images: {
-        "ps-1": { title: "那覇の前室", caption: "コンクリートホテルの入り口における幾何学的な影。", location: "日本、那覇" },
-        "ps-2": { title: "ストリート・ミュージシャン", caption: "夜、歩道でパフォーマンスをするストリートミュージシャン。", location: "日本、那覇" },
-        "ps-3": { title: "孤独なカラス", caption: "海辺の白い金属の手すりに止まる鳥。", location: "日本、沖縄海岸" },
-        "ps-4": { title: "海の構造物", caption: "波の中に立つ古いコンクリートのプラットフォーム。", location: "日本、沖縄" }
+        "02": { title: "那覇の前室", caption: "コンクリートホテルの入り口における幾何学的な影。", location: "日本、那覇" },
+        "03": { title: "ストリート・ミュージシャン", caption: "夜、歩道でパフォーマンスをするストリートミュージシャン。", location: "日本、那覇" },
+        "04": { title: "孤独なカラス", caption: "海辺の白い金属の手すりに止まる鳥。", location: "日本、沖縄海岸" },
+        "05": { title: "海の構造物", caption: "波の中に立つ古いコンクリートのプラットフォーム。", location: "日本、沖縄" }
       }
     },
     "expressions": {
@@ -377,10 +377,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、東京",
       category: "ポートレート",
       images: {
-        "es-1": { title: "ニュートラル", caption: "暗いドレープの衣服をまとったクリーンなスタジオ・ポートレート。", location: "日本、東京" },
-        "es-2": { title: "ディテール", caption: "金属製のカラビナを握る手のクローズアップ。", location: "日本、東京" },
-        "es-3": { title: "螺旋階段", caption: "コンクリートの螺旋階段に座り、上を見上げる。", location: "日本、東京" },
-        "es-4": { title: "ありのままの感情", caption: "生の感情を捉えた表情豊かなクローズアップ・スナップショット。", location: "日本、東京" }
+        "02": { title: "ニュートラル", caption: "暗いドレープの衣服をまとったクリーンなスタジオ・ポートレート。", location: "日本、東京" },
+        "03": { title: "ディテール", caption: "金属製のカラビナを握る手のクローズアップ。", location: "日本、東京" },
+        "04": { title: "螺旋階段", caption: "コンクリートの螺旋階段に座り、上を見上げる。", location: "日本、東京" },
+        "05": { title: "ありのままの感情", caption: "生の感情を捉えた表情豊かなクローズアップ・スナップショット。", location: "日本、東京" }
       }
     },
     "urban-connection": {
@@ -390,10 +390,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、東京",
       category: "ポートレート",
       images: {
-        "hl-1": { title: "ベンチ", caption: "緑の葉に囲まれた静かな都市の庭園で共に座る。", location: "日本、東京" },
-        "hl-2": { title: "瞬間", caption: "交わされる遊び心のあるキスのスナップショット。", location: "日本、東京" },
-        "hl-3": { title: "見上げる", caption: "現代の超高層ビルの下、腕を組んで小道に立つ。", location: "日本、東京" },
-        "hl-4": { title: "まなざし", caption: "動く手が写る、直接的でクローズアップされたポートレート。", location: "日本、東京" }
+        "02": { title: "ベンチ", caption: "緑の葉に囲まれた静かな都市の庭園で共に座る。", location: "日本、東京" },
+        "03": { title: "瞬間", caption: "交わされる遊び心のあるキスのスナップショット。", location: "日本、東京" },
+        "04": { title: "見上げる", caption: "現代の超高層ビルの下、腕を組んで小道に立つ。", location: "日本、東京" },
+        "05": { title: "まなざし", caption: "動く手が写る、直接的でクローズアップされたポートレート。", location: "日本、東京" }
       }
     },
     "winter-illusion": {
@@ -403,14 +403,14 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、北海道",
       category: "ポートレート",
       images: {
-        "ic-1": { title: "ドットの壁", caption: "赤いドットのパターンの前での静かなポートレート。", location: "日本、東京" },
-        "ic-2": { title: "ダブル・ビジョン", caption: "2つの視点を示すクリエイティブな二重露光ポートレート。", location: "日本、東京" },
-        "ic-3": { title: "冬の静寂", caption: "白い雪原の中、葉のない樹木に寄りかかる。", location: "日本、美瑛" },
-        "ic-4": { title: "冷たい囁き", caption: "冬の霜に包まれた静かなポートレート。", location: "日本、北海道" },
-        "ic-5": { title: "煙草と寒さ", caption: "雪の中、包帯を巻いた手のクローズアップ・ポートレート。", location: "日本、美瑛" },
-        "ic-6": { title: "吹き溜まり", caption: "広大な雪に覆われた丘の上に横たわる。", location: "日本、旭川" },
-        "ic-7": { title: "霜の鏡", caption: "冬の横顔に映る光と氷の反射。", location: "日本、北海道" },
-        "ic-8": { title: "雪の幻想", caption: "舞い散る雪と溶け合う二重露光のシルエット。", location: "日本、北海道" }
+        "02": { title: "ドットの壁", caption: "赤いドットのパターンの前での静かなポートレート。", location: "日本、東京" },
+        "03": { title: "ダブル・ビジョン", caption: "2つの視点を示すクリエイティブな二重露光ポートレート。", location: "日本、東京" },
+        "04": { title: "冬の静寂", caption: "白い雪原の中、葉のない樹木に寄りかかる。", location: "日本、美瑛" },
+        "05": { title: "冷たい囁き", caption: "冬の霜に包まれた静かなポートレート。", location: "日本、北海道" },
+        "06": { title: "煙草と寒さ", caption: "雪の中、包帯を巻いた手のクローズアップ・ポートレート。", location: "日本、美瑛" },
+        "07": { title: "吹き溜まり", caption: "広大な雪に覆われた丘の上に横たわる。", location: "日本、旭川" },
+        "08": { title: "霜の鏡", caption: "冬の横顔に映る光と氷の反射。", location: "日本、北海道" },
+        "09": { title: "雪の幻想", caption: "舞い散る雪と溶け合う二重露光のシルエット。", location: "日本、北海道" }
       }
     },
     "northern-fragments": {
@@ -420,11 +420,11 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、北海道",
       category: "ストリート",
       images: {
-        "th-1": { title: "海辺の休息", caption: "北海道の海岸線、水辺に佇むグレーブルーの家とポツンと置かれた赤い軽自動車。" },
-        "th-2": { title: "風化した骨組み", caption: "崩壊しつつある古い木造の小屋が、後方の現代的な住宅と対比を成しながら土に還っていく。" },
-        "th-3": { title: "サンモール一番街の相棒", caption: "雪の降る小樽の商店街で、屋外のテーブルに静かに座る巨大なクマのぬいぐるみ。" },
-        "th-4": { title: "ダートコース", caption: "北の淡い太陽の下、地元のレースで馬たちが砂塵を巻き上げる。" },
-        "th-5": { title: "静寂の海岸", caption: "薄暗い空の下、霧が立ち込めるグレーの海へと伸びる防波堤。", location: "日本、北海道" }
+        "02": { title: "海辺の休息", caption: "北海道の海岸線、水辺に佇むグレーブルーの家とポツンと置かれた赤い軽自動車。" },
+        "03": { title: "風化した骨組み", caption: "崩壊しつつある古い木造の小屋が、後方の現代的な住宅と対比を成しながら土に還っていく。" },
+        "04": { title: "サンモール一番街の相棒", caption: "雪の降る小樽の商店街で、屋外のテーブルに静かに座る巨大なクマのぬいぐるみ。" },
+        "05": { title: "ダートコース", caption: "北の淡い太陽の下、地元のレースで馬たちが砂塵を巻き上げる。" },
+        "06": { title: "静寂の海岸", caption: "薄暗い空の下、霧が立ち込めるグレーの海へと伸びる防波堤。", location: "日本、北海道" }
       }
     },
     "tracks-and-tides": {
@@ -434,12 +434,12 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、銚子",
       category: "ストリート",
       images: {
-        "ep-1": { title: "外川発車", caption: "銚子電鉄の静かな駅で、信号旗を持った駅員が出発を待つ。" },
-        "ep-2": { title: "浜辺の日傘", caption: "日傘を差した女性が岩だらけの海岸を見つめ、近くを少女が歩く。" },
-        "ep-3": { title: "太平洋のうねり", caption: "青空の下、火山岩に激しく打ち付け砕け散る波。" },
-        "ep-4": { title: "鉄馬の打ち合わせ", caption: "クラシックなオレンジ色のDE10形ディーゼル機関車の横で、鉄道員たちが作業の打ち合わせをする。" },
-        "ep-5": { title: "野原の夕暮れ", caption: "ソーラーパネルと民家の上に広がる、ドラマチックな紫色の夕焼け空。" },
-        "ep-6": { title: "赤煉瓦と空", caption: "流れる雲に向かってそびえ立つ、歴史的な赤煉瓦教会の白い鐘楼。" }
+        "02": { title: "外川発車", caption: "銚子電鉄の静かな駅で、信号旗を持った駅員が出発を待つ。" },
+        "03": { title: "浜辺の日傘", caption: "日傘を差した女性が岩だらけの海岸を見つめ、近くを少女が歩く。" },
+        "04": { title: "太平洋のうねり", caption: "青空の下、火山岩に激しく打ち付け砕け散る波。" },
+        "05": { title: "鉄馬の打ち合わせ", caption: "クラシックなオレンジ色のDE10形ディーゼル機関車の横で、鉄道員たちが作業の打ち合わせをする。" },
+        "06": { title: "野原の夕暮れ", caption: "ソーラーパネルと民家の上に広がる、ドラマチックな紫色の夕焼け空。" },
+        "07": { title: "赤煉瓦と空", caption: "流れる雲に向かってそびえ立つ、歴史的な赤煉瓦教会の白い鐘楼。" }
       }
     },
     "diptych-of-her": {
@@ -449,7 +449,7 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、東京",
       category: "ポートレート",
       images: {
-        "pa-1": { title: "スポンテニアスな夜", caption: "夜の交差点の横断歩道上でしゃがみ込み、こちらを振り返る彼女のフラッシュ・ポートレート。" }
+        "02": { title: "スポンテニアスな夜", caption: "夜の交差点の横断歩道上でしゃがみ込み、こちらを振り返る彼女のフラッシュ・ポートレート。" }
       }
     },
     "xiao-yuanhang": {
@@ -459,13 +459,13 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、小樽",
       category: "ポートレート",
       images: {
-        "in-1": { title: "レインコートとガラス", caption: "透明なプラスチックのジャケットを着た肖遠航の、ハイコントラストな白黒のプロフィール。" },
-        "in-2": { title: "温かいネオン", caption: "街の明かりの下、被写体の横顔を照らす温かい街灯。" },
-        "in-3": { title: "コンクリートの影", caption: "風化した柱の横で、被写体の顔に差し込むゴールデンアワーの光。" },
-        "in-4": { title: "反射する眼差し", caption: "柔らかな反射がある窓ガラス越しに見る、肖遠航のストレートなポートレート。" },
-        "in-5": { title: "食堂にて", caption: "地元の食堂でスプーンを持つ被写体の、強烈で飾らない表情。" },
-        "in-6": { title: "組んだ手", caption: "被写体の静かな佇まいと組まれた手を捉えた、フォーマルな白黒ポートレート。" },
-        "in-7": { title: "路地の出会い", caption: "雪の積もる狭い路地に立ち、肩越しに振り返る肖遠航。", location: "日本、小樽" }
+        "02": { title: "レインコートとガラス", caption: "透明なプラスチックのジャケットを着た肖遠航の、ハイコントラストな白黒のプロフィール。" },
+        "03": { title: "温かいネオン", caption: "街の明かりの下、被写体の横顔を照らす温かい街灯。" },
+        "04": { title: "コンクリートの影", caption: "風化した柱の横で、被写体の顔に差し込むゴールデンアワーの光。" },
+        "05": { title: "反射する眼差し", caption: "柔らかな反射がある窓ガラス越しに見る、肖遠航のストレートなポートレート。" },
+        "06": { title: "食堂にて", caption: "地元の食堂でスプーンを持つ被写体の、強烈で飾らない表情。" },
+        "07": { title: "組んだ手", caption: "被写体の静かな佇まいと組まれた手を捉えた、フォーマルな白黒ポートレート。" },
+        "08": { title: "路地の出会い", caption: "雪の積もる狭い路地に立ち、肩越しに振り返る肖遠航。", location: "日本、小樽" }
       }
     },
     "okinawa-breeze": {
@@ -475,9 +475,9 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、沖縄",
       category: "ストリート",
       images: {
-        "ou-1": { title: "車掌さん", caption: "ペーパーのゆいレール（沖縄モノレール）の帽子をかぶった少年が、ホームで待ちながら携帯をチェックしている。" },
-        "ou-2": { title: "観光客たち", caption: "駐車されたスクーターの横の静かな通りで、スーツケースを持った観光客たちが上を見上げて写真を撮っている。" },
-        "ou-3": { title: "キャンプ・レスター・ゲート", caption: "キャンプ・レスターの入り口に立つ衛兵。沖縄の土地の持つ二面性を映し出している。" }
+        "02": { title: "車掌さん", caption: "ペーパーのゆいレール（沖縄モノレール）の帽子をかぶった少年が、ホームで待ちながら携帯をチェックしている。" },
+        "03": { title: "観光客たち", caption: "駐車されたスクーターの横の静かな通りで、スーツケースを持った観光客たちが上を見上げて写真を撮っている。" },
+        "04": { title: "キャンプ・レスター・ゲート", caption: "キャンプ・レスターの入り口に立つ衛兵。沖縄の土地の持つ二面性を映し出している。" }
       }
     },
     "transient-states": {
@@ -487,11 +487,11 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、東京",
       category: "ストリート",
       images: {
-        "vi-1": { title: "寺院の壁", caption: "バンコクのワット・アルンの華やかでカラフルな陶器の装飾の前に立つ。" },
-        "vi-2": { title: "無重力", caption: "トロピカルな島の浅く澄んだエメラルドグリーンの海に穏やかに浮かぶ。" },
-        "vi-3": { title: "眠るエンジン", caption: "東京の路地のネオンの下、シートに覆われて静かに佇むバイク。" },
-        "vi-4": { title: "グリップ", caption: "街の光の柔らかなボケを背景に、バッグのストラップを握る手のクローズアップ。" },
-        "vi-5": { title: "光の川", caption: "夜空の下、車の光跡を見下ろす橋に寄りかかる。" }
+        "02": { title: "寺院の壁", caption: "バンコクのワット・アルンの華やかでカラフルな陶器の装飾の前に立つ。" },
+        "03": { title: "無重力", caption: "トロピカルな島の浅く澄んだエメラルドグリーンの海に穏やかに浮かぶ。" },
+        "04": { title: "眠るエンジン", caption: "東京の路地のネオンの下、シートに覆われて静かに佇むバイク。" },
+        "05": { title: "グリップ", caption: "街の光の柔らかなボケを背景に、バッグのストラップを握る手のクローズアップ。" },
+        "06": { title: "光の川", caption: "夜空の下、車の光跡を見下ろす橋に寄りかかる。" }
       }
     },
     "analog-hokkaido": {
@@ -501,12 +501,12 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "日本、北海道",
       category: "風景",
       images: {
-        "ah001": { title: "札幌手打ちラーメン", caption: "札幌の温かい小さな食堂で湯気を立てる一杯のラーメン。" },
-        "ah002": { title: "小樽の雪道", caption: "冬の小樽の通りに舞い落ちる細雪。" },
-        "ah003": { title: "北の鉄路", caption: "北海道北部の広大な雪原へと延びる線路。" },
-        "ah004": { title: "冬の静寂", caption: "冬の小樽、街灯が高い雪壁を柔らかく照らす。" },
-        "ah005": { title: "札幌深夜の湯気", caption: "深夜の札幌ラーメン店から立ち上る温かな湯気。" },
-        "ah006": { title: "最北端の碑", caption: "日本最北端、宗谷岬に建つ象徴的な記念碑。" }
+        "02": { title: "札幌手打ちラーメン", caption: "札幌の温かい小さな食堂で湯気を立てる一杯のラーメン。" },
+        "03": { title: "小樽の雪道", caption: "冬の小樽の通りに舞い落ちる細雪。" },
+        "04": { title: "北の鉄路", caption: "北海道北部の広大な雪原へと延びる線路。" },
+        "05": { title: "冬の静寂", caption: "冬の小樽、街灯が高い雪壁を柔らかく照らす。" },
+        "06": { title: "札幌深夜の湯気", caption: "深夜の札幌ラーメン店から立ち上る温かな湯気。" },
+        "07": { title: "最北端の碑", caption: "日本最北端、宗谷岬に建つ象徴的な記念碑。" }
       }
     },
     "transient-geographies": {
@@ -516,10 +516,10 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
       location: "タイ、千葉、台湾",
       category: "ストリート",
       images: {
-        "tg001": { title: "バンコクの街の色", caption: "バンコクの繁華街に交差する電線とカラフルなトゥクトゥク。" },
-        "tg002": { title: "千葉競馬場", caption: "千葉競馬場のダートコースで砂塵を巻き上げる競走馬のクローズアップ。" },
-        "tg003": { title: "台湾の暖簾の質感", caption: "台湾の伝統的な商店の前に掛かるノスタルジックな青い布暖簾。" },
-        "tg004": { title: "台湾の軒先", caption: "台湾の路地奥、色褪せた壁と門枠に掛かる布暖簾。" }
+        "02": { title: "バンコクの街の色", caption: "バンコクの繁華街に交差する電線とカラフルなトゥクトゥク。" },
+        "03": { title: "千葉競馬場", caption: "千葉競馬場のダートコースで砂塵を巻き上げる競走馬のクローズアップ。" },
+        "04": { title: "台湾の暖簾の質感", caption: "台湾の伝統的な商店の前に掛かるノスタルジックな青い布暖簾。" },
+        "05": { title: "台湾の軒先", caption: "台湾の路地奥、色褪せた壁と門枠に掛かる布暖簾。" }
       }
     }
   }

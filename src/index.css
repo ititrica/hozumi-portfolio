@@ -12,9 +12,9 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "DM Sans", "DM Sans Local", sans-serif;
-  --font-serif: "DM Sans", "DM Sans Local", serif;
-  --font-mono: "DM Sans", "DM Sans Local", monospace;
+  --font-sans: "DM Sans", "DM Sans Local", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+  --font-serif: "DM Sans", "DM Sans Local", "Hiragino Mincho ProN", "Noto Serif JP", "Yu Mincho", serif;
+  --font-mono: "DM Sans", "DM Sans Local", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", monospace;
 }
 
 

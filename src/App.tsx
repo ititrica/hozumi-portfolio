@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Routes, Route, useNavigate, useLocation, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { Instagram, Twitter, Mail, ArrowUp } from "lucide-react";
+
+import { PHOTOGRAPHY_DATA } from "./data";
 
 // Types
 import { Photo } from "./types";
@@ -212,14 +214,23 @@ export default function App() {
     return path.startsWith("/series") || path === "/playground";
   };
 
-  const [routeLoading, setRouteLoading] = useState(shouldLoadRoute(location.pathname));
-  const [prevPath, setPrevPath] = useState(location.pathname);
+  const [routeLoading, setRouteLoading] = useState(() => shouldLoadRoute(location.pathname));
 
-  // Synchronous route interception to prevent paint flash
-  if (location.pathname !== prevPath) {
-    setPrevPath(location.pathname);
-    setRouteLoading(shouldLoadRoute(location.pathname));
-  }
+  useLayoutEffect(() => {
+    if (shouldLoadRoute(location.pathname)) {
+      setRouteLoading(true);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!shouldLoadRoute(location.pathname)) {
+      setRouteLoading(false);
+      return;
+    }
+    let active = true;
+    const timer = setTimeout(() => { if (active) setRouteLoading(false); }, 1000);
+    return () => { active = false; clearTimeout(timer); };
+  }, [location.pathname]);
 
   const pageTransition = {
     duration: 0.6
@@ -231,66 +242,6 @@ export default function App() {
     transform: "translate3d(0, 0, 0)",
     WebkitTransform: "translate3d(0, 0, 0)"
   };
-
-  useEffect(() => {
-    const path = location.pathname;
-    if (!shouldLoadRoute(path)) {
-      setRouteLoading(false);
-      return;
-    }
-
-    let active = true;
-
-    // Gather all URLs to preload
-    const urlsToPreload: string[] = [];
-
-    if (path.startsWith("/series/")) {
-      const seriesId = path.substring("/series/".length);
-      const series = localizedData.find((s) => s.id === seriesId);
-      if (series) {
-        series.images.forEach((img) => {
-          urlsToPreload.push(img.url);
-          urlsToPreload.push(img.url.replace(/\.webp$/, ".thumb.webp"));
-        });
-      }
-    } else if (path === "/playground") {
-      localizedData.forEach((series) => {
-        series.images.forEach((img) => {
-          urlsToPreload.push(img.url.replace(/\.webp$/, ".thumb.webp"));
-        });
-      });
-    }
-
-    if (urlsToPreload.length === 0) {
-      setRouteLoading(false);
-      return;
-    }
-
-    // Helper to preload a single image
-    const preloadImage = (url: string) => {
-      return new Promise<void>((resolve) => {
-        const img = new Image();
-        img.src = url;
-        img.onload = () => resolve();
-        img.onerror = () => resolve(); // Avoid blocking indefinitely on broken links
-      });
-    };
-
-    // Preload all assets in parallel
-    Promise.all(urlsToPreload.map(preloadImage)).then(() => {
-      if (!active) return;
-      // Small buffer for smooth animations
-      setTimeout(() => {
-        if (active) {
-          setRouteLoading(false);
-        }
-      }, 350);
-    });
-
-    return () => {
-      active = false;
-    };
-  }, [location.pathname, localizedData]);
 
   const handleEnterSite = () => {
     if (isExpanding) return;
@@ -563,7 +514,7 @@ export default function App() {
           />
 
           {/* Main Orchestrated Contents */}
-          <main className={`flex-grow relative flex flex-col ${routeLoading ? "opacity-0 pointer-events-none" : "opacity-100 transition-opacity duration-500"}`}>
+          <main className="flex-grow relative flex flex-col">
             <AnimatePresence mode="wait">
               {/* @ts-ignore */}
               <Routes location={location} key={location.pathname}>
@@ -693,7 +644,7 @@ export default function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="fixed inset-0 z-[150] flex items-center justify-center bg-white dark:bg-[#0e0c0b]"
               >
                 <RouteLoader />

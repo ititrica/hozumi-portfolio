@@ -74,8 +74,8 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
     const coverPhoto: Photo = {
       id: `${series.id}-cover`,
       url: series.coverImage,
-      title: series.title,
-      caption: series.description,
+      title: series.coverTitle ?? series.title,
+      caption: series.coverCaption ?? series.description,
       aspectRatio: "landscape",
       location: series.location,
       date: series.year
@@ -137,9 +137,8 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
     return (
       <div ref={photosColRef} className="col-span-12 lg:col-span-10 flex flex-col space-y-3">
         {allPhotos.map((photo, index) => {
-          const isCover = photo.id === `${series.id}-cover`;
-          const plateNumber = hasVirtualCover ? index : index + 1;
-          
+          const plateNumber = index + 1;
+
           return (
             <div
               key={photo.id}
@@ -151,10 +150,7 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
               <div className="col-span-10 lg:col-span-3 flex flex-col space-y-3 pt-4 lg:pr-6 text-left">
                 <div className="flex items-baseline justify-between pb-1 transition-colors duration-1000">
                   <span className="font-mono text-[9px] tracking-[0.1em] text-neutral-450 uppercase">
-                    {isCover 
-                      ? (lang === "zh" ? "封面图" : lang === "ja" ? "カバー" : "COVER PLATES")
-                      : `[ ${t.plates} #${plateNumber} ]`
-                    }
+                    {`[ ${t.plates} #${plateNumber} ]`}
                   </span>
                 </div>
 

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useState } from "react";
-import { X, ChevronLeft, ChevronRight, Info } from "lucide-react";
+import React, { useEffect } from "react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Photo } from "../types";
 import { Language, UI_TRANSLATIONS } from "../i18n";
@@ -19,7 +19,6 @@ interface LightboxProps {
 
 export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: LightboxProps) {
   const t = UI_TRANSLATIONS[lang];
-  const [showExif, setShowExif] = useState(true);
 
   const currentIndex = photos.findIndex((p) => p.id === photo.id);
 
@@ -88,23 +87,6 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
 
         {/* Action Buttons */}
         <div className="flex items-center space-x-3">
-          {/* Toggle EXIF */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowExif(!showExif);
-            }}
-            className={`p-2 rounded-none border transition-all duration-300 ${
-              showExif 
-                ? "bg-white text-black border-white" 
-                : "text-neutral-400 border-neutral-800 hover:text-white"
-            }`}
-            title="Toggle EXIF Metadata"
-            data-cursor="nav"
-          >
-            <Info className="w-4 h-4" />
-          </button>
-
           {/* Close Button */}
           <button
             onClick={onClose}
@@ -175,7 +157,7 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
             
             {/* Integrated EXIF Parameters Row */}
             <div className="order-1 md:order-2 flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-neutral-450 text-[8px] md:text-[9px]">
-              {showExif && photo.exif && (
+              {photo.exif && (
                 <>
                   <span className="text-neutral-300 font-medium">{photo.exif.camera}</span>
                   <span className="hidden sm:inline text-neutral-700">|</span>

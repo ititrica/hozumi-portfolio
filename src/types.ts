@@ -33,6 +33,8 @@ export interface PhotographySeries {
   location: string;
   coordinates: string;
   coverImage: string;
+  coverTitle?: string;
+  coverCaption?: string;
   images: Photo[];
   colorTheme: {
     bg: string;

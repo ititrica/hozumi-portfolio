@@ -66,14 +66,18 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
   const isDraggingRef = useRef(false);
   const isZoomTriggeredRef = useRef(false);
 
-  // Flatten and randomly shuffle all photos (including cover images) from all photography series
-  const allPhotos = React.useMemo(() => {
-    const photos: Photo[] = [];
-    
+  // First-mount shuffle order persisted in a ref so language switches don't
+  // re-shuffle card positions. Generated once as a deterministic index sequence.
+  const permRef = useRef<number[] | null>(null);
+
+  // Flatten all photos in stable series order, then apply the persisted permutation
+  const [gridSlots, N, canvasW, canvasH] = React.useMemo(() => {
+    // 1. Collect photos in deterministic order (by series, then by image order)
+    const ordered: (Photo | { type: "phrase"; content: string })[] = [];
+
     photographyData.forEach((series) => {
-      // 1. Add cover image if it exists
       if (series.coverImage) {
-        photos.push({
+        ordered.push({
           id: `${series.id}-cover`,
           url: series.coverImage,
           title: `${series.title} (Cover)`,
@@ -81,20 +85,11 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
           aspectRatio: "landscape",
           location: series.location,
           date: `${series.year}`,
-          exif: {
-            camera: "ILCE-7CM2",
-            lens: "FE 35mm F1.4 GM",
-            focalLength: "35mm",
-            aperture: "f/1.4",
-            shutterSpeed: "1/125s",
-            iso: "100"
-          }
+          exif: { camera: "ILCE-7CM2", lens: "FE 35mm F1.4 GM", focalLength: "35mm", aperture: "f/1.4", shutterSpeed: "1/125s", iso: "100" }
         });
       }
-      
-      // 2. Add series sub-images
       series.images.forEach((img) => {
-        photos.push({
+        ordered.push({
           ...img,
           location: img.location || series.location,
           date: img.date || `${series.year}`,
@@ -102,37 +97,16 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       });
     });
 
-    // Fisher-Yates Shuffle Algorithm for random board layouts
-    for (let i = photos.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [photos[i], photos[j]] = [photos[j], photos[i]];
-    }
-
-    return photos;
-  }, [photographyData]);
-
-  // Generate a square grid layout slots (N x N)
-  // Photos are mixed with black concept cards containing random phrases.
-  const { gridSlots, N, canvasW, canvasH } = useMemo(() => {
-    const totalPhotos = allPhotos.length;
-    
-    // Target ratio: photos fill ~75% of the square area.
-    // N is the grid side size (columns and rows)
+    // 2. Build grid: photos + random phrase cards
+    const totalPhotos = ordered.length;
     const targetSlots = Math.ceil(totalPhotos / 0.75);
     const calculatedN = Math.max(8, Math.ceil(Math.sqrt(targetSlots)));
     const totalSlots = calculatedN * calculatedN;
 
-    const slots: (Photo | { type: "phrase"; content: string })[] = [];
+    // Fill with photo slots first
+    const slots = [...ordered];
 
-    // Add all photos
-    allPhotos.forEach((photo) => {
-      slots.push(photo);
-    });
-
-    // Fill the rest with black phrase cards
     const phraseCount = totalSlots - totalPhotos;
-
-    // Shuffle phrases so they are randomly selected
     const shuffledPhrases = [...RANDOM_PHRASES];
     for (let i = shuffledPhrases.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -140,23 +114,27 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     }
 
     for (let i = 0; i < phraseCount; i++) {
-      slots.push({
-        type: "phrase",
-        content: shuffledPhrases[i % shuffledPhrases.length]
-      });
+      slots.push({ type: "phrase", content: shuffledPhrases[i % shuffledPhrases.length] });
     }
 
-    // Fisher-Yates shuffle the final slots array
-    for (let i = slots.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [slots[i], slots[j]] = [slots[j], slots[i]];
+    // 3. Build the permutation on first run, reuse on subsequent runs
+    if (!permRef.current) {
+      const perm = Array.from({ length: slots.length }, (_, i) => i);
+      for (let i = perm.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [perm[i], perm[j]] = [perm[j], perm[i]];
+      }
+      permRef.current = perm;
     }
 
-    const calculatedW = calculatedN * 280 + (calculatedN - 1) * 210 + 320;
-    const calculatedH = calculatedN * 350 + (calculatedN - 1) * 262 + 320;
+    // 4. Apply permutation to get the displayed order
+    const displaySlots = permRef.current.map((idx) => slots[idx]);
 
-    return { gridSlots: slots, N: calculatedN, canvasW: calculatedW, canvasH: calculatedH };
-  }, [allPhotos, lang]);
+    const w = calculatedN * 280 + (calculatedN - 1) * 210 + 320;
+    const h = calculatedN * 350 + (calculatedN - 1) * 262 + 320;
+
+    return [displaySlots, calculatedN, w, h] as const;
+  }, [photographyData]);
 
   // Center the canvas initially upon mount
   useEffect(() => {
@@ -206,26 +184,24 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
   }, [canvasW, canvasH, motionScale]);
 
   // Listen to wheel events for zooming the board (scroll down to zoom out, scroll up to zoom in)
-  // We perform the zoom centering on the user's cursor position without changing transform origin
+  // Also handles touch pinch-to-zoom.
   useEffect(() => {
     const container = constraintsRef.current;
     if (!container) return;
 
+    // --- Wheel zoom ---
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault(); // Stop default browser zoom/scroll
+      e.preventDefault();
 
       if (!container || !canvasRef.current) return;
-
       const rectParent = container.getBoundingClientRect();
-      
-      // Mouse coordinates relative to parent viewport container
+
       const mouseParentX = e.clientX - rectParent.left;
       const mouseParentY = e.clientY - rectParent.top;
 
       const cx = canvasW / 2;
       const cy = canvasH / 2;
 
-      // Stop any active drag inertia or slide animations immediately when zoom starts
       canvasX.stop();
       canvasY.stop();
       motionScale.stop();
@@ -234,26 +210,88 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       const yOld = smoothY.get();
       const sOld = smoothScale.get();
 
-      // Calculate the next target scale (speed increased for responsive wheel/touchpad zoom)
       const zoomSpeed = 0.0032;
       const sNew = Math.min(2.2, Math.max(0.35, sOld - e.deltaY * zoomSpeed));
-
       if (sOld === sNew) return;
 
-      // Apply scale transition center math (keeping origin at 0.5, 0.5 static)
       const factor = sNew / sOld;
       const xNew = mouseParentX - cx - (mouseParentX - cx - xOld) * factor;
       const yNew = mouseParentY - cy - (mouseParentY - cy - yOld) * factor;
 
-      // Set translations and scale together (springs will animate them smoothly in sync)
       canvasX.set(xNew);
       canvasY.set(yNew);
       motionScale.set(sNew);
     };
 
+    // --- Touch pinch-to-zoom ---
+    let pinchStartDist = 0;
+    let pinchStartScale = 1;
+    let pinchCenterX = 0;
+    let pinchCenterY = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const t1 = e.touches[0];
+        const t2 = e.touches[1];
+        pinchStartDist = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+        pinchStartScale = smoothScale.get();
+        pinchCenterX = (t1.clientX + t2.clientX) / 2;
+        pinchCenterY = (t1.clientY + t2.clientY) / 2;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const t1 = e.touches[0];
+        const t2 = e.touches[1];
+        const dist = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+
+        if (pinchStartDist === 0) return;
+        const ratio = dist / pinchStartDist;
+        const sNew = Math.min(2.2, Math.max(0.35, pinchStartScale * ratio));
+
+        canvasX.stop();
+        canvasY.stop();
+        motionScale.stop();
+
+        const rectParent = container.getBoundingClientRect();
+        const cx = canvasW / 2;
+        const cy = canvasH / 2;
+        const mouseParentX = pinchCenterX - rectParent.left;
+        const mouseParentY = pinchCenterY - rectParent.top;
+        const xOld = smoothX.get();
+        const yOld = smoothY.get();
+        const sOld = smoothScale.get();
+
+        if (sOld === sNew) return;
+        const factor = sNew / sOld;
+        const xNew = mouseParentX - cx - (mouseParentX - cx - xOld) * factor;
+        const yNew = mouseParentY - cy - (mouseParentY - cy - yOld) * factor;
+
+        canvasX.set(xNew);
+        canvasY.set(yNew);
+        motionScale.set(sNew);
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length < 2) {
+        pinchStartDist = 0;
+      }
+    };
+
     container.addEventListener("wheel", handleWheel, { passive: false });
+    container.addEventListener("touchstart", handleTouchStart, { passive: false });
+    container.addEventListener("touchmove", handleTouchMove, { passive: false });
+    container.addEventListener("touchend", handleTouchEnd);
+
     return () => {
       container.removeEventListener("wheel", handleWheel);
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("touchend", handleTouchEnd);
     };
   }, [canvasW, canvasH, canvasX, canvasY, motionScale, smoothX, smoothY, smoothScale]);
 
@@ -293,9 +331,11 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
         });
 
         if (closestPhotoId) {
-          const matchedPhoto = allPhotos.find((p) => p.id === closestPhotoId);
+          const matchedPhoto = gridSlots.find(
+            (s): s is Photo => "id" in s && s.id === closestPhotoId && "url" in s
+          );
           if (matchedPhoto) {
-            onSelectPhoto(matchedPhoto, allPhotos);
+            onSelectPhoto(matchedPhoto, gridSlots.filter((s): s is Photo => "url" in s));
           }
         }
       } else if (latestScale < 2.0) {
@@ -305,7 +345,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     });
 
     return () => unsubscribe();
-  }, [allPhotos, onSelectPhoto]);
+  }, [gridSlots, onSelectPhoto]);
 
   const handleDragStart = () => {
     isDraggingRef.current = true;
@@ -319,7 +359,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
 
   const handlePhotoClick = (photo: Photo) => {
     if (isDraggingRef.current) return;
-    onSelectPhoto(photo, allPhotos);
+    onSelectPhoto(photo, gridSlots.filter((s): s is Photo => "url" in s));
   };
 
 
