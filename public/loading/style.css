@@ -141,29 +141,15 @@ body {
    ========================================================================== */
 .grid-char {
     position: absolute;
-    font-size: 36px;
-    font-weight: 300;
-    letter-spacing: 0.2em;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
-    
-    /* 默认触发动画效果 */
+    object-fit: contain;
+
+    /* Default entry animation */
     animation: charEnter 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@media (min-width: 640px) {
-    .grid-char {
-        font-size: 64px;
-    }
-}
-
-@media (min-width: 768px) {
-    .grid-char {
-        font-size: 96px;
-    }
 }
 
 /* 正在淡出销毁状态 */

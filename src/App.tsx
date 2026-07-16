@@ -712,6 +712,13 @@ const LOADER_STEPS = [
   { grid: ["", "", "", ""], duration: 150 }
 ];
 
+const CHAR_SVGS: Record<string, string> = {
+  "ホ": "/loading/chars/ho.svg",
+  "ズ": "/loading/chars/zu.svg",
+  "ミ": "/loading/chars/mi.svg",
+  "＃": "/loading/chars/hash.svg",
+};
+
 function RouteLoader() {
   const [stepIndex, setStepIndex] = useState(0);
 
@@ -730,18 +737,17 @@ function RouteLoader() {
       {currentGrid.map((char, index) => (
         <div key={index} className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 flex items-center justify-center relative">
           <AnimatePresence mode="wait">
-            {char && (
-              <motion.span
+            {char && CHAR_SVGS[char] && (
+              <motion.img
                 key={char}
-                className="absolute text-4xl sm:text-6xl md:text-7xl font-light tracking-[0.2em] text-neutral-950 dark:text-white select-none"
-                style={{ fontFamily: "'Tsukushi Mincho', serif", fontWeight: 300 }}
+                src={CHAR_SVGS[char]}
+                alt={char}
+                className="absolute w-full h-full object-contain select-none"
                 initial={{ opacity: 0, scale: 0.8, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8, y: -10 }}
                 transition={{ duration: 0.12, ease: "easeOut" }}
-              >
-                {char}
-              </motion.span>
+              />
             )}
           </AnimatePresence>
         </div>
