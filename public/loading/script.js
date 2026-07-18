@@ -66,10 +66,16 @@ function runStep(index) {
 }
 
 function updateCellDOM(cellIndex, nextChar) {
-    const cellEl = document.getElementById(`cell-${cellIndex}`);
+    const cellEl = document.getElementById("cell-" + cellIndex);
     if (!cellEl) return;
 
-    // 1. If next char is empty, fade out and remove existing element
+    const isLatin = /^[A-Z]$/.test(nextChar);
+    if (isLatin) {
+        cellEl.classList.add("latin");
+    } else {
+        cellEl.classList.remove("latin");
+    }
+
     if (nextChar === "") {
         const existingEl = cellEl.querySelector(".grid-char");
         if (existingEl) {
@@ -78,30 +84,22 @@ function updateCellDOM(cellIndex, nextChar) {
                 existingEl.remove();
             }, 500);
         }
+        return;
     }
-    // 2. If new char to show
-    else {
-        // Fade out existing char first
-        const existingEl = cellEl.querySelector(".grid-char");
-        if (existingEl) {
-            existingEl.classList.add("exit");
-            setTimeout(() => {
-                existingEl.remove();
-            }, 500);
-        }
 
-        // Create img element for the SVG
-        const imgPath = CHAR_IMAGES[nextChar];
-        if (imgPath) {
-            const newImg = document.createElement("img");
-            newImg.className = "grid-char";
-            newImg.src = imgPath;
-            newImg.alt = nextChar;
-            cellEl.appendChild(newImg);
-        }
+    const existingEl = cellEl.querySelector(".grid-char");
+    if (existingEl) {
+        existingEl.classList.add("exit");
+        setTimeout(() => {
+            existingEl.remove();
+        }, 500);
     }
+
+    const newSpan = document.createElement("span");
+    newSpan.className = "grid-char";
+    newSpan.textContent = nextChar;
+    cellEl.appendChild(newSpan);
 }
-
 function finishPreloader() {
     const overlay = document.getElementById("preloader-overlay");
     const container = overlay ? overlay.querySelector(".preloader-container") : null;
