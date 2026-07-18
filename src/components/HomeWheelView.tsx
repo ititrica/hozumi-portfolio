@@ -44,16 +44,39 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
   });
 
   const [currentVal, setCurrentVal] = useState(savedIndex);
+  const [settledIndex, setSettledIndex] = useState(Math.round(savedIndex));
+  const settleTimerRef = useRef<number | null>(null);
 
-  // Track scroll position changes to trigger state updates
+  // Keep the wheel position live for card motion, but commit the title
+  // highlight only after the spring has stopped to avoid flashing through
+  // intermediate indices during a multi-series jump.
   useEffect(() => {
     const unsubscribe = smoothProgress.on("change", (latest) => {
       setCurrentVal(latest);
-    });
-    return () => unsubscribe();
-  }, [smoothProgress]);
 
-  const activeIndex = Math.max(0, Math.min(photographyData.length - 1, Math.round(currentVal)));
+      if (settleTimerRef.current !== null) {
+        window.clearTimeout(settleTimerRef.current);
+      }
+
+      settleTimerRef.current = window.setTimeout(() => {
+        const nextIndex = Math.max(
+          0,
+          Math.min(photographyData.length - 1, Math.round(smoothProgress.get()))
+        );
+        setSettledIndex((previous) => previous === nextIndex ? previous : nextIndex);
+        settleTimerRef.current = null;
+      }, 220);
+    });
+
+    return () => {
+      unsubscribe();
+      if (settleTimerRef.current !== null) {
+        window.clearTimeout(settleTimerRef.current);
+        settleTimerRef.current = null;
+      }
+    };
+  }, [smoothProgress, photographyData.length]);
+  const activeIndex = Math.max(0, Math.min(photographyData.length - 1, settledIndex));
   const activeSeries = photographyData[activeIndex];
 
 
