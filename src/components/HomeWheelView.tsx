@@ -400,7 +400,12 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
       {/* Right-side vertical series title list — hidden on mobile, active one highlighted on desktop */}
       <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-14 z-30 flex-col items-stretch space-y-5 w-52">
         {photographyData.map((series, idx) => {
-          const isActive = idx === activeIndex;
+          // Match title brightness to the same continuous spring position that
+          // drives the cards, instead of waiting for a delayed discrete index.
+          const titleDistance = Math.abs(currentVal - idx);
+          const titleFocus = Math.exp(-Math.pow(titleDistance / 0.5, 2));
+          const titleOpacity = 0.28 + titleFocus * 0.72;
+
           return (
             <button
               key={series.id}
@@ -408,32 +413,25 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
               className="flex items-baseline justify-between w-full gap-3 group cursor-pointer"
             >
               <span
-                className={`font-mono text-[8px] tracking-[0.1em] tabular-nums inline-block w-6 text-left transition-colors duration-[1400ms] ease-in-out ${
-                  isActive
-                    ? "text-neutral-500 dark:text-neutral-400"
-                    : "text-neutral-300 dark:text-neutral-700"
-                }`}
+                className="font-mono text-[8px] tracking-[0.1em] tabular-nums inline-block w-6 text-left text-neutral-900 dark:text-neutral-100"
+                style={{ opacity: titleOpacity }}
               >
-                {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}/
+                {idx + 1 < 10 ? "0" + (idx + 1) : idx + 1}/
               </span>
               <span
-                className={`font-serif uppercase leading-none text-right transition-colors duration-[1400ms] ease-in-out ${
-                  isActive
-                    ? "text-neutral-900 dark:text-neutral-100"
-                    : "text-neutral-300 dark:text-neutral-700 group-hover:text-neutral-500 dark:group-hover:text-neutral-400"
-                }`}
+                className="font-serif uppercase leading-none text-right text-neutral-900 dark:text-neutral-100"
                 style={{
                   fontSize: lang === "ja" ? "0.78rem" : "0.75rem",
                   fontWeight: lang === "ja" ? 400 : 300,
                   letterSpacing: "0.04em",
+                  opacity: titleOpacity,
                 }}
               >
                 {series.title}
               </span>
             </button>
           );
-        })}
-      </div>
+        })}      </div>
 
       {/* Mobile Title display anchored in the top-middle area */}
       {isMobile && activeSeries && (
