@@ -154,32 +154,29 @@ export default function CustomCursor({ lang }: { lang: Language }) {
     };
   }, [mouseX, mouseY, updateCursorHoverState]);
 
-  // MutationObserver to detect modal mount/unmount and immediately update cursor state without mouse moves
+  // Recheck the element under the cursor once after an overlay mounts or unmounts.
+  // Coalescing DOM mutations into one animation frame avoids cursor state changes
+  // landing repeatedly during the Lightbox entrance animation.
   useEffect(() => {
-    const pendingTimeouts: number[] = [];
+    let frameId: number | null = null;
 
-    const observer = new MutationObserver(() => {
-      // Use short timeouts so React renders the modal components first
-      pendingTimeouts.push(
-        window.setTimeout(forceUpdateCursorAtCurrentPos, 50),
-        window.setTimeout(forceUpdateCursorAtCurrentPos, 150),
-      );
-    });
+    const scheduleCursorUpdate = () => {
+      if (frameId !== null) return;
+      frameId = window.requestAnimationFrame(() => {
+        frameId = null;
+        forceUpdateCursorAtCurrentPos();
+      });
+    };
 
+    const observer = new MutationObserver(scheduleCursorUpdate);
     observer.observe(document.body, { childList: true, subtree: true });
+
     return () => {
       observer.disconnect();
-      pendingTimeouts.forEach(clearTimeout);
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
     };
-  }, [forceUpdateCursorAtCurrentPos]);
-
-  // Click listener fallback to trigger recalculation when views change via user action
-  useEffect(() => {
-    const handleGlobalClick = () => {
-      setTimeout(forceUpdateCursorAtCurrentPos, 100);
-    };
-    window.addEventListener("click", handleGlobalClick);
-    return () => window.removeEventListener("click", handleGlobalClick);
   }, [forceUpdateCursorAtCurrentPos]);
 
   if (!isVisible) return null;

@@ -405,7 +405,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
                     src={slot.url.replace(".webp", ".thumb.webp")}
                     alt={slot.title}
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 ease-out group-hover:scale-105 filter grayscale hover:grayscale-0 duration-1000"
+                    className="w-full h-full object-cover select-none pointer-events-none filter grayscale transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105"
                   />
                   {/* Overlay shadow wash */}
                   <div className="absolute inset-0 bg-neutral-950/5 group-hover:bg-transparent transition-colors duration-500 pointer-events-none" />
