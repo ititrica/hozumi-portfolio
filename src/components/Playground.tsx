@@ -65,6 +65,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
   const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0, top: 0, bottom: 0 });
   const isDraggingRef = useRef(false);
   const isZoomTriggeredRef = useRef(false);
+  const zoomFocusRef = useRef({ x: 0, y: 0 });
 
   // First-mount shuffle order persisted in a ref so language switches don't
   // re-shuffle card positions. Generated once as a deterministic index sequence.
@@ -192,6 +193,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     // --- Wheel zoom ---
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
+      zoomFocusRef.current = { x: e.clientX, y: e.clientY };
 
       if (!container || !canvasRef.current) return;
       const rectParent = container.getBoundingClientRect();
@@ -238,6 +240,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
         pinchStartScale = smoothScale.get();
         pinchCenterX = (t1.clientX + t2.clientX) / 2;
         pinchCenterY = (t1.clientY + t2.clientY) / 2;
+        zoomFocusRef.current = { x: pinchCenterX, y: pinchCenterY };
       }
     };
 
@@ -295,57 +298,60 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     };
   }, [canvasW, canvasH, canvasX, canvasY, motionScale, smoothX, smoothY, smoothScale]);
 
-  // Listen to scale changes: if scale reaches 2.1 (zooming in), select the photo closest to viewport center
+  // Wait for the zoom spring to settle, then open the photo directly under
+  // the pointer that initiated the zoom. Sampling card centers before the
+  // spring finishes can select a neighboring card.
   useEffect(() => {
-    const unsubscribe = motionScale.on("change", (latestScale) => {
+    let pendingSelection = false;
+    let frameId: number | null = null;
+
+    const selectPhotoUnderZoomFocus = () => {
+      const { x, y } = zoomFocusRef.current;
+      const target = document.elementFromPoint(x, y)?.closest<HTMLElement>(".playground-photo-card");
+      const photoId = target?.getAttribute("data-photo-id");
+      if (!photoId) return;
+
+      const matchedPhoto = gridSlots.find(
+        (slot): slot is Photo => "url" in slot && slot.id === photoId
+      );
+      if (matchedPhoto) {
+        onSelectPhoto(matchedPhoto, gridSlots.filter((slot): slot is Photo => "url" in slot));
+      }
+    };
+
+    const unsubscribeTarget = motionScale.on("change", (latestScale) => {
       if (latestScale >= 2.1) {
-        if (isZoomTriggeredRef.current) return;
-        isZoomTriggeredRef.current = true;
-
-        const cards = document.querySelectorAll(".playground-photo-card");
-        if (cards.length === 0) {
-          isZoomTriggeredRef.current = false;
-          return;
-        }
-
-        const viewportCenterX = window.innerWidth / 2;
-        const viewportCenterY = window.innerHeight / 2;
-
-        let closestPhotoId: string | null = null;
-        let minDistance = Infinity;
-
-        cards.forEach((card) => {
-          const rect = card.getBoundingClientRect();
-          const cardCenterX = rect.left + rect.width / 2;
-          const cardCenterY = rect.top + rect.height / 2;
-
-          const dist = Math.sqrt(
-            Math.pow(cardCenterX - viewportCenterX, 2) +
-            Math.pow(cardCenterY - viewportCenterY, 2)
-          );
-
-          if (dist < minDistance) {
-            minDistance = dist;
-            closestPhotoId = card.getAttribute("data-photo-id");
-          }
-        });
-
-        if (closestPhotoId) {
-          const matchedPhoto = gridSlots.find(
-            (s): s is Photo => "id" in s && s.id === closestPhotoId && "url" in s
-          );
-          if (matchedPhoto) {
-            onSelectPhoto(matchedPhoto, gridSlots.filter((s): s is Photo => "url" in s));
-          }
+        if (!isZoomTriggeredRef.current) {
+          isZoomTriggeredRef.current = true;
+          pendingSelection = true;
         }
       } else if (latestScale < 2.0) {
-        // Reset the trigger flag when user zooms back out below 2.0
         isZoomTriggeredRef.current = false;
+        pendingSelection = false;
       }
     });
 
-    return () => unsubscribe();
-  }, [gridSlots, onSelectPhoto]);
+    const unsubscribeSettled = smoothScale.on("change", (latestScale) => {
+      if (!pendingSelection || motionScale.get() < 2.1) return;
+      if (Math.abs(latestScale - motionScale.get()) > 0.035) return;
+      if (Math.abs(smoothX.get() - canvasX.get()) > 1.5 || Math.abs(smoothY.get() - canvasY.get()) > 1.5) return;
+      if (frameId !== null) return;
+
+      frameId = window.requestAnimationFrame(() => {
+        frameId = null;
+        pendingSelection = false;
+        selectPhotoUnderZoomFocus();
+      });
+    });
+
+    return () => {
+      unsubscribeTarget();
+      unsubscribeSettled();
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
+    };
+  }, [gridSlots, motionScale, onSelectPhoto, smoothScale]);
 
   const handleDragStart = () => {
     isDraggingRef.current = true;
