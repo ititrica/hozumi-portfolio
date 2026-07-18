@@ -1,0 +1,180 @@
+# PROJECT METADATA
+
+PROJECT_ID: letters-in-morning-light
+TITLE: Letters in Morning Light
+SUBTITLE: Intimate Portraits
+CATEGORY: Portrait
+YEAR: 2026
+LOCATION: Japan
+COORDINATES: —
+DESCRIPTION: A quiet portrait study shaped by window light, small domestic gestures, and the suspended feeling of early morning.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 1.webp
+CARD_IMAGE: 7.webp
+CARD_FILE: 7.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 1.webp
+THUMBNAIL_FILE: 1.thumb.webp
+TITLE: Letter by the Window
+DESCRIPTION: A quiet portrait by the window, capturing a private moment of thought and stillness.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1086
+HEIGHT: 1448
+FILE_SIZE_BYTES: 1431952
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 2.webp
+THUMBNAIL_FILE: 2.thumb.webp
+TITLE: White Rose
+DESCRIPTION: A soft close-up portrait where the white rose adds a gentle, poetic mood.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1086
+HEIGHT: 1448
+FILE_SIZE_BYTES: 1465462
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 03]
+FILE: 3.webp
+THUMBNAIL_FILE: 3.thumb.webp
+TITLE: Before Waking
+DESCRIPTION: Morning light, an alarm clock, and a relaxed pose create a calm sense of early morning.
+ASPECT_RATIO: landscape
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1448
+HEIGHT: 1086
+FILE_SIZE_BYTES: 1294150
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 04]
+FILE: 4.webp
+THUMBNAIL_FILE: 4.thumb.webp
+TITLE: Warmth by the Window
+DESCRIPTION: Holding a cup near the window, the image conveys a simple and peaceful daily moment.
+ASPECT_RATIO: landscape
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1448
+HEIGHT: 1086
+FILE_SIZE_BYTES: 1303592
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 05]
+FILE: 5.webp
+THUMBNAIL_FILE: 5.thumb.webp
+TITLE: Corner Light
+DESCRIPTION: A seated figure in soft light, expressing quiet reflection and solitude.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1086
+HEIGHT: 1448
+FILE_SIZE_BYTES: 1330364
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 06]
+FILE: 6.webp
+THUMBNAIL_FILE: 6.thumb.webp
+TITLE: Close Distance
+DESCRIPTION: A low-angle portrait that highlights natural expression and subtle emotion.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1086
+HEIGHT: 1448
+FILE_SIZE_BYTES: 1345106
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 07]
+FILE: 7.webp
+THUMBNAIL_FILE: 7.thumb.webp
+TITLE: Half Dreaming
+DESCRIPTION: A close facial portrait with a blurred, dreamy atmosphere.
+ASPECT_RATIO: landscape
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1536
+HEIGHT: 1024
+FILE_SIZE_BYTES: 1367038
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 08]
+FILE: 8.webp
+THUMBNAIL_FILE: 8.thumb.webp
+TITLE: Light in the Eye
+DESCRIPTION: An extreme close-up focusing on the eye, hair, and delicate emotional detail.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1023
+HEIGHT: 1537
+FILE_SIZE_BYTES: 1366470
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 09]
+FILE: 9.webp
+THUMBNAIL_FILE: 9.thumb.webp
+TITLE: Between Breaths
+DESCRIPTION: A detailed close-up emphasizing skin texture, lips, and soft natural light.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1024
+HEIGHT: 1536
+FILE_SIZE_BYTES: 1389506
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+

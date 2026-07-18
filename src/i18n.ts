@@ -153,6 +153,8 @@ interface SeriesTranslation {
   title?: string;
   subtitle?: string;
   description?: string;
+  coverTitle?: string;
+  coverCaption?: string;
   location?: string;
   category?: string;
   images?: Record<string, {
@@ -341,6 +343,25 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "04": { title: "台湾暖帘纹理", caption: "台湾传统商铺门前，一幅充满怀旧气息的蓝色布质门帘。" },
         "05": { title: "台湾门廊细节", caption: "台湾小巷深处，斑驳陆离的墙面与挂在门框上的布帘。" }
       }
+    },
+    "letters-in-morning-light": {
+      title: "晨光中的书信",
+      subtitle: "私密肖像",
+      description: "一组由窗边光线、细小的日常动作，以及清晨悬置般的感觉构成的安静肖像研究。",
+      coverTitle: "窗边的书信",
+      coverCaption: "窗边的一段安静肖像，捕捉一个人沉思与静止的私人时刻。",
+      location: "日本",
+      category: "人像",
+      images: {
+        "02": { title: "白玫瑰", caption: "柔和的特写肖像中，白玫瑰增添了温柔而诗意的气息。" },
+        "03": { title: "醒来之前", caption: "晨光、闹钟与放松的姿态，共同营造出清晨宁静的感觉。" },
+        "04": { title: "窗边的温度", caption: "窗边手捧一杯饮品，画面传达出简单而平和的日常时刻。" },
+        "05": { title: "角落里的光", caption: "柔光中的身影坐在角落，流露出安静的凝视与孤独。" },
+        "06": { title: "近距离", caption: "低角度的肖像突出自然的表情与细微的情绪。" },
+        "07": { title: "半梦之间", caption: "模糊而梦幻的氛围中，一张贴近面部的肖像缓缓浮现。" },
+        "08": { title: "眼中的光", caption: "极近距离聚焦于眼睛、发丝，以及细腻的情绪细节。" },
+        "09": { title: "呼吸之间", caption: "细致的近景强调肌肤纹理、双唇与柔和的自然光。" }
+      }
     }
   },
   ja: {
@@ -521,6 +542,25 @@ export const SERIES_TRANSLATIONS: Record<Exclude<Language, "en">, Record<string,
         "04": { title: "台湾の暖簾の質感", caption: "台湾の伝統的な商店の前に掛かるノスタルジックな青い布暖簾。" },
         "05": { title: "台湾の軒先", caption: "台湾の路地奥、色褪せた壁と門枠に掛かる布暖簾。" }
       }
+    },
+    "letters-in-morning-light": {
+      title: "朝の光の中の手紙",
+      subtitle: "親密なポートレート",
+      description: "窓辺の光、小さな日常の仕草、そして早朝の宙づりのような感覚から生まれた、静かなポートレート研究。",
+      coverTitle: "窓辺の手紙",
+      coverCaption: "窓辺で思索にふける、ひとりの静かな肖像。私的な時間の気配と静止した瞬間を捉えている。",
+      location: "日本",
+      category: "ポートレート",
+      images: {
+        "02": { title: "白いバラ", caption: "白いバラがやさしく詩的な雰囲気を添える、柔らかなクローズアップ。" },
+        "03": { title: "目覚める前", caption: "朝の光と目覚まし時計、くつろいだ姿勢が、穏やかな早朝の感覚をつくる。" },
+        "04": { title: "窓辺のぬくもり", caption: "窓辺でカップを手にする姿が、素朴で穏やかな日常の一瞬を伝える。" },
+        "05": { title: "隅の光", caption: "やわらかな光の中に座る姿が、静かな思索と孤独を表す。" },
+        "06": { title: "近い距離", caption: "低いアングルのポートレートが、自然な表情と繊細な感情を際立たせる。" },
+        "07": { title: "半分夢の中", caption: "ぼんやりと夢のような空気の中に浮かぶ、顔のクローズアップ。" },
+        "08": { title: "瞳の中の光", caption: "目と髪、そして繊細な感情の細部に焦点を当てた極端なクローズアップ。" },
+        "09": { title: "息のあいだ", caption: "肌の質感、唇、やわらかな自然光を際立たせる、細やかなクローズアップ。" }
+      }
     }
   }
 };
@@ -552,6 +592,8 @@ export function getLocalizedData(lang: Language): PhotographySeries[] {
       title: itemTrans.title ?? item.title,
       subtitle: itemTrans.subtitle ?? item.subtitle,
       description: itemTrans.description ?? item.description,
+      coverTitle: itemTrans.coverTitle ?? item.coverTitle,
+      coverCaption: itemTrans.coverCaption ?? item.coverCaption,
       location: itemTrans.location ?? item.location,
       category: itemTrans.category ?? item.category,
       images: localizedImages,

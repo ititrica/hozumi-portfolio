@@ -33,6 +33,7 @@ export interface PhotographySeries {
   location: string;
   coordinates: string;
   coverImage: string;
+  cardImage?: string;
   coverTitle?: string;
   coverCaption?: string;
   images: Photo[];

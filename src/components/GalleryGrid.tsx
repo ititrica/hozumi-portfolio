@@ -86,7 +86,7 @@ export default function GalleryGrid({ onSelectSeries }: GalleryGridProps) {
 
                   {/* Parallax Image Zoom */}
                   <motion.img
-                    src={series.coverImage.replace(".webp", ".card.webp")}
+                    src={(series.cardImage ?? series.coverImage).replace(".webp", ".card.webp")}
                     alt={series.title}
                     referrerPolicy="no-referrer"
                     className="h-full w-full object-cover transition-transform duration-[1.5s] cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-105"

@@ -1276,5 +1276,98 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         }
       }
     ]
+  },
+  {
+    "id": "letters-in-morning-light",
+    "title": "Letters in Morning Light",
+    "subtitle": "Intimate Portraits",
+    "category": "Portrait",
+    "year": "2026",
+    "location": "Japan",
+    "coordinates": "35.6762° N, 139.6503° E",
+    "coverImage": "/images/14/1.webp",
+    "cardImage": "/images/14/7.webp",
+    "coverTitle": "Letter by the Window",
+    "coverCaption": "A quiet portrait by the window, capturing a private moment of thought and stillness.",
+    "description": "A quiet portrait study shaped by window light, small domestic gestures, and the suspended feeling of early morning.",
+    "colorTheme": {
+      "bg": "bg-stone-50",
+      "text": "text-stone-900",
+      "accent": "border-stone-400"
+    },
+    "images": [
+      {
+        "id": "02",
+        "url": "/images/14/2.webp",
+        "title": "White Rose",
+        "caption": "A soft close-up portrait where the white rose adds a gentle, poetic mood.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "03",
+        "url": "/images/14/3.webp",
+        "title": "Before Waking",
+        "caption": "Morning light, an alarm clock, and a relaxed pose create a calm sense of early morning.",
+        "aspectRatio": "landscape",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "04",
+        "url": "/images/14/4.webp",
+        "title": "Warmth by the Window",
+        "caption": "Holding a cup near the window, the image conveys a simple and peaceful daily moment.",
+        "aspectRatio": "landscape",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "05",
+        "url": "/images/14/5.webp",
+        "title": "Corner Light",
+        "caption": "A seated figure in soft light, expressing quiet reflection and solitude.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "06",
+        "url": "/images/14/6.webp",
+        "title": "Close Distance",
+        "caption": "A low-angle portrait that highlights natural expression and subtle emotion.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "07",
+        "url": "/images/14/7.webp",
+        "title": "Half Dreaming",
+        "caption": "A close facial portrait with a blurred, dreamy atmosphere.",
+        "aspectRatio": "landscape",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "08",
+        "url": "/images/14/8.webp",
+        "title": "Light in the Eye",
+        "caption": "An extreme close-up focusing on the eye, hair, and delicate emotional detail.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "09",
+        "url": "/images/14/9.webp",
+        "title": "Between Breaths",
+        "caption": "A detailed close-up emphasizing skin texture, lips, and soft natural light.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      }
+    ]
   }
 ];
