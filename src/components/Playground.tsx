@@ -429,10 +429,23 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
                 data-photo-id={slot.id}
               >
                 {/* Image Mask Frame */}
-                <div className="relative w-[280px] h-[320px] flex-none overflow-hidden bg-neutral-100 dark:bg-neutral-900 shadow-lg rounded-none">
+                <div
+                  className="relative box-border w-[280px] h-[320px] min-w-[280px] max-w-[280px] min-h-[320px] max-h-[320px] flex-none isolate overflow-hidden bg-neutral-100 dark:bg-neutral-900 rounded-none"
+                  style={{
+                    width: 280,
+                    height: 320,
+                    contain: "strict",
+                    transform: "translate3d(0, 0, 0)",
+                  }}
+                >
                   <div
                     className="absolute inset-0 overflow-hidden transition-transform duration-1000 ease-out group-hover:scale-105"
-                    style={{ transformOrigin: "center center", willChange: "transform" }}
+                    style={{
+                      transformOrigin: "center center",
+                      willChange: "transform",
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                    }}
                   >
                     <img
                       src={slot.url.replace(".webp", ".thumb.webp")}
@@ -444,6 +457,8 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
                     {/* Overlay shadow wash */}
                     <div className="absolute inset-0 bg-neutral-950/5 group-hover:bg-transparent transition-colors duration-500 pointer-events-none" />
                   </div>
+                  {/* Fixed frame edge, independent from the zoom layer */}
+                  <div className="absolute inset-0 pointer-events-none border border-neutral-950/10 dark:border-white/10" />
                 </div>
                 {/* Photo metadata title label */}
                 <div className="h-6 flex items-center justify-between font-mono text-[8px] tracking-widest text-neutral-450 dark:text-neutral-500 uppercase mt-2">
