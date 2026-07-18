@@ -1,0 +1,108 @@
+# PROJECT METADATA
+
+PROJECT_ID: monochrome-studies
+TITLE: Monochrome Studies
+SUBTITLE: Black & White Narratives
+CATEGORY: Monochrome
+YEAR: 2025
+LOCATION: Okinawa, Japan
+COORDINATES: 26.2124° N, 127.6809° E
+DESCRIPTION: A series of high-contrast black and white photographs exploring structural lines, human presence, and quiet shores.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 01.webp
+CARD_IMAGE: 01.webp
+CARD_FILE: 01.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 01.webp
+THUMBNAIL_FILE: 01.thumb.webp
+TITLE: Monochrome Studies
+DESCRIPTION: A series of high-contrast black and white photographs exploring structural lines, human presence, and quiet shores.
+ASPECT_RATIO: landscape
+LOCATION: Okinawa, Japan
+DATE: 2025
+WIDTH: 7008
+HEIGHT: 4672
+FILE_SIZE_BYTES: 978204
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 02.webp
+THUMBNAIL_FILE: 02.thumb.webp
+TITLE: Anteroom Naha
+DESCRIPTION: Geometric shadows at the entrance of a concrete hotel.
+ASPECT_RATIO: landscape
+LOCATION: Naha, Japan
+DATE: November 2025
+WIDTH: 7008
+HEIGHT: 4672
+FILE_SIZE_BYTES: 568374
+CAMERA: ILCE-7CM2
+LENS: 65mm F2 DG DN | Contemporary 020
+FOCAL_LENGTH: 65mm
+APERTURE: f/5.6
+SHUTTER_SPEED: 1/250s
+ISO: 100
+
+[PHOTO 03]
+FILE: 03.webp
+THUMBNAIL_FILE: 03.thumb.webp
+TITLE: Street Musician
+DESCRIPTION: A busker performing on the sidewalk at night.
+ASPECT_RATIO: portrait
+LOCATION: Naha, Japan
+DATE: November 2025
+WIDTH: 4000
+HEIGHT: 6000
+FILE_SIZE_BYTES: 3324210
+CAMERA: ILCE-7CM2
+LENS: XF 56mm f/1.2 R WR
+FOCAL_LENGTH: 56mm
+APERTURE: f/1.2
+SHUTTER_SPEED: 1/125s
+ISO: 1600
+
+[PHOTO 04]
+FILE: 04.webp
+THUMBNAIL_FILE: 04.thumb.webp
+TITLE: Solitary Crow
+DESCRIPTION: A bird perched on a white metal railing by the sea.
+ASPECT_RATIO: portrait
+LOCATION: Okinawa Coast, Japan
+DATE: December 2025
+WIDTH: 3058
+HEIGHT: 4587
+FILE_SIZE_BYTES: 790984
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F2.8 ZA
+FOCAL_LENGTH: 35mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1/4000s
+ISO: 125
+
+[PHOTO 05]
+FILE: 05.webp
+THUMBNAIL_FILE: 05.thumb.webp
+TITLE: Sea Structure
+DESCRIPTION: An old concrete platform standing in the waves.
+ASPECT_RATIO: portrait
+LOCATION: Okinawa, Japan
+DATE: October 2025
+WIDTH: 4031
+HEIGHT: 6047
+FILE_SIZE_BYTES: 1225028
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F2.8 ZA
+FOCAL_LENGTH: 35mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1/1600s
+ISO: 160
+

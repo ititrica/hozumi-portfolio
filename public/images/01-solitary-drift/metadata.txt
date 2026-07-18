@@ -1,0 +1,108 @@
+# PROJECT METADATA
+
+PROJECT_ID: solitary-drift
+TITLE: Solitary Drift
+SUBTITLE: Cinematic Portraits
+CATEGORY: Portrait
+YEAR: 2025
+LOCATION: Hokkaido, Japan
+COORDINATES: 43.0646° N, 141.3468° E
+DESCRIPTION: A visual essay capturing quiet moments of reflection, solitary walks, and urban geometries across Hokkaido.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 01.webp
+CARD_IMAGE: 01.webp
+CARD_FILE: 01.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 01.webp
+THUMBNAIL_FILE: 01.thumb.webp
+TITLE: Solitary Drift
+DESCRIPTION: A visual essay capturing quiet moments of reflection, solitary walks, and urban geometries across Hokkaido.
+ASPECT_RATIO: landscape
+LOCATION: Hokkaido, Japan
+DATE: 2025
+WIDTH: 6941
+HEIGHT: 4627
+FILE_SIZE_BYTES: 933442
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 02.webp
+THUMBNAIL_FILE: 02.thumb.webp
+TITLE: Warm Light
+DESCRIPTION: A quiet moment under the soft glow of streetlights.
+ASPECT_RATIO: landscape
+LOCATION: Sapporo, Japan
+DATE: December 2025
+WIDTH: 4672
+HEIGHT: 4379
+FILE_SIZE_BYTES: 1571696
+CAMERA: ILCE-7CM2
+LENS: Summilux-M 35mm f/1.4 ASPH
+FOCAL_LENGTH: 35mm
+APERTURE: f/5.6
+SHUTTER_SPEED: 1/1000s
+ISO: 64
+
+[PHOTO 03]
+FILE: 03.webp
+THUMBNAIL_FILE: 03.thumb.webp
+TITLE: Above the Steps
+DESCRIPTION: A view from the stairs under the blue winter sky.
+ASPECT_RATIO: portrait
+LOCATION: Otaru, Japan
+DATE: December 2025
+WIDTH: 4672
+HEIGHT: 7008
+FILE_SIZE_BYTES: 1042824
+CAMERA: ILCE-7CM2
+LENS: Elmarit-M 28mm f/2.8 ASPH
+FOCAL_LENGTH: 28mm
+APERTURE: f/8.0
+SHUTTER_SPEED: 1/500s
+ISO: 100
+
+[PHOTO 04]
+FILE: 04.webp
+THUMBNAIL_FILE: 04.thumb.webp
+TITLE: Passage
+DESCRIPTION: Leaning against the cold concrete walls in the shadows.
+ASPECT_RATIO: portrait
+LOCATION: Asahikawa, Japan
+DATE: December 2025
+WIDTH: 4672
+HEIGHT: 7008
+FILE_SIZE_BYTES: 643050
+CAMERA: ILCE-7CM2
+LENS: Summilux-M 35mm f/1.4 ASPH
+FOCAL_LENGTH: 35mm
+APERTURE: f/4.0
+SHUTTER_SPEED: 1/2000s
+ISO: 64
+
+[PHOTO 05]
+FILE: 05.webp
+THUMBNAIL_FILE: 05.thumb.webp
+TITLE: Nocturnal Flow
+DESCRIPTION: A solitary walk amidst blurred city lights and passing traffic.
+ASPECT_RATIO: landscape
+LOCATION: Sapporo, Japan
+DATE: December 2025
+WIDTH: 7008
+HEIGHT: 4672
+FILE_SIZE_BYTES: 783006
+CAMERA: ILCE-7CM2
+LENS: Apo-Summicron-M 50mm f/2 ASPH
+FOCAL_LENGTH: 50mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1/125s
+ISO: 200
+

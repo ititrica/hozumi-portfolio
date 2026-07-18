@@ -1,0 +1,108 @@
+# PROJECT METADATA
+
+PROJECT_ID: expressions
+TITLE: Expressions
+SUBTITLE: Character Studies
+CATEGORY: Portrait
+YEAR: 2026
+LOCATION: Tokyo, Japan
+COORDINATES: 35.6762° N, 139.6503° E
+DESCRIPTION: A collection of intimate portraits exploring facial expressions, textures of clothing, and raw human emotion.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 01.webp
+CARD_IMAGE: 01.webp
+CARD_FILE: 01.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 01.webp
+THUMBNAIL_FILE: 01.thumb.webp
+TITLE: Expressions
+DESCRIPTION: A collection of intimate portraits exploring facial expressions, textures of clothing, and raw human emotion.
+ASPECT_RATIO: landscape
+LOCATION: Tokyo, Japan
+DATE: 2026
+WIDTH: 7008
+HEIGHT: 4406
+FILE_SIZE_BYTES: 1131366
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 02.webp
+THUMBNAIL_FILE: 02.thumb.webp
+TITLE: Neutrality
+DESCRIPTION: A clean studio portrait in dark draped clothing.
+ASPECT_RATIO: portrait
+LOCATION: Tokyo, Japan
+DATE: January 2026
+WIDTH: 4672
+HEIGHT: 6808
+FILE_SIZE_BYTES: 510100
+CAMERA: ILCE-7CM2
+LENS: 65mm F2 DG DN | Contemporary 020
+FOCAL_LENGTH: 65mm
+APERTURE: f/2
+SHUTTER_SPEED: 1/250s
+ISO: 1000
+
+[PHOTO 03]
+FILE: 03.webp
+THUMBNAIL_FILE: 03.thumb.webp
+TITLE: Details
+DESCRIPTION: A close-up of hands holding a metal carabiner.
+ASPECT_RATIO: landscape
+LOCATION: Tokyo, Japan
+DATE: February 2026
+WIDTH: 6590
+HEIGHT: 4393
+FILE_SIZE_BYTES: 306818
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F2.8 ZA
+FOCAL_LENGTH: 35mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1/250s
+ISO: 1000
+
+[PHOTO 04]
+FILE: 04.webp
+THUMBNAIL_FILE: 04.thumb.webp
+TITLE: Spiral Steps
+DESCRIPTION: Sitting on a concrete spiral staircase looking upward.
+ASPECT_RATIO: portrait
+LOCATION: Tokyo, Japan
+DATE: March 2026
+WIDTH: 4672
+HEIGHT: 7008
+FILE_SIZE_BYTES: 406924
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F2.8 ZA
+FOCAL_LENGTH: 35mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1/100s
+ISO: 200
+
+[PHOTO 05]
+FILE: 05.webp
+THUMBNAIL_FILE: 05.thumb.webp
+TITLE: Raw Emotion
+DESCRIPTION: An expressive, close-up snapshot showing raw feeling.
+ASPECT_RATIO: landscape
+LOCATION: Tokyo, Japan
+DATE: March 2026
+WIDTH: 7008
+HEIGHT: 4672
+FILE_SIZE_BYTES: 333748
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F2.8 ZA
+FOCAL_LENGTH: 35mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1/500s
+ISO: 100
+

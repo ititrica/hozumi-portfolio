@@ -1,0 +1,54 @@
+# PROJECT METADATA
+
+PROJECT_ID: diptych-of-her
+TITLE: Diptych of Her
+SUBTITLE: Two Moments
+CATEGORY: Portrait
+YEAR: 2025
+LOCATION: Tokyo, Japan
+COORDINATES: 35.6762° N, 139.6503° E
+DESCRIPTION: A diptych capturing two contrasting moments of a young woman in a striped dress. The first frame presents her in a quiet, sunlit traditional garden sitting on a red bench; the second frame is a candid flash portrait of her crouching on a street crosswalk at night. Together they form a dialogue between quiet tradition and spontaneous urban night.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 01.webp
+CARD_IMAGE: 01.webp
+CARD_FILE: 01.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 01.webp
+THUMBNAIL_FILE: 01.thumb.webp
+TITLE: Diptych of Her
+DESCRIPTION: A diptych capturing two contrasting moments of a young woman in a striped dress. The first frame presents her in a quiet, sunlit traditional garden sitting on a red bench; the second frame is a candid flash portrait of her crouching on a street crosswalk at night. Together they form a dialogue between quiet tradition and spontaneous urban night.
+ASPECT_RATIO: landscape
+LOCATION: Tokyo, Japan
+DATE: 2025
+WIDTH: 6000
+HEIGHT: 4000
+FILE_SIZE_BYTES: 1827026
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 02.webp
+THUMBNAIL_FILE: 02.thumb.webp
+TITLE: Spontaneous Night
+DESCRIPTION: A playful flash portrait of the subject crouching on a street crosswalk at night.
+ASPECT_RATIO: portrait
+LOCATION: Tokyo, Japan
+DATE: 2025
+WIDTH: 3163
+HEIGHT: 4054
+FILE_SIZE_BYTES: 874626
+CAMERA: ILCE-7CM2
+LENS: E 17-70mm F2.8 B070
+FOCAL_LENGTH: 43mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1/125s
+ISO: 2000
+

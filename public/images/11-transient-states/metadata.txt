@@ -1,0 +1,126 @@
+# PROJECT METADATA
+
+PROJECT_ID: transient-states
+TITLE: Transient States
+SUBTITLE: Travels of the Soul
+CATEGORY: Street
+YEAR: 2025
+LOCATION: Tokyo, Japan
+COORDINATES: 35.6762° N, 139.6503° E
+DESCRIPTION: A visual journal tracing a young traveler’s journey across contrasting environments. From the vibrant tiled facades of Bangkok temples and the clear float of tropical seas to quiet domestic shadows, close details of touch, and the rushing light trails of Tokyo bridges at night, these frames explore the fluid states of youth and motion.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 01.webp
+CARD_IMAGE: 01.webp
+CARD_FILE: 01.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 01.webp
+THUMBNAIL_FILE: 01.thumb.webp
+TITLE: Transient States
+DESCRIPTION: A visual journal tracing a young traveler’s journey across contrasting environments. From the vibrant tiled facades of Bangkok temples and the clear float of tropical seas to quiet domestic shadows, close details of touch, and the rushing light trails of Tokyo bridges at night, these frames explore the fluid states of youth and motion.
+ASPECT_RATIO: landscape
+LOCATION: Tokyo, Japan
+DATE: 2025
+WIDTH: 6503
+HEIGHT: 4335
+FILE_SIZE_BYTES: 778836
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 02.webp
+THUMBNAIL_FILE: 02.thumb.webp
+TITLE: Temple Wall
+DESCRIPTION: Standing in front of the ornate, colorful porcelain details of Wat Arun, Bangkok.
+ASPECT_RATIO: portrait
+LOCATION: Bangkok, Thailand
+DATE: 2025
+WIDTH: 3964
+HEIGHT: 5946
+FILE_SIZE_BYTES: 1085550
+CAMERA: ILCE-7CM2
+LENS: FE 24-70mm f/2.8 GM II
+FOCAL_LENGTH: 35mm
+APERTURE: f/11.0
+SHUTTER_SPEED: 1/30s
+ISO: 100
+
+[PHOTO 03]
+FILE: 03.webp
+THUMBNAIL_FILE: 03.thumb.webp
+TITLE: Weightless
+DESCRIPTION: Floating peacefully in the shallow, clear turquoise sea of a tropical island.
+ASPECT_RATIO: landscape
+LOCATION: Koh Samui, Thailand
+DATE: 2025
+WIDTH: 6000
+HEIGHT: 4000
+FILE_SIZE_BYTES: 973472
+CAMERA: ILCE-7CM2
+LENS: FE 24-70mm f/2.8 GM II
+FOCAL_LENGTH: 50mm
+APERTURE: f/8.0
+SHUTTER_SPEED: 1/250s
+ISO: 64
+
+[PHOTO 04]
+FILE: 04.webp
+THUMBNAIL_FILE: 04.thumb.webp
+TITLE: Sleeping Engine
+DESCRIPTION: A motorcycle covered in plastic stands silently under neon lights in a Tokyo backstreet.
+ASPECT_RATIO: landscape
+LOCATION: Tokyo, Japan
+DATE: 2025
+WIDTH: 6000
+HEIGHT: 4000
+FILE_SIZE_BYTES: 1346804
+CAMERA: ILCE-7CM2
+LENS: FE 16-35mm f/2.8 GM II
+FOCAL_LENGTH: 16mm
+APERTURE: f/11.0
+SHUTTER_SPEED: 1/500s
+ISO: 64
+
+[PHOTO 05]
+FILE: 05.webp
+THUMBNAIL_FILE: 05.thumb.webp
+TITLE: The Grip
+DESCRIPTION: An intimate close-up of a hand clutching a bag strap against the soft bokeh of city lights.
+ASPECT_RATIO: landscape
+LOCATION: Tokyo, Japan
+DATE: 2025
+WIDTH: 6000
+HEIGHT: 4000
+FILE_SIZE_BYTES: 1564764
+CAMERA: ILCE-7CM2
+LENS: FE 70-200mm f/2.8 GM OSS II
+FOCAL_LENGTH: 70mm
+APERTURE: f/8.0
+SHUTTER_SPEED: 1/500s
+ISO: 64
+
+[PHOTO 06]
+FILE: 06.webp
+THUMBNAIL_FILE: 06.thumb.webp
+TITLE: Light Streams
+DESCRIPTION: Leaning on a bridge overlooking long-exposure light trails of traffic under the city night sky.
+ASPECT_RATIO: landscape
+LOCATION: Tokyo, Japan
+DATE: 2025
+WIDTH: 5202
+HEIGHT: 3468
+FILE_SIZE_BYTES: 442318
+CAMERA: ILCE-7CM2
+LENS: E 17-70mm F2.8 B070
+FOCAL_LENGTH: 19mm
+APERTURE: f/3.5
+SHUTTER_SPEED: 1/3s
+ISO: 200
+

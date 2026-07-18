@@ -1,0 +1,144 @@
+# PROJECT METADATA
+
+PROJECT_ID: tracks-and-tides
+TITLE: Tracks and Tides
+SUBTITLE: Regional Japan Diaries
+CATEGORY: Street
+YEAR: 2025
+LOCATION: Choshi, Japan
+COORDINATES: 35.7347° N, 140.8268° E
+DESCRIPTION: A photographic diary tracking the quiet rhythms of Japan's local railways, coastal edges, and regional landmarks. From the solitary guard at a country station to the crashing tides of the Pacific, these frames capture the nostalgic transit of everyday life in the provinces.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 01.webp
+CARD_IMAGE: 01.webp
+CARD_FILE: 01.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 01.webp
+THUMBNAIL_FILE: 01.thumb.webp
+TITLE: Tracks and Tides
+DESCRIPTION: A photographic diary tracking the quiet rhythms of Japan's local railways, coastal edges, and regional landmarks. From the solitary guard at a country station to the crashing tides of the Pacific, these frames capture the nostalgic transit of everyday life in the provinces.
+ASPECT_RATIO: landscape
+LOCATION: Choshi, Japan
+DATE: 2025
+WIDTH: 7008
+HEIGHT: 4672
+FILE_SIZE_BYTES: 392828
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 02.webp
+THUMBNAIL_FILE: 02.thumb.webp
+TITLE: Tokawa Dispatch
+DESCRIPTION: A station guard holding flag batons waits at a quiet local station on the Choshi line.
+ASPECT_RATIO: landscape
+LOCATION: Choshi, Japan
+DATE: 2025
+WIDTH: 6000
+HEIGHT: 4000
+FILE_SIZE_BYTES: 271654
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F2.8 ZA
+FOCAL_LENGTH: 35mm
+APERTURE: f/4.5
+SHUTTER_SPEED: 1/200s
+ISO: 100
+
+[PHOTO 03]
+FILE: 03.webp
+THUMBNAIL_FILE: 03.thumb.webp
+TITLE: Parasol by the Shore
+DESCRIPTION: A woman holds a parasol, looking out over the rocky coast as a girl walks nearby.
+ASPECT_RATIO: landscape
+LOCATION: Choshi, Japan
+DATE: 2025
+WIDTH: 6000
+HEIGHT: 4000
+FILE_SIZE_BYTES: 1454322
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F2.8 ZA
+FOCAL_LENGTH: 35mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1/1250s
+ISO: 100
+
+[PHOTO 04]
+FILE: 04.webp
+THUMBNAIL_FILE: 04.thumb.webp
+TITLE: Pacific Surge
+DESCRIPTION: Waves crashing violently against the volcanic rocks under a bright blue sky.
+ASPECT_RATIO: portrait
+LOCATION: Choshi, Japan
+DATE: 2025
+WIDTH: 3927
+HEIGHT: 5891
+FILE_SIZE_BYTES: 1272856
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F2.8 ZA
+FOCAL_LENGTH: 35mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1/1600s
+ISO: 100
+
+[PHOTO 05]
+FILE: 05.webp
+THUMBNAIL_FILE: 05.thumb.webp
+TITLE: Iron Horse Consultation
+DESCRIPTION: Railway workers discuss operations beside a classic orange DE10 diesel locomotive.
+ASPECT_RATIO: portrait
+LOCATION: Tochigi, Japan
+DATE: 2025
+WIDTH: 2899
+HEIGHT: 4348
+FILE_SIZE_BYTES: 272764
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F2.8 ZA
+FOCAL_LENGTH: 35mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1/1000s
+ISO: 100
+
+[PHOTO 06]
+FILE: 06.webp
+THUMBNAIL_FILE: 06.thumb.webp
+TITLE: Evening Over the Fields
+DESCRIPTION: A dramatic purple twilight sky stretching over solar panels and local houses.
+ASPECT_RATIO: landscape
+LOCATION: Chiba, Japan
+DATE: 2025
+WIDTH: 5906
+HEIGHT: 3937
+FILE_SIZE_BYTES: 425772
+CAMERA: ILCE-7CM2
+LENS: E 28-200mm F2.8-5.6 A071
+FOCAL_LENGTH: 28mm
+APERTURE: f/2.8
+SHUTTER_SPEED: 1s
+ISO: 1000
+
+[PHOTO 07]
+FILE: 07.webp
+THUMBNAIL_FILE: 07.thumb.webp
+TITLE: Brick and Sky
+DESCRIPTION: The white bell tower of a historic red-brick church rising toward passing clouds.
+ASPECT_RATIO: portrait
+LOCATION: Otaru, Japan
+DATE: 2025
+WIDTH: 4308
+HEIGHT: 6745
+FILE_SIZE_BYTES: 626276
+CAMERA: ILCE-7CM2
+LENS: 65mm F2 DG DN | Contemporary 020
+FOCAL_LENGTH: 65mm
+APERTURE: f/5.6
+SHUTTER_SPEED: 1/320s
+ISO: 50
+

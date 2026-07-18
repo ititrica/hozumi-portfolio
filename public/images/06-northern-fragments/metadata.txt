@@ -1,0 +1,126 @@
+# PROJECT METADATA
+
+PROJECT_ID: northern-fragments
+TITLE: Northern Fragments
+SUBTITLE: Hokkaido Vignettes
+CATEGORY: Street
+YEAR: 2025
+LOCATION: Hokkaido, Japan
+COORDINATES: 43.0646° N, 141.3468° E
+DESCRIPTION: A documentary collection capturing the quiet corners and fleeting encounters of Hokkaido. From a blue cafe truck overlooking the ocean and weathered seaside homes to unexpected street installations and the dust-kicking energy of northern horse racing, these frames document the rustic poetry of Japan's northernmost island.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 01.webp
+CARD_IMAGE: 01.webp
+CARD_FILE: 01.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 01.webp
+THUMBNAIL_FILE: 01.thumb.webp
+TITLE: Northern Fragments
+DESCRIPTION: A documentary collection capturing the quiet corners and fleeting encounters of Hokkaido. From a blue cafe truck overlooking the ocean and weathered seaside homes to unexpected street installations and the dust-kicking energy of northern horse racing, these frames document the rustic poetry of Japan's northernmost island.
+ASPECT_RATIO: landscape
+LOCATION: Hokkaido, Japan
+DATE: 2025
+WIDTH: 7008
+HEIGHT: 4672
+FILE_SIZE_BYTES: 1894102
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 02.webp
+THUMBNAIL_FILE: 02.thumb.webp
+TITLE: Seaside Respite
+DESCRIPTION: A blue-grey house perched at the water's edge with a lone subcompact car, Hokkaido coast.
+ASPECT_RATIO: landscape
+LOCATION: Hokkaido, Japan
+DATE: 2025
+WIDTH: 6872
+HEIGHT: 4271
+FILE_SIZE_BYTES: 1793194
+CAMERA: ILCE-7CM2
+LENS: Elmarit-M 28mm f/2.8 ASPH
+FOCAL_LENGTH: 28mm
+APERTURE: f/8.0
+SHUTTER_SPEED: 1/500s
+ISO: 100
+
+[PHOTO 03]
+FILE: 03.webp
+THUMBNAIL_FILE: 03.thumb.webp
+TITLE: Weathered Frame
+DESCRIPTION: A collapsed wooden shack slowly returning to the earth, contrasting with modern housing behind it.
+ASPECT_RATIO: landscape
+LOCATION: Hokkaido, Japan
+DATE: 2025
+WIDTH: 7008
+HEIGHT: 4672
+FILE_SIZE_BYTES: 1503058
+CAMERA: ILCE-7CM2
+LENS: Summilux-M 35mm f/1.4 ASPH
+FOCAL_LENGTH: 35mm
+APERTURE: f/5.6
+SHUTTER_SPEED: 1/250s
+ISO: 64
+
+[PHOTO 04]
+FILE: 04.webp
+THUMBNAIL_FILE: 04.thumb.webp
+TITLE: Sun Mall Companion
+DESCRIPTION: A giant plush bear sits quietly at an outdoor table in a snowy shopping arcade, Otaru.
+ASPECT_RATIO: landscape
+LOCATION: Otaru, Japan
+DATE: 2025
+WIDTH: 6482
+HEIGHT: 4618
+FILE_SIZE_BYTES: 1664990
+CAMERA: ILCE-7CM2
+LENS: Apo-Summicron-M 50mm f/2 ASPH
+FOCAL_LENGTH: 50mm
+APERTURE: f/11.0
+SHUTTER_SPEED: 1/125s
+ISO: 64
+
+[PHOTO 05]
+FILE: 05.webp
+THUMBNAIL_FILE: 05.thumb.webp
+TITLE: The Dirt Track
+DESCRIPTION: Horses kick up dust under the pale northern sun during a local race.
+ASPECT_RATIO: landscape
+LOCATION: Hokkaido, Japan
+DATE: 2025
+WIDTH: 5526
+HEIGHT: 2876
+FILE_SIZE_BYTES: 477272
+CAMERA: ILCE-7CM2
+LENS: 65mm F2 DG DN | Contemporary 020
+FOCAL_LENGTH: 65mm
+APERTURE: f/5.6
+SHUTTER_SPEED: 1/1600s
+ISO: 100
+
+[PHOTO 06]
+FILE: 06.webp
+THUMBNAIL_FILE: 06.thumb.webp
+TITLE: Silent Coast
+DESCRIPTION: A weathered breakwater extending into the misty grey sea under a pale sky.
+ASPECT_RATIO: landscape
+LOCATION: Hokkaido, Japan
+DATE: 2025
+WIDTH: 7008
+HEIGHT: 4672
+FILE_SIZE_BYTES: 1830728
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F1.4 GM
+FOCAL_LENGTH: 35mm
+APERTURE: f/1.4
+SHUTTER_SPEED: 1/125s
+ISO: 100
+

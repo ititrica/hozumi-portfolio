@@ -1,0 +1,180 @@
+# PROJECT METADATA
+
+PROJECT_ID: winter-illusion
+TITLE: Winter & Illusion
+SUBTITLE: Creative Portraiture
+CATEGORY: Portrait
+YEAR: 2025
+LOCATION: Hokkaido, Japan
+COORDINATES: 43.0646° N, 141.3468° E
+DESCRIPTION: An exploration of creative double-exposure portraiture and quiet, snowy scenes across northern Japan.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 01.webp
+CARD_IMAGE: 01.webp
+CARD_FILE: 01.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 01.webp
+THUMBNAIL_FILE: 01.thumb.webp
+TITLE: Winter & Illusion
+DESCRIPTION: An exploration of creative double-exposure portraiture and quiet, snowy scenes across northern Japan.
+ASPECT_RATIO: landscape
+LOCATION: Hokkaido, Japan
+DATE: 2025
+WIDTH: 6035
+HEIGHT: 5087
+FILE_SIZE_BYTES: 1549122
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 02.webp
+THUMBNAIL_FILE: 02.thumb.webp
+TITLE: Dot Wall
+DESCRIPTION: A quiet portrait set against a pattern of red dots.
+ASPECT_RATIO: portrait
+LOCATION: Tokyo, Japan
+DATE: July 2024
+WIDTH: 2605
+HEIGHT: 3731
+FILE_SIZE_BYTES: 250516
+CAMERA: ILCE-7CM2
+LENS: SMC Pentax 67 105mm f/2.4
+FOCAL_LENGTH: 105mm
+APERTURE: f/8.0
+SHUTTER_SPEED: 1/500s
+ISO: 160
+
+[PHOTO 03]
+FILE: 03.webp
+THUMBNAIL_FILE: 03.thumb.webp
+TITLE: Double Vision
+DESCRIPTION: A creative double-exposure portrait showing two perspectives.
+ASPECT_RATIO: portrait
+LOCATION: Tokyo, Japan
+DATE: June 2024
+WIDTH: 4672
+HEIGHT: 7008
+FILE_SIZE_BYTES: 470620
+CAMERA: ILCE-7CM2
+LENS: 65mm F2 DG DN | Contemporary 020
+FOCAL_LENGTH: 65mm
+APERTURE: f/5.6
+SHUTTER_SPEED: 6s
+ISO: 50
+
+[PHOTO 04]
+FILE: 04.webp
+THUMBNAIL_FILE: 04.thumb.webp
+TITLE: Winter Silence
+DESCRIPTION: Leaning against a bare tree trunk in a white snowy field.
+ASPECT_RATIO: portrait
+LOCATION: Biei, Japan
+DATE: December 2024
+WIDTH: 3782
+HEIGHT: 6401
+FILE_SIZE_BYTES: 1289400
+CAMERA: ILCE-7CM2
+LENS: SMC Pentax 67 105mm f/2.4
+FOCAL_LENGTH: 105mm
+APERTURE: f/5.6
+SHUTTER_SPEED: 1/125s
+ISO: 160
+
+[PHOTO 05]
+FILE: 05.webp
+THUMBNAIL_FILE: 05.thumb.webp
+TITLE: Cold Whisper
+DESCRIPTION: A serene portrait surrounded by winter frost.
+ASPECT_RATIO: portrait
+LOCATION: Hokkaido, Japan
+DATE: December 2024
+WIDTH: 4672
+HEIGHT: 7008
+FILE_SIZE_BYTES: 1303764
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F1.4 GM
+FOCAL_LENGTH: 35mm
+APERTURE: f/1.4
+SHUTTER_SPEED: 1/125s
+ISO: 100
+
+[PHOTO 06]
+FILE: 06.webp
+THUMBNAIL_FILE: 06.thumb.webp
+TITLE: Cigarette & Cold
+DESCRIPTION: A close-up portrait in the snow with a bandaged hand.
+ASPECT_RATIO: portrait
+LOCATION: Biei, Japan
+DATE: December 2024
+WIDTH: 4672
+HEIGHT: 7008
+FILE_SIZE_BYTES: 504144
+CAMERA: ILCE-7CM2
+LENS: SMC Pentax 67 75mm f/2.8
+FOCAL_LENGTH: 75mm
+APERTURE: f/4.0
+SHUTTER_SPEED: 1/60s
+ISO: 800
+
+[PHOTO 07]
+FILE: 07.webp
+THUMBNAIL_FILE: 07.thumb.webp
+TITLE: Snow Drift
+DESCRIPTION: Lying down flat on a vast, snow-covered hill.
+ASPECT_RATIO: portrait
+LOCATION: Asahikawa, Japan
+DATE: December 2024
+WIDTH: 4672
+HEIGHT: 7008
+FILE_SIZE_BYTES: 1214842
+CAMERA: ILCE-7CM2
+LENS: SMC Pentax 67 105mm f/2.4
+FOCAL_LENGTH: 105mm
+APERTURE: f/11.0
+SHUTTER_SPEED: 1/1000s
+ISO: 160
+
+[PHOTO 08]
+FILE: 08.webp
+THUMBNAIL_FILE: 08.thumb.webp
+TITLE: Frost Mirror
+DESCRIPTION: Reflections of light and ice on a winter profile.
+ASPECT_RATIO: landscape
+LOCATION: Hokkaido, Japan
+DATE: December 2024
+WIDTH: 7008
+HEIGHT: 4672
+FILE_SIZE_BYTES: 1131914
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F1.4 GM
+FOCAL_LENGTH: 35mm
+APERTURE: f/1.4
+SHUTTER_SPEED: 1/125s
+ISO: 100
+
+[PHOTO 09]
+FILE: 09.webp
+THUMBNAIL_FILE: 09.thumb.webp
+TITLE: Snowy Illusion
+DESCRIPTION: Double-exposure silhouette blending with the falling snow.
+ASPECT_RATIO: portrait
+LOCATION: Hokkaido, Japan
+DATE: December 2024
+WIDTH: 4672
+HEIGHT: 4682
+FILE_SIZE_BYTES: 713782
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F1.4 GM
+FOCAL_LENGTH: 35mm
+APERTURE: f/1.4
+SHUTTER_SPEED: 1/125s
+ISO: 100
+

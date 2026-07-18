@@ -1,0 +1,108 @@
+# PROJECT METADATA
+
+PROJECT_ID: transient-geographies
+TITLE: Transient Geographies
+SUBTITLE: Asia Transit
+CATEGORY: Street
+YEAR: 2026
+LOCATION: Thailand, Chiba & Taiwan
+COORDINATES: 13.7563° N, 100.5018° E
+DESCRIPTION: A travelogue of street corners across Thailand, dynamic actions at Chiba racecourse, and nostalgic fabric door curtains in Taiwan.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 01.webp
+CARD_IMAGE: 01.webp
+CARD_FILE: 01.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 01.webp
+THUMBNAIL_FILE: 01.thumb.webp
+TITLE: Transient Geographies
+DESCRIPTION: A travelogue of street corners across Thailand, dynamic actions at Chiba racecourse, and nostalgic fabric door curtains in Taiwan.
+ASPECT_RATIO: landscape
+LOCATION: Thailand, Chiba & Taiwan
+DATE: 2026
+WIDTH: 5112
+HEIGHT: 3943
+FILE_SIZE_BYTES: 780438
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 02.webp
+THUMBNAIL_FILE: 02.thumb.webp
+TITLE: Bangkok Transit Colors
+DESCRIPTION: Tangled power lines and colorful tuk-tuks in Bangkok's bustling center.
+ASPECT_RATIO: landscape
+LOCATION: Bangkok, Thailand
+DATE: March 2026
+WIDTH: 6000
+HEIGHT: 4000
+FILE_SIZE_BYTES: 993650
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F1.4 GM
+FOCAL_LENGTH: 35mm
+APERTURE: f/1.4
+SHUTTER_SPEED: 1/125s
+ISO: 100
+
+[PHOTO 03]
+FILE: 03.webp
+THUMBNAIL_FILE: 03.thumb.webp
+TITLE: Chiba Racecourse Track
+DESCRIPTION: Wind and mud flying by the racing track at Chiba racecourse.
+ASPECT_RATIO: portrait
+LOCATION: Chiba, Japan
+DATE: March 2026
+WIDTH: 4644
+HEIGHT: 6966
+FILE_SIZE_BYTES: 1091204
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F1.4 GM
+FOCAL_LENGTH: 35mm
+APERTURE: f/1.4
+SHUTTER_SPEED: 1/125s
+ISO: 100
+
+[PHOTO 04]
+FILE: 04.webp
+THUMBNAIL_FILE: 04.thumb.webp
+TITLE: Taiwan Curtain Textures
+DESCRIPTION: Nostalgic blue fabric door curtains at a traditional shop doorway in Taiwan.
+ASPECT_RATIO: landscape
+LOCATION: Taipei, Taiwan
+DATE: March 2026
+WIDTH: 7008
+HEIGHT: 4672
+FILE_SIZE_BYTES: 1524258
+CAMERA: ILCE-7CM2
+LENS: FE 35mm F1.4 GM
+FOCAL_LENGTH: 35mm
+APERTURE: f/1.4
+SHUTTER_SPEED: 1/125s
+ISO: 100
+
+[PHOTO 05]
+FILE: 05.webp
+THUMBNAIL_FILE: 05.thumb.webp
+TITLE: Taiwan Doorway Detail
+DESCRIPTION: Battered walls and fabric curtains hanging over a door frame in a Taiwan alleyway.
+ASPECT_RATIO: landscape
+LOCATION: Jiufen, Taiwan
+DATE: March 2026
+WIDTH: 6361
+HEIGHT: 4578
+FILE_SIZE_BYTES: 2554474
+CAMERA: ILCE-7CM2
+LENS: 65mm F2 DG DN | Contemporary 020
+FOCAL_LENGTH: 65mm
+APERTURE: f/9
+SHUTTER_SPEED: 1/250s
+ISO: 100
+

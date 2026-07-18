@@ -1,0 +1,90 @@
+# PROJECT METADATA
+
+PROJECT_ID: okinawa-breeze
+TITLE: Okinawa Breeze
+SUBTITLE: Okinawa Street Journal
+CATEGORY: Street
+YEAR: 2025
+LOCATION: Okinawa, Japan
+COORDINATES: 26.2124° N, 127.6809° E
+DESCRIPTION: A street-level study of Okinawa's unique cultural landscape, where local island life, tourist curiosity, and historical military presence coexist. These snapshots capture the quiet moments of rest, youthful play, and the distinct architecture of Japan's southern prefecture.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: 01.webp
+CARD_IMAGE: 01.webp
+CARD_FILE: 01.card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: 01.webp
+THUMBNAIL_FILE: 01.thumb.webp
+TITLE: Okinawa Breeze
+DESCRIPTION: A street-level study of Okinawa's unique cultural landscape, where local island life, tourist curiosity, and historical military presence coexist. These snapshots capture the quiet moments of rest, youthful play, and the distinct architecture of Japan's southern prefecture.
+ASPECT_RATIO: landscape
+LOCATION: Okinawa, Japan
+DATE: 2025
+WIDTH: 6348
+HEIGHT: 3958
+FILE_SIZE_BYTES: 656462
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: 02.webp
+THUMBNAIL_FILE: 02.thumb.webp
+TITLE: The Conductor
+DESCRIPTION: A boy wearing a paper Yui Rail monorail hat checks his phone while waiting on a platform.
+ASPECT_RATIO: portrait
+LOCATION: Okinawa, Japan
+DATE: 2025
+WIDTH: 4672
+HEIGHT: 7008
+FILE_SIZE_BYTES: 311614
+CAMERA: ILCE-7CM2
+LENS: FE 24-70mm f/2.8 GM II
+FOCAL_LENGTH: 50mm
+APERTURE: f/8.0
+SHUTTER_SPEED: 1/250s
+ISO: 100
+
+[PHOTO 03]
+FILE: 03.webp
+THUMBNAIL_FILE: 03.thumb.webp
+TITLE: Sightseers
+DESCRIPTION: Tourists with luggage look up and take photos on a quiet street next to parked scooters.
+ASPECT_RATIO: landscape
+LOCATION: Okinawa, Japan
+DATE: 2025
+WIDTH: 3955
+HEIGHT: 2637
+FILE_SIZE_BYTES: 587154
+CAMERA: ILCE-7CM2
+LENS: FE 24-70mm f/2.8 GM II
+FOCAL_LENGTH: 35mm
+APERTURE: f/11.0
+SHUTTER_SPEED: 1/500s
+ISO: 64
+
+[PHOTO 04]
+FILE: 04.webp
+THUMBNAIL_FILE: 04.thumb.webp
+TITLE: Camp Lester Gate
+DESCRIPTION: A guard stands at the entrance of Camp Lester, capturing the dual character of Okinawa's land.
+ASPECT_RATIO: landscape
+LOCATION: Chatan, Okinawa
+DATE: 2025
+WIDTH: 6462
+HEIGHT: 4308
+FILE_SIZE_BYTES: 1205464
+CAMERA: ILCE-7CM2
+LENS: FE 70-200mm f/2.8 GM OSS II
+FOCAL_LENGTH: 100mm
+APERTURE: f/5.6
+SHUTTER_SPEED: 1/500s
+ISO: 100
+
