@@ -734,7 +734,7 @@ function RouteLoader() {
               <motion.span
                 key={char}
                 className="absolute text-4xl sm:text-6xl md:text-7xl font-light tracking-[0.2em] text-neutral-950 dark:text-white select-none"
-                style={{ fontFamily: 'Tsukushi Mincho, serif', fontWeight: 300 }}
+                style={{ fontFamily: /^[A-Z]$/.test(char) ? '"DM Sans Local", "DM Sans", monospace' : '"Tsukushi Mincho", serif', fontWeight: /^[A-Z]$/.test(char) ? 400 : 300 }}
                 initial={{ opacity: 0, scale: 0.8, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8, y: -10 }}

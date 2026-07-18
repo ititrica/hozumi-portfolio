@@ -19,10 +19,17 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'DM Sans Local';
+    src: url('/DMSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 :root {
     --bg-color: #000000;
     --text-color: #ffffff;
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-mono: 'DM Sans Local', 'DM Sans', 'JetBrains Mono', 'Fira Code', monospace;
     --font-sans: 'Inter', sans-serif;
 }
 
@@ -115,6 +122,7 @@ body {
     position: relative;
     color: var(--text-color);
     font-family: 'Tsukushi Mincho', serif;
+    font-synthesis: none;
 }
 
 /* Latin characters in the second phase */
@@ -166,7 +174,7 @@ body {
     }
 }
 
-/*/* 正在淡出销毁状态 */
+/* 正在淡出销毁状态 */
 .grid-char.exit {
     animation: charExit 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
