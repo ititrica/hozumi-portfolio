@@ -42,6 +42,11 @@ const RANDOM_PHRASES = [
   "▢"
 ];
 
+const PLAYGROUND_GRID_PADDING = 160;
+const PLAYGROUND_CARD_WIDTH = 280;
+const PLAYGROUND_CARD_HEIGHT = 350;
+const PLAYGROUND_COLUMN_GAP = 210;
+const PLAYGROUND_ROW_GAP = 262;
 interface PlaygroundProps {
   photographyData: PhotographySeries[];
   onSelectPhoto: (photo: Photo, photos: Photo[]) => void;
@@ -306,19 +311,37 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     let frameId: number | null = null;
 
     const selectPhotoUnderZoomFocus = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
       const { x, y } = zoomFocusRef.current;
-      const target = document.elementFromPoint(x, y)?.closest<HTMLElement>(".playground-photo-card");
-      const photoId = target?.getAttribute("data-photo-id");
-      if (!photoId) return;
+      const scale = smoothScale.get();
+      if (scale <= 0) return;
 
-      const matchedPhoto = gridSlots.find(
-        (slot): slot is Photo => "url" in slot && slot.id === photoId
-      );
-      if (matchedPhoto) {
-        onSelectPhoto(matchedPhoto, gridSlots.filter((slot): slot is Photo => "url" in slot));
-      }
+      // Convert the screen point back into the unscaled canvas coordinate
+      // system, then resolve the row and column without querying DOM boxes.
+      const rect = canvas.getBoundingClientRect();
+      const localX = (x - rect.left) / scale;
+      const localY = (y - rect.top) / scale;
+      const gridX = localX - PLAYGROUND_GRID_PADDING;
+      const gridY = localY - PLAYGROUND_GRID_PADDING;
+
+      if (gridX < 0 || gridY < 0) return;
+
+      const columnStride = PLAYGROUND_CARD_WIDTH + PLAYGROUND_COLUMN_GAP;
+      const rowStride = PLAYGROUND_CARD_HEIGHT + PLAYGROUND_ROW_GAP;
+      const column = Math.floor(gridX / columnStride);
+      const row = Math.floor(gridY / rowStride);
+
+      if (column < 0 || column >= N || row < 0 || row >= N) return;
+      if (gridX - column * columnStride >= PLAYGROUND_CARD_WIDTH) return;
+      if (gridY - row * rowStride >= PLAYGROUND_CARD_HEIGHT) return;
+
+      const slot = gridSlots[row * N + column];
+      if (!slot || !("url" in slot)) return;
+
+      onSelectPhoto(slot, gridSlots.filter((item): item is Photo => "url" in item));
     };
-
     const unsubscribeTarget = motionScale.on("change", (latestScale) => {
       if (latestScale >= 2.1) {
         if (!isZoomTriggeredRef.current) {
