@@ -396,16 +396,16 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
               <div
                 key={slot.id}
                 onClick={() => handlePhotoClick(slot)}
-                className="w-[280px] h-[350px] flex flex-col justify-between group cursor-pointer playground-photo-card"
+                className="w-[280px] h-[350px] flex-none flex flex-col justify-between group cursor-pointer playground-photo-card"
                 data-photo-id={slot.id}
               >
                 {/* Image Mask Frame */}
-                <div className="w-full h-[320px] overflow-hidden bg-neutral-100 dark:bg-neutral-900 shadow-lg group-hover:shadow-2xl transition-all duration-500 ease-out rounded-none relative">
+                <div className="relative w-[280px] h-[320px] flex-none overflow-hidden bg-neutral-100 dark:bg-neutral-900 shadow-lg group-hover:shadow-2xl transition-shadow duration-500 ease-out rounded-none" style={{ contain: "layout paint" }}>
                   <img
                     src={slot.url.replace(".webp", ".thumb.webp")}
                     alt={slot.title}
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover select-none pointer-events-none filter grayscale transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105"
+                    className="absolute inset-0 block w-full h-full object-cover select-none pointer-events-none filter grayscale transition-[transform,filter] duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105" style={{ transformOrigin: "center center", willChange: "transform, filter" }}
                   />
                   {/* Overlay shadow wash */}
                   <div className="absolute inset-0 bg-neutral-950/5 group-hover:bg-transparent transition-colors duration-500 pointer-events-none" />
