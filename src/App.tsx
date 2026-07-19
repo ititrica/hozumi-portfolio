@@ -414,12 +414,16 @@ export default function App() {
     return () => window.clearTimeout(timer);
   }, [location, routePageReady, routeTransitionPhase, seriesChunkReady]);
 
-  const pageTransition = {
-    duration: 0.8,
-    ease: "easeInOut" as const
-  };
+ const pageTransition = {
+   duration: 0.8,
+   ease: "easeInOut" as const
+ };
 
-  const safariTransitionFix = {
+  const shouldShowHeader = !loading
+    && routeTransitionPhase === "idle"
+    && !externalRouteLoading;
+
+ const safariTransitionFix = {
     backfaceVisibility: "hidden" as const,
     WebkitBackfaceVisibility: "hidden" as const,
     transform: "translate3d(0, 0, 0)",
@@ -688,23 +692,28 @@ export default function App() {
           </AnimatePresence>
 
           {/* Persistent Menu & Headers */}
-          <div
-            className={`transition-opacity duration-500 ${
-              loading || routeTransitionPhase !== "idle" || externalRouteLoading
-                ? "opacity-0 pointer-events-none"
-                : "opacity-100"
-            }`}
-          >
-            <Header
-              theme={theme}
-              setTheme={setTheme}
-              lang={lang}
-              setLang={setLang}
-              isMuted={isMuted}
-              toggleMute={toggleMute}
-              onNavigate={handleHeaderNavigate}
-            />
-          </div>
+          <AnimatePresence initial={false}>
+            {shouldShowHeader && (
+              <motion.div
+                key="site-header"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="pointer-events-auto"
+              >
+                <Header
+                  theme={theme}
+                  setTheme={setTheme}
+                  lang={lang}
+                  setLang={setLang}
+                  isMuted={isMuted}
+                  toggleMute={toggleMute}
+                  onNavigate={handleHeaderNavigate}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Main Orchestrated Contents */}
           <main
