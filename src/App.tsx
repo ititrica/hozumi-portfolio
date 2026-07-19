@@ -591,9 +591,17 @@ export default function App() {
             }`}
           >
             <AnimatePresence mode="wait">
-              <Suspense fallback={<RouteLoaderScreen />}>
-                {/* @ts-ignore Routes uses the current displayed location as its transition key. */}
-                <Routes location={renderedLocation} key={renderedRouteIdentity}>
+              <motion.div
+                key={renderedRouteIdentity}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={pageTransition}
+                className="absolute inset-0"
+              >
+                <Suspense fallback={<RouteLoaderScreen />}>
+                  {/* @ts-ignore Routes uses the current displayed location as its transition key. */}
+                  <Routes location={renderedLocation}>
                 {/* Home — Selected Work */}
                 <Route
                   path="/"
@@ -680,8 +688,9 @@ export default function App() {
                     </motion.div>
                   }
                 />
-                </Routes>
-              </Suspense>
+                  </Routes>
+                </Suspense>
+              </motion.div>
             </AnimatePresence>
           </main>
 
