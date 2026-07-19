@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { Suspense, lazy, useState, useEffect, useLayoutEffect, useRef, useMemo, useCallback } from "react";
+import React, { Suspense, lazy, useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Routes, Route, useNavigate, useLocation, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { Instagram, Twitter, Mail, ArrowUp } from "lucide-react";
@@ -20,7 +20,8 @@ import SeoManager from "./components/SeoManager";
 import { Language, getLocalizedData, UI_TRANSLATIONS } from "./i18n";
 
 const HomeWheelView = lazy(() => import("./components/HomeWheelView"));
-const SeriesView = lazy(() => import("./components/SeriesView"));
+const loadSeriesView = () => import("./components/SeriesView");
+const SeriesView = lazy(loadSeriesView);
 const Lightbox = lazy(() => import("./components/Lightbox"));
 const AboutContact = lazy(() => import("./components/AboutContact"));
 const Playground = lazy(() => import("./components/Playground"));
@@ -37,6 +38,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [entranceSequenceDone, setEntranceSequenceDone] = useState(hasEnteredSession);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [manualRouteLoading, setManualRouteLoading] = useState(false);
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof localStorage !== 'undefined') {
@@ -128,6 +130,8 @@ export default function App() {
   }, []);
 
   const handleSelectSeries = useCallback((series: PhotographySeries) => {
+    setManualRouteLoading(true);
+    void loadSeriesView();
     navigate(`/series/${series.id}`);
   }, [navigate]);
 
@@ -270,23 +274,33 @@ export default function App() {
     return path.startsWith("/series") || path === "/playground";
   };
 
-  const [routeLoading, setRouteLoading] = useState(() => shouldLoadRoute(location.pathname));
-
-  useLayoutEffect(() => {
-    if (shouldLoadRoute(location.pathname)) {
-      setRouteLoading(true);
-    }
-  }, [location.pathname]);
+  // Keep the route transition in front of page mounting. Using the history key
+  // also catches navigation between entries that share the same pathname.
+  const routeIdentity = `${location.key}:${location.pathname}${location.search}`;
+  const routeRequiresLoader = shouldLoadRoute(location.pathname);
+  const [readyRouteIdentity, setReadyRouteIdentity] = useState<string | null>(() => (
+    routeRequiresLoader ? null : routeIdentity
+  ));
+  const routeLoading = routeRequiresLoader && (
+    manualRouteLoading || readyRouteIdentity !== routeIdentity
+  );
 
   useEffect(() => {
-    if (!shouldLoadRoute(location.pathname)) {
-      setRouteLoading(false);
+    if (!routeRequiresLoader) {
+      setReadyRouteIdentity(routeIdentity);
+      setManualRouteLoading(false);
       return;
     }
-    let active = true;
-    const timer = setTimeout(() => { if (active) setRouteLoading(false); }, 450);
-    return () => { active = false; clearTimeout(timer); };
-  }, [location.pathname]);
+
+    if (!routeLoading) return;
+
+    const timer = window.setTimeout(() => {
+      setReadyRouteIdentity(routeIdentity);
+      setManualRouteLoading(false);
+    }, 450);
+
+    return () => window.clearTimeout(timer);
+  }, [routeIdentity, routeLoading, routeRequiresLoader]);
 
   const pageTransition = {
     duration: 0.6
@@ -560,22 +574,26 @@ export default function App() {
             )}
           </AnimatePresence>
 
-          {/* Persistent Menu & Headers */}
-          <Header
-            theme={theme}
-            setTheme={setTheme}
-            lang={lang}
-            setLang={setLang}
-            isMuted={isMuted}
-            toggleMute={toggleMute}
-          />
+          {routeLoading ? (
+            <RouteLoaderScreen />
+          ) : (
+            <>
+              {/* Persistent Menu & Headers */}
+              <Header
+                theme={theme}
+                setTheme={setTheme}
+                lang={lang}
+                setLang={setLang}
+                isMuted={isMuted}
+                toggleMute={toggleMute}
+              />
 
-          {/* Main Orchestrated Contents */}
-          <main className="flex-grow relative flex flex-col">
-            <AnimatePresence mode="wait">
-              <Suspense fallback={<RouteLoader />}>
-                {/* @ts-ignore Routes uses the current pathname as its transition key. */}
-                <Routes location={location} key={location.pathname}>
+              {/* Main Orchestrated Contents */}
+              <main className="flex-grow relative flex flex-col">
+                <AnimatePresence mode="wait">
+                  <Suspense fallback={<RouteLoaderScreen />}>
+                    {/* @ts-ignore Routes uses the current pathname as its transition key. */}
+                    <Routes location={location} key={routeIdentity}>
                 {/* Home — Selected Work */}
                 <Route
                   path="/"
@@ -662,57 +680,44 @@ export default function App() {
                     </motion.div>
                   }
                 />
-                </Routes>
-              </Suspense>
-            </AnimatePresence>
-          </main>
+                    </Routes>
+                  </Suspense>
+                </AnimatePresence>
+              </main>
 
-          {/* Lightbox for Selected Photo */}
-          <AnimatePresence>
-            {selectedPhoto && (
-              <Suspense fallback={null}>
-                <Lightbox
-                  photo={selectedPhoto}
-                  photos={lightboxPhotos}
-                  onClose={() => setSelectedPhoto(null)}
-                  onNavigate={(photo) => setSelectedPhoto(photo)}
-                  lang={lang}
-                />
-              </Suspense>
-            )}
-          </AnimatePresence>
+              {/* Lightbox for Selected Photo */}
+              <AnimatePresence>
+                {selectedPhoto && (
+                  <Suspense fallback={null}>
+                    <Lightbox
+                      photo={selectedPhoto}
+                      photos={lightboxPhotos}
+                      onClose={() => setSelectedPhoto(null)}
+                      onNavigate={(photo) => setSelectedPhoto(photo)}
+                      lang={lang}
+                    />
+                  </Suspense>
+                )}
+              </AnimatePresence>
 
-          {/* Scroll to Top for About Page */}
-          <AnimatePresence>
-            {showScrollTop && (
-              <motion.button
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                className="fixed bottom-8 right-8 z-50 p-3 bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 rounded-none shadow-lg hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-all duration-300 focus:outline-none"
-                onClick={scrollToTop}
-                data-cursor="nav"
-                aria-label="Scroll to top"
-              >
-                <ArrowUp className="w-4.5 h-4.5" />
-              </motion.button>
-            )}
-          </AnimatePresence>
-
-          {/* Elegant Minimalist Route Transition Loader */}
-          <AnimatePresence>
-            {routeLoading && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="fixed inset-0 z-[150] flex items-center justify-center bg-white dark:bg-[#0e0c0b]"
-              >
-                <RouteLoader />
-              </motion.div>
-            )}
-          </AnimatePresence>
+              {/* Scroll to Top for About Page */}
+              <AnimatePresence>
+                {showScrollTop && (
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    className="fixed bottom-8 right-8 z-50 p-3 bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 rounded-none shadow-lg hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-all duration-300 focus:outline-none"
+                    onClick={scrollToTop}
+                    data-cursor="nav"
+                    aria-label="Scroll to top"
+                  >
+                    <ArrowUp className="w-4.5 h-4.5" />
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            </>
+          )}
         </>
       )}
     </div>
@@ -795,6 +800,14 @@ function RouteLoader() {
           </AnimatePresence>
         </div>
       ))}
+    </div>
+  );
+}
+
+function RouteLoaderScreen() {
+  return (
+    <div className="fixed inset-0 z-[9998] flex items-center justify-center bg-white dark:bg-[#0e0c0b]">
+      <RouteLoader />
     </div>
   );
 }
