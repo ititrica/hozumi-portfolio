@@ -688,7 +688,7 @@ export default function App() {
                   transition={pageTransition}
                   className="absolute inset-0"
                 >
-                  <Suspense fallback={<RouteLoaderScreen />}>
+                  <Suspense fallback={showRouteLoader ? <RouteLoaderScreen /> : null}>
                     {/* @ts-ignore Routes uses the current displayed location as its transition key. */}
                     <Routes location={renderedLocation}>
                 {/* Home — Selected Work */}
