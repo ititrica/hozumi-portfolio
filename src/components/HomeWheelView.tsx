@@ -214,6 +214,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
     };
   }, [smoothProgress, photographyData.length]);
   const activeIndex = Math.max(0, Math.min(photographyData.length - 1, settledIndex));
+  const interactiveIndex = Math.max(0, Math.min(photographyData.length - 1, Math.round(currentVal)));
   const activeSeries = photographyData[activeIndex];
 
 
@@ -344,7 +345,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
       onTouchEnd={handleTouchEnd}
       className="relative w-full h-full overflow-hidden select-none bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-200 cursor-default flex flex-col justify-between transition-colors duration-1000"
       id="home-wheel-viewport"
-      data-active-card={activeIndex}
+       data-active-card={interactiveIndex}
     >
       <div className="sr-only">
         <h1>Hozumi Photography Portfolio</h1>
@@ -415,7 +416,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
               key={series.id}
               series={series}
               index={index}
-              activeIndex={activeIndex}
+              activeIndex={interactiveIndex}
               dimensions={dimensions}
               progress={smoothProgress}
               onSelectSeries={onSelectSeries}
