@@ -24,7 +24,8 @@ async function generateThumbnails() {
     if (
       filePath.endsWith(".webp") &&
       !filePath.endsWith("-thumb.webp") &&
-      !filePath.endsWith("-card.webp")
+      !filePath.endsWith("-card.webp") &&
+      !filePath.endsWith("-display.webp")
     ) {
       webpFiles.push(filePath);
     }

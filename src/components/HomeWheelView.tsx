@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring, animate } from "motion/react";
+import { motion, MotionValue, useMotionValue, useSpring, useTransform, animate } from "motion/react";
 import { useLocation } from "react-router-dom";
 import { PhotographySeries } from "../types";
 import { Language } from "../i18n";
@@ -24,6 +24,124 @@ const CATEGORIES = [
   { label: "电影 CINEMATIC", value: "CINEMATIC" },
 ];
 
+function getBaseSize(index: number, width: number, isMobile: boolean) {
+  const patternIndex = index % 5;
+  const baseWidth = width * (isMobile ? 0.62 : 0.363);
+  const multipliers = isMobile ? [0.9, 0.95, 1, 1.05, 1] : [0.94, 0.97, 1, 1.03, 1];
+  return Math.round(baseWidth * multipliers[patternIndex]);
+}
+
+function getCardCoords(offset: number, width: number, isMobile: boolean) {
+  const baseWidth = width * (isMobile ? 0.62 : 0.363);
+  const spacing = isMobile ? Math.round(baseWidth * 0.85) : Math.round(baseWidth * 0.72);
+  const cornerRadius = isMobile ? Math.round(baseWidth * 1.3) : Math.round(baseWidth * 0.76);
+
+  if (offset < -1) {
+    return { x: 0, y: cornerRadius + (-offset - 1) * spacing };
+  }
+  if (offset > 1) {
+    return { x: cornerRadius + (offset - 1) * spacing, y: 0 };
+  }
+
+  const radians = ((offset + 1) / 2) * (Math.PI / 2);
+  return {
+    x: cornerRadius * (1 - Math.cos(radians)),
+    y: cornerRadius * (1 - Math.sin(radians)),
+  };
+}
+
+interface WheelCardProps {
+  series: PhotographySeries;
+  index: number;
+  dimensions: { width: number; height: number };
+  progress: MotionValue<number>;
+  settledIndex: number;
+  onSelectSeries: (series: PhotographySeries) => void;
+}
+
+const WheelCard = React.memo(function WheelCard({
+  series,
+  index,
+  dimensions,
+  progress,
+  settledIndex,
+  onSelectSeries,
+}: WheelCardProps) {
+  const isMobile = dimensions.width < 768;
+  const baseWidth = getBaseSize(index, dimensions.width, isMobile);
+  const displayWidth = series.id === "xiao-yuanhang" ? baseWidth * 0.8 : baseWidth;
+
+  const x = useTransform(progress, (current) => getCardCoords(index - current, dimensions.width, isMobile).x);
+  const y = useTransform(progress, (current) => -getCardCoords(index - current, dimensions.width, isMobile).y);
+  const opacity = useTransform(progress, (current) => Math.max(0, Math.min(1, 1.1 - Math.abs(index - current) / 3.2)));
+  const zIndex = useTransform(progress, (current) => Math.round(90 - Math.abs(index - current) * 16));
+  const scale = useTransform(progress, (current) => {
+    const diff = Math.abs(index - current);
+    return 0.28 + 0.72 * Math.exp(-Math.pow(diff / 1.35, 2));
+  });
+  const imageTransform = useTransform(progress, (current) => {
+    const offset = Math.max(-1.3, Math.min(1.3, index - current));
+    const diff = Math.abs(index - current);
+    const parallaxX = Math.max(0, offset) * 28;
+    const parallaxY = Math.min(0, offset) * 28;
+    const imageScale = 1.2 - 0.07 * Math.exp(-Math.pow(diff / 0.5, 2));
+    return `translateX(${parallaxX}px) translateY(${parallaxY}px) scale(${imageScale})`;
+  });
+  const imageFilter = useTransform(progress, (current) => {
+    const diff = Math.abs(index - current);
+    const blur = Math.min(8, Math.pow(diff, 2) * 8);
+    const grayscale = 40 * (1 - Math.exp(-Math.pow(diff / 0.9, 2)));
+    return `blur(${blur}px) grayscale(${grayscale}%)`;
+  });
+  const imageOpacity = useTransform(progress, (current) => {
+    const diff = Math.abs(index - current);
+    return 0.6 + 0.4 * Math.exp(-Math.pow(diff / 0.9, 2));
+  });
+
+  const handleClick = () => {
+    sessionStorage.setItem("wheelIndex", String(index));
+    onSelectSeries(series);
+  };
+
+  return (
+    <motion.div
+      onClick={handleClick}
+      className="absolute pointer-events-auto transition-shadow duration-500"
+      style={{
+        width: displayWidth,
+        left: 0,
+        bottom: 0,
+        x,
+        y,
+        willChange: "transform",
+        opacity,
+        zIndex,
+        cursor: "pointer",
+      }}
+      data-cursor="home-card"
+    >
+      <motion.div
+        className="relative"
+        style={{ scale, transformOrigin: "bottom left", willChange: "transform" }}
+      >
+        <div className="relative w-full overflow-hidden bg-neutral-950 shadow-2xl group">
+          <img
+            src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
+            alt={series.title}
+            loading={Math.abs(index - settledIndex) <= 1 ? "eager" : "lazy"}
+            decoding="async"
+            draggable={false}
+            referrerPolicy="no-referrer"
+            className="w-full block select-none pointer-events-none"
+            style={{ filter: imageFilter, transform: imageTransform, opacity: imageOpacity }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-60 pointer-events-none" />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+});
+
 export default function HomeWheelView({ onSelectSeries, photographyData, lang }: HomeWheelViewProps) {
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,25 +152,31 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
   const savedIndex = restoreWheel && typeof sessionStorage !== 'undefined'
     ? parseFloat(sessionStorage.getItem('wheelIndex') || '0')
     : 0;
+  const initialIndex = Math.max(0, Math.min(photographyData.length - 1, Math.round(savedIndex)));
 
   // Framer Motion spring scroll state for buttery kinetic movement
-  const scrollProgress = useMotionValue(savedIndex);
+  const scrollProgress = useMotionValue(initialIndex);
   const smoothProgress = useSpring(scrollProgress, {
     stiffness: 75,
     damping: 20,
     mass: 0.8,
   });
 
-  const [currentVal, setCurrentVal] = useState(savedIndex);
-  const [settledIndex, setSettledIndex] = useState(Math.round(savedIndex));
+  const [currentVal, setCurrentVal] = useState(initialIndex);
+  const [settledIndex, setSettledIndex] = useState(initialIndex);
   const settleTimerRef = useRef<number | null>(null);
+  const lastVisualUpdateRef = useRef(0);
 
   // Keep the wheel position live for card motion, but commit the title
   // highlight only after the spring has stopped to avoid flashing through
   // intermediate indices during a multi-series jump.
   useEffect(() => {
     const unsubscribe = smoothProgress.on("change", (latest) => {
-      setCurrentVal(latest);
+      const now = performance.now();
+      if (now - lastVisualUpdateRef.current >= 32) {
+        lastVisualUpdateRef.current = now;
+        setCurrentVal(latest);
+      }
 
       if (settleTimerRef.current !== null) {
         window.clearTimeout(settleTimerRef.current);
@@ -63,6 +187,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
           0,
           Math.min(photographyData.length - 1, Math.round(smoothProgress.get()))
         );
+        setCurrentVal(smoothProgress.get());
         setSettledIndex((previous) => previous === nextIndex ? previous : nextIndex);
         settleTimerRef.current = null;
       }, 220);
@@ -104,9 +229,6 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
 
   const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const activeAnimationRef = useRef<any | null>(null);
-
-  // Responsive scale based on container width (reference at 1400px)
-  const responsiveScale = Math.min(Math.max(dimensions.width / 1400, 0.45), 1.1);
 
   // Wheel Scroll handler with automatic snapping timeout (native non-passive for Safari compatibility)
   useEffect(() => {
@@ -200,57 +322,9 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
     });
   };
 
-  // Dynamic card dimension variation for asymmetric design
-  const getBaseSize = (i: number, isMob: boolean) => {
-    const index = i % 5;
-    if (isMob) {
-      const baseW = dimensions.width * 0.62;
-      switch (index) {
-        case 0: return { w: Math.round(baseW * 0.9), h: 0 };
-        case 1: return { w: Math.round(baseW * 0.95), h: 0 };
-        case 2: return { w: Math.round(baseW * 1.0), h: 0 };
-        case 3: return { w: Math.round(baseW * 1.05), h: 0 };
-        default: return { w: Math.round(baseW), h: 0 };
-      }
-    }
-    const baseW = dimensions.width * 0.363;
-    switch (index) {
-      case 0: return { w: Math.round(baseW * 0.94), h: 0 };
-      case 1: return { w: Math.round(baseW * 0.97), h: 0 };
-      case 2: return { w: Math.round(baseW * 1.0), h: 0 };
-      case 3: return { w: Math.round(baseW * 1.03), h: 0 };
-      default: return { w: Math.round(baseW), h: 0 };
-    }
-  };
-
-  // Exact coordinates helper for L-shape corner layout hugging the left & bottom walls
-  const getCardCoords = (offset: number) => {
-    const isMob = dimensions.width < 768;
-    const baseW = isMob ? dimensions.width * 0.62 : dimensions.width * 0.363;
-
-    const spacing = isMob ? Math.round(baseW * 0.85) : Math.round(baseW * 0.72);
-    const cornerRadius = isMob ? Math.round(baseW * 1.3) : Math.round(baseW * 0.76);
-
-    let x = 0;
-    let y = 0;
-
-    if (offset < -1) {
-      x = 0;
-      y = cornerRadius + (-offset - 1) * spacing;
-    } else if (offset > 1) {
-      x = cornerRadius + (offset - 1) * spacing;
-      y = 0;
-    } else {
-      const t = (offset + 1) / 2;
-      const radians = t * (Math.PI / 2);
-      x = cornerRadius * (1 - Math.cos(radians));
-      y = cornerRadius * (1 - Math.sin(radians));
-    }
-
-    return { x, y };
-  };
-
   const isMobile = dimensions.width < 768;
+  const visibleStart = Math.max(0, settledIndex - 4);
+  const visibleEnd = Math.min(photographyData.length - 1, settledIndex + 4);
 
   return (
     <div
@@ -283,8 +357,10 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
               }}
             >
               <img
-                  src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
+                src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
                 alt=""
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover scale-110 grayscale-[30%]"
                 style={{
@@ -309,84 +385,18 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
 
       {/* Main Interactive Stage: The L-Shape Corner Curve */}
       <div className="absolute inset-0 z-10 overflow-visible pointer-events-none">
-        {photographyData.map((series, idx) => {
-          const offset = idx - currentVal;
-          const { x, y } = getCardCoords(offset);
-
-          const baseSize = getBaseSize(idx, isMobile);
-
-          const diff = Math.abs(offset);
-          const scale = 0.28 + 0.72 * Math.exp(-Math.pow(diff / 1.35, 2));
-
-          const displayWidth = series.id === "xiao-yuanhang" ? baseSize.w * 0.8 : baseSize.w;
-
-          const blurAmount = Math.min(12, Math.pow(diff, 2) * 12);
-
-          if (Math.abs(offset) > 3.2) return null;
-          const opacity = Math.max(0, Math.min(1, 1.1 - Math.abs(offset) / 3.2));
-          if (opacity <= 0.01) return null;
-
-          // Parallax: image inside the masked frame is enlarged and offset
-          // so the frame arrives at position first and the image "catches up"
-          const clampedOffset = Math.max(-1.3, Math.min(1.3, offset));
-          // Use Math.max/min so transition is continuous with no conditional discontinuity at 0
-          const parallaxX = Math.max(0, clampedOffset) * 28;
-          const parallaxY = Math.min(0, clampedOffset) * 28;
-
-          // All image properties are continuous functions of diff — no discrete jumps
-          const imgScale   = 1.20 - 0.07 * Math.exp(-Math.pow(diff / 0.5, 2));
-          const imgOpacity = 0.60 + 0.40 * Math.exp(-Math.pow(diff / 0.9, 2));
-          const imgGray    = 40  * (1  - Math.exp(-Math.pow(diff / 0.9, 2)));
-
+        {photographyData.slice(visibleStart, visibleEnd + 1).map((series, relativeIndex) => {
+          const index = visibleStart + relativeIndex;
           return (
-            <div
+            <WheelCard
               key={series.id}
-              onClick={() => {
-                sessionStorage.setItem('wheelIndex', String(idx));
-                onSelectSeries(series);
-              }}
-              className="absolute pointer-events-auto transition-shadow duration-500"
-              style={{
-                width: `${displayWidth}px`,
-                left: `0px`,
-                bottom: `0px`,
-                transform: `translate3d(${x}px, ${-y}px, 0)`,
-                willChange: "transform",
-                opacity: opacity,
-                // z-index is a continuous function of proximity — no discrete flip when activeIndex changes
-                zIndex: Math.round(90 - Math.abs(offset) * 16),
-                cursor: "pointer",
-              }}
-              data-cursor="home-card"
-            >
-              {/* Image Frame Container */}
-              <div
-                className="relative"
-                style={{
-                  transform: `scale(${scale})`,
-                  transformOrigin: "bottom left",
-                  willChange: "transform",
-                }}
-              >
-                <div className="relative w-full overflow-hidden bg-neutral-950 shadow-2xl group">
-                  {/* Lazy-loaded imagery — all transforms driven by continuous spring value, no CSS transition needed */}
-                  <img
-                    src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
-                    alt={series.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full block select-none pointer-events-none"
-                    style={{
-                      filter: `blur(${blurAmount}px) grayscale(${imgGray}%)`,
-                      transform: `translateX(${parallaxX}px) translateY(${parallaxY}px) scale(${imgScale})`,
-                      opacity: imgOpacity,
-                      willChange: "transform",
-                    }}
-                  />
-                  {/* Dynamic vignette overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-60 pointer-events-none" />
-                </div>
-              </div>
-            </div>
+              series={series}
+              index={index}
+              dimensions={dimensions}
+              progress={smoothProgress}
+              settledIndex={settledIndex}
+              onSelectSeries={onSelectSeries}
+            />
           );
         })}
       </div>

@@ -72,6 +72,8 @@ export default function AboutContact({ lang }: AboutContactProps) {
             <img
               src="/images/about-profile.webp"
               alt="Hozumi Portrait"
+              loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-[1s] ease-in-out"
             />

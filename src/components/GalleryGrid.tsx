@@ -88,6 +88,8 @@ export default function GalleryGrid({ onSelectSeries }: GalleryGridProps) {
                   <motion.img
                     src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
                     alt={series.title}
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="h-full w-full object-cover transition-transform duration-[1.5s] cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-105"
                   />

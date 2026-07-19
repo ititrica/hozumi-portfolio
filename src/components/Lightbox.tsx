@@ -53,6 +53,14 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentIndex, photos]);
 
+  useEffect(() => {
+    const nextPhoto = photos[(currentIndex + 1) % photos.length];
+    if (!nextPhoto) return;
+    const image = new Image();
+    image.decoding = "async";
+    image.src = nextPhoto.url;
+  }, [currentIndex, photos]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -128,6 +136,9 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
               key={photo.id}
               src={photo.url}
               alt={photo.title}
+              loading="eager"
+              decoding="async"
+              draggable={false}
               referrerPolicy="no-referrer"
               className="object-contain rounded-none shadow-2xl max-h-[75vh] max-w-[85vw]"
               initial={{ opacity: 0, scale: 0.97 }}

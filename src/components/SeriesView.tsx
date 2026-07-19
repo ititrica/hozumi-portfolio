@@ -18,10 +18,11 @@ interface SeriesViewProps {
 
 export default function SeriesView({ series, onBack, onSelectPhoto, lang }: SeriesViewProps) {
   const t = UI_TRANSLATIONS[lang];
-  const [activeIdx, setActiveIdx] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const photosColRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const scrollProgressRef = useRef(0);
+  const scrollFrameRef = useRef<number | null>(null);
 
   // Dynamic gutter measurement for progress bar positioning
   const [gutterInfo, setGutterInfo] = useState({ centerX: 0, width: 0, vpHeight: 600 });
@@ -61,8 +62,19 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
     const { scrollTop, scrollHeight, clientHeight } = el;
     const totalScroll = scrollHeight - clientHeight;
     if (totalScroll <= 0) return;
-    setScrollProgress(scrollTop / totalScroll);
+    scrollProgressRef.current = scrollTop / totalScroll;
+    if (scrollFrameRef.current !== null) return;
+    scrollFrameRef.current = window.requestAnimationFrame(() => {
+      scrollFrameRef.current = null;
+      setScrollProgress(scrollProgressRef.current);
+    });
   };
+
+  useEffect(() => () => {
+    if (scrollFrameRef.current !== null) {
+      window.cancelAnimationFrame(scrollFrameRef.current);
+    }
+  }, []);
 
   // Combine cover image and other images
   const { allPhotos, hasVirtualCover } = useMemo(() => {
@@ -82,39 +94,6 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
     };
     return { allPhotos: [coverPhoto, ...series.images], hasVirtualCover: true };
   }, [series]);
-
-  // Set up intersection observer for scroll spy
-  useEffect(() => {
-    const observerOptions = {
-      root: null, // viewport
-      rootMargin: "-25% 0px -45% 0px", // middle quadrant trigger area
-      threshold: 0.05,
-    };
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const idStr = entry.target.getAttribute("data-photo-idx");
-          if (idStr !== null) {
-            setActiveIdx(parseInt(idStr, 10));
-          }
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, observerOptions);
-    
-    // We observe after a tiny delay to let images paint and offsets stabilize
-    const timer = setTimeout(() => {
-      const elements = document.querySelectorAll("[data-photo-idx]");
-      elements.forEach((el) => observer.observe(el));
-    }, 100);
-
-    return () => {
-      clearTimeout(timer);
-      observer.disconnect();
-    };
-  }, [series, allPhotos]);
 
   const scrollToPhoto = (idx: number) => {
     const el = document.getElementById(`photo-row-${idx}`);
@@ -174,9 +153,16 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
                 <div className="absolute inset-0 bg-neutral-950/2 group-hover:bg-transparent transition-all duration-300 z-10" />
 
                 <img
-                  src={photo.url}
+                  src={photo.url.replace(/\.webp$/, "-display.webp")}
                   alt={photo.title}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  decoding="async"
                   referrerPolicy="no-referrer"
+                  onError={(event) => {
+                    const image = event.currentTarget;
+                    if (image.src.endsWith("-display.webp")) image.src = photo.url;
+                  }}
                   className="w-full h-auto block transition-transform duration-[1.2s] group-hover:scale-101.5"
                 />
               </div>
@@ -271,6 +257,8 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
                   <img
                     src={photo.url.replace(/\.webp$/, "-thumb.webp")}
                     alt={`Thumbnail ${index}`}
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
                   />

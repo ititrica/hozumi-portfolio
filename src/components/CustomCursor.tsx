@@ -92,6 +92,7 @@ export default function CustomCursor({ lang }: { lang: Language }) {
     }
 
     let hasMoved = false;
+    let lastHoverTarget: Element | null = null;
     const style = document.createElement("style");
     style.id = "custom-cursor-hide-style";
     style.innerHTML = `
@@ -113,13 +114,18 @@ export default function CustomCursor({ lang }: { lang: Language }) {
     };
 
     const handleMouseOver = (e: MouseEvent) => {
-      updateCursorHoverState(e.target as HTMLElement);
+      const target = e.target as HTMLElement;
+      const hoverTarget = target.closest("[data-cursor], a, button, [role='button']");
+      if (hoverTarget === lastHoverTarget) return;
+      lastHoverTarget = hoverTarget;
+      updateCursorHoverState(target);
     };
 
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
     
     const handleMouseLeaveWindow = () => {
+      lastHoverTarget = null;
       setIsVisible(false);
       document.body.style.cursor = "auto";
     };

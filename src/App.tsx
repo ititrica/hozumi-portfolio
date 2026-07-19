@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
+import React, { Suspense, lazy, useState, useEffect, useLayoutEffect, useRef, useMemo, useCallback } from "react";
 import { Routes, Route, useNavigate, useLocation, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { Instagram, Twitter, Mail, ArrowUp } from "lucide-react";
@@ -11,18 +11,19 @@ import { Instagram, Twitter, Mail, ArrowUp } from "lucide-react";
 import { PHOTOGRAPHY_DATA } from "./data";
 
 // Types
-import { Photo } from "./types";
+import { PhotographySeries, Photo } from "./types";
 
 // Components
 import CustomCursor from "./components/CustomCursor";
 import Header from "./components/Header";
-import HomeWheelView from "./components/HomeWheelView";
-import SeriesView from "./components/SeriesView";
-import Lightbox from "./components/Lightbox";
-import AboutContact from "./components/AboutContact";
-import Playground from "./components/Playground";
 import SeoManager from "./components/SeoManager";
 import { Language, getLocalizedData, UI_TRANSLATIONS } from "./i18n";
+
+const HomeWheelView = lazy(() => import("./components/HomeWheelView"));
+const SeriesView = lazy(() => import("./components/SeriesView"));
+const Lightbox = lazy(() => import("./components/Lightbox"));
+const AboutContact = lazy(() => import("./components/AboutContact"));
+const Playground = lazy(() => import("./components/Playground"));
 
 export default function App() {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ export default function App() {
   });
   const [lang, setLang] = useState<Language>("en");
 
-  const localizedData = getLocalizedData(lang);
+  const localizedData = useMemo(() => getLocalizedData(lang), [lang]);
   const t = UI_TRANSLATIONS[lang];
 
   // Toggle dark class on document when theme changes
@@ -83,10 +84,14 @@ export default function App() {
   };
 
   // Handle Photo selection from series
-  const handleSelectPhoto = (photo: Photo, photos: Photo[]) => {
+  const handleSelectPhoto = useCallback((photo: Photo, photos: Photo[]) => {
     setSelectedPhoto(photo);
     setLightboxPhotos(photos);
-  };
+  }, []);
+
+  const handleSelectSeries = useCallback((series: PhotographySeries) => {
+    navigate(`/series/${series.id}`);
+  }, [navigate]);
 
   // Minimalist Background Music with Fade Transitions
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -241,7 +246,7 @@ export default function App() {
       return;
     }
     let active = true;
-    const timer = setTimeout(() => { if (active) setRouteLoading(false); }, 1000);
+    const timer = setTimeout(() => { if (active) setRouteLoading(false); }, 450);
     return () => { active = false; clearTimeout(timer); };
   }, [location.pathname]);
 
@@ -357,7 +362,7 @@ export default function App() {
     <div className="font-sans bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 dark:selection:bg-white selection:text-white dark:selection:text-neutral-900 transition-colors duration-1000 min-h-screen flex flex-col isolate">
       <SeoManager photographyData={localizedData} lang={lang} />
       {/* Background Audio Node - always mounted so it's ready to play */}
-      <audio ref={audioRef} src="/music.mp3" loop autoPlay playsInline />
+      <audio ref={audioRef} src="/music.mp3" loop playsInline preload="none" />
 
       {/* Premium Interactive Cursor */}
       <CustomCursor lang={lang} />
@@ -530,8 +535,9 @@ export default function App() {
           {/* Main Orchestrated Contents */}
           <main className="flex-grow relative flex flex-col">
             <AnimatePresence mode="wait">
-              {/* @ts-ignore */}
-              <Routes location={location} key={location.pathname}>
+              <Suspense fallback={<RouteLoader />}>
+                {/* @ts-ignore Routes uses the current pathname as its transition key. */}
+                <Routes location={location} key={location.pathname}>
                 {/* Home — Selected Work */}
                 <Route
                   path="/"
@@ -545,7 +551,7 @@ export default function App() {
                       className="fixed inset-0 w-full h-full overflow-hidden"
                     >
                       <HomeWheelView
-                        onSelectSeries={(series) => navigate(`/series/${series.id}`)}
+                        onSelectSeries={handleSelectSeries}
                         photographyData={localizedData}
                         lang={lang}
                       />
@@ -618,20 +624,23 @@ export default function App() {
                     </motion.div>
                   }
                 />
-              </Routes>
+                </Routes>
+              </Suspense>
             </AnimatePresence>
           </main>
 
           {/* Lightbox for Selected Photo */}
           <AnimatePresence>
             {selectedPhoto && (
-              <Lightbox
-                photo={selectedPhoto}
-                photos={lightboxPhotos}
-                onClose={() => setSelectedPhoto(null)}
-                onNavigate={(photo) => setSelectedPhoto(photo)}
-                lang={lang}
-              />
+              <Suspense fallback={null}>
+                <Lightbox
+                  photo={selectedPhoto}
+                  photos={lightboxPhotos}
+                  onClose={() => setSelectedPhoto(null)}
+                  onNavigate={(photo) => setSelectedPhoto(photo)}
+                  lang={lang}
+                />
+              </Suspense>
             )}
           </AnimatePresence>
 

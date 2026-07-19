@@ -460,9 +460,11 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
                     <img
                        src={slot.url.replace(/\.webp$/, "-thumb.webp")}
                       alt={slot.title}
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
                       referrerPolicy="no-referrer"
                       className="block w-full h-full object-cover select-none pointer-events-none filter grayscale transition-[filter] duration-1000 ease-out group-hover:grayscale-0"
-                      style={{ willChange: "filter" }}
                     />
                     {/* Overlay shadow wash */}
                     <div className="absolute inset-0 bg-neutral-950/5 group-hover:bg-transparent transition-colors duration-500 pointer-events-none" />
