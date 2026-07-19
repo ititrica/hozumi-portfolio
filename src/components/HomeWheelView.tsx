@@ -8,6 +8,7 @@ import { motion, MotionValue, useMotionValue, useSpring, useTransform, animate }
 import { useLocation } from "react-router-dom";
 import { PhotographySeries } from "../types";
 import { Language } from "../i18n";
+import { playButtonFeedback } from "../utils/uiSound";
 
 interface HomeWheelViewProps {
   onSelectSeries: (series: PhotographySeries) => void;
@@ -104,6 +105,7 @@ const WheelCard = React.memo(function WheelCard({
   ));
 
   const handleClick = () => {
+    playButtonFeedback();
     sessionStorage.setItem("wheelIndex", String(index));
     if (index === activeIndex) {
       onSelectSeries(series);

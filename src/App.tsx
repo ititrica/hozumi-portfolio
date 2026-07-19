@@ -206,7 +206,12 @@ export default function App() {
       if (!(event.target instanceof Element)) return;
 
       const button = event.target.closest("button, [data-button-sound]");
-      if (!button || (button instanceof HTMLButtonElement && button.disabled) || button.closest("#home-wheel-viewport")) return;
+      if (
+        !button
+        || (button instanceof HTMLButtonElement && button.disabled)
+        || button.closest("#home-wheel-viewport")
+        || button.getAttribute("data-sound-handled") === "true"
+      ) return;
 
       playButtonFeedback();
     };

@@ -7,6 +7,7 @@ import React, { useRef, useState, useEffect, useMemo } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { PhotographySeries, Photo } from "../types";
 import { Language, UI_TRANSLATIONS } from "../i18n";
+import { playButtonFeedback } from "../utils/uiSound";
 
 const RANDOM_PHRASES = [
   "Chasing Shadows",
@@ -403,6 +404,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang, onRea
 
   const handlePhotoClick = (photo: Photo) => {
     if (isDraggingRef.current) return;
+    playButtonFeedback();
     onSelectPhoto(photo, gridSlots.filter((s): s is Photo => "url" in s));
   };
 

@@ -8,6 +8,7 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Photo } from "../types";
 import { Language, UI_TRANSLATIONS } from "../i18n";
+import { playButtonFeedback } from "../utils/uiSound";
 
 interface LightboxProps {
   photo: Photo;
@@ -21,6 +22,11 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
   const t = UI_TRANSLATIONS[lang];
 
   const currentIndex = photos.findIndex((p) => p.id === photo.id);
+
+  const handleCloseClick = () => {
+    playButtonFeedback();
+    onClose();
+  };
 
   const handlePrev = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -68,7 +74,7 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[200] bg-neutral-950/98 flex flex-col justify-between"
-      onClick={onClose}
+      onClick={handleCloseClick}
       data-cursor="close"
     >
       {/* Top Control Bar */}
@@ -97,9 +103,10 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
         <div className="flex items-center space-x-3">
           {/* Close Button */}
           <button
-            onClick={onClose}
+            onClick={handleCloseClick}
             className="p-2 rounded-none bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
             data-cursor="nav"
+            data-sound-handled="true"
           >
             <X className="w-4 h-4" />
           </button>

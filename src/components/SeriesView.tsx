@@ -7,6 +7,7 @@ import React, { useEffect, useState, useMemo, useRef } from "react";
 import { motion } from "motion/react";
 import { PhotographySeries, Photo } from "../types";
 import { Language, UI_TRANSLATIONS } from "../i18n";
+import { playButtonFeedback } from "../utils/uiSound";
 
 interface SeriesViewProps {
   series: PhotographySeries;
@@ -151,7 +152,10 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang, onRead
               {/* Middle Column: Photo itself */}
               <div 
                 className="col-span-10 lg:col-span-7 group relative cursor-pointer overflow-hidden bg-neutral-100 dark:bg-neutral-900/40 select-none shadow-xs transition-colors duration-1000"
-                onClick={() => onSelectPhoto(photo, allPhotos)}
+                onClick={() => {
+                  playButtonFeedback();
+                  onSelectPhoto(photo, allPhotos);
+                }}
                 data-cursor="view"
               >
                 {/* Visual filter overlay */}
