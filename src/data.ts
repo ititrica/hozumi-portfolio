@@ -1378,8 +1378,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2026",
     "location": "Japan",
     "coordinates": "35.6762° N, 139.6503° E",
-    "coverImage": "/images/15/1.webp",
-    "cardImage": "/images/15/2.webp",
+    "coverImage": "/images/15-whispers-in-silver-light/1.webp",
+    "cardImage": "/images/15-whispers-in-silver-light/2.webp",
     "coverTitle": "The Quiet Reader",
     "coverCaption": "Seated in an antique chair, the figure holds a book in stillness, surrounded by the warm atmosphere of a private room.",
     "description": "A quiet portrait series shaped by soft light, delicate textures, and fleeting moments of reflection. The images explore solitude, elegance, and the gentle dialogue between the figure, flowers, and space.",
@@ -1391,7 +1391,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "images": [
       {
         "id": "02",
-        "url": "/images/15/2.webp",
+        "url": "/images/15-whispers-in-silver-light/2.webp",
         "title": "Fallen Petals",
         "caption": "A tender moment of contemplation, captured through a lowered gaze and a single delicate petal held between the fingers.",
         "aspectRatio": "square",
@@ -1400,7 +1400,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "03",
-        "url": "/images/15/3.webp",
+        "url": "/images/15-whispers-in-silver-light/3.webp",
         "title": "Flower in the Light",
         "caption": "A floral shadow rests across the shoulder, blending the softness of the body with the poetry of natural light.",
         "aspectRatio": "portrait",
@@ -1409,7 +1409,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "04",
-        "url": "/images/15/4.webp",
+        "url": "/images/15-whispers-in-silver-light/4.webp",
         "title": "A Rose Behind Her",
         "caption": "Seen from behind, the figure becomes a quiet canvas for the shadow of a flower, suspended in warm afternoon light.",
         "aspectRatio": "portrait",
@@ -1418,7 +1418,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "05",
-        "url": "/images/15/5.webp",
+        "url": "/images/15-whispers-in-silver-light/5.webp",
         "title": "Touch of Bloom",
         "caption": "A close study of a flower, a hand, and a fleeting gesture, emphasizing texture, intimacy, and gentle curiosity.",
         "aspectRatio": "square",
@@ -1427,7 +1427,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "06",
-        "url": "/images/15/6.webp",
+        "url": "/images/15-whispers-in-silver-light/6.webp",
         "title": "Passing Through Light",
         "caption": "The flowing dress and luminous window create a dreamlike portrait of movement, grace, and quiet departure.",
         "aspectRatio": "portrait",
