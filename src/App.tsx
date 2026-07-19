@@ -650,14 +650,22 @@ export default function App() {
           </AnimatePresence>
 
           {/* Persistent Menu & Headers */}
-          <Header
-            theme={theme}
-            setTheme={setTheme}
-            lang={lang}
-            setLang={setLang}
-            isMuted={isMuted}
-            toggleMute={toggleMute}
-          />
+          <div
+            className={`${
+              loading || routeTransitionPhase !== "idle" || externalRouteLoading
+                ? "opacity-0 pointer-events-none"
+                : "opacity-100 transition-opacity duration-500"
+            }`}
+          >
+            <Header
+              theme={theme}
+              setTheme={setTheme}
+              lang={lang}
+              setLang={setLang}
+              isMuted={isMuted}
+              toggleMute={toggleMute}
+            />
+          </div>
 
           {/* Main Orchestrated Contents */}
           <main
