@@ -169,7 +169,12 @@ export default function CustomCursor({ lang }: { lang: Language }) {
     };
 
     const observer = new MutationObserver(scheduleCursorUpdate);
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["data-cursor"],
+    });
 
     return () => {
       observer.disconnect();

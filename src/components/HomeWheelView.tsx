@@ -326,8 +326,6 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
           const opacity = Math.max(0, Math.min(1, 1.1 - Math.abs(offset) / 3.2));
           if (opacity <= 0.01) return null;
 
-          const isSelfActive = idx === activeIndex;
-
           // Parallax: image inside the masked frame is enlarged and offset
           // so the frame arrives at position first and the image "catches up"
           const clampedOffset = Math.max(-1.3, Math.min(1.3, offset));
@@ -359,7 +357,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
                 zIndex: Math.round(90 - Math.abs(offset) * 16),
                 cursor: "pointer",
               }}
-              data-cursor={isSelfActive ? "home-card" : undefined}
+              data-cursor="home-card"
             >
               {/* Image Frame Container */}
               <div
