@@ -689,10 +689,10 @@ export default function App() {
 
           {/* Persistent Menu & Headers */}
           <div
-            className={`${
+            className={`transition-opacity duration-500 ${
               loading || routeTransitionPhase !== "idle" || externalRouteLoading
                 ? "opacity-0 pointer-events-none"
-                : "opacity-100 transition-opacity duration-500"
+                : "opacity-100"
             }`}
           >
             <Header
