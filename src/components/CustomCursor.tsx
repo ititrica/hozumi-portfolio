@@ -196,9 +196,11 @@ export default function CustomCursor({ lang }: { lang: Language }) {
       attributes: true,
       attributeFilter: ["data-cursor", "data-active-card", "data-card-index"],
     });
+    window.addEventListener("home-wheel-motion", scheduleCursorUpdate);
 
     return () => {
       observer.disconnect();
+      window.removeEventListener("home-wheel-motion", scheduleCursorUpdate);
       if (frameId !== null) {
         window.cancelAnimationFrame(frameId);
       }

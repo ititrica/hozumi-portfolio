@@ -183,6 +183,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
   // intermediate indices during a multi-series jump.
   useEffect(() => {
     const unsubscribe = smoothProgress.on("change", (latest) => {
+      window.dispatchEvent(new Event("home-wheel-motion"));
       const now = performance.now();
       if (now - lastVisualUpdateRef.current >= 32) {
         lastVisualUpdateRef.current = now;
