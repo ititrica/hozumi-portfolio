@@ -16,22 +16,22 @@ const CHAR_IMAGES = {
 
 const STEPS = [
     // Phase 1: "ホズミ＃" appear one by one
-    { grid: ["ホ", "", "", ""], duration: 190 },
-    { grid: ["ホ", "ズ", "", ""], duration: 190 },
-    { grid: ["ホ", "ズ", "ミ", ""], duration: 190 },
-    { grid: ["ホ", "ズ", "ミ", "＃"], duration: 360 },
+    { grid: ["ホ", "", "", ""], duration: 180 },
+    { grid: ["ホ", "ズ", "", ""], duration: 260 },
+    { grid: ["ホ", "ズ", "ミ", ""], duration: 260 },
+    { grid: ["ホ", "ズ", "ミ", "＃"], duration: 320 },
 
     // Phase 1: fade out one by one
-    { grid: ["", "ズ", "ミ", "＃"], duration: 60 },
-    { grid: ["", "", "ミ", "＃"], duration: 60 },
-    { grid: ["", "", "", "＃"], duration: 60 },
-    { grid: ["", "", "", ""], duration: 100 },
+    { grid: ["", "ズ", "ミ", "＃"], duration: 70 },
+    { grid: ["", "", "ミ", "＃"], duration: 70 },
+    { grid: ["", "", "", "＃"], duration: 70 },
+    { grid: ["", "", "", ""], duration: 120 },
 
     // Phase 2: "PFOL" appear one by one
-    { grid: ["P", "", "", ""], duration: 190 },
-    { grid: ["P", "F", "", ""], duration: 190 },
-    { grid: ["P", "F", "O", ""], duration: 190 },
-    { grid: ["P", "F", "O", "L"], duration: 410 }
+    { grid: ["P", "", "", ""], duration: 180 },
+    { grid: ["P", "F", "", ""], duration: 260 },
+    { grid: ["P", "F", "O", ""], duration: 260 },
+    { grid: ["P", "F", "O", "L"], duration: 770 }
 ];
 
 let activeChars = ["", "", "", ""];
