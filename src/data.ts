@@ -1501,5 +1501,71 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         "date": "2026"
       }
     ]
+  },
+  {
+    "id": "whispers-in-green",
+    "title": "Whispers in Green",
+    "subtitle": "Botanical Portraits",
+    "category": "Portrait",
+    "year": "2026",
+    "location": "Japan",
+    "coordinates": "35.6762° N, 139.6503° E",
+    "coverImage": "/images/17-whispers-in-green/1.webp",
+    "cardImage": "/images/17-whispers-in-green/1.webp",
+    "coverTitle": "A Leaf of Light",
+    "coverCaption": "An intimate portrait where a fragile leaf becomes a quiet detail of tenderness.",
+    "description": "A quiet portrait series shaped by soft light, delicate foliage, and intimate expressions. Each image explores the gentle connection between the subject and nature.",
+    "colorTheme": {
+      "bg": "bg-emerald-50",
+      "text": "text-emerald-950",
+      "accent": "border-emerald-300"
+    },
+    "images": [
+      {
+        "id": "02",
+        "url": "/images/17-whispers-in-green/2.webp",
+        "title": "Among the Vines",
+        "caption": "A soft portrait framed by hanging greenery, capturing a calm and attentive gaze.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "03",
+        "url": "/images/17-whispers-in-green/3.webp",
+        "title": "Garden Reverie",
+        "caption": "Surrounded by cascading leaves, the subject pauses in a peaceful, dreamlike moment.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "04",
+        "url": "/images/17-whispers-in-green/4.webp",
+        "title": "Dappled Gaze",
+        "caption": "Filtered sunlight and blurred foliage create a layered portrait filled with quiet intensity.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "05",
+        "url": "/images/17-whispers-in-green/5.webp",
+        "title": "A Quiet Bloom",
+        "caption": "A contemplative expression and a delicate vine convey stillness and gentle emotion.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "06",
+        "url": "/images/17-whispers-in-green/6.webp",
+        "title": "Through the Green",
+        "caption": "Soft foreground leaves frame a direct gaze, blending intimacy with natural serenity.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      }
+    ]
   }
 ];
