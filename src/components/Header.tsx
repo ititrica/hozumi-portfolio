@@ -16,9 +16,10 @@ interface HeaderProps {
   setLang: (lang: Language) => void;
   isMuted: boolean;
   toggleMute: () => void;
+  onNavigate?: (path: string) => void;
 }
 
-export default function Header({ theme, setTheme, lang, setLang, isMuted, toggleMute }: HeaderProps) {
+export default function Header({ theme, setTheme, lang, setLang, isMuted, toggleMute, onNavigate }: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,6 +52,13 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
   ];
 
   const handleNavClick = (path: string) => {
+    if (onNavigate) {
+      onNavigate(path);
+      setIsMenuOpen(false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
     if (path === "/" && location.pathname.startsWith("/series")) {
       navigate("/", { state: { restoreWheel: true } });
     } else {

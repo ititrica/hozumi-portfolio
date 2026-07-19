@@ -24,7 +24,8 @@ const loadSeriesView = () => import("./components/SeriesView");
 const SeriesView = lazy(loadSeriesView);
 const Lightbox = lazy(() => import("./components/Lightbox"));
 const AboutContact = lazy(() => import("./components/AboutContact"));
-const Playground = lazy(() => import("./components/Playground"));
+const loadPlaygroundView = () => import("./components/Playground");
+const Playground = lazy(loadPlaygroundView);
 
 type RouteTransitionPhase =
   | "idle"
@@ -143,15 +144,32 @@ export default function App() {
     setLightboxPhotos(photos);
   }, []);
 
-  const handleSelectSeries = useCallback((series: PhotographySeries) => {
+  const startRouteTransition = useCallback((loadRoute: () => Promise<unknown>, path: string) => {
     if (routeTransitionPhase !== "idle") return;
     setRouteTransitionPhase("page-exit");
     setSeriesChunkReady(false);
     setRoutePageReady(false);
     setRouteLoaderCycleComplete(false);
-    void loadSeriesView().finally(() => setSeriesChunkReady(true));
-    navigate(`/series/${series.id}`);
+    void loadRoute().finally(() => setSeriesChunkReady(true));
+    navigate(path);
   }, [navigate, routeTransitionPhase]);
+
+  const handleSelectSeries = useCallback((series: PhotographySeries) => {
+    startRouteTransition(loadSeriesView, `/series/${series.id}`);
+  }, [startRouteTransition]);
+
+  const handleHeaderNavigate = useCallback((path: string) => {
+    if (path === "/playground") {
+      startRouteTransition(loadPlaygroundView, path);
+      return;
+    }
+
+    if (path === "/" && location.pathname.startsWith("/series")) {
+      navigate("/", { state: { restoreWheel: true } });
+    } else {
+      navigate(path);
+    }
+  }, [location.pathname, navigate, startRouteTransition]);
 
   const handleRoutePageReady = useCallback(() => {
     setRoutePageReady(true);
@@ -669,6 +687,7 @@ export default function App() {
               setLang={setLang}
               isMuted={isMuted}
               toggleMute={toggleMute}
+              onNavigate={handleHeaderNavigate}
             />
           </div>
 
@@ -688,7 +707,11 @@ export default function App() {
                   transition={pageTransition}
                   className="absolute inset-0"
                 >
-                  <Suspense fallback={showRouteLoader ? <RouteLoaderScreen /> : null}>
+                  <Suspense
+                    fallback={routeRequiresLoader && routeTransitionPhase === "idle" && !externalRouteLoading
+                      ? <RouteLoaderScreen />
+                      : null}
+                  >
                     {/* @ts-ignore Routes uses the current displayed location as its transition key. */}
                     <Routes location={renderedLocation}>
                 {/* Home — Selected Work */}
@@ -752,6 +775,7 @@ export default function App() {
                         photographyData={localizedData}
                         onSelectPhoto={handleSelectPhoto}
                         lang={lang}
+                        onReady={handleRoutePageReady}
                       />
                     </motion.div>
                   }

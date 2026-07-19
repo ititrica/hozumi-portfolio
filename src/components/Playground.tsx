@@ -51,9 +51,10 @@ interface PlaygroundProps {
   photographyData: PhotographySeries[];
   onSelectPhoto: (photo: Photo, photos: Photo[]) => void;
   lang: Language;
+  onReady?: () => void;
 }
 
-export default function Playground({ photographyData, onSelectPhoto, lang }: PlaygroundProps) {
+export default function Playground({ photographyData, onSelectPhoto, lang, onReady }: PlaygroundProps) {
   const t = UI_TRANSLATIONS[lang];
   const constraintsRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -71,6 +72,10 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
   const isDraggingRef = useRef(false);
   const isZoomTriggeredRef = useRef(false);
   const zoomFocusRef = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    onReady?.();
+  }, [onReady]);
 
   // First-mount shuffle order persisted in a ref so language switches don't
   // re-shuffle card positions. Generated once as a deterministic index sequence.
