@@ -80,12 +80,20 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
   const [gridSlots, N, canvasW, canvasH] = React.useMemo(() => {
     // 1. Collect photos in deterministic order (by series, then by image order)
     const ordered: (Photo | { type: "phrase"; content: string })[] = [];
+    const usedSeriesKeys = new Set<string>();
 
-    photographyData.forEach((series) => {
+    photographyData.forEach((series, seriesIndex) => {
+      // Keep Playground photo identities unique across series while preserving
+      // the source image number used by translations and detail pages.
+      const baseSeriesKey = series.id.replace(/[^a-z0-9]/gi, "").slice(0, 2).toLowerCase();
+      const projectKey = usedSeriesKeys.has(baseSeriesKey)
+        ? `${baseSeriesKey}${seriesIndex + 1}`
+        : baseSeriesKey;
+      usedSeriesKeys.add(projectKey);
       const hasCoverInImages = series.images.some((img) => img.url === series.coverImage);
       if (series.coverImage && !hasCoverInImages) {
         ordered.push({
-          id: `${series.id}-cover`,
+          id: `${projectKey}-cover`,
           url: series.coverImage,
           title: `${series.title} (Cover)`,
           caption: series.description,
@@ -98,6 +106,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
       series.images.forEach((img) => {
         ordered.push({
           ...img,
+          id: `${projectKey}-${img.id}`,
           location: img.location || series.location,
           date: img.date || `${series.year}`,
         });
