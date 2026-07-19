@@ -184,7 +184,6 @@ export default function App() {
 
   const handleRouteLoaderAnimationComplete = useCallback(() => {
     if (routeTransitionPhase === "loader-exit") {
-      setHeaderVisible(true);
       setRouteTransitionPhase("idle");
     }
   }, [routeTransitionPhase]);
@@ -414,6 +413,12 @@ export default function App() {
       if (routeTransitionPhase === "loader-playing") {
         setDisplayLocation(location);
       }
+      if (routeTransitionPhase === "page-enter") {
+        // Start the header fade beneath the still-opaque loader. When the
+        // loader begins its exit, the navigation is already midway through
+        // the same visual handoff instead of starting afterward.
+        setHeaderVisible(true);
+      }
       if (nextPhase) setRouteTransitionPhase(nextPhase);
     }, duration);
 
@@ -435,8 +440,9 @@ export default function App() {
 
   const shouldShowHeader = headerVisible
     && !loading
-    && routeTransitionPhase === "idle"
+    && (routeTransitionPhase === "loader-exit" || routeTransitionPhase === "idle")
     && !externalRouteLoading;
+  const headerInteractive = shouldShowHeader && routeTransitionPhase === "idle";
 
  const safariTransitionFix = {
     backfaceVisibility: "hidden" as const,
@@ -710,7 +716,7 @@ export default function App() {
           <div
             style={{
               opacity: shouldShowHeader ? 1 : 0,
-              pointerEvents: shouldShowHeader ? "auto" : "none",
+              pointerEvents: headerInteractive ? "auto" : "none",
               transition: shouldShowHeader ? "opacity 500ms ease-in-out" : "none"
             }}
           >
