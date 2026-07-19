@@ -344,12 +344,8 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
             <div
               key={series.id}
               onClick={() => {
-                if (isSelfActive) {
-                  sessionStorage.setItem('wheelIndex', String(activeIndex));
-                  onSelectSeries(series);
-                } else {
-                  scrollToIndex(idx);
-                }
+                sessionStorage.setItem('wheelIndex', String(idx));
+                onSelectSeries(series);
               }}
               className="absolute pointer-events-auto transition-shadow duration-500"
               style={{
