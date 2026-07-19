@@ -28,24 +28,14 @@ const Playground = lazy(() => import("./components/Playground"));
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
+  const hasEnteredSession = typeof sessionStorage !== "undefined" && sessionStorage.getItem("hasEnteredSite") === "true";
 
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [lightboxPhotos, setLightboxPhotos] = useState<Photo[]>([]);
-  const [hasEntered, setHasEntered] = useState(() => {
-    if (typeof sessionStorage !== 'undefined') {
-      return sessionStorage.getItem('hasEnteredSite') === 'true';
-    }
-    return false;
-  });
+  const [hasEntered, setHasEntered] = useState(hasEnteredSession);
   const [isExpanding, setIsExpanding] = useState(false);
-  const [loading, setLoading] = useState(() => {
-    if (typeof sessionStorage !== 'undefined') {
-      if (sessionStorage.getItem('hasEnteredSite') === 'true') {
-        return false;
-      }
-    }
-    return true;
-  });
+  const [loading, setLoading] = useState(true);
+  const [entranceSequenceDone, setEntranceSequenceDone] = useState(hasEnteredSession);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
@@ -59,6 +49,54 @@ export default function App() {
 
   const localizedData = useMemo(() => getLocalizedData(lang), [lang]);
   const t = UI_TRANSLATIONS[lang];
+
+  const homeCardUrls = useMemo(() => {
+    return Array.from(new Set(PHOTOGRAPHY_DATA.map((series) => (
+      series.cardImage ?? series.coverImage
+    ).replace(/\.webp$/, "-card.webp"))));
+  }, []);
+  const [homeAssetsReady, setHomeAssetsReady] = useState(false);
+
+  // Warm every homepage card while the entry screen is visible so large wheel jumps never
+  // wait for a newly mounted image. Decode completion is included where supported.
+  useEffect(() => {
+    let cancelled = false;
+
+    const preloadCard = (src: string) => new Promise<void>((resolve) => {
+      const image = new Image();
+      let settled = false;
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        if (image.decode) {
+          image.decode().catch(() => undefined).finally(resolve);
+        } else {
+          resolve();
+        }
+      };
+      image.onload = finish;
+      image.onerror = () => {
+        console.error(`Failed to preload homepage card: ${src}`);
+        resolve();
+      };
+      image.src = src;
+      if (image.complete) finish();
+    });
+
+    Promise.all(homeCardUrls.map(preloadCard)).then(() => {
+      if (!cancelled) setHomeAssetsReady(true);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [homeCardUrls]);
+
+  useEffect(() => {
+    if (entranceSequenceDone && homeAssetsReady) {
+      setLoading(false);
+    }
+  }, [entranceSequenceDone, homeAssetsReady]);
 
   // Toggle dark class on document when theme changes
   useEffect(() => {
@@ -284,7 +322,7 @@ export default function App() {
       setHasEntered(true);
       // Keep the outer loading layer aligned with the shortened text animation.
       setTimeout(() => {
-        setLoading(false);
+        setEntranceSequenceDone(true);
       }, 2950);
     }, 350);
   };

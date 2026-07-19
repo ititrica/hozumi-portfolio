@@ -55,7 +55,6 @@ interface WheelCardProps {
   index: number;
   dimensions: { width: number; height: number };
   progress: MotionValue<number>;
-  settledIndex: number;
   onSelectSeries: (series: PhotographySeries) => void;
 }
 
@@ -64,7 +63,6 @@ const WheelCard = React.memo(function WheelCard({
   index,
   dimensions,
   progress,
-  settledIndex,
   onSelectSeries,
 }: WheelCardProps) {
   const isMobile = dimensions.width < 768;
@@ -128,7 +126,7 @@ const WheelCard = React.memo(function WheelCard({
           <img
             src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
             alt={series.title}
-            loading={Math.abs(index - settledIndex) <= 1 ? "eager" : "lazy"}
+            loading="eager"
             decoding="async"
             draggable={false}
             referrerPolicy="no-referrer"
@@ -394,7 +392,6 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
               index={index}
               dimensions={dimensions}
               progress={smoothProgress}
-              settledIndex={settledIndex}
               onSelectSeries={onSelectSeries}
             />
           );
