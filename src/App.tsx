@@ -29,12 +29,10 @@ const Playground = lazy(() => import("./components/Playground"));
 type RouteTransitionPhase =
   | "idle"
   | "page-exit"
-  | "loader-enter"
   | "loader-playing"
   | "loader-exit"
   | "page-enter";
 
-const PAGE_EXIT_DURATION = 600;
 const LOADER_FADE_DURATION = 500;
 const LOADER_TOTAL_DURATION = 1250;
 const LOADER_PLAY_DURATION = LOADER_TOTAL_DURATION - LOADER_FADE_DURATION;
@@ -312,7 +310,7 @@ export default function App() {
   const routeLoading = routeTransitionPhase !== "idle"
     ? routeTransitionPhase !== "page-enter" || !routePageReady
     : externalRouteLoading;
-  const showRouteLoader = routeTransitionPhase === "loader-enter"
+  const showRouteLoader = routeTransitionPhase === "page-exit"
     || routeTransitionPhase === "loader-playing"
     || routeTransitionPhase === "loader-exit"
     || (routeTransitionPhase === "page-enter" && !routePageReady)
@@ -351,10 +349,6 @@ export default function App() {
 
     switch (routeTransitionPhase) {
       case "page-exit":
-        duration = PAGE_EXIT_DURATION;
-        nextPhase = "loader-enter";
-        break;
-      case "loader-enter":
         duration = LOADER_FADE_DURATION;
         nextPhase = "loader-playing";
         break;
@@ -383,7 +377,8 @@ export default function App() {
   }, [location, routePageReady, routeTransitionPhase, seriesChunkReady]);
 
   const pageTransition = {
-    duration: 0.6
+    duration: 0.8,
+    ease: "easeInOut" as const
   };
 
   const safariTransitionFix = {
