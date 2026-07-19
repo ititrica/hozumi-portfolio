@@ -279,7 +279,7 @@ export default function App() {
       // Keep the outer loading layer aligned with the shortened text animation.
       setTimeout(() => {
         setLoading(false);
-      }, 3000);
+      }, 2200);
     }, 350);
   };
 

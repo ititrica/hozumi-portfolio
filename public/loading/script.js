@@ -114,6 +114,6 @@ function finishPreloader() {
         setTimeout(() => {
             document.body.classList.add("loaded");
             overlay.remove();
-        }, 800);
+        }, 400);
     }
 }
