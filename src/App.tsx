@@ -194,8 +194,6 @@ export default function App() {
   const fadeIntervalRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (isMuted) return;
-
     const handleButtonClick = (event: MouseEvent) => {
       if (!(event.target instanceof Element)) return;
 
@@ -207,7 +205,7 @@ export default function App() {
 
     window.addEventListener("click", handleButtonClick, true);
     return () => window.removeEventListener("click", handleButtonClick, true);
-  }, [isMuted]);
+  }, []);
 
   const fadeAudio = (targetVolume: number, onComplete?: () => void) => {
     if (!audioRef.current) return;
