@@ -77,7 +77,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-[90] backdrop-blur-xl transition-all duration-1000 bg-white/45 dark:bg-black/10">
+      <header className="fixed top-0 left-0 w-full z-[90]">
         <div className="max-w-[1600px] mx-auto px-6 h-20 flex items-center justify-between">
           
           {/* Logo */}
