@@ -86,7 +86,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
               onClick={() => handleNavClick("/")}
               onMouseEnter={() => setLogoHovered(true)}
               onMouseLeave={() => setLogoHovered(false)}
-              className="cursor-pointer group flex items-center text-[19px] tracking-[0.16em] font-medium uppercase text-neutral-900 dark:text-neutral-100"
+              className="cursor-pointer group flex items-center text-[19px] tracking-[0.16em] font-medium uppercase text-neutral-950 dark:text-neutral-100"
               style={{ fontFamily: "'DM Sans', 'DM Sans Local', sans-serif" }}
               data-cursor="nav"
             >
@@ -107,7 +107,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                   className={`relative py-2 font-mono text-[10px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000 ${
                     active
                       ? "text-neutral-950 dark:text-neutral-100"
-                      : "text-neutral-750 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
+                       : "text-neutral-800 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
                   }`}
                   data-cursor="nav"
                 >
@@ -126,7 +126,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
             {/* Theme Toggle Button */}
             <button
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="p-2 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-1000 ml-2"
+              className="p-2 text-neutral-700 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-1000 ml-2"
               aria-label="Toggle Theme"
               data-cursor="nav"
             >
@@ -136,7 +136,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
             {/* Mute/Unmute Button */}
             <button
               onClick={toggleMute}
-              className="p-2 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-1000 ml-1"
+              className="p-2 text-neutral-700 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-1000 ml-1"
               aria-label={isMuted ? "Unmute Music" : "Mute Music"}
               data-cursor="nav"
             >
@@ -152,7 +152,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className={`relative py-2 text-[10px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000`}
+                    className={`relative py-2 text-[10px] tracking-[0.14em] font-medium uppercase text-neutral-800 dark:text-neutral-400 transition-colors duration-1000`}
                     data-cursor="nav"
                   >
                     {label}
@@ -173,21 +173,21 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
           <div className="flex items-center space-x-2 md:hidden">
             <button
               onClick={toggleMute}
-              className="p-2 rounded-none text-neutral-800 dark:text-neutral-100 focus:outline-none transition-colors duration-1000"
+                  className="p-2 rounded-none text-neutral-950 dark:text-neutral-100 focus:outline-none transition-colors duration-1000"
               aria-label="Toggle Music"
             >
               {isMuted ? <VolumeX className="w-4.5 h-4.5" /> : <Volume2 className="w-4.5 h-4.5" />}
             </button>
             <button
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="p-2 rounded-none text-neutral-800 dark:text-neutral-100 focus:outline-none transition-colors duration-1000"
+                  className="p-2 rounded-none text-neutral-950 dark:text-neutral-100 focus:outline-none transition-colors duration-1000"
               aria-label="Toggle Theme"
             >
               {theme === "light" ? <Moon className="w-4.5 h-4.5" /> : <Sun className="w-4.5 h-4.5" />}
             </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-none text-neutral-800 dark:text-neutral-100 focus:outline-none transition-colors duration-1000"
+                  className="p-2 rounded-none text-neutral-950 dark:text-neutral-100 focus:outline-none transition-colors duration-1000"
               aria-label="Open Menu"
             >
               <Menu className="w-6 h-6" />
@@ -234,7 +234,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                 >
                   <button
                     onClick={() => handleNavClick(item.path)}
-                    className="text-left font-serif text-lg tracking-[0.2em] font-light hover:text-neutral-500 text-neutral-800 dark:text-neutral-100 dark:hover:text-neutral-400 transition-colors uppercase"
+                    className="text-left font-serif text-lg tracking-[0.2em] font-light hover:text-neutral-600 text-neutral-950 dark:text-neutral-100 dark:hover:text-neutral-400 transition-colors uppercase"
                   >
                     {item.label}
                   </button>
@@ -255,7 +255,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                       className={`relative py-2 font-mono text-[10px] tracking-[0.14em] font-medium uppercase transition-colors duration-300 ${
                         langActive
                           ? "text-neutral-950 dark:text-neutral-100"
-                          : "text-neutral-750 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
+                         : "text-neutral-800 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
                       }`}
                     >
                       {label}
@@ -271,7 +271,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                 })}
               </div>
               <div className="font-mono text-[8px] tracking-[0.2em] text-neutral-500">
-                <p>{t.timeZone} / {localTime || "12:00:00"} CST</p>
+                <p className="text-neutral-700 dark:text-neutral-500">{t.timeZone} / {localTime || "12:00:00"} CST</p>
               </div>
             </div>
           </motion.div>
