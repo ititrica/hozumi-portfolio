@@ -587,7 +587,7 @@ export default function App() {
           {/* Main Orchestrated Contents */}
           <main
             className={`flex-grow relative flex flex-col transition-opacity duration-500 ${
-              routeLoading ? "opacity-0 pointer-events-none" : "opacity-100"
+              loading || routeLoading ? "opacity-0 pointer-events-none" : "opacity-100"
             }`}
           >
             <AnimatePresence mode="wait">
