@@ -49,6 +49,7 @@ export default function App() {
   const [hasEntered, setHasEntered] = useState(hasEnteredSession);
   const [isExpanding, setIsExpanding] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [headerVisible, setHeaderVisible] = useState(hasEnteredSession);
   const [entranceSequenceDone, setEntranceSequenceDone] = useState(hasEnteredSession);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [routeTransitionPhase, setRouteTransitionPhase] = useState<RouteTransitionPhase>("idle");
@@ -147,6 +148,7 @@ export default function App() {
 
   const startRouteTransition = useCallback((loadRoute: () => Promise<unknown>, path: string) => {
     if (routeTransitionPhase !== "idle") return;
+    setHeaderVisible(false);
     setRouteTransitionPhase("page-exit");
     setSeriesChunkReady(false);
     setRoutePageReady(false);
@@ -414,12 +416,21 @@ export default function App() {
     return () => window.clearTimeout(timer);
   }, [location, routePageReady, routeTransitionPhase, seriesChunkReady]);
 
+  // Keep the header mounted throughout route transitions. Restoring visibility
+  // only after the loader and the destination page are both ready prevents a
+  // second AnimatePresence enter cycle from flashing the navigation controls.
+  useEffect(() => {
+    if (loading || routeTransitionPhase !== "idle" || externalRouteLoading) return;
+    setHeaderVisible(true);
+  }, [externalRouteLoading, loading, routeTransitionPhase]);
+
  const pageTransition = {
    duration: 0.8,
    ease: "easeInOut" as const
  };
 
-  const shouldShowHeader = !loading
+  const shouldShowHeader = headerVisible
+    && !loading
     && routeTransitionPhase === "idle"
     && !externalRouteLoading;
 
@@ -692,28 +703,24 @@ export default function App() {
           </AnimatePresence>
 
           {/* Persistent Menu & Headers */}
-          <AnimatePresence initial={false}>
-            {shouldShowHeader && (
-              <motion.div
-                key="site-header"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="pointer-events-auto"
-              >
-                <Header
-                  theme={theme}
-                  setTheme={setTheme}
-                  lang={lang}
-                  setLang={setLang}
-                  isMuted={isMuted}
-                  toggleMute={toggleMute}
-                  onNavigate={handleHeaderNavigate}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: shouldShowHeader ? 1 : 0 }}
+            transition={shouldShowHeader
+              ? { duration: 0.5, ease: "easeInOut" }
+              : { duration: 0 }}
+            className={shouldShowHeader ? "pointer-events-auto" : "pointer-events-none"}
+          >
+            <Header
+              theme={theme}
+              setTheme={setTheme}
+              lang={lang}
+              setLang={setLang}
+              isMuted={isMuted}
+              toggleMute={toggleMute}
+              onNavigate={handleHeaderNavigate}
+            />
+          </motion.div>
 
           {/* Main Orchestrated Contents */}
           <main
