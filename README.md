@@ -46,7 +46,6 @@ src/
 - **GPU 加速动画** — 使用 CSS transform 替代 Layout 触发属性，确保 30fps+ 流畅度
 - **移动端优化** — 触摸滑动支持，响应式布局
 - **渐进式加载** — 启动动画完成后加载首屏内容
-- **离线单文件** — 支持构建为自包含 HTML（详见构建说明）
 
 ---
 
@@ -58,12 +57,11 @@ src/
 - npm 9+
 ```
 
-### 构建离线单文件
+### 构建生产版本
 
 ```bash
-# 使用 vite-plugin-singlefile 构建为单 HTML 文件
 npm run build
-# 会自动生成 dist/index.html（含图片 base64 内嵌）
+# 生成 dist/ 静态资源目录
 ```
 
 ## 联系方式 | Contact

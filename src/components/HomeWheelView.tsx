@@ -95,6 +95,9 @@ const WheelCard = React.memo(function WheelCard({
     const diff = Math.abs(index - current);
     return 0.6 + 0.4 * Math.exp(-Math.pow(diff / 0.9, 2));
   });
+  const pointerEvents = useTransform(progress, (current) => (
+    Math.abs(index - current) <= 3.2 ? "auto" : "none"
+  ));
 
   const handleClick = () => {
     sessionStorage.setItem("wheelIndex", String(index));
@@ -114,6 +117,7 @@ const WheelCard = React.memo(function WheelCard({
         willChange: "transform",
         opacity,
         zIndex,
+        pointerEvents,
         cursor: "pointer",
       }}
       data-cursor="home-card"
@@ -321,8 +325,6 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
   };
 
   const isMobile = dimensions.width < 768;
-  const visibleStart = Math.max(0, settledIndex - 4);
-  const visibleEnd = Math.min(photographyData.length - 1, settledIndex + 4);
 
   return (
     <div
@@ -383,8 +385,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
 
       {/* Main Interactive Stage: The L-Shape Corner Curve */}
       <div className="absolute inset-0 z-10 overflow-visible pointer-events-none">
-        {photographyData.slice(visibleStart, visibleEnd + 1).map((series, relativeIndex) => {
-          const index = visibleStart + relativeIndex;
+        {photographyData.map((series, index) => {
           return (
             <WheelCard
               key={series.id}
