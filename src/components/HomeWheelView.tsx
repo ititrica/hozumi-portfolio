@@ -336,9 +336,15 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
       id="home-wheel-viewport"
     >
       <div className="sr-only">
-        <h1>Hozumi 摄影集 | Hozumi Photography Portfolio</h1>
-        <p>
-          Hozumi（hozumipfol）视觉艺术与摄影作品集，收录人像摄影、街头摄影、建筑摄影，以及来自日本与亚洲的系列作品。
+        <h1>Hozumi Photography Portfolio</h1>
+        <p lang="en">
+          Hozumi (hozumifolio) is a photography and visual art portfolio featuring portraits, street photography, architecture, and series from Japan and Asia.
+        </p>
+        <p lang="zh-CN">
+          Hozumi（hozumifolio）视觉艺术与摄影作品集，收录人像摄影、街头摄影、建筑摄影，以及来自日本与亚洲的系列作品。
+        </p>
+        <p lang="ja">
+          Hozumi（hozumifolio）の写真集とビジュアルアート作品。人物、ストリート、建築写真、日本とアジアのシリーズを紹介します。
         </p>
       </div>
 

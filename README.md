@@ -8,7 +8,7 @@
 
 This is a personal photography portfolio website showcasing series taken across Japan and China. It features an immersive wheel-based interaction design, supporting both desktop and mobile access.
 
-**在线访问 | Visit:** [https://hozumipfol.cc.cd]
+**在线访问 | Visit:** [https://hozumifolio.uk]
 
 ---
 
