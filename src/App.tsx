@@ -276,10 +276,10 @@ export default function App() {
     // Trigger hasEntered at 350ms (midway through expansion) so loading animation mounts and starts playing earlier
     setTimeout(() => {
       setHasEntered(true);
-      // Start the 5-second loading animation timer
+      // Keep the outer loading layer aligned with the shortened text animation.
       setTimeout(() => {
         setLoading(false);
-      }, 5000);
+      }, 3000);
     }, 350);
   };
 
