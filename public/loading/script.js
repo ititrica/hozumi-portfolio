@@ -19,7 +19,7 @@ const STEPS = [
     { grid: ["ホ", "", "", ""], duration: 180 },
     { grid: ["ホ", "ズ", "", ""], duration: 260 },
     { grid: ["ホ", "ズ", "ミ", ""], duration: 260 },
-    { grid: ["ホ", "ズ", "ミ", "＃"], duration: 320 },
+    { grid: ["ホ", "ズ", "ミ", "＃"], duration: 520 },
 
     // Phase 1: fade out one by one
     { grid: ["", "ズ", "ミ", "＃"], duration: 70 },
