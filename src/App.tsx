@@ -26,6 +26,20 @@ const Lightbox = lazy(() => import("./components/Lightbox"));
 const AboutContact = lazy(() => import("./components/AboutContact"));
 const Playground = lazy(() => import("./components/Playground"));
 
+type RouteTransitionPhase =
+  | "idle"
+  | "page-exit"
+  | "loader-enter"
+  | "loader-playing"
+  | "loader-exit"
+  | "page-enter";
+
+const PAGE_EXIT_DURATION = 600;
+const LOADER_FADE_DURATION = 500;
+const LOADER_TOTAL_DURATION = 1250;
+const LOADER_PLAY_DURATION = LOADER_TOTAL_DURATION - LOADER_FADE_DURATION;
+const PAGE_ENTER_DURATION = 1200;
+
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,6 +52,9 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [entranceSequenceDone, setEntranceSequenceDone] = useState(hasEnteredSession);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [routeTransitionPhase, setRouteTransitionPhase] = useState<RouteTransitionPhase>("idle");
+  const [seriesChunkReady, setSeriesChunkReady] = useState(false);
+  const [routePageReady, setRoutePageReady] = useState(false);
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof localStorage !== 'undefined') {
@@ -129,9 +146,17 @@ export default function App() {
   }, []);
 
   const handleSelectSeries = useCallback((series: PhotographySeries) => {
-    void loadSeriesView();
+    if (routeTransitionPhase !== "idle") return;
+    setRouteTransitionPhase("page-exit");
+    setSeriesChunkReady(false);
+    setRoutePageReady(false);
+    void loadSeriesView().finally(() => setSeriesChunkReady(true));
     navigate(`/series/${series.id}`);
-  }, [navigate]);
+  }, [navigate, routeTransitionPhase]);
+
+  const handleRoutePageReady = useCallback(() => {
+    setRoutePageReady(true);
+  }, []);
 
   // Minimalist Background Music with Fade Transitions
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -283,11 +308,23 @@ export default function App() {
   const [displayLocation, setDisplayLocation] = useState(location);
   const displayRouteIdentity = getRouteIdentity(displayLocation);
   const routeChanged = displayRouteIdentity !== routeIdentity;
-  const routeLoading = routeRequiresLoader && routeChanged;
-  const renderedLocation = routeLoading ? displayLocation : location;
+  const externalRouteLoading = routeRequiresLoader && routeChanged;
+  const routeLoading = routeTransitionPhase !== "idle"
+    ? routeTransitionPhase !== "page-enter" || !routePageReady
+    : externalRouteLoading;
+  const showRouteLoader = routeTransitionPhase === "loader-enter"
+    || routeTransitionPhase === "loader-playing"
+    || routeTransitionPhase === "loader-exit"
+    || (routeTransitionPhase === "page-enter" && !routePageReady)
+    || (routeTransitionPhase === "idle" && externalRouteLoading);
+  const renderedLocation = routeTransitionPhase === "page-enter"
+    ? location
+    : routeLoading ? displayLocation : location;
   const renderedRouteIdentity = getRouteIdentity(renderedLocation);
 
   useEffect(() => {
+    if (routeTransitionPhase !== "idle") return;
+
     if (!routeRequiresLoader) {
       setDisplayLocation(location);
       return;
@@ -300,7 +337,50 @@ export default function App() {
     }, 450);
 
     return () => window.clearTimeout(timer);
-  }, [location, routeLoading, routeRequiresLoader]);
+  }, [location, routeLoading, routeRequiresLoader, routeTransitionPhase]);
+
+  // Card-to-detail navigation uses one timed sequence so the page and loader
+  // never compete to reveal themselves in separate animation lifecycles.
+  useEffect(() => {
+    if (routeTransitionPhase === "idle") return;
+    if (routeTransitionPhase === "loader-playing" && !seriesChunkReady) return;
+    if (routeTransitionPhase === "page-enter" && !routePageReady) return;
+
+    let duration = 0;
+    let nextPhase: RouteTransitionPhase | null = null;
+
+    switch (routeTransitionPhase) {
+      case "page-exit":
+        duration = PAGE_EXIT_DURATION;
+        nextPhase = "loader-enter";
+        break;
+      case "loader-enter":
+        duration = LOADER_FADE_DURATION;
+        nextPhase = "loader-playing";
+        break;
+      case "loader-playing":
+        duration = LOADER_PLAY_DURATION;
+        nextPhase = "loader-exit";
+        break;
+      case "loader-exit":
+        duration = LOADER_FADE_DURATION;
+        nextPhase = "page-enter";
+        break;
+      case "page-enter":
+        duration = PAGE_ENTER_DURATION;
+        nextPhase = "idle";
+        break;
+    }
+
+    const timer = window.setTimeout(() => {
+      if (routeTransitionPhase === "loader-exit") {
+        setDisplayLocation(location);
+      }
+      if (nextPhase) setRouteTransitionPhase(nextPhase);
+    }, duration);
+
+    return () => window.clearTimeout(timer);
+  }, [location, routePageReady, routeTransitionPhase, seriesChunkReady]);
 
   const pageTransition = {
     duration: 0.6
@@ -685,6 +765,7 @@ export default function App() {
                         localizedData={localizedData}
                         onSelectPhoto={handleSelectPhoto}
                         lang={lang}
+                        onReady={handleRoutePageReady}
                       />
                     </motion.div>
                   }
@@ -730,13 +811,15 @@ export default function App() {
 
           {/* Route transition layer stays outside Routes so page exit/enter animations can run. */}
           <AnimatePresence>
-            {routeLoading && (
+            {showRouteLoader && (
               <motion.div
                 key={`route-loader-${routeIdentity}`}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={{
+                  opacity: routeTransitionPhase === "loader-exit" ? 0 : 1
+                }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
+                transition={{ duration: LOADER_FADE_DURATION / 1000, ease: "easeInOut" }}
                 className="fixed inset-0 z-[9998] flex items-center justify-center bg-white dark:bg-[#0e0c0b]"
               >
                 <RouteLoader />
@@ -754,10 +837,12 @@ function SeriesRouteWrapper({
   localizedData,
   onSelectPhoto,
   lang,
+  onReady,
 }: {
   localizedData: ReturnType<typeof getLocalizedData>;
   onSelectPhoto: (photo: Photo, photos: Photo[]) => void;
   lang: Language;
+  onReady: () => void;
 }) {
   const { seriesId } = useParams<{ seriesId: string }>();
   const navigate = useNavigate();
@@ -776,6 +861,7 @@ function SeriesRouteWrapper({
       onBack={() => navigate("/", { state: { restoreWheel: true } })}
       onSelectPhoto={onSelectPhoto}
       lang={lang}
+      onReady={onReady}
     />
   );
 }

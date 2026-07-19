@@ -13,10 +13,11 @@ interface SeriesViewProps {
   onBack: () => void;
   onSelectPhoto: (photo: Photo, photos: Photo[]) => void;
   lang: Language;
+  onReady?: () => void;
   key?: string | number;
 }
 
-export default function SeriesView({ series, onBack, onSelectPhoto, lang }: SeriesViewProps) {
+export default function SeriesView({ series, onBack, onSelectPhoto, lang, onReady }: SeriesViewProps) {
   const t = UI_TRANSLATIONS[lang];
   const containerRef = useRef<HTMLDivElement>(null);
   const photosColRef = useRef<HTMLDivElement>(null);
@@ -55,6 +56,10 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
       document.body.style.overflow = "auto";
     };
   }, []);
+
+  useEffect(() => {
+    onReady?.();
+  }, [onReady]);
 
   const handleScroll = () => {
     const el = containerRef.current;
