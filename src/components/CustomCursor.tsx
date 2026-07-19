@@ -46,6 +46,21 @@ export default function CustomCursor({ lang }: { lang: Language }) {
         setIsCursorHidden(true);
         return;
       }
+
+      if (type === "home-card") {
+        const homeViewport = interactiveEl.closest("#home-wheel-viewport");
+        const cardIndex = interactiveEl.getAttribute("data-card-index");
+        const activeCardIndex = homeViewport?.getAttribute("data-active-card");
+
+        if (homeViewport && cardIndex !== activeCardIndex) {
+          setIsCursorHidden(false);
+          setIsHovered(false);
+          setCursorText("");
+          setCursorType("");
+          return;
+        }
+      }
+
       setIsCursorHidden(false);
       setIsHovered(true);
       setCursorType(type);
@@ -179,7 +194,7 @@ export default function CustomCursor({ lang }: { lang: Language }) {
       childList: true,
       subtree: true,
       attributes: true,
-      attributeFilter: ["data-cursor"],
+      attributeFilter: ["data-cursor", "data-active-card", "data-card-index"],
     });
 
     return () => {

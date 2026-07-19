@@ -53,17 +53,21 @@ function getCardCoords(offset: number, width: number, isMobile: boolean) {
 interface WheelCardProps {
   series: PhotographySeries;
   index: number;
+  activeIndex: number;
   dimensions: { width: number; height: number };
   progress: MotionValue<number>;
   onSelectSeries: (series: PhotographySeries) => void;
+  onFocusCard: (index: number) => void;
 }
 
 const WheelCard = React.memo(function WheelCard({
   series,
   index,
+  activeIndex,
   dimensions,
   progress,
   onSelectSeries,
+  onFocusCard,
 }: WheelCardProps) {
   const isMobile = dimensions.width < 768;
   const baseWidth = getBaseSize(index, dimensions.width, isMobile);
@@ -101,7 +105,11 @@ const WheelCard = React.memo(function WheelCard({
 
   const handleClick = () => {
     sessionStorage.setItem("wheelIndex", String(index));
-    onSelectSeries(series);
+    if (index === activeIndex) {
+      onSelectSeries(series);
+    } else {
+      onFocusCard(index);
+    }
   };
 
   return (
@@ -121,6 +129,7 @@ const WheelCard = React.memo(function WheelCard({
         cursor: "pointer",
       }}
       data-cursor="home-card"
+      data-card-index={index}
     >
       <motion.div
         className="relative"
@@ -334,6 +343,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
       onTouchEnd={handleTouchEnd}
       className="relative w-full h-full overflow-hidden select-none bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-200 cursor-default flex flex-col justify-between transition-colors duration-1000"
       id="home-wheel-viewport"
+      data-active-card={activeIndex}
     >
       <div className="sr-only">
         <h1>Hozumi Photography Portfolio</h1>
@@ -404,9 +414,11 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
               key={series.id}
               series={series}
               index={index}
+              activeIndex={activeIndex}
               dimensions={dimensions}
               progress={smoothProgress}
               onSelectSeries={onSelectSeries}
+              onFocusCard={scrollToIndex}
             />
           );
         })}
