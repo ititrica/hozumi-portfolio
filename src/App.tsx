@@ -38,7 +38,6 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [entranceSequenceDone, setEntranceSequenceDone] = useState(hasEnteredSession);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [manualRouteLoading, setManualRouteLoading] = useState(false);
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof localStorage !== 'undefined') {
@@ -130,7 +129,6 @@ export default function App() {
   }, []);
 
   const handleSelectSeries = useCallback((series: PhotographySeries) => {
-    setManualRouteLoading(true);
     void loadSeriesView();
     navigate(`/series/${series.id}`);
   }, [navigate]);
@@ -274,33 +272,35 @@ export default function App() {
     return path.startsWith("/series") || path === "/playground";
   };
 
-  // Keep the route transition in front of page mounting. Using the history key
-  // also catches navigation between entries that share the same pathname.
-  const routeIdentity = `${location.key}:${location.pathname}${location.search}`;
-  const routeRequiresLoader = shouldLoadRoute(location.pathname);
-  const [readyRouteIdentity, setReadyRouteIdentity] = useState<string | null>(() => (
-    routeRequiresLoader ? null : routeIdentity
-  ));
-  const routeLoading = routeRequiresLoader && (
-    manualRouteLoading || readyRouteIdentity !== routeIdentity
+  // Keep the previous route mounted while the transition layer is visible.
+  // The new route is only handed to Routes after the loader has completed, so
+  // the existing AnimatePresence exit/enter lifecycle remains intact.
+  const getRouteIdentity = (route: typeof location) => (
+    `${route.key}:${route.pathname}${route.search}`
   );
+  const routeIdentity = getRouteIdentity(location);
+  const routeRequiresLoader = shouldLoadRoute(location.pathname);
+  const [displayLocation, setDisplayLocation] = useState(location);
+  const displayRouteIdentity = getRouteIdentity(displayLocation);
+  const routeChanged = displayRouteIdentity !== routeIdentity;
+  const routeLoading = routeRequiresLoader && routeChanged;
+  const renderedLocation = routeLoading ? displayLocation : location;
+  const renderedRouteIdentity = getRouteIdentity(renderedLocation);
 
   useEffect(() => {
     if (!routeRequiresLoader) {
-      setReadyRouteIdentity(routeIdentity);
-      setManualRouteLoading(false);
+      setDisplayLocation(location);
       return;
     }
 
     if (!routeLoading) return;
 
     const timer = window.setTimeout(() => {
-      setReadyRouteIdentity(routeIdentity);
-      setManualRouteLoading(false);
+      setDisplayLocation(location);
     }, 450);
 
     return () => window.clearTimeout(timer);
-  }, [routeIdentity, routeLoading, routeRequiresLoader]);
+  }, [location, routeLoading, routeRequiresLoader]);
 
   const pageTransition = {
     duration: 0.6
@@ -574,26 +574,22 @@ export default function App() {
             )}
           </AnimatePresence>
 
-          {routeLoading ? (
-            <RouteLoaderScreen />
-          ) : (
-            <>
-              {/* Persistent Menu & Headers */}
-              <Header
-                theme={theme}
-                setTheme={setTheme}
-                lang={lang}
-                setLang={setLang}
-                isMuted={isMuted}
-                toggleMute={toggleMute}
-              />
+          {/* Persistent Menu & Headers */}
+          <Header
+            theme={theme}
+            setTheme={setTheme}
+            lang={lang}
+            setLang={setLang}
+            isMuted={isMuted}
+            toggleMute={toggleMute}
+          />
 
-              {/* Main Orchestrated Contents */}
-              <main className="flex-grow relative flex flex-col">
-                <AnimatePresence mode="wait">
-                  <Suspense fallback={<RouteLoaderScreen />}>
-                    {/* @ts-ignore Routes uses the current pathname as its transition key. */}
-                    <Routes location={location} key={routeIdentity}>
+          {/* Main Orchestrated Contents */}
+          <main className="flex-grow relative flex flex-col">
+            <AnimatePresence mode="wait">
+              <Suspense fallback={<RouteLoaderScreen />}>
+                {/* @ts-ignore Routes uses the current displayed location as its transition key. */}
+                <Routes location={renderedLocation} key={renderedRouteIdentity}>
                 {/* Home — Selected Work */}
                 <Route
                   path="/"
@@ -680,44 +676,58 @@ export default function App() {
                     </motion.div>
                   }
                 />
-                    </Routes>
-                  </Suspense>
-                </AnimatePresence>
-              </main>
+                </Routes>
+              </Suspense>
+            </AnimatePresence>
+          </main>
 
-              {/* Lightbox for Selected Photo */}
-              <AnimatePresence>
-                {selectedPhoto && (
-                  <Suspense fallback={null}>
-                    <Lightbox
-                      photo={selectedPhoto}
-                      photos={lightboxPhotos}
-                      onClose={() => setSelectedPhoto(null)}
-                      onNavigate={(photo) => setSelectedPhoto(photo)}
-                      lang={lang}
-                    />
-                  </Suspense>
-                )}
-              </AnimatePresence>
+          {/* Lightbox for Selected Photo */}
+          <AnimatePresence>
+            {selectedPhoto && (
+              <Suspense fallback={null}>
+                <Lightbox
+                  photo={selectedPhoto}
+                  photos={lightboxPhotos}
+                  onClose={() => setSelectedPhoto(null)}
+                  onNavigate={(photo) => setSelectedPhoto(photo)}
+                  lang={lang}
+                />
+              </Suspense>
+            )}
+          </AnimatePresence>
 
-              {/* Scroll to Top for About Page */}
-              <AnimatePresence>
-                {showScrollTop && (
-                  <motion.button
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    className="fixed bottom-8 right-8 z-50 p-3 bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 rounded-none shadow-lg hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-all duration-300 focus:outline-none"
-                    onClick={scrollToTop}
-                    data-cursor="nav"
-                    aria-label="Scroll to top"
-                  >
-                    <ArrowUp className="w-4.5 h-4.5" />
-                  </motion.button>
-                )}
-              </AnimatePresence>
-            </>
-          )}
+          {/* Scroll to Top for About Page */}
+          <AnimatePresence>
+            {showScrollTop && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                className="fixed bottom-8 right-8 z-50 p-3 bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 rounded-none shadow-lg hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-all duration-300 focus:outline-none"
+                onClick={scrollToTop}
+                data-cursor="nav"
+                aria-label="Scroll to top"
+              >
+                <ArrowUp className="w-4.5 h-4.5" />
+              </motion.button>
+            )}
+          </AnimatePresence>
+
+          {/* Route transition layer stays outside Routes so page exit/enter animations can run. */}
+          <AnimatePresence>
+            {routeLoading && (
+              <motion.div
+                key={`route-loader-${routeIdentity}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="fixed inset-0 z-[9998] flex items-center justify-center bg-white dark:bg-[#0e0c0b]"
+              >
+                <RouteLoader />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </div>
