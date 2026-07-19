@@ -197,8 +197,8 @@ export default function App() {
     const handleButtonClick = (event: MouseEvent) => {
       if (!(event.target instanceof Element)) return;
 
-      const button = event.target.closest("button");
-      if (!button || button.disabled || button.closest("#home-wheel-viewport")) return;
+      const button = event.target.closest("button, [data-button-sound]");
+      if (!button || (button instanceof HTMLButtonElement && button.disabled) || button.closest("#home-wheel-viewport")) return;
 
       playButtonFeedback();
     };

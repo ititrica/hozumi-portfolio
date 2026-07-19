@@ -89,6 +89,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
               className="cursor-pointer group flex items-center text-[19px] tracking-[0.16em] font-medium uppercase text-neutral-950 dark:text-neutral-100"
               style={{ fontFamily: "'DM Sans', 'DM Sans Local', sans-serif" }}
               data-cursor="nav"
+              data-button-sound="true"
             >
               <LogoSegment english="HO" japanese="ホ" isHovered={logoHovered} index={0} />
               <LogoSegment english="ZU" japanese="ズ" isHovered={logoHovered} index={1} />
