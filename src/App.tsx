@@ -18,6 +18,7 @@ import CustomCursor from "./components/CustomCursor";
 import Header from "./components/Header";
 import SeoManager from "./components/SeoManager";
 import { Language, getLocalizedData, UI_TRANSLATIONS } from "./i18n";
+import { playButtonFeedback } from "./utils/uiSound";
 
 const HomeWheelView = lazy(() => import("./components/HomeWheelView"));
 const loadSeriesView = () => import("./components/SeriesView");
@@ -191,6 +192,22 @@ export default function App() {
     return true;
   });
   const fadeIntervalRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (isMuted) return;
+
+    const handleButtonClick = (event: MouseEvent) => {
+      if (!(event.target instanceof Element)) return;
+
+      const button = event.target.closest("button");
+      if (!button || button.disabled || button.closest("#home-wheel-viewport")) return;
+
+      playButtonFeedback(theme);
+    };
+
+    window.addEventListener("click", handleButtonClick, true);
+    return () => window.removeEventListener("click", handleButtonClick, true);
+  }, [isMuted, theme]);
 
   const fadeAudio = (targetVolume: number, onComplete?: () => void) => {
     if (!audioRef.current) return;
