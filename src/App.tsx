@@ -585,7 +585,11 @@ export default function App() {
           />
 
           {/* Main Orchestrated Contents */}
-          <main className="flex-grow relative flex flex-col">
+          <main
+            className={`flex-grow relative flex flex-col transition-opacity duration-500 ${
+              routeLoading ? "opacity-0 pointer-events-none" : "opacity-100"
+            }`}
+          >
             <AnimatePresence mode="wait">
               <Suspense fallback={<RouteLoaderScreen />}>
                 {/* @ts-ignore Routes uses the current displayed location as its transition key. */}
@@ -721,7 +725,7 @@ export default function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
                 className="fixed inset-0 z-[9998] flex items-center justify-center bg-white dark:bg-[#0e0c0b]"
               >
                 <RouteLoader />
