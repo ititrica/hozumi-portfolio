@@ -182,6 +182,13 @@ export default function App() {
     setRouteLoaderCycleComplete(true);
   }, []);
 
+  const handleRouteLoaderAnimationComplete = useCallback(() => {
+    if (routeTransitionPhase === "loader-exit") {
+      setHeaderVisible(true);
+      setRouteTransitionPhase("idle");
+    }
+  }, [routeTransitionPhase]);
+
   // Minimalist Background Music with Fade Transitions
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isMuted, setIsMuted] = useState(() => {
@@ -383,6 +390,7 @@ export default function App() {
     if (routeTransitionPhase === "idle") return;
     if (routeTransitionPhase === "loader-playing" && !seriesChunkReady) return;
     if (routeTransitionPhase === "page-enter" && (!routePageReady || !routeLoaderCycleComplete)) return;
+    if (routeTransitionPhase === "loader-exit") return;
 
     let duration = 0;
     let nextPhase: RouteTransitionPhase | null = null;
@@ -395,10 +403,6 @@ export default function App() {
       case "loader-playing":
         duration = LOADER_PLAY_DURATION;
         nextPhase = "page-enter";
-        break;
-      case "loader-exit":
-        duration = LOADER_FADE_DURATION;
-        nextPhase = "idle";
         break;
       case "page-enter":
         duration = 0;
@@ -873,10 +877,10 @@ export default function App() {
           </AnimatePresence>
 
           {/* Route transition layer stays outside Routes so page exit/enter animations can run. */}
-          <AnimatePresence>
+          <AnimatePresence initial={false} mode="wait">
             {showRouteLoader && (
               <motion.div
-                key={`route-loader-${routeIdentity}`}
+                key="route-loader"
                 initial={{ opacity: 0 }}
                 animate={{
                   opacity: routeTransitionPhase === "loader-exit" ? 0 : 1
@@ -884,6 +888,7 @@ export default function App() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: LOADER_FADE_DURATION / 1000, ease: "easeInOut" }}
                 className="fixed inset-0 z-[9998] flex items-center justify-center bg-white dark:bg-[#0e0c0b]"
+                onAnimationComplete={handleRouteLoaderAnimationComplete}
               >
                 <RouteLoader
                   onCycleComplete={routeTransitionPhase !== "idle"
