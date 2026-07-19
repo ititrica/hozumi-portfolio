@@ -12,13 +12,13 @@ DESCRIPTION: A street-level study of Okinawa's unique cultural landscape, where 
 # DISPLAY ASSETS
 DETAIL_COVER_IMAGE: ok-01.webp
 CARD_IMAGE: ok-01.webp
-CARD_FILE: so-01-card.webp
+CARD_FILE: ok-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
 FILE: ok-01.webp
-THUMBNAIL_FILE: so-01-thumb.webp
+THUMBNAIL_FILE: ok-01-thumb.webp
 TITLE: Okinawa Breeze
 DESCRIPTION: A street-level study of Okinawa's unique cultural landscape, where local island life, tourist curiosity, and historical military presence coexist. These snapshots capture the quiet moments of rest, youthful play, and the distinct architecture of Japan's southern prefecture.
 ASPECT_RATIO: landscape
@@ -36,7 +36,7 @@ ISO: N/A
 
 [PHOTO 02]
 FILE: ok-02.webp
-THUMBNAIL_FILE: so-02-thumb.webp
+THUMBNAIL_FILE: ok-02-thumb.webp
 TITLE: The Conductor
 DESCRIPTION: A boy wearing a paper Yui Rail monorail hat checks his phone while waiting on a platform.
 ASPECT_RATIO: portrait
@@ -54,7 +54,7 @@ ISO: 100
 
 [PHOTO 03]
 FILE: ok-03.webp
-THUMBNAIL_FILE: so-03-thumb.webp
+THUMBNAIL_FILE: ok-03-thumb.webp
 TITLE: Sightseers
 DESCRIPTION: Tourists with luggage look up and take photos on a quiet street next to parked scooters.
 ASPECT_RATIO: landscape
@@ -72,7 +72,7 @@ ISO: 64
 
 [PHOTO 04]
 FILE: ok-04.webp
-THUMBNAIL_FILE: so-04-thumb.webp
+THUMBNAIL_FILE: ok-04-thumb.webp
 TITLE: Camp Lester Gate
 DESCRIPTION: A guard stands at the entrance of Camp Lester, capturing the dual character of Okinawa's land.
 ASPECT_RATIO: landscape
@@ -87,4 +87,3 @@ FOCAL_LENGTH: 100mm
 APERTURE: f/5.6
 SHUTTER_SPEED: 1/500s
 ISO: 100
-

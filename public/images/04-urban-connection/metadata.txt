@@ -12,13 +12,13 @@ DESCRIPTION: Capturing candid moments of companionship, laughter, and reflection
 # DISPLAY ASSETS
 DETAIL_COVER_IMAGE: ur-01.webp
 CARD_IMAGE: ur-01.webp
-CARD_FILE: so-01-card.webp
+CARD_FILE: ur-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
 FILE: ur-01.webp
-THUMBNAIL_FILE: so-01-thumb.webp
+THUMBNAIL_FILE: ur-01-thumb.webp
 TITLE: Urban Connection
 DESCRIPTION: Capturing candid moments of companionship, laughter, and reflection in urban public parks and streets.
 ASPECT_RATIO: landscape
@@ -36,7 +36,7 @@ ISO: N/A
 
 [PHOTO 02]
 FILE: ur-02.webp
-THUMBNAIL_FILE: so-02-thumb.webp
+THUMBNAIL_FILE: ur-02-thumb.webp
 TITLE: The Bench
 DESCRIPTION: Sitting together in a quiet city garden surrounded by green leaves.
 ASPECT_RATIO: landscape
@@ -54,7 +54,7 @@ ISO: 1600
 
 [PHOTO 03]
 FILE: ur-03.webp
-THUMBNAIL_FILE: so-03-thumb.webp
+THUMBNAIL_FILE: ur-03-thumb.webp
 TITLE: A Moment
 DESCRIPTION: A candid close-up of a shared, playful kiss.
 ASPECT_RATIO: landscape
@@ -72,7 +72,7 @@ ISO: 1250
 
 [PHOTO 04]
 FILE: ur-04.webp
-THUMBNAIL_FILE: so-04-thumb.webp
+THUMBNAIL_FILE: ur-04-thumb.webp
 TITLE: Looking Up
 DESCRIPTION: Standing on the pathway with arms crossed under modern skyscrapers.
 ASPECT_RATIO: portrait
@@ -90,7 +90,7 @@ ISO: 500
 
 [PHOTO 05]
 FILE: ur-05.webp
-THUMBNAIL_FILE: so-05-thumb.webp
+THUMBNAIL_FILE: ur-05-thumb.webp
 TITLE: Gaze
 DESCRIPTION: A direct, close-up portrait with hands in motion.
 ASPECT_RATIO: landscape
@@ -105,4 +105,3 @@ FOCAL_LENGTH: 35mm
 APERTURE: f/2.8
 SHUTTER_SPEED: 1/250s
 ISO: 2500
-

@@ -12,13 +12,13 @@ DESCRIPTION: An exploration of creative double-exposure portraiture and quiet, s
 # DISPLAY ASSETS
 DETAIL_COVER_IMAGE: wi-01.webp
 CARD_IMAGE: wi-01.webp
-CARD_FILE: so-01-card.webp
+CARD_FILE: wi-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
 FILE: wi-01.webp
-THUMBNAIL_FILE: so-01-thumb.webp
+THUMBNAIL_FILE: wi-01-thumb.webp
 TITLE: Winter & Illusion
 DESCRIPTION: An exploration of creative double-exposure portraiture and quiet, snowy scenes across northern Japan.
 ASPECT_RATIO: landscape
@@ -36,7 +36,7 @@ ISO: N/A
 
 [PHOTO 02]
 FILE: wi-02.webp
-THUMBNAIL_FILE: so-02-thumb.webp
+THUMBNAIL_FILE: wi-02-thumb.webp
 TITLE: Dot Wall
 DESCRIPTION: A quiet portrait set against a pattern of red dots.
 ASPECT_RATIO: portrait
@@ -54,7 +54,7 @@ ISO: 160
 
 [PHOTO 03]
 FILE: wi-03.webp
-THUMBNAIL_FILE: so-03-thumb.webp
+THUMBNAIL_FILE: wi-03-thumb.webp
 TITLE: Double Vision
 DESCRIPTION: A creative double-exposure portrait showing two perspectives.
 ASPECT_RATIO: portrait
@@ -72,7 +72,7 @@ ISO: 50
 
 [PHOTO 04]
 FILE: wi-04.webp
-THUMBNAIL_FILE: so-04-thumb.webp
+THUMBNAIL_FILE: wi-04-thumb.webp
 TITLE: Winter Silence
 DESCRIPTION: Leaning against a bare tree trunk in a white snowy field.
 ASPECT_RATIO: portrait
@@ -90,7 +90,7 @@ ISO: 160
 
 [PHOTO 05]
 FILE: wi-05.webp
-THUMBNAIL_FILE: so-05-thumb.webp
+THUMBNAIL_FILE: wi-05-thumb.webp
 TITLE: Cold Whisper
 DESCRIPTION: A serene portrait surrounded by winter frost.
 ASPECT_RATIO: portrait
@@ -177,4 +177,3 @@ FOCAL_LENGTH: 35mm
 APERTURE: f/1.4
 SHUTTER_SPEED: 1/125s
 ISO: 100
-

@@ -1,0 +1,125 @@
+# PROJECT METADATA
+
+PROJECT_ID: whispers-in-green
+TITLE: Whispers in Green
+SUBTITLE: Botanical Portraits
+CATEGORY: Portrait
+YEAR: 2026
+LOCATION: Japan
+COORDINATES: 35.6762° N, 139.6503° E
+DESCRIPTION: A quiet portrait series shaped by soft light, delicate foliage, and intimate expressions. Each image explores the gentle connection between the subject and nature.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: wh17-01.webp
+CARD_IMAGE: wh17-01.webp
+CARD_FILE: wh17-01-card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: wh17-01.webp
+THUMBNAIL_FILE: wh17-01-thumb.webp
+TITLE: A Leaf of Light
+DESCRIPTION: An intimate portrait where a fragile leaf becomes a quiet detail of tenderness.
+ASPECT_RATIO: landscape
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1122
+HEIGHT: 1402
+FILE_SIZE_BYTES: 1498574
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: wh17-02.webp
+THUMBNAIL_FILE: wh17-02-thumb.webp
+TITLE: Among the Vines
+DESCRIPTION: A soft portrait framed by hanging greenery, capturing a calm and attentive gaze.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1024
+HEIGHT: 1536
+FILE_SIZE_BYTES: 1405712
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 03]
+FILE: wh17-03.webp
+THUMBNAIL_FILE: wh17-03-thumb.webp
+TITLE: Garden Reverie
+DESCRIPTION: Surrounded by cascading leaves, the subject pauses in a peaceful, dreamlike moment.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1024
+HEIGHT: 1536
+FILE_SIZE_BYTES: 1959888
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 04]
+FILE: wh17-04.webp
+THUMBNAIL_FILE: wh17-04-thumb.webp
+TITLE: Dappled Gaze
+DESCRIPTION: Filtered sunlight and blurred foliage create a layered portrait filled with quiet intensity.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1024
+HEIGHT: 1536
+FILE_SIZE_BYTES: 1353806
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 05]
+FILE: wh17-05.webp
+THUMBNAIL_FILE: wh17-05-thumb.webp
+TITLE: A Quiet Bloom
+DESCRIPTION: A contemplative expression and a delicate vine convey stillness and gentle emotion.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1024
+HEIGHT: 1536
+FILE_SIZE_BYTES: 1362294
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 06]
+FILE: wh17-06.webp
+THUMBNAIL_FILE: wh17-06-thumb.webp
+TITLE: Through the Green
+DESCRIPTION: Soft foreground leaves frame a direct gaze, blending intimacy with natural serenity.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1024
+HEIGHT: 1536
+FILE_SIZE_BYTES: 1325982
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A

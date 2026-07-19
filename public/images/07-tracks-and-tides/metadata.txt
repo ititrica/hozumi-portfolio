@@ -12,13 +12,13 @@ DESCRIPTION: A photographic diary tracking the quiet rhythms of Japan's local ra
 # DISPLAY ASSETS
 DETAIL_COVER_IMAGE: tr-01.webp
 CARD_IMAGE: tr-01.webp
-CARD_FILE: so-01-card.webp
+CARD_FILE: tr-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
 FILE: tr-01.webp
-THUMBNAIL_FILE: so-01-thumb.webp
+THUMBNAIL_FILE: tr-01-thumb.webp
 TITLE: Tracks and Tides
 DESCRIPTION: A photographic diary tracking the quiet rhythms of Japan's local railways, coastal edges, and regional landmarks. From the solitary guard at a country station to the crashing tides of the Pacific, these frames capture the nostalgic transit of everyday life in the provinces.
 ASPECT_RATIO: landscape
@@ -36,7 +36,7 @@ ISO: N/A
 
 [PHOTO 02]
 FILE: tr-02.webp
-THUMBNAIL_FILE: so-02-thumb.webp
+THUMBNAIL_FILE: tr-02-thumb.webp
 TITLE: Tokawa Dispatch
 DESCRIPTION: A station guard holding flag batons waits at a quiet local station on the Choshi line.
 ASPECT_RATIO: landscape
@@ -54,7 +54,7 @@ ISO: 100
 
 [PHOTO 03]
 FILE: tr-03.webp
-THUMBNAIL_FILE: so-03-thumb.webp
+THUMBNAIL_FILE: tr-03-thumb.webp
 TITLE: Parasol by the Shore
 DESCRIPTION: A woman holds a parasol, looking out over the rocky coast as a girl walks nearby.
 ASPECT_RATIO: landscape
@@ -72,7 +72,7 @@ ISO: 100
 
 [PHOTO 04]
 FILE: tr-04.webp
-THUMBNAIL_FILE: so-04-thumb.webp
+THUMBNAIL_FILE: tr-04-thumb.webp
 TITLE: Pacific Surge
 DESCRIPTION: Waves crashing violently against the volcanic rocks under a bright blue sky.
 ASPECT_RATIO: portrait
@@ -90,7 +90,7 @@ ISO: 100
 
 [PHOTO 05]
 FILE: tr-05.webp
-THUMBNAIL_FILE: so-05-thumb.webp
+THUMBNAIL_FILE: tr-05-thumb.webp
 TITLE: Iron Horse Consultation
 DESCRIPTION: Railway workers discuss operations beside a classic orange DE10 diesel locomotive.
 ASPECT_RATIO: portrait
@@ -108,7 +108,7 @@ ISO: 100
 
 [PHOTO 06]
 FILE: tr-06.webp
-THUMBNAIL_FILE: wi-06-thumb.webp
+THUMBNAIL_FILE: tr-06-thumb.webp
 TITLE: Evening Over the Fields
 DESCRIPTION: A dramatic purple twilight sky stretching over solar panels and local houses.
 ASPECT_RATIO: landscape
@@ -126,7 +126,7 @@ ISO: 1000
 
 [PHOTO 07]
 FILE: tr-07.webp
-THUMBNAIL_FILE: wi-07-thumb.webp
+THUMBNAIL_FILE: tr-07-thumb.webp
 TITLE: Brick and Sky
 DESCRIPTION: The white bell tower of a historic red-brick church rising toward passing clouds.
 ASPECT_RATIO: portrait
@@ -141,4 +141,3 @@ FOCAL_LENGTH: 65mm
 APERTURE: f/5.6
 SHUTTER_SPEED: 1/320s
 ISO: 50
-

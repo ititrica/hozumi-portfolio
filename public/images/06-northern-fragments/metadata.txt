@@ -12,13 +12,13 @@ DESCRIPTION: A documentary collection capturing the quiet corners and fleeting e
 # DISPLAY ASSETS
 DETAIL_COVER_IMAGE: no-01.webp
 CARD_IMAGE: no-01.webp
-CARD_FILE: so-01-card.webp
+CARD_FILE: no-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
 FILE: no-01.webp
-THUMBNAIL_FILE: so-01-thumb.webp
+THUMBNAIL_FILE: no-01-thumb.webp
 TITLE: Northern Fragments
 DESCRIPTION: A documentary collection capturing the quiet corners and fleeting encounters of Hokkaido. From a blue cafe truck overlooking the ocean and weathered seaside homes to unexpected street installations and the dust-kicking energy of northern horse racing, these frames document the rustic poetry of Japan's northernmost island.
 ASPECT_RATIO: landscape
@@ -36,7 +36,7 @@ ISO: N/A
 
 [PHOTO 02]
 FILE: no-02.webp
-THUMBNAIL_FILE: so-02-thumb.webp
+THUMBNAIL_FILE: no-02-thumb.webp
 TITLE: Seaside Respite
 DESCRIPTION: A blue-grey house perched at the water's edge with a lone subcompact car, Hokkaido coast.
 ASPECT_RATIO: landscape
@@ -54,7 +54,7 @@ ISO: 100
 
 [PHOTO 03]
 FILE: no-03.webp
-THUMBNAIL_FILE: so-03-thumb.webp
+THUMBNAIL_FILE: no-03-thumb.webp
 TITLE: Weathered Frame
 DESCRIPTION: A collapsed wooden shack slowly returning to the earth, contrasting with modern housing behind it.
 ASPECT_RATIO: landscape
@@ -72,7 +72,7 @@ ISO: 64
 
 [PHOTO 04]
 FILE: no-04.webp
-THUMBNAIL_FILE: so-04-thumb.webp
+THUMBNAIL_FILE: no-04-thumb.webp
 TITLE: Sun Mall Companion
 DESCRIPTION: A giant plush bear sits quietly at an outdoor table in a snowy shopping arcade, Otaru.
 ASPECT_RATIO: landscape
@@ -90,7 +90,7 @@ ISO: 64
 
 [PHOTO 05]
 FILE: no-05.webp
-THUMBNAIL_FILE: so-05-thumb.webp
+THUMBNAIL_FILE: no-05-thumb.webp
 TITLE: The Dirt Track
 DESCRIPTION: Horses kick up dust under the pale northern sun during a local race.
 ASPECT_RATIO: landscape
@@ -108,7 +108,7 @@ ISO: 100
 
 [PHOTO 06]
 FILE: no-06.webp
-THUMBNAIL_FILE: wi-06-thumb.webp
+THUMBNAIL_FILE: no-06-thumb.webp
 TITLE: Silent Coast
 DESCRIPTION: A weathered breakwater extending into the misty grey sea under a pale sky.
 ASPECT_RATIO: landscape
@@ -123,4 +123,3 @@ FOCAL_LENGTH: 35mm
 APERTURE: f/1.4
 SHUTTER_SPEED: 1/125s
 ISO: 100
-

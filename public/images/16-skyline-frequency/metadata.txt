@@ -1,0 +1,125 @@
+# PROJECT METADATA
+
+PROJECT_ID: skyline-frequency
+TITLE: Skyline Frequency
+SUBTITLE: Urban Portraits
+CATEGORY: Portrait
+YEAR: 2026
+LOCATION: Tokyo, Japan
+COORDINATES: 35.6762° N, 139.6503° E
+DESCRIPTION: A playful urban portrait series combining wide-angle perspective, retro technology, and bright daylight. The subject interacts with the lens while the surrounding skyscrapers amplify a sense of energy, freedom, and modern city life.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: sk-01.webp
+CARD_IMAGE: sk-01.webp
+CARD_FILE: sk-01-card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: sk-01.webp
+THUMBNAIL_FILE: sk-01-thumb.webp
+TITLE: Signal Within Reach
+DESCRIPTION: A flip phone and an outstretched hand create a direct connection between the subject, the camera, and the city.
+ASPECT_RATIO: landscape
+LOCATION: Tokyo, Japan
+DATE: 2026
+WIDTH: 1448
+HEIGHT: 1086
+FILE_SIZE_BYTES: 1696156
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: sk-02.webp
+THUMBNAIL_FILE: sk-02-thumb.webp
+TITLE: Pocket Perspective
+DESCRIPTION: A compact camera and a playful gesture capture the spontaneous spirit of urban self-expression.
+ASPECT_RATIO: portrait
+LOCATION: Tokyo, Japan
+DATE: 2026
+WIDTH: 1086
+HEIGHT: 1448
+FILE_SIZE_BYTES: 1748924
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 03]
+FILE: sk-03.webp
+THUMBNAIL_FILE: sk-03-thumb.webp
+TITLE: City Sound
+DESCRIPTION: Headphones become a symbol of personal rhythm in a dramatic low-angle portrait beneath the skyline.
+ASPECT_RATIO: portrait
+LOCATION: Tokyo, Japan
+DATE: 2026
+WIDTH: 1086
+HEIGHT: 1448
+FILE_SIZE_BYTES: 1626436
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 04]
+FILE: sk-04.webp
+THUMBNAIL_FILE: sk-04-thumb.webp
+TITLE: Touch the Sky
+DESCRIPTION: A reaching hand, a bright expression, and towering buildings bring movement and youthful confidence into the frame.
+ASPECT_RATIO: portrait
+LOCATION: Tokyo, Japan
+DATE: 2026
+WIDTH: 1086
+HEIGHT: 1448
+FILE_SIZE_BYTES: 1756714
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 05]
+FILE: sk-05.webp
+THUMBNAIL_FILE: sk-05-thumb.webp
+TITLE: Breaking the Frame
+DESCRIPTION: Both hands extend beyond the traditional portrait space, turning the photograph into an energetic interaction.
+ASPECT_RATIO: portrait
+LOCATION: Tokyo, Japan
+DATE: 2026
+WIDTH: 1086
+HEIGHT: 1448
+FILE_SIZE_BYTES: 1765392
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 06]
+FILE: sk-06.webp
+THUMBNAIL_FILE: sk-06-thumb.webp
+TITLE: Between the Towers
+DESCRIPTION: A calm, confident pose balances the strong architectural lines and expansive blue sky.
+ASPECT_RATIO: portrait
+LOCATION: Tokyo, Japan
+DATE: 2026
+WIDTH: 1086
+HEIGHT: 1448
+FILE_SIZE_BYTES: 1607862
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A

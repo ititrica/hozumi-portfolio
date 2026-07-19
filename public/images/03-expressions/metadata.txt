@@ -12,13 +12,13 @@ DESCRIPTION: A collection of intimate portraits exploring facial expressions, te
 # DISPLAY ASSETS
 DETAIL_COVER_IMAGE: ex-01.webp
 CARD_IMAGE: ex-01.webp
-CARD_FILE: so-01-card.webp
+CARD_FILE: ex-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
 FILE: ex-01.webp
-THUMBNAIL_FILE: so-01-thumb.webp
+THUMBNAIL_FILE: ex-01-thumb.webp
 TITLE: Expressions
 DESCRIPTION: A collection of intimate portraits exploring facial expressions, textures of clothing, and raw human emotion.
 ASPECT_RATIO: landscape
@@ -36,7 +36,7 @@ ISO: N/A
 
 [PHOTO 02]
 FILE: ex-02.webp
-THUMBNAIL_FILE: so-02-thumb.webp
+THUMBNAIL_FILE: ex-02-thumb.webp
 TITLE: Neutrality
 DESCRIPTION: A clean studio portrait in dark draped clothing.
 ASPECT_RATIO: portrait
@@ -54,7 +54,7 @@ ISO: 1000
 
 [PHOTO 03]
 FILE: ex-03.webp
-THUMBNAIL_FILE: so-03-thumb.webp
+THUMBNAIL_FILE: ex-03-thumb.webp
 TITLE: Details
 DESCRIPTION: A close-up of hands holding a metal carabiner.
 ASPECT_RATIO: landscape
@@ -72,7 +72,7 @@ ISO: 1000
 
 [PHOTO 04]
 FILE: ex-04.webp
-THUMBNAIL_FILE: so-04-thumb.webp
+THUMBNAIL_FILE: ex-04-thumb.webp
 TITLE: Spiral Steps
 DESCRIPTION: Sitting on a concrete spiral staircase looking upward.
 ASPECT_RATIO: portrait
@@ -90,7 +90,7 @@ ISO: 200
 
 [PHOTO 05]
 FILE: ex-05.webp
-THUMBNAIL_FILE: so-05-thumb.webp
+THUMBNAIL_FILE: ex-05-thumb.webp
 TITLE: Raw Emotion
 DESCRIPTION: An expressive, close-up snapshot showing raw feeling.
 ASPECT_RATIO: landscape
@@ -105,4 +105,3 @@ FOCAL_LENGTH: 35mm
 APERTURE: f/2.8
 SHUTTER_SPEED: 1/500s
 ISO: 100
-

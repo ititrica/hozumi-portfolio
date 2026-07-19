@@ -21,6 +21,7 @@ import SeriesView from "./components/SeriesView";
 import Lightbox from "./components/Lightbox";
 import AboutContact from "./components/AboutContact";
 import Playground from "./components/Playground";
+import SeoManager from "./components/SeoManager";
 import { Language, getLocalizedData, UI_TRANSLATIONS } from "./i18n";
 
 export default function App() {
@@ -354,6 +355,7 @@ export default function App() {
 
   return (
     <div className="font-sans bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 dark:selection:bg-white selection:text-white dark:selection:text-neutral-900 transition-colors duration-1000 min-h-screen flex flex-col isolate">
+      <SeoManager photographyData={localizedData} lang={lang} />
       {/* Background Audio Node - always mounted so it's ready to play */}
       <audio ref={audioRef} src="/music.mp3" loop autoPlay playsInline />
 

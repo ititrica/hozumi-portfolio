@@ -1,6 +1,6 @@
 {
-  "name": "Cathy Dolle Portfolio",
-  "description": "An immersive, single-screen photography portfolio featuring a responsive 1/4 wheel carousel with smooth scroll-wheel, pointer-drag, and spring-loaded snapping interactions.",
+  "name": "Hozumi Photography Portfolio",
+  "description": "An immersive photography and visual art portfolio featuring intimate portraits, street photography, architecture, and interactive series browsing.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

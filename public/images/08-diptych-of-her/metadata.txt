@@ -12,13 +12,13 @@ DESCRIPTION: A diptych capturing two contrasting moments of a young woman in a s
 # DISPLAY ASSETS
 DETAIL_COVER_IMAGE: di-01.webp
 CARD_IMAGE: di-01.webp
-CARD_FILE: so-01-card.webp
+CARD_FILE: di-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
 FILE: di-01.webp
-THUMBNAIL_FILE: so-01-thumb.webp
+THUMBNAIL_FILE: di-01-thumb.webp
 TITLE: Diptych of Her
 DESCRIPTION: A diptych capturing two contrasting moments of a young woman in a striped dress. The first frame presents her in a quiet, sunlit traditional garden sitting on a red bench; the second frame is a candid flash portrait of her crouching on a street crosswalk at night. Together they form a dialogue between quiet tradition and spontaneous urban night.
 ASPECT_RATIO: landscape
@@ -36,7 +36,7 @@ ISO: N/A
 
 [PHOTO 02]
 FILE: di-02.webp
-THUMBNAIL_FILE: so-02-thumb.webp
+THUMBNAIL_FILE: di-02-thumb.webp
 TITLE: Spontaneous Night
 DESCRIPTION: A playful flash portrait of the subject crouching on a street crosswalk at night.
 ASPECT_RATIO: portrait
@@ -51,4 +51,3 @@ FOCAL_LENGTH: 43mm
 APERTURE: f/2.8
 SHUTTER_SPEED: 1/125s
 ISO: 2000
-

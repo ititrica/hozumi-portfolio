@@ -1,0 +1,125 @@
+# PROJECT METADATA
+
+PROJECT_ID: whispers-in-silver-light
+TITLE: Whispers in Silver Light
+SUBTITLE: Intimate Portraits
+CATEGORY: Portrait
+YEAR: 2026
+LOCATION: Japan
+COORDINATES: 35.6762° N, 139.6503° E
+DESCRIPTION: A quiet portrait series shaped by soft light, delicate textures, and fleeting moments of reflection. The images explore solitude, elegance, and the gentle dialogue between the figure, flowers, and space.
+
+# DISPLAY ASSETS
+DETAIL_COVER_IMAGE: wh-01.webp
+CARD_IMAGE: wh-02.webp
+CARD_FILE: wh-02-card.webp
+
+# PHOTO DETAILS
+
+[PHOTO 01]
+FILE: wh-01.webp
+THUMBNAIL_FILE: wh-01-thumb.webp
+TITLE: The Quiet Reader
+DESCRIPTION: Seated in an antique chair, the figure holds a book in stillness, surrounded by the warm atmosphere of a private room.
+ASPECT_RATIO: landscape
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1024
+HEIGHT: 1536
+FILE_SIZE_BYTES: 1987542
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 02]
+FILE: wh-02.webp
+THUMBNAIL_FILE: wh-02-thumb.webp
+TITLE: Fallen Petals
+DESCRIPTION: A tender moment of contemplation, captured through a lowered gaze and a single delicate petal held between the fingers.
+ASPECT_RATIO: square
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1254
+HEIGHT: 1254
+FILE_SIZE_BYTES: 2010324
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 03]
+FILE: wh-03.webp
+THUMBNAIL_FILE: wh-03-thumb.webp
+TITLE: Flower in the Light
+DESCRIPTION: A floral shadow rests across the shoulder, blending the softness of the body with the poetry of natural light.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1024
+HEIGHT: 1536
+FILE_SIZE_BYTES: 1845450
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 04]
+FILE: wh-04.webp
+THUMBNAIL_FILE: wh-04-thumb.webp
+TITLE: A Rose Behind Her
+DESCRIPTION: Seen from behind, the figure becomes a quiet canvas for the shadow of a flower, suspended in warm afternoon light.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1024
+HEIGHT: 1536
+FILE_SIZE_BYTES: 1648484
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 05]
+FILE: wh-05.webp
+THUMBNAIL_FILE: wh-05-thumb.webp
+TITLE: Touch of Bloom
+DESCRIPTION: A close study of a flower, a hand, and a fleeting gesture, emphasizing texture, intimacy, and gentle curiosity.
+ASPECT_RATIO: square
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1254
+HEIGHT: 1254
+FILE_SIZE_BYTES: 1952176
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A
+
+[PHOTO 06]
+FILE: wh-06.webp
+THUMBNAIL_FILE: wh-06-thumb.webp
+TITLE: Passing Through Light
+DESCRIPTION: The flowing dress and luminous window create a dreamlike portrait of movement, grace, and quiet departure.
+ASPECT_RATIO: portrait
+LOCATION: Japan
+DATE: 2026
+WIDTH: 1024
+HEIGHT: 1536
+FILE_SIZE_BYTES: 1650934
+CAMERA: N/A
+LENS: N/A
+FOCAL_LENGTH: N/A
+APERTURE: N/A
+SHUTTER_SPEED: N/A
+ISO: N/A

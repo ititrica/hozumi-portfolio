@@ -12,13 +12,13 @@ DESCRIPTION: A series of high-contrast black and white photographs exploring str
 # DISPLAY ASSETS
 DETAIL_COVER_IMAGE: mo-01.webp
 CARD_IMAGE: mo-01.webp
-CARD_FILE: so-01-card.webp
+CARD_FILE: mo-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
 FILE: mo-01.webp
-THUMBNAIL_FILE: so-01-thumb.webp
+THUMBNAIL_FILE: mo-01-thumb.webp
 TITLE: Monochrome Studies
 DESCRIPTION: A series of high-contrast black and white photographs exploring structural lines, human presence, and quiet shores.
 ASPECT_RATIO: landscape
@@ -36,7 +36,7 @@ ISO: N/A
 
 [PHOTO 02]
 FILE: mo-02.webp
-THUMBNAIL_FILE: so-02-thumb.webp
+THUMBNAIL_FILE: mo-02-thumb.webp
 TITLE: Anteroom Naha
 DESCRIPTION: Geometric shadows at the entrance of a concrete hotel.
 ASPECT_RATIO: landscape
@@ -54,7 +54,7 @@ ISO: 100
 
 [PHOTO 03]
 FILE: mo-03.webp
-THUMBNAIL_FILE: so-03-thumb.webp
+THUMBNAIL_FILE: mo-03-thumb.webp
 TITLE: Street Musician
 DESCRIPTION: A busker performing on the sidewalk at night.
 ASPECT_RATIO: portrait
@@ -72,7 +72,7 @@ ISO: 1600
 
 [PHOTO 04]
 FILE: mo-04.webp
-THUMBNAIL_FILE: so-04-thumb.webp
+THUMBNAIL_FILE: mo-04-thumb.webp
 TITLE: Solitary Crow
 DESCRIPTION: A bird perched on a white metal railing by the sea.
 ASPECT_RATIO: portrait
@@ -90,7 +90,7 @@ ISO: 125
 
 [PHOTO 05]
 FILE: mo-05.webp
-THUMBNAIL_FILE: so-05-thumb.webp
+THUMBNAIL_FILE: mo-05-thumb.webp
 TITLE: Sea Structure
 DESCRIPTION: An old concrete platform standing in the waves.
 ASPECT_RATIO: portrait
@@ -105,4 +105,3 @@ FOCAL_LENGTH: 35mm
 APERTURE: f/2.8
 SHUTTER_SPEED: 1/1600s
 ISO: 160
-
