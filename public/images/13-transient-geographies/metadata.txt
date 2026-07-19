@@ -10,15 +10,15 @@ COORDINATES: 13.7563° N, 100.5018° E
 DESCRIPTION: A travelogue of street corners across Thailand, dynamic actions at Chiba racecourse, and nostalgic fabric door curtains in Taiwan.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 01.webp
-CARD_IMAGE: 01.webp
-CARD_FILE: 01.card.webp
+DETAIL_COVER_IMAGE: tr13-01.webp
+CARD_IMAGE: tr13-01.webp
+CARD_FILE: so-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 01.webp
-THUMBNAIL_FILE: 01.thumb.webp
+FILE: tr13-01.webp
+THUMBNAIL_FILE: so-01-thumb.webp
 TITLE: Transient Geographies
 DESCRIPTION: A travelogue of street corners across Thailand, dynamic actions at Chiba racecourse, and nostalgic fabric door curtains in Taiwan.
 ASPECT_RATIO: landscape
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 02.webp
-THUMBNAIL_FILE: 02.thumb.webp
+FILE: tr13-02.webp
+THUMBNAIL_FILE: so-02-thumb.webp
 TITLE: Bangkok Transit Colors
 DESCRIPTION: Tangled power lines and colorful tuk-tuks in Bangkok's bustling center.
 ASPECT_RATIO: landscape
@@ -53,8 +53,8 @@ SHUTTER_SPEED: 1/125s
 ISO: 100
 
 [PHOTO 03]
-FILE: 03.webp
-THUMBNAIL_FILE: 03.thumb.webp
+FILE: tr13-03.webp
+THUMBNAIL_FILE: so-03-thumb.webp
 TITLE: Chiba Racecourse Track
 DESCRIPTION: Wind and mud flying by the racing track at Chiba racecourse.
 ASPECT_RATIO: portrait
@@ -71,8 +71,8 @@ SHUTTER_SPEED: 1/125s
 ISO: 100
 
 [PHOTO 04]
-FILE: 04.webp
-THUMBNAIL_FILE: 04.thumb.webp
+FILE: tr13-04.webp
+THUMBNAIL_FILE: so-04-thumb.webp
 TITLE: Taiwan Curtain Textures
 DESCRIPTION: Nostalgic blue fabric door curtains at a traditional shop doorway in Taiwan.
 ASPECT_RATIO: landscape
@@ -89,8 +89,8 @@ SHUTTER_SPEED: 1/125s
 ISO: 100
 
 [PHOTO 05]
-FILE: 05.webp
-THUMBNAIL_FILE: 05.thumb.webp
+FILE: tr13-05.webp
+THUMBNAIL_FILE: so-05-thumb.webp
 TITLE: Taiwan Doorway Detail
 DESCRIPTION: Battered walls and fabric curtains hanging over a door frame in a Taiwan alleyway.
 ASPECT_RATIO: landscape

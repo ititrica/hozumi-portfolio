@@ -10,15 +10,15 @@ COORDINATES: 26.2124° N, 127.6809° E
 DESCRIPTION: A series of high-contrast black and white photographs exploring structural lines, human presence, and quiet shores.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 01.webp
-CARD_IMAGE: 01.webp
-CARD_FILE: 01.card.webp
+DETAIL_COVER_IMAGE: mo-01.webp
+CARD_IMAGE: mo-01.webp
+CARD_FILE: so-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 01.webp
-THUMBNAIL_FILE: 01.thumb.webp
+FILE: mo-01.webp
+THUMBNAIL_FILE: so-01-thumb.webp
 TITLE: Monochrome Studies
 DESCRIPTION: A series of high-contrast black and white photographs exploring structural lines, human presence, and quiet shores.
 ASPECT_RATIO: landscape
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 02.webp
-THUMBNAIL_FILE: 02.thumb.webp
+FILE: mo-02.webp
+THUMBNAIL_FILE: so-02-thumb.webp
 TITLE: Anteroom Naha
 DESCRIPTION: Geometric shadows at the entrance of a concrete hotel.
 ASPECT_RATIO: landscape
@@ -53,8 +53,8 @@ SHUTTER_SPEED: 1/250s
 ISO: 100
 
 [PHOTO 03]
-FILE: 03.webp
-THUMBNAIL_FILE: 03.thumb.webp
+FILE: mo-03.webp
+THUMBNAIL_FILE: so-03-thumb.webp
 TITLE: Street Musician
 DESCRIPTION: A busker performing on the sidewalk at night.
 ASPECT_RATIO: portrait
@@ -71,8 +71,8 @@ SHUTTER_SPEED: 1/125s
 ISO: 1600
 
 [PHOTO 04]
-FILE: 04.webp
-THUMBNAIL_FILE: 04.thumb.webp
+FILE: mo-04.webp
+THUMBNAIL_FILE: so-04-thumb.webp
 TITLE: Solitary Crow
 DESCRIPTION: A bird perched on a white metal railing by the sea.
 ASPECT_RATIO: portrait
@@ -89,8 +89,8 @@ SHUTTER_SPEED: 1/4000s
 ISO: 125
 
 [PHOTO 05]
-FILE: 05.webp
-THUMBNAIL_FILE: 05.thumb.webp
+FILE: mo-05.webp
+THUMBNAIL_FILE: so-05-thumb.webp
 TITLE: Sea Structure
 DESCRIPTION: An old concrete platform standing in the waves.
 ASPECT_RATIO: portrait

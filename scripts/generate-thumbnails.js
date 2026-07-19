@@ -21,7 +21,11 @@ async function generateThumbnails() {
 
   const webpFiles = [];
   walkDir(IMAGES_DIR, (filePath) => {
-    if (filePath.endsWith(".webp") && !filePath.endsWith(".thumb.webp")) {
+    if (
+      filePath.endsWith(".webp") &&
+      !filePath.endsWith("-thumb.webp") &&
+      !filePath.endsWith("-card.webp")
+    ) {
       webpFiles.push(filePath);
     }
   });
@@ -32,7 +36,7 @@ async function generateThumbnails() {
   for (const filePath of webpFiles) {
     const ext = path.extname(filePath);
     const base = filePath.slice(0, -ext.length);
-    const thumbPath = `${base}.thumb.webp`;
+    const thumbPath = `${base}-thumb.webp`;
 
     if (fs.existsSync(thumbPath)) {
       // Skip if thumbnail already exists

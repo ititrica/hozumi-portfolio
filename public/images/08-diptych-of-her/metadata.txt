@@ -10,15 +10,15 @@ COORDINATES: 35.6762° N, 139.6503° E
 DESCRIPTION: A diptych capturing two contrasting moments of a young woman in a striped dress. The first frame presents her in a quiet, sunlit traditional garden sitting on a red bench; the second frame is a candid flash portrait of her crouching on a street crosswalk at night. Together they form a dialogue between quiet tradition and spontaneous urban night.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 01.webp
-CARD_IMAGE: 01.webp
-CARD_FILE: 01.card.webp
+DETAIL_COVER_IMAGE: di-01.webp
+CARD_IMAGE: di-01.webp
+CARD_FILE: so-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 01.webp
-THUMBNAIL_FILE: 01.thumb.webp
+FILE: di-01.webp
+THUMBNAIL_FILE: so-01-thumb.webp
 TITLE: Diptych of Her
 DESCRIPTION: A diptych capturing two contrasting moments of a young woman in a striped dress. The first frame presents her in a quiet, sunlit traditional garden sitting on a red bench; the second frame is a candid flash portrait of her crouching on a street crosswalk at night. Together they form a dialogue between quiet tradition and spontaneous urban night.
 ASPECT_RATIO: landscape
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 02.webp
-THUMBNAIL_FILE: 02.thumb.webp
+FILE: di-02.webp
+THUMBNAIL_FILE: so-02-thumb.webp
 TITLE: Spontaneous Night
 DESCRIPTION: A playful flash portrait of the subject crouching on a street crosswalk at night.
 ASPECT_RATIO: portrait

@@ -42,7 +42,7 @@ async function processNewPhotos() {
     const baseName = path.parse(filename).name;
     const webpName = `${baseName}.webp`;
     const webpPath = path.join(new12, webpName);
-    const thumbName = `${baseName}.thumb.webp`;
+    const thumbName = `${baseName}-thumb.webp`;
     const thumbPath = path.join(new12, thumbName);
 
     console.log(`Converting ${filename} to WebP...`);
@@ -101,21 +101,21 @@ async function processNewPhotos() {
   // Create a cover image for analog-hokkaido from the first image
   if (hokkaidoMeta.length > 0) {
     const coverPath = path.join(new12, "cover.webp");
-    const coverThumbPath = path.join(new12, "cover.thumb.webp");
+    const coverThumbPath = path.join(new12, "cover-thumb.webp");
     // Just copy first WebP as cover
     fs.copyFileSync(path.join(new12, `${hokkaidoMeta[0].id}.webp`), coverPath);
-    fs.copyFileSync(path.join(new12, `${hokkaidoMeta[0].id}.thumb.webp`), coverThumbPath);
+    fs.copyFileSync(path.join(new12, `${hokkaidoMeta[0].id}-thumb.webp`), coverThumbPath);
   }
 
   // 2. Process transient-geographies (extract metadata, generate thumbs)
   console.log("\nProcessing transient-geographies images...");
-  const geoImages = fs.readdirSync(new13).filter(f => f.endsWith(".webp") && !f.endsWith(".thumb.webp") && !f.includes("cover"));
+  const geoImages = fs.readdirSync(new13).filter(f => f.endsWith(".webp") && !f.endsWith("-thumb.webp") && !f.includes("cover"));
   const geoMeta = [];
 
   for (const filename of geoImages) {
     const fullPath = path.join(new13, filename);
     const baseName = path.parse(filename).name;
-    const thumbName = `${baseName}.thumb.webp`;
+    const thumbName = `${baseName}-thumb.webp`;
     const thumbPath = path.join(new13, thumbName);
 
     console.log(`Processing ${filename}...`);
@@ -174,9 +174,9 @@ async function processNewPhotos() {
   // Create cover for transient-geographies from the first image
   if (geoMeta.length > 0) {
     const coverPath = path.join(new13, "cover.webp");
-    const coverThumbPath = path.join(new13, "cover.thumb.webp");
+    const coverThumbPath = path.join(new13, "cover-thumb.webp");
     fs.copyFileSync(path.join(new13, geoImages[0]), coverPath);
-    fs.copyFileSync(path.join(new13, `${path.parse(geoImages[0]).name}.thumb.webp`), coverThumbPath);
+    fs.copyFileSync(path.join(new13, `${path.parse(geoImages[0]).name}-thumb.webp`), coverThumbPath);
   }
 
   console.log("\n================ HOKKAIDO METADATA ================");

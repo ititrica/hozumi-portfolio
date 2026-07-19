@@ -10,15 +10,15 @@ COORDINATES: 26.2124° N, 127.6809° E
 DESCRIPTION: A street-level study of Okinawa's unique cultural landscape, where local island life, tourist curiosity, and historical military presence coexist. These snapshots capture the quiet moments of rest, youthful play, and the distinct architecture of Japan's southern prefecture.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 01.webp
-CARD_IMAGE: 01.webp
-CARD_FILE: 01.card.webp
+DETAIL_COVER_IMAGE: ok-01.webp
+CARD_IMAGE: ok-01.webp
+CARD_FILE: so-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 01.webp
-THUMBNAIL_FILE: 01.thumb.webp
+FILE: ok-01.webp
+THUMBNAIL_FILE: so-01-thumb.webp
 TITLE: Okinawa Breeze
 DESCRIPTION: A street-level study of Okinawa's unique cultural landscape, where local island life, tourist curiosity, and historical military presence coexist. These snapshots capture the quiet moments of rest, youthful play, and the distinct architecture of Japan's southern prefecture.
 ASPECT_RATIO: landscape
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 02.webp
-THUMBNAIL_FILE: 02.thumb.webp
+FILE: ok-02.webp
+THUMBNAIL_FILE: so-02-thumb.webp
 TITLE: The Conductor
 DESCRIPTION: A boy wearing a paper Yui Rail monorail hat checks his phone while waiting on a platform.
 ASPECT_RATIO: portrait
@@ -53,8 +53,8 @@ SHUTTER_SPEED: 1/250s
 ISO: 100
 
 [PHOTO 03]
-FILE: 03.webp
-THUMBNAIL_FILE: 03.thumb.webp
+FILE: ok-03.webp
+THUMBNAIL_FILE: so-03-thumb.webp
 TITLE: Sightseers
 DESCRIPTION: Tourists with luggage look up and take photos on a quiet street next to parked scooters.
 ASPECT_RATIO: landscape
@@ -71,8 +71,8 @@ SHUTTER_SPEED: 1/500s
 ISO: 64
 
 [PHOTO 04]
-FILE: 04.webp
-THUMBNAIL_FILE: 04.thumb.webp
+FILE: ok-04.webp
+THUMBNAIL_FILE: so-04-thumb.webp
 TITLE: Camp Lester Gate
 DESCRIPTION: A guard stands at the entrance of Camp Lester, capturing the dual character of Okinawa's land.
 ASPECT_RATIO: landscape

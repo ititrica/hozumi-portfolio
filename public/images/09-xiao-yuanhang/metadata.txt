@@ -10,15 +10,15 @@ COORDINATES: 43.1907° N, 140.9947° E
 DESCRIPTION: An intimate portrait study of Xiao Yuanhang, captured across various locations and light conditions in Otaru. Through grainy black-and-white double exposures, neon-lit close-ups, and direct natural light, this series explores the quiet moods, intensity, and introspective character of a single subject.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 01.webp
-CARD_IMAGE: 01.webp
-CARD_FILE: 01.card.webp
+DETAIL_COVER_IMAGE: xi-01.webp
+CARD_IMAGE: xi-01.webp
+CARD_FILE: so-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 01.webp
-THUMBNAIL_FILE: 01.thumb.webp
+FILE: xi-01.webp
+THUMBNAIL_FILE: so-01-thumb.webp
 TITLE: Xiao Yuanhang
 DESCRIPTION: An intimate portrait study of Xiao Yuanhang, captured across various locations and light conditions in Otaru. Through grainy black-and-white double exposures, neon-lit close-ups, and direct natural light, this series explores the quiet moods, intensity, and introspective character of a single subject.
 ASPECT_RATIO: portrait
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 02.webp
-THUMBNAIL_FILE: 02.thumb.webp
+FILE: xi-02.webp
+THUMBNAIL_FILE: so-02-thumb.webp
 TITLE: Raincoat and Glass
 DESCRIPTION: A high-contrast black-and-white profile of Xiao Yuanhang wearing a clear plastic jacket.
 ASPECT_RATIO: portrait
@@ -53,8 +53,8 @@ SHUTTER_SPEED: 1/180s
 ISO: 64
 
 [PHOTO 03]
-FILE: 03.webp
-THUMBNAIL_FILE: 03.thumb.webp
+FILE: xi-03.webp
+THUMBNAIL_FILE: so-03-thumb.webp
 TITLE: Warm Neon
 DESCRIPTION: Warm streetlights illuminating the profile of the subject under the city lights.
 ASPECT_RATIO: portrait
@@ -71,8 +71,8 @@ SHUTTER_SPEED: 1/200s
 ISO: 1600
 
 [PHOTO 04]
-FILE: 04.webp
-THUMBNAIL_FILE: 04.thumb.webp
+FILE: xi-04.webp
+THUMBNAIL_FILE: so-04-thumb.webp
 TITLE: Concrete Shadow
 DESCRIPTION: Golden hour sunlight raking across the face of the subject next to a weathered pillar.
 ASPECT_RATIO: landscape
@@ -89,8 +89,8 @@ SHUTTER_SPEED: 1/60s
 ISO: 200
 
 [PHOTO 05]
-FILE: 05.webp
-THUMBNAIL_FILE: 05.thumb.webp
+FILE: xi-05.webp
+THUMBNAIL_FILE: so-05-thumb.webp
 TITLE: Reflected Gaze
 DESCRIPTION: A direct portrait of Xiao Yuanhang seen through a pane of glass with soft reflections.
 ASPECT_RATIO: portrait
@@ -107,8 +107,8 @@ SHUTTER_SPEED: 1/250s
 ISO: 1000
 
 [PHOTO 06]
-FILE: 06.webp
-THUMBNAIL_FILE: 06.thumb.webp
+FILE: xi-06.webp
+THUMBNAIL_FILE: wi-06-thumb.webp
 TITLE: The Diner
 DESCRIPTION: An intense, candid look from the subject holding a spoon at a local eatery.
 ASPECT_RATIO: portrait
@@ -125,8 +125,8 @@ SHUTTER_SPEED: 1/250s
 ISO: 6400
 
 [PHOTO 07]
-FILE: 07.webp
-THUMBNAIL_FILE: 07.thumb.webp
+FILE: xi-07.webp
+THUMBNAIL_FILE: wi-07-thumb.webp
 TITLE: Clasped Hands
 DESCRIPTION: A formal black-and-white portrait capturing the subject's quiet posture and clasped hands.
 ASPECT_RATIO: portrait
@@ -143,8 +143,8 @@ SHUTTER_SPEED: 1/30s
 ISO: 200
 
 [PHOTO 08]
-FILE: 08.webp
-THUMBNAIL_FILE: 08.thumb.webp
+FILE: xi-08.webp
+THUMBNAIL_FILE: wi-08-thumb.webp
 TITLE: Alleyway Encounter
 DESCRIPTION: Xiao Yuanhang stands in a narrow snowy alleyway, looking over his shoulder.
 ASPECT_RATIO: portrait

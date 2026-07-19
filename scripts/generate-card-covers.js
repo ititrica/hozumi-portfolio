@@ -32,7 +32,7 @@ async function generateCardCovers() {
   let count = 0;
   for (const filePath of coverFiles) {
     const dir = path.dirname(filePath);
-    const cardPath = path.join(dir, "cover.card.webp");
+    const cardPath = path.join(dir, "cover-card.webp");
 
     try {
       // Resize cover to max width of 1000px, quality 85 for sharp visual display

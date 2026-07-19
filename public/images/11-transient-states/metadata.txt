@@ -10,15 +10,15 @@ COORDINATES: 35.6762° N, 139.6503° E
 DESCRIPTION: A visual journal tracing a young traveler’s journey across contrasting environments. From the vibrant tiled facades of Bangkok temples and the clear float of tropical seas to quiet domestic shadows, close details of touch, and the rushing light trails of Tokyo bridges at night, these frames explore the fluid states of youth and motion.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 01.webp
-CARD_IMAGE: 01.webp
-CARD_FILE: 01.card.webp
+DETAIL_COVER_IMAGE: tr11-01.webp
+CARD_IMAGE: tr11-01.webp
+CARD_FILE: so-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 01.webp
-THUMBNAIL_FILE: 01.thumb.webp
+FILE: tr11-01.webp
+THUMBNAIL_FILE: so-01-thumb.webp
 TITLE: Transient States
 DESCRIPTION: A visual journal tracing a young traveler’s journey across contrasting environments. From the vibrant tiled facades of Bangkok temples and the clear float of tropical seas to quiet domestic shadows, close details of touch, and the rushing light trails of Tokyo bridges at night, these frames explore the fluid states of youth and motion.
 ASPECT_RATIO: landscape
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 02.webp
-THUMBNAIL_FILE: 02.thumb.webp
+FILE: tr11-02.webp
+THUMBNAIL_FILE: so-02-thumb.webp
 TITLE: Temple Wall
 DESCRIPTION: Standing in front of the ornate, colorful porcelain details of Wat Arun, Bangkok.
 ASPECT_RATIO: portrait
@@ -53,8 +53,8 @@ SHUTTER_SPEED: 1/30s
 ISO: 100
 
 [PHOTO 03]
-FILE: 03.webp
-THUMBNAIL_FILE: 03.thumb.webp
+FILE: tr11-03.webp
+THUMBNAIL_FILE: so-03-thumb.webp
 TITLE: Weightless
 DESCRIPTION: Floating peacefully in the shallow, clear turquoise sea of a tropical island.
 ASPECT_RATIO: landscape
@@ -71,8 +71,8 @@ SHUTTER_SPEED: 1/250s
 ISO: 64
 
 [PHOTO 04]
-FILE: 04.webp
-THUMBNAIL_FILE: 04.thumb.webp
+FILE: tr11-04.webp
+THUMBNAIL_FILE: so-04-thumb.webp
 TITLE: Sleeping Engine
 DESCRIPTION: A motorcycle covered in plastic stands silently under neon lights in a Tokyo backstreet.
 ASPECT_RATIO: landscape
@@ -89,8 +89,8 @@ SHUTTER_SPEED: 1/500s
 ISO: 64
 
 [PHOTO 05]
-FILE: 05.webp
-THUMBNAIL_FILE: 05.thumb.webp
+FILE: tr11-05.webp
+THUMBNAIL_FILE: so-05-thumb.webp
 TITLE: The Grip
 DESCRIPTION: An intimate close-up of a hand clutching a bag strap against the soft bokeh of city lights.
 ASPECT_RATIO: landscape
@@ -107,8 +107,8 @@ SHUTTER_SPEED: 1/500s
 ISO: 64
 
 [PHOTO 06]
-FILE: 06.webp
-THUMBNAIL_FILE: 06.thumb.webp
+FILE: tr11-06.webp
+THUMBNAIL_FILE: wi-06-thumb.webp
 TITLE: Light Streams
 DESCRIPTION: Leaning on a bridge overlooking long-exposure light trails of traffic under the city night sky.
 ASPECT_RATIO: landscape

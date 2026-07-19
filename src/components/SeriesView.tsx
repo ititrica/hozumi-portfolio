@@ -269,7 +269,7 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang }: Seri
                   data-cursor="nav"
                 >
                   <img
-                    src={photo.url.replace(/\.webp$/, ".thumb.webp")}
+                    src={photo.url.replace(/\.webp$/, "-thumb.webp")}
                     alt={`Thumbnail ${index}`}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"

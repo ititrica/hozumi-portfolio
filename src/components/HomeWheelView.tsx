@@ -283,7 +283,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
               }}
             >
               <img
-                src={(series.cardImage ?? series.coverImage).replace(".webp", ".card.webp")}
+                  src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
                 alt=""
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover scale-110 grayscale-[30%]"
@@ -371,7 +371,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
                 <div className="relative w-full overflow-hidden bg-neutral-950 shadow-2xl group">
                   {/* Lazy-loaded imagery — all transforms driven by continuous spring value, no CSS transition needed */}
                   <img
-                    src={(series.cardImage ?? series.coverImage).replace(".webp", ".card.webp")}
+                    src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
                     alt={series.title}
                     referrerPolicy="no-referrer"
                     className="w-full block select-none pointer-events-none"

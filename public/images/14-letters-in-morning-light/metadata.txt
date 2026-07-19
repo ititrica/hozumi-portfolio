@@ -10,15 +10,15 @@ COORDINATES: —
 DESCRIPTION: A quiet portrait study shaped by window light, small domestic gestures, and the suspended feeling of early morning.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 1.webp
-CARD_IMAGE: 7.webp
-CARD_FILE: 7.card.webp
+DETAIL_COVER_IMAGE: le-01.webp
+CARD_IMAGE: le-07.webp
+CARD_FILE: le-07-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 1.webp
-THUMBNAIL_FILE: 1.thumb.webp
+FILE: le-01.webp
+THUMBNAIL_FILE: le-01-thumb.webp
 TITLE: Letter by the Window
 DESCRIPTION: A quiet portrait by the window, capturing a private moment of thought and stillness.
 ASPECT_RATIO: portrait
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 2.webp
-THUMBNAIL_FILE: 2.thumb.webp
+FILE: le-02.webp
+THUMBNAIL_FILE: le-02-thumb.webp
 TITLE: White Rose
 DESCRIPTION: A soft close-up portrait where the white rose adds a gentle, poetic mood.
 ASPECT_RATIO: portrait
@@ -53,8 +53,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 03]
-FILE: 3.webp
-THUMBNAIL_FILE: 3.thumb.webp
+FILE: le-03.webp
+THUMBNAIL_FILE: le-03-thumb.webp
 TITLE: Before Waking
 DESCRIPTION: Morning light, an alarm clock, and a relaxed pose create a calm sense of early morning.
 ASPECT_RATIO: landscape
@@ -71,8 +71,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 04]
-FILE: 4.webp
-THUMBNAIL_FILE: 4.thumb.webp
+FILE: le-04.webp
+THUMBNAIL_FILE: le-04-thumb.webp
 TITLE: Warmth by the Window
 DESCRIPTION: Holding a cup near the window, the image conveys a simple and peaceful daily moment.
 ASPECT_RATIO: landscape
@@ -89,8 +89,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 05]
-FILE: 5.webp
-THUMBNAIL_FILE: 5.thumb.webp
+FILE: le-05.webp
+THUMBNAIL_FILE: le-05-thumb.webp
 TITLE: Corner Light
 DESCRIPTION: A seated figure in soft light, expressing quiet reflection and solitude.
 ASPECT_RATIO: portrait
@@ -107,8 +107,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 06]
-FILE: 6.webp
-THUMBNAIL_FILE: 6.thumb.webp
+FILE: le-06.webp
+THUMBNAIL_FILE: le-06-thumb.webp
 TITLE: Close Distance
 DESCRIPTION: A low-angle portrait that highlights natural expression and subtle emotion.
 ASPECT_RATIO: portrait
@@ -125,8 +125,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 07]
-FILE: 7.webp
-THUMBNAIL_FILE: 7.thumb.webp
+FILE: le-07.webp
+THUMBNAIL_FILE: le-07-thumb.webp
 TITLE: Half Dreaming
 DESCRIPTION: A close facial portrait with a blurred, dreamy atmosphere.
 ASPECT_RATIO: landscape
@@ -143,8 +143,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 08]
-FILE: 8.webp
-THUMBNAIL_FILE: 8.thumb.webp
+FILE: le-08.webp
+THUMBNAIL_FILE: le-08-thumb.webp
 TITLE: Light in the Eye
 DESCRIPTION: An extreme close-up focusing on the eye, hair, and delicate emotional detail.
 ASPECT_RATIO: portrait
@@ -161,8 +161,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 09]
-FILE: 9.webp
-THUMBNAIL_FILE: 9.thumb.webp
+FILE: le-09.webp
+THUMBNAIL_FILE: le-09-thumb.webp
 TITLE: Between Breaths
 DESCRIPTION: A detailed close-up emphasizing skin texture, lips, and soft natural light.
 ASPECT_RATIO: portrait

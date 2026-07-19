@@ -10,15 +10,15 @@ COORDINATES: 35.6762° N, 139.6503° E
 DESCRIPTION: A collection of intimate portraits exploring facial expressions, textures of clothing, and raw human emotion.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 01.webp
-CARD_IMAGE: 01.webp
-CARD_FILE: 01.card.webp
+DETAIL_COVER_IMAGE: ex-01.webp
+CARD_IMAGE: ex-01.webp
+CARD_FILE: so-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 01.webp
-THUMBNAIL_FILE: 01.thumb.webp
+FILE: ex-01.webp
+THUMBNAIL_FILE: so-01-thumb.webp
 TITLE: Expressions
 DESCRIPTION: A collection of intimate portraits exploring facial expressions, textures of clothing, and raw human emotion.
 ASPECT_RATIO: landscape
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 02.webp
-THUMBNAIL_FILE: 02.thumb.webp
+FILE: ex-02.webp
+THUMBNAIL_FILE: so-02-thumb.webp
 TITLE: Neutrality
 DESCRIPTION: A clean studio portrait in dark draped clothing.
 ASPECT_RATIO: portrait
@@ -53,8 +53,8 @@ SHUTTER_SPEED: 1/250s
 ISO: 1000
 
 [PHOTO 03]
-FILE: 03.webp
-THUMBNAIL_FILE: 03.thumb.webp
+FILE: ex-03.webp
+THUMBNAIL_FILE: so-03-thumb.webp
 TITLE: Details
 DESCRIPTION: A close-up of hands holding a metal carabiner.
 ASPECT_RATIO: landscape
@@ -71,8 +71,8 @@ SHUTTER_SPEED: 1/250s
 ISO: 1000
 
 [PHOTO 04]
-FILE: 04.webp
-THUMBNAIL_FILE: 04.thumb.webp
+FILE: ex-04.webp
+THUMBNAIL_FILE: so-04-thumb.webp
 TITLE: Spiral Steps
 DESCRIPTION: Sitting on a concrete spiral staircase looking upward.
 ASPECT_RATIO: portrait
@@ -89,8 +89,8 @@ SHUTTER_SPEED: 1/100s
 ISO: 200
 
 [PHOTO 05]
-FILE: 05.webp
-THUMBNAIL_FILE: 05.thumb.webp
+FILE: ex-05.webp
+THUMBNAIL_FILE: so-05-thumb.webp
 TITLE: Raw Emotion
 DESCRIPTION: An expressive, close-up snapshot showing raw feeling.
 ASPECT_RATIO: landscape

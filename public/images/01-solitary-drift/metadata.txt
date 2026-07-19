@@ -10,15 +10,15 @@ COORDINATES: 43.0646° N, 141.3468° E
 DESCRIPTION: A visual essay capturing quiet moments of reflection, solitary walks, and urban geometries across Hokkaido.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 01.webp
-CARD_IMAGE: 01.webp
-CARD_FILE: 01.card.webp
+DETAIL_COVER_IMAGE: so-01.webp
+CARD_IMAGE: so-01.webp
+CARD_FILE: so-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 01.webp
-THUMBNAIL_FILE: 01.thumb.webp
+FILE: so-01.webp
+THUMBNAIL_FILE: so-01-thumb.webp
 TITLE: Solitary Drift
 DESCRIPTION: A visual essay capturing quiet moments of reflection, solitary walks, and urban geometries across Hokkaido.
 ASPECT_RATIO: landscape
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 02.webp
-THUMBNAIL_FILE: 02.thumb.webp
+FILE: so-02.webp
+THUMBNAIL_FILE: so-02-thumb.webp
 TITLE: Warm Light
 DESCRIPTION: A quiet moment under the soft glow of streetlights.
 ASPECT_RATIO: landscape
@@ -53,8 +53,8 @@ SHUTTER_SPEED: 1/1000s
 ISO: 64
 
 [PHOTO 03]
-FILE: 03.webp
-THUMBNAIL_FILE: 03.thumb.webp
+FILE: so-03.webp
+THUMBNAIL_FILE: so-03-thumb.webp
 TITLE: Above the Steps
 DESCRIPTION: A view from the stairs under the blue winter sky.
 ASPECT_RATIO: portrait
@@ -71,8 +71,8 @@ SHUTTER_SPEED: 1/500s
 ISO: 100
 
 [PHOTO 04]
-FILE: 04.webp
-THUMBNAIL_FILE: 04.thumb.webp
+FILE: so-04.webp
+THUMBNAIL_FILE: so-04-thumb.webp
 TITLE: Passage
 DESCRIPTION: Leaning against the cold concrete walls in the shadows.
 ASPECT_RATIO: portrait
@@ -89,8 +89,8 @@ SHUTTER_SPEED: 1/2000s
 ISO: 64
 
 [PHOTO 05]
-FILE: 05.webp
-THUMBNAIL_FILE: 05.thumb.webp
+FILE: so-05.webp
+THUMBNAIL_FILE: so-05-thumb.webp
 TITLE: Nocturnal Flow
 DESCRIPTION: A solitary walk amidst blurred city lights and passing traffic.
 ASPECT_RATIO: landscape

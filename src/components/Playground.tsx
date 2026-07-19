@@ -458,7 +458,7 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
                     }}
                   >
                     <img
-                      src={slot.url.replace(".webp", ".thumb.webp")}
+                       src={slot.url.replace(/\.webp$/, "-thumb.webp")}
                       alt={slot.title}
                       referrerPolicy="no-referrer"
                       className="block w-full h-full object-cover select-none pointer-events-none filter grayscale transition-[filter] duration-1000 ease-out group-hover:grayscale-0"

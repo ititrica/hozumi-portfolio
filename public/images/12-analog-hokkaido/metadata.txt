@@ -10,15 +10,15 @@ COORDINATES: 45.5230° N, 141.9366° E
 DESCRIPTION: Film photography capturing the northernmost points of Hokkaido, steaming ramen in Sapporo nights, and silent snowscapes of winter Otaru.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 01.webp
-CARD_IMAGE: 01.webp
-CARD_FILE: 01.card.webp
+DETAIL_COVER_IMAGE: an-01.webp
+CARD_IMAGE: an-01.webp
+CARD_FILE: so-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 01.webp
-THUMBNAIL_FILE: 01.thumb.webp
+FILE: an-01.webp
+THUMBNAIL_FILE: so-01-thumb.webp
 TITLE: Analog Hokkaido
 DESCRIPTION: Film photography capturing the northernmost points of Hokkaido, steaming ramen in Sapporo nights, and silent snowscapes of winter Otaru.
 ASPECT_RATIO: landscape
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 02.webp
-THUMBNAIL_FILE: 02.thumb.webp
+FILE: an-02.webp
+THUMBNAIL_FILE: so-02-thumb.webp
 TITLE: Sapporo Ramen Craft
 DESCRIPTION: A steaming bowl of fresh ramen prepared in a cozy Sapporo eatery.
 ASPECT_RATIO: landscape
@@ -53,8 +53,8 @@ SHUTTER_SPEED: 1/125s
 ISO: 100
 
 [PHOTO 03]
-FILE: 03.webp
-THUMBNAIL_FILE: 03.thumb.webp
+FILE: an-03.webp
+THUMBNAIL_FILE: so-03-thumb.webp
 TITLE: Otaru Snow Street
 DESCRIPTION: Falling snow dusting the streets of Otaru during winter.
 ASPECT_RATIO: landscape
@@ -71,8 +71,8 @@ SHUTTER_SPEED: 1/125s
 ISO: 100
 
 [PHOTO 04]
-FILE: 04.webp
-THUMBNAIL_FILE: 04.thumb.webp
+FILE: an-04.webp
+THUMBNAIL_FILE: so-04-thumb.webp
 TITLE: Northern Transit Line
 DESCRIPTION: Railway tracks extending into the vast white snowlands of northern Hokkaido.
 ASPECT_RATIO: landscape
@@ -89,8 +89,8 @@ SHUTTER_SPEED: 1/125s
 ISO: 100
 
 [PHOTO 05]
-FILE: 05.webp
-THUMBNAIL_FILE: 05.thumb.webp
+FILE: an-05.webp
+THUMBNAIL_FILE: so-05-thumb.webp
 TITLE: Winter Silence
 DESCRIPTION: Quiet lamplight illuminating high snow walls in Otaru.
 ASPECT_RATIO: landscape
@@ -107,8 +107,8 @@ SHUTTER_SPEED: 1/125s
 ISO: 100
 
 [PHOTO 06]
-FILE: 06.webp
-THUMBNAIL_FILE: 06.thumb.webp
+FILE: an-06.webp
+THUMBNAIL_FILE: wi-06-thumb.webp
 TITLE: Sapporo Night Steam
 DESCRIPTION: Warm rising steam inside a late-night Sapporo ramen shop.
 ASPECT_RATIO: landscape
@@ -125,8 +125,8 @@ SHUTTER_SPEED: 1/125s
 ISO: 100
 
 [PHOTO 07]
-FILE: 07.webp
-THUMBNAIL_FILE: 07.thumb.webp
+FILE: an-07.webp
+THUMBNAIL_FILE: wi-07-thumb.webp
 TITLE: Northernmost Monument
 DESCRIPTION: The landmark monument designating the northernmost point of Japan at Soya Cape.
 ASPECT_RATIO: landscape

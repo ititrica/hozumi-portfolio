@@ -10,15 +10,15 @@ COORDINATES: 43.0646° N, 141.3468° E
 DESCRIPTION: A documentary collection capturing the quiet corners and fleeting encounters of Hokkaido. From a blue cafe truck overlooking the ocean and weathered seaside homes to unexpected street installations and the dust-kicking energy of northern horse racing, these frames document the rustic poetry of Japan's northernmost island.
 
 # DISPLAY ASSETS
-DETAIL_COVER_IMAGE: 01.webp
-CARD_IMAGE: 01.webp
-CARD_FILE: 01.card.webp
+DETAIL_COVER_IMAGE: no-01.webp
+CARD_IMAGE: no-01.webp
+CARD_FILE: so-01-card.webp
 
 # PHOTO DETAILS
 
 [PHOTO 01]
-FILE: 01.webp
-THUMBNAIL_FILE: 01.thumb.webp
+FILE: no-01.webp
+THUMBNAIL_FILE: so-01-thumb.webp
 TITLE: Northern Fragments
 DESCRIPTION: A documentary collection capturing the quiet corners and fleeting encounters of Hokkaido. From a blue cafe truck overlooking the ocean and weathered seaside homes to unexpected street installations and the dust-kicking energy of northern horse racing, these frames document the rustic poetry of Japan's northernmost island.
 ASPECT_RATIO: landscape
@@ -35,8 +35,8 @@ SHUTTER_SPEED: N/A
 ISO: N/A
 
 [PHOTO 02]
-FILE: 02.webp
-THUMBNAIL_FILE: 02.thumb.webp
+FILE: no-02.webp
+THUMBNAIL_FILE: so-02-thumb.webp
 TITLE: Seaside Respite
 DESCRIPTION: A blue-grey house perched at the water's edge with a lone subcompact car, Hokkaido coast.
 ASPECT_RATIO: landscape
@@ -53,8 +53,8 @@ SHUTTER_SPEED: 1/500s
 ISO: 100
 
 [PHOTO 03]
-FILE: 03.webp
-THUMBNAIL_FILE: 03.thumb.webp
+FILE: no-03.webp
+THUMBNAIL_FILE: so-03-thumb.webp
 TITLE: Weathered Frame
 DESCRIPTION: A collapsed wooden shack slowly returning to the earth, contrasting with modern housing behind it.
 ASPECT_RATIO: landscape
@@ -71,8 +71,8 @@ SHUTTER_SPEED: 1/250s
 ISO: 64
 
 [PHOTO 04]
-FILE: 04.webp
-THUMBNAIL_FILE: 04.thumb.webp
+FILE: no-04.webp
+THUMBNAIL_FILE: so-04-thumb.webp
 TITLE: Sun Mall Companion
 DESCRIPTION: A giant plush bear sits quietly at an outdoor table in a snowy shopping arcade, Otaru.
 ASPECT_RATIO: landscape
@@ -89,8 +89,8 @@ SHUTTER_SPEED: 1/125s
 ISO: 64
 
 [PHOTO 05]
-FILE: 05.webp
-THUMBNAIL_FILE: 05.thumb.webp
+FILE: no-05.webp
+THUMBNAIL_FILE: so-05-thumb.webp
 TITLE: The Dirt Track
 DESCRIPTION: Horses kick up dust under the pale northern sun during a local race.
 ASPECT_RATIO: landscape
@@ -107,8 +107,8 @@ SHUTTER_SPEED: 1/1600s
 ISO: 100
 
 [PHOTO 06]
-FILE: 06.webp
-THUMBNAIL_FILE: 06.thumb.webp
+FILE: no-06.webp
+THUMBNAIL_FILE: wi-06-thumb.webp
 TITLE: Silent Coast
 DESCRIPTION: A weathered breakwater extending into the misty grey sea under a pale sky.
 ASPECT_RATIO: landscape
