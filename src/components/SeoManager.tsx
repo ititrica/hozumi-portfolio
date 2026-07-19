@@ -50,14 +50,14 @@ export default function SeoManager({ photographyData, lang }: SeoManagerProps) {
         ? "About Hozumi | Photography & Visual Art"
         : routePath === "/playground"
           ? "Playground | Hozumi Photography"
-          : "Hozumi | Photography & Visual Art Portfolio";
+          : "Hozumi 摄影集 | Photography & Visual Art Portfolio";
     const description = series
       ? series.description
       : routePath === "/about"
         ? "Learn about Hozumi, a Chinese digital visual artist and photographer working between architecture, portraits, street photography, and film."
         : routePath === "/playground"
           ? "Explore Hozumi's interactive photography playground and browse images from the complete series collection."
-          : "Hozumi is a photography and visual art portfolio featuring intimate portraits, street photography, architecture, and quiet visual stories from Japan and Asia.";
+          : "Hozumi（hozumipfol）摄影集与视觉艺术作品集，收录人像、街头摄影、建筑摄影及来自日本与亚洲的安静视觉故事。";
     const image = series ? absoluteUrl(series.coverImage) : `${SITE_URL}/images/about-profile.webp`;
     const imageAlt = series ? `${series.title} photography series cover` : "Hozumi photography and visual art";
     const locale = lang === "zh" ? "zh_CN" : lang === "ja" ? "ja_JP" : "en_US";
@@ -86,10 +86,22 @@ export default function SeoManager({ photographyData, lang }: SeoManagerProps) {
         {
           "@type": "WebSite",
           "@id": `${SITE_URL}/#website`,
-          name: "Hozumi",
+          name: "Hozumi 摄影集",
+          alternateName: ["Hozumi", "hozumipfol", "Hozumi Photography"],
           url: SITE_URL,
-          description: "Photography and visual art portfolio by Hozumi.",
-          inLanguage: ["en", "zh", "ja"],
+          description: "Hozumi 的摄影集与视觉艺术作品集。",
+          inLanguage: ["zh-CN", "en", "ja"],
+          publisher: { "@id": `${SITE_URL}/#person` },
+        },
+        {
+          "@type": "Person",
+          "@id": `${SITE_URL}/#person`,
+          name: "Hozumi",
+          alternateName: "hozumipfol",
+          url: `${SITE_URL}/about`,
+          image: `${SITE_URL}/images/about-profile.webp`,
+          jobTitle: "Photographer and Visual Artist",
+          knowsAbout: ["Photography", "Visual Art", "Street Photography", "Architecture Photography", "Portrait Photography"],
         },
         {
           "@type": series ? "ImageGallery" : "CollectionPage",
@@ -99,6 +111,7 @@ export default function SeoManager({ photographyData, lang }: SeoManagerProps) {
           description,
           image,
           isPartOf: { "@id": `${SITE_URL}/#website` },
+          about: { "@id": `${SITE_URL}/#person` },
           ...(series
             ? {
                 about: {

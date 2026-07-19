@@ -335,6 +335,13 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
       className="relative w-full h-full overflow-hidden select-none bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-200 cursor-default flex flex-col justify-between transition-colors duration-1000"
       id="home-wheel-viewport"
     >
+      <div className="sr-only">
+        <h1>Hozumi 摄影集 | Hozumi Photography Portfolio</h1>
+        <p>
+          Hozumi（hozumipfol）视觉艺术与摄影作品集，收录人像摄影、街头摄影、建筑摄影，以及来自日本与亚洲的系列作品。
+        </p>
+      </div>
+
       {/* Immersive blurred ambient background cross-fade */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-70 dark:opacity-40 transition-opacity duration-1000">
         {photographyData.map((series, idx) => {
