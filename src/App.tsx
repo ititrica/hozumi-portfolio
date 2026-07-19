@@ -202,12 +202,12 @@ export default function App() {
       const button = event.target.closest("button");
       if (!button || button.disabled || button.closest("#home-wheel-viewport")) return;
 
-      playButtonFeedback(theme);
+      playButtonFeedback();
     };
 
     window.addEventListener("click", handleButtonClick, true);
     return () => window.removeEventListener("click", handleButtonClick, true);
-  }, [isMuted, theme]);
+  }, [isMuted]);
 
   const fadeAudio = (targetVolume: number, onComplete?: () => void) => {
     if (!audioRef.current) return;
