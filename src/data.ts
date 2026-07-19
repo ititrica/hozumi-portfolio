@@ -1285,8 +1285,8 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "year": "2026",
     "location": "Japan",
     "coordinates": "35.6762° N, 139.6503° E",
-    "coverImage": "/images/14/1.webp",
-    "cardImage": "/images/14/7.webp",
+    "coverImage": "/images/14-letters-in-morning-light/1.webp",
+    "cardImage": "/images/14-letters-in-morning-light/7.webp",
     "coverTitle": "Letter by the Window",
     "coverCaption": "A quiet portrait by the window, capturing a private moment of thought and stillness.",
     "description": "A quiet portrait study shaped by window light, small domestic gestures, and the suspended feeling of early morning.",
@@ -1298,7 +1298,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
     "images": [
       {
         "id": "02",
-        "url": "/images/14/2.webp",
+        "url": "/images/14-letters-in-morning-light/2.webp",
         "title": "White Rose",
         "caption": "A soft close-up portrait where the white rose adds a gentle, poetic mood.",
         "aspectRatio": "portrait",
@@ -1307,7 +1307,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "03",
-        "url": "/images/14/3.webp",
+        "url": "/images/14-letters-in-morning-light/3.webp",
         "title": "Before Waking",
         "caption": "Morning light, an alarm clock, and a relaxed pose create a calm sense of early morning.",
         "aspectRatio": "landscape",
@@ -1316,7 +1316,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "04",
-        "url": "/images/14/4.webp",
+        "url": "/images/14-letters-in-morning-light/4.webp",
         "title": "Warmth by the Window",
         "caption": "Holding a cup near the window, the image conveys a simple and peaceful daily moment.",
         "aspectRatio": "landscape",
@@ -1325,7 +1325,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "05",
-        "url": "/images/14/5.webp",
+        "url": "/images/14-letters-in-morning-light/5.webp",
         "title": "Corner Light",
         "caption": "A seated figure in soft light, expressing quiet reflection and solitude.",
         "aspectRatio": "portrait",
@@ -1334,7 +1334,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "06",
-        "url": "/images/14/6.webp",
+        "url": "/images/14-letters-in-morning-light/6.webp",
         "title": "Close Distance",
         "caption": "A low-angle portrait that highlights natural expression and subtle emotion.",
         "aspectRatio": "portrait",
@@ -1343,7 +1343,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "07",
-        "url": "/images/14/7.webp",
+        "url": "/images/14-letters-in-morning-light/7.webp",
         "title": "Half Dreaming",
         "caption": "A close facial portrait with a blurred, dreamy atmosphere.",
         "aspectRatio": "landscape",
@@ -1352,7 +1352,7 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "08",
-        "url": "/images/14/8.webp",
+        "url": "/images/14-letters-in-morning-light/8.webp",
         "title": "Light in the Eye",
         "caption": "An extreme close-up focusing on the eye, hair, and delicate emotional detail.",
         "aspectRatio": "portrait",
@@ -1361,9 +1361,75 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
       },
       {
         "id": "09",
-        "url": "/images/14/9.webp",
+        "url": "/images/14-letters-in-morning-light/9.webp",
         "title": "Between Breaths",
         "caption": "A detailed close-up emphasizing skin texture, lips, and soft natural light.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      }
+    ]
+  },
+  {
+    "id": "whispers-in-silver-light",
+    "title": "Whispers in Silver Light",
+    "subtitle": "Intimate Portraits",
+    "category": "Portrait",
+    "year": "2026",
+    "location": "Japan",
+    "coordinates": "35.6762° N, 139.6503° E",
+    "coverImage": "/images/15/1.webp",
+    "cardImage": "/images/15/2.webp",
+    "coverTitle": "The Quiet Reader",
+    "coverCaption": "Seated in an antique chair, the figure holds a book in stillness, surrounded by the warm atmosphere of a private room.",
+    "description": "A quiet portrait series shaped by soft light, delicate textures, and fleeting moments of reflection. The images explore solitude, elegance, and the gentle dialogue between the figure, flowers, and space.",
+    "colorTheme": {
+      "bg": "bg-neutral-100",
+      "text": "text-neutral-900",
+      "accent": "border-neutral-400"
+    },
+    "images": [
+      {
+        "id": "02",
+        "url": "/images/15/2.webp",
+        "title": "Fallen Petals",
+        "caption": "A tender moment of contemplation, captured through a lowered gaze and a single delicate petal held between the fingers.",
+        "aspectRatio": "square",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "03",
+        "url": "/images/15/3.webp",
+        "title": "Flower in the Light",
+        "caption": "A floral shadow rests across the shoulder, blending the softness of the body with the poetry of natural light.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "04",
+        "url": "/images/15/4.webp",
+        "title": "A Rose Behind Her",
+        "caption": "Seen from behind, the figure becomes a quiet canvas for the shadow of a flower, suspended in warm afternoon light.",
+        "aspectRatio": "portrait",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "05",
+        "url": "/images/15/5.webp",
+        "title": "Touch of Bloom",
+        "caption": "A close study of a flower, a hand, and a fleeting gesture, emphasizing texture, intimacy, and gentle curiosity.",
+        "aspectRatio": "square",
+        "location": "Japan",
+        "date": "2026"
+      },
+      {
+        "id": "06",
+        "url": "/images/15/6.webp",
+        "title": "Passing Through Light",
+        "caption": "The flowing dress and luminous window create a dreamlike portrait of movement, grace, and quiet departure.",
         "aspectRatio": "portrait",
         "location": "Japan",
         "date": "2026"

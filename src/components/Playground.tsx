@@ -82,7 +82,8 @@ export default function Playground({ photographyData, onSelectPhoto, lang }: Pla
     const ordered: (Photo | { type: "phrase"; content: string })[] = [];
 
     photographyData.forEach((series) => {
-      if (series.coverImage) {
+      const hasCoverInImages = series.images.some((img) => img.url === series.coverImage);
+      if (series.coverImage && !hasCoverInImages) {
         ordered.push({
           id: `${series.id}-cover`,
           url: series.coverImage,
