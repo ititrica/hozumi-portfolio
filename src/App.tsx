@@ -36,7 +36,6 @@ type RouteTransitionPhase =
 const LOADER_FADE_DURATION = 500;
 const LOADER_TOTAL_DURATION = 1250;
 const LOADER_PLAY_DURATION = LOADER_TOTAL_DURATION - LOADER_FADE_DURATION;
-const PAGE_ENTER_DURATION = 1200;
 
 export default function App() {
   const navigate = useNavigate();
@@ -53,6 +52,7 @@ export default function App() {
   const [routeTransitionPhase, setRouteTransitionPhase] = useState<RouteTransitionPhase>("idle");
   const [seriesChunkReady, setSeriesChunkReady] = useState(false);
   const [routePageReady, setRoutePageReady] = useState(false);
+  const [routeLoaderCycleComplete, setRouteLoaderCycleComplete] = useState(false);
 
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof localStorage !== 'undefined') {
@@ -148,12 +148,17 @@ export default function App() {
     setRouteTransitionPhase("page-exit");
     setSeriesChunkReady(false);
     setRoutePageReady(false);
+    setRouteLoaderCycleComplete(false);
     void loadSeriesView().finally(() => setSeriesChunkReady(true));
     navigate(`/series/${series.id}`);
   }, [navigate, routeTransitionPhase]);
 
   const handleRoutePageReady = useCallback(() => {
     setRoutePageReady(true);
+  }, []);
+
+  const handleRouteLoaderCycleComplete = useCallback(() => {
+    setRouteLoaderCycleComplete(true);
   }, []);
 
   // Minimalist Background Music with Fade Transitions
@@ -308,12 +313,12 @@ export default function App() {
   const routeChanged = displayRouteIdentity !== routeIdentity;
   const externalRouteLoading = routeRequiresLoader && routeChanged;
   const routeLoading = routeTransitionPhase !== "idle"
-    ? routeTransitionPhase !== "page-enter" || !routePageReady
+    ? true
     : externalRouteLoading;
   const showRouteLoader = routeTransitionPhase === "page-exit"
     || routeTransitionPhase === "loader-playing"
     || routeTransitionPhase === "loader-exit"
-    || (routeTransitionPhase === "page-enter" && !routePageReady)
+    || routeTransitionPhase === "page-enter"
     || (routeTransitionPhase === "idle" && externalRouteLoading);
   const renderedLocation = routeTransitionPhase === "page-enter"
     ? location
@@ -342,7 +347,7 @@ export default function App() {
   useEffect(() => {
     if (routeTransitionPhase === "idle") return;
     if (routeTransitionPhase === "loader-playing" && !seriesChunkReady) return;
-    if (routeTransitionPhase === "page-enter" && !routePageReady) return;
+    if (routeTransitionPhase === "page-enter" && (!routePageReady || !routeLoaderCycleComplete)) return;
 
     let duration = 0;
     let nextPhase: RouteTransitionPhase | null = null;
@@ -354,20 +359,20 @@ export default function App() {
         break;
       case "loader-playing":
         duration = LOADER_PLAY_DURATION;
-        nextPhase = "loader-exit";
+        nextPhase = "page-enter";
         break;
       case "loader-exit":
         duration = LOADER_FADE_DURATION;
-        nextPhase = "page-enter";
+        nextPhase = "idle";
         break;
       case "page-enter":
-        duration = PAGE_ENTER_DURATION;
-        nextPhase = "idle";
+        duration = 0;
+        nextPhase = "loader-exit";
         break;
     }
 
     const timer = window.setTimeout(() => {
-      if (routeTransitionPhase === "loader-exit") {
+      if (routeTransitionPhase === "loader-playing") {
         setDisplayLocation(location);
       }
       if (nextPhase) setRouteTransitionPhase(nextPhase);
@@ -825,7 +830,11 @@ export default function App() {
                 transition={{ duration: LOADER_FADE_DURATION / 1000, ease: "easeInOut" }}
                 className="fixed inset-0 z-[9998] flex items-center justify-center bg-white dark:bg-[#0e0c0b]"
               >
-                <RouteLoader />
+                <RouteLoader
+                  onCycleComplete={routeTransitionPhase !== "idle"
+                    ? handleRouteLoaderCycleComplete
+                    : undefined}
+                />
               </motion.div>
             )}
           </AnimatePresence>
@@ -880,12 +889,20 @@ const LOADER_STEPS = [
   { grid: ["", "", "", ""], duration: 150 }
 ];
 
-function RouteLoader() {
+function RouteLoader({ onCycleComplete }: { onCycleComplete?: () => void }) {
   const [stepIndex, setStepIndex] = useState(0);
+  const onCycleCompleteRef = useRef(onCycleComplete);
+
+  useEffect(() => {
+    onCycleCompleteRef.current = onCycleComplete;
+  }, [onCycleComplete]);
 
   useEffect(() => {
     const currentStep = LOADER_STEPS[stepIndex];
     const timer = setTimeout(() => {
+      if (stepIndex === LOADER_STEPS.length - 1) {
+        onCycleCompleteRef.current?.();
+      }
       setStepIndex((prev) => (prev + 1) % LOADER_STEPS.length);
     }, currentStep.duration);
     return () => clearTimeout(timer);
