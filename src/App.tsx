@@ -707,13 +707,12 @@ export default function App() {
           </AnimatePresence>
 
           {/* Persistent Menu & Headers */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: shouldShowHeader ? 1 : 0 }}
-            transition={shouldShowHeader
-              ? { duration: 0.5, ease: "easeInOut" }
-              : { duration: 0 }}
-            className={shouldShowHeader ? "pointer-events-auto" : "pointer-events-none"}
+          <div
+            style={{
+              opacity: shouldShowHeader ? 1 : 0,
+              pointerEvents: shouldShowHeader ? "auto" : "none",
+              transition: shouldShowHeader ? "opacity 500ms ease-in-out" : "none"
+            }}
           >
             <Header
               theme={theme}
@@ -724,7 +723,7 @@ export default function App() {
               toggleMute={toggleMute}
               onNavigate={handleHeaderNavigate}
             />
-          </motion.div>
+          </div>
 
           {/* Main Orchestrated Contents */}
           <main
