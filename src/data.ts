@@ -1435,5 +1435,71 @@ export const PHOTOGRAPHY_DATA: PhotographySeries[] = [
         "date": "2026"
       }
     ]
+  },
+  {
+    "id": "skyline-frequency",
+    "title": "Skyline Frequency",
+    "subtitle": "Urban Portraits",
+    "category": "Portrait",
+    "year": "2026",
+    "location": "Tokyo, Japan",
+    "coordinates": "35.6762° N, 139.6503° E",
+    "coverImage": "/images/16-skyline-frequency/1.webp",
+    "cardImage": "/images/16-skyline-frequency/1.webp",
+    "coverTitle": "Signal Within Reach",
+    "coverCaption": "A flip phone and an outstretched hand create a direct connection between the subject, the camera, and the city.",
+    "description": "A playful urban portrait series combining wide-angle perspective, retro technology, and bright daylight. The subject interacts with the lens while the surrounding skyscrapers amplify a sense of energy, freedom, and modern city life.",
+    "colorTheme": {
+      "bg": "bg-sky-50",
+      "text": "text-slate-900",
+      "accent": "border-sky-400"
+    },
+    "images": [
+      {
+        "id": "02",
+        "url": "/images/16-skyline-frequency/2.webp",
+        "title": "Pocket Perspective",
+        "caption": "A compact camera and a playful gesture capture the spontaneous spirit of urban self-expression.",
+        "aspectRatio": "portrait",
+        "location": "Tokyo, Japan",
+        "date": "2026"
+      },
+      {
+        "id": "03",
+        "url": "/images/16-skyline-frequency/3.webp",
+        "title": "City Sound",
+        "caption": "Headphones become a symbol of personal rhythm in a dramatic low-angle portrait beneath the skyline.",
+        "aspectRatio": "portrait",
+        "location": "Tokyo, Japan",
+        "date": "2026"
+      },
+      {
+        "id": "04",
+        "url": "/images/16-skyline-frequency/4.webp",
+        "title": "Touch the Sky",
+        "caption": "A reaching hand, a bright expression, and towering buildings bring movement and youthful confidence into the frame.",
+        "aspectRatio": "portrait",
+        "location": "Tokyo, Japan",
+        "date": "2026"
+      },
+      {
+        "id": "05",
+        "url": "/images/16-skyline-frequency/5.webp",
+        "title": "Breaking the Frame",
+        "caption": "Both hands extend beyond the traditional portrait space, turning the photograph into an energetic interaction.",
+        "aspectRatio": "portrait",
+        "location": "Tokyo, Japan",
+        "date": "2026"
+      },
+      {
+        "id": "06",
+        "url": "/images/16-skyline-frequency/6.webp",
+        "title": "Between the Towers",
+        "caption": "A calm, confident pose balances the strong architectural lines and expansive blue sky.",
+        "aspectRatio": "portrait",
+        "location": "Tokyo, Japan",
+        "date": "2026"
+      }
+    ]
   }
 ];
