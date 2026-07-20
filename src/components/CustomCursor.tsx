@@ -225,7 +225,7 @@ export default function CustomCursor({ lang }: { lang: Language }) {
   const isViewHover = cursorType === "view";
   const isCloseHover = cursorType === "close";
   const isLabelHover = isCardHover || isViewHover || isCloseHover;
-  const labelText = isCardHover ? t.cursorEnter : isViewHover ? t.cursorView : isCloseHover ? t.cursorBack : "";
+  const labelText = isCardHover ? t.cursorEnter : isViewHover ? t.cursorView : isCloseHover ? "CLOSE" : "";
 
   return (
     <>
