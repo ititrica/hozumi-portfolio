@@ -10,7 +10,7 @@ export type Language = "en" | "zh" | "ja";
 
 export const UI_TRANSLATIONS = {
   en: {
-    selectedWork: "SELECTED WORK",
+    selectedWork: "DIAL",
     biography: "BIOGRAPHY",
     playground: "PLAYGROUND",
     backToCollections: "Back to collections",
@@ -58,7 +58,7 @@ export const UI_TRANSLATIONS = {
     wheelNav: "WHEEL"
   },
   zh: {
-    selectedWork: "精选作品",
+    selectedWork: "轮盘",
     biography: "个人简介",
     playground: "操场",
     backToCollections: "返回画廊目录",
@@ -106,7 +106,7 @@ export const UI_TRANSLATIONS = {
     wheelNav: "轮盘"
   },
   ja: {
-    selectedWork: "作品選",
+    selectedWork: "ホイール",
     biography: "プロフィール",
     playground: "プレイグラウンド",
     backToCollections: "カタログに戻る",

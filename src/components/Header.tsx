@@ -56,10 +56,15 @@ export default function Header({
   const t = UI_TRANSLATIONS[lang];
 
   const navItems = [
-    { label: t.selectedWork, path: "/" },
     { label: t.biography, path: "/about" },
     { label: t.playground, path: "/playground" },
+  ];
+
+  const mobileNavItems = [
+    { label: t.selectedWork, path: "/" },
     { label: t.timelineNav, path: "/timeline" },
+    { label: t.biography, path: "/about" },
+    { label: t.playground, path: "/playground" },
   ];
 
   const handleNavClick = (path: string) => {
@@ -94,8 +99,9 @@ export default function Header({
       <header className="fixed top-0 left-0 w-full z-[90]">
         <div className="w-full px-6 md:px-10 h-20 flex items-center justify-between -translate-y-1">
           
-          {/* Logo */}
-          <div className="flex items-center space-x-6">
+          {/* Logo and Mode Switchers */}
+          <div className="flex items-center space-x-8 md:space-x-12">
+            {/* Logo */}
             <div
               onClick={() => handleNavClick("/")}
               onMouseEnter={() => setLogoHovered(true)}
@@ -108,6 +114,47 @@ export default function Header({
               <LogoSegment english="HO" japanese="ホ" isHovered={logoHovered} index={0} />
               <LogoSegment english="ZU" japanese="ズ" isHovered={logoHovered} index={1} />
               <LogoSegment english="MI" japanese="ミ" isHovered={logoHovered} index={2} />
+            </div>
+
+            {/* Dial & Timeline selectors */}
+            <div className="hidden md:flex items-center space-x-6 border-l border-neutral-200 dark:border-neutral-800 pl-6 md:pl-8 transition-colors duration-1000">
+              <button
+                onClick={() => handleNavClick("/")}
+                className={`relative py-2 font-mono text-[11px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000 ${
+                  isActive("/")
+                    ? "text-neutral-950 dark:text-neutral-100"
+                    : "text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
+                }`}
+                data-cursor="nav"
+              >
+                {t.selectedWork}
+                {isActive("/") && (
+                  <motion.div
+                    layoutId="activeNavIndicator"
+                    className="absolute bottom-0 left-0 w-full h-[1px] bg-neutral-900 dark:bg-white transition-colors duration-1000"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </button>
+
+              <button
+                onClick={() => handleNavClick("/timeline")}
+                className={`relative py-2 font-mono text-[11px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000 ${
+                  isActive("/timeline")
+                    ? "text-neutral-950 dark:text-neutral-100"
+                    : "text-neutral-500 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
+                }`}
+                data-cursor="nav"
+              >
+                {t.timelineNav}
+                {isActive("/timeline") && (
+                  <motion.div
+                    layoutId="activeNavIndicator"
+                    className="absolute bottom-0 left-0 w-full h-[1px] bg-neutral-900 dark:bg-white transition-colors duration-1000"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </button>
             </div>
           </div>
 
@@ -244,7 +291,7 @@ export default function Header({
 
             {/* Mobile Menu Items */}
             <div className="flex flex-col space-y-6 my-auto font-mono">
-              {navItems.map((item, index) => (
+              {mobileNavItems.map((item, index) => (
                 <motion.div
                   key={item.path}
                   initial={{ opacity: 0, x: -20 }}
