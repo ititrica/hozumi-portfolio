@@ -105,7 +105,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                 <button
                   key={item.path}
                   onClick={() => handleNavClick(item.path)}
-                  className={`relative py-2 font-mono text-[10px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000 ${
+                  className={`relative py-2 font-mono text-[11px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000 ${
                     active
                       ? "text-neutral-950 dark:text-neutral-100"
                        : "text-neutral-800 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
@@ -153,7 +153,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                   <button
                     key={l}
                     onClick={() => setLang(l)}
-                    className={`relative py-2 text-[10px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000 ${
+                    className={`relative py-2 text-[11px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000 ${
                       langActive
                         ? "text-neutral-950 dark:text-neutral-100"
                         : "text-neutral-800 dark:text-neutral-400"
@@ -257,7 +257,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
                     <button
                       key={l}
                       onClick={() => { setLang(l); setIsMenuOpen(false); }}
-                      className={`relative py-2 font-mono text-[10px] tracking-[0.14em] font-medium uppercase transition-colors duration-300 ${
+                      className={`relative py-2 font-mono text-[11px] tracking-[0.14em] font-medium uppercase transition-colors duration-300 ${
                         langActive
                           ? "text-neutral-950 dark:text-neutral-100"
                          : "text-neutral-800 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"

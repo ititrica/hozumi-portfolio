@@ -159,6 +159,7 @@ interface WheelTitleProps {
   series: PhotographySeries;
   idx: number;
   progress: MotionValue<number>;
+  currentVal: number;
   lang: Language;
   scrollToIndex: (index: number) => void;
 }
@@ -167,6 +168,7 @@ const WheelTitle = React.memo(function WheelTitle({
   series,
   idx,
   progress,
+  currentVal,
   lang,
   scrollToIndex,
 }: WheelTitleProps) {
@@ -182,6 +184,8 @@ const WheelTitle = React.memo(function WheelTitle({
     return titleDistance < 5.5 ? "auto" : "none";
   });
 
+  const isActive = Math.round(currentVal) === idx;
+
   return (
     <motion.button
       onClick={() => scrollToIndex(idx)}
@@ -193,15 +197,27 @@ const WheelTitle = React.memo(function WheelTitle({
       }}
       data-cursor="nav"
     >
-      <span className="font-mono text-[8px] tracking-[0.1em] tabular-nums inline-block w-6 text-left text-neutral-900 dark:text-neutral-100">
+      <span 
+        className={`font-mono tracking-[0.15em] tabular-nums inline-block w-6 text-left transition-all duration-300 ${
+          isActive 
+            ? "text-black dark:text-white font-medium text-[10px]" 
+            : "text-neutral-400 dark:text-neutral-500 text-[9px]"
+        }`}
+      >
         {idx + 1 < 10 ? "0" + (idx + 1) : idx + 1}/
       </span>
       <span
-        className="font-serif uppercase leading-none text-right text-neutral-900 dark:text-neutral-100"
+        className={`font-serif uppercase leading-none text-right transition-all duration-300 ${
+          isActive 
+            ? "text-black dark:text-white" 
+            : "text-neutral-500 dark:text-neutral-400"
+        }`}
         style={{
-          fontSize: lang === "ja" ? "0.78rem" : "0.75rem",
-          fontWeight: lang === "ja" ? 400 : 300,
+          fontSize: lang === "ja" ? "0.81rem" : "0.78rem",
+          fontWeight: isActive ? 500 : (lang === "ja" ? 400 : 300),
           letterSpacing: "0.04em",
+          transform: isActive ? "scale(1.06)" : "scale(1.0)",
+          transformOrigin: "right center",
         }}
       >
         {series.title}
@@ -497,6 +513,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
               series={series}
               idx={idx}
               progress={smoothProgress}
+              currentVal={currentVal}
               lang={lang}
               scrollToIndex={scrollToIndex}
             />
