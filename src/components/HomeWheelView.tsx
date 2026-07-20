@@ -155,6 +155,61 @@ const WheelCard = React.memo(function WheelCard({
   );
 });
 
+interface WheelTitleProps {
+  series: PhotographySeries;
+  idx: number;
+  progress: MotionValue<number>;
+  lang: Language;
+  scrollToIndex: (index: number) => void;
+}
+
+const WheelTitle = React.memo(function WheelTitle({
+  series,
+  idx,
+  progress,
+  lang,
+  scrollToIndex,
+}: WheelTitleProps) {
+  const titleOpacity = useTransform(progress, (current) => {
+    const titleDistance = Math.abs(current - idx);
+    const titleFocus = Math.exp(-Math.pow(titleDistance / 0.5, 2));
+    const fadeFactor = Math.max(0, 1 - Math.pow(titleDistance / 6, 2));
+    return fadeFactor * (0.28 + titleFocus * 0.72);
+  });
+
+  const pointerEvents = useTransform(progress, (current) => {
+    const titleDistance = Math.abs(current - idx);
+    return titleDistance < 5.5 ? "auto" : "none";
+  });
+
+  return (
+    <motion.button
+      onClick={() => scrollToIndex(idx)}
+      className="flex items-center justify-between w-full gap-3 group cursor-pointer pointer-events-auto text-left"
+      style={{
+        height: "36px",
+        opacity: titleOpacity,
+        pointerEvents,
+      }}
+      data-cursor="nav"
+    >
+      <span className="font-mono text-[8px] tracking-[0.1em] tabular-nums inline-block w-6 text-left text-neutral-900 dark:text-neutral-100">
+        {idx + 1 < 10 ? "0" + (idx + 1) : idx + 1}/
+      </span>
+      <span
+        className="font-serif uppercase leading-none text-right text-neutral-900 dark:text-neutral-100"
+        style={{
+          fontSize: lang === "ja" ? "0.78rem" : "0.75rem",
+          fontWeight: lang === "ja" ? 400 : 300,
+          letterSpacing: "0.04em",
+        }}
+      >
+        {series.title}
+      </span>
+    </motion.button>
+  );
+});
+
 export default function HomeWheelView({ onSelectSeries, photographyData, lang }: HomeWheelViewProps) {
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
   const containerRef = useRef<HTMLDivElement>(null);
@@ -429,40 +484,25 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
       </div>
 
       {/* Right-side vertical series title list — hidden on mobile, active one highlighted on desktop */}
-      <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-14 z-30 flex-col items-stretch space-y-5 w-52">
-        {photographyData.map((series, idx) => {
-          // Match title brightness to the same continuous spring position that
-          // drives the cards, instead of waiting for a delayed discrete index.
-          const titleDistance = Math.abs(currentVal - idx);
-          const titleFocus = Math.exp(-Math.pow(titleDistance / 0.5, 2));
-          const titleOpacity = 0.28 + titleFocus * 0.72;
-
-          return (
-            <button
+      <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-14 z-30 flex-col w-56 h-[396px] overflow-hidden pointer-events-none">
+        <motion.div
+          className="flex flex-col w-full"
+          style={{
+            y: useTransform(smoothProgress, (val) => (5 - val) * 36)
+          }}
+        >
+          {photographyData.map((series, idx) => (
+            <WheelTitle
               key={series.id}
-              onClick={() => scrollToIndex(idx)}
-              className="flex items-baseline justify-between w-full gap-3 group cursor-pointer"
-            >
-              <span
-                className="font-mono text-[8px] tracking-[0.1em] tabular-nums inline-block w-6 text-left text-neutral-900 dark:text-neutral-100"
-                style={{ opacity: titleOpacity }}
-              >
-                {idx + 1 < 10 ? "0" + (idx + 1) : idx + 1}/
-              </span>
-              <span
-                className="font-serif uppercase leading-none text-right text-neutral-900 dark:text-neutral-100"
-                style={{
-                  fontSize: lang === "ja" ? "0.78rem" : "0.75rem",
-                  fontWeight: lang === "ja" ? 400 : 300,
-                  letterSpacing: "0.04em",
-                  opacity: titleOpacity,
-                }}
-              >
-                {series.title}
-              </span>
-            </button>
-          );
-        })}      </div>
+              series={series}
+              idx={idx}
+              progress={smoothProgress}
+              lang={lang}
+              scrollToIndex={scrollToIndex}
+            />
+          ))}
+        </motion.div>
+      </div>
 
       {/* Mobile Title display anchored in the top-middle area */}
       {isMobile && activeSeries && (
