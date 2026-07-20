@@ -62,7 +62,7 @@ export default function App() {
       const saved = localStorage.getItem('themePreference');
       if (saved === 'light' || saved === 'dark') return saved;
     }
-    return "dark";
+    return "light";
   });
   const [lang, setLang] = useState<Language>("en");
 

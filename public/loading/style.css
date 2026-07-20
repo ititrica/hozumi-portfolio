@@ -27,8 +27,8 @@
     font-display: swap;
 }
 :root {
-    --bg-color: #000000;
-    --text-color: #ffffff;
+    --bg-color: #fdfdfd;
+    --text-color: #0e0c0b;
     --font-mono: 'DM Sans Local', 'DM Sans', 'JetBrains Mono', 'Fira Code', monospace;
     --font-sans: 'DM Sans Local', 'DM Sans', 'Inter', sans-serif;
 }
@@ -40,7 +40,7 @@
 }
 
 body {
-    background-color: #030303;
+    background-color: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-sans);
     overflow: hidden; /* 动画播放期间防止滚动 */
