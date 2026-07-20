@@ -75,7 +75,10 @@ const WheelCard = React.memo(function WheelCard({
   const displayWidth = series.id === "xiao-yuanhang" ? baseWidth * 0.8 : baseWidth;
 
   const x = useTransform(progress, (current) => getCardCoords(index - current, dimensions.width, isMobile).x);
-  const y = useTransform(progress, (current) => -getCardCoords(index - current, dimensions.width, isMobile).y);
+  const y = useTransform(progress, (current) => {
+    const rawY = -getCardCoords(index - current, dimensions.width, isMobile).y;
+    return isMobile ? rawY - dimensions.height * 0.12 : rawY;
+  });
   const opacity = useTransform(progress, (current) => Math.max(0, Math.min(1, 1.1 - Math.abs(index - current) / 3.2)));
   const zIndex = useTransform(progress, (current) => Math.round(90 - Math.abs(index - current) * 16));
   const scale = useTransform(progress, (current) => {
