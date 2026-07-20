@@ -847,12 +847,12 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
 
       {/* Dynamic Tick Marks Ruler Progress Bar (Timeline Mode Only) */}
       <motion.div
-        className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30 flex items-end justify-center h-8 pointer-events-none"
+        className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30 flex items-end h-8 pointer-events-none w-[75%]"
         style={{
           opacity: timelineTransition,
         }}
       >
-        <div className="flex items-end gap-[8px]">
+        <div className="flex items-end justify-between w-full h-full">
           {ticks.map((tick) => {
             const tickHeight = useTransform(smoothProgress, (prog) => {
               const distance = Math.abs(tick.index - (prog as number));
