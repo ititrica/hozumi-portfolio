@@ -488,15 +488,15 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
                 loading="lazy"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover scale-110 grayscale-[30%]"
+                className="w-full h-full object-cover grayscale-[30%]"
                 style={{
                   filter: "blur(30px)",
                   WebkitFilter: "blur(30px)",
                   willChange: "transform",
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
-                  transform: "translate3d(0, 0, 0)",
-                  WebkitTransform: "translate3d(0, 0, 0)",
+                  transform: "scale(1.15) translate3d(0, 0, 0)",
+                  WebkitTransform: "scale(1.15) translate3d(0, 0, 0)",
                 }}
               />
             </div>
