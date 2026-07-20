@@ -1,6 +1,13 @@
 const CACHEABLE_PATHS = ["/images/", "/assets/", "/media/"];
 const R2_MEDIA_PREFIX = "/media/";
 
+function isHostedOriginalImage(pathname) {
+  return pathname.startsWith("/images/") &&
+    pathname.endsWith(".webp") &&
+    pathname !== "/images/about-profile.webp" &&
+    !/(?:-thumb|-card|-display)\.webp$/.test(pathname);
+}
+
 async function serveMedia(request, env, pathname) {
   if (!env.MEDIA_BUCKET) {
     return new Response("R2 media binding is not configured.", { status: 500 });
@@ -47,6 +54,10 @@ export default {
 
     if ((request.method === "GET" || request.method === "HEAD") && pathname.startsWith(R2_MEDIA_PREFIX)) {
       return serveMedia(request, env, pathname);
+    }
+
+    if ((request.method === "GET" || request.method === "HEAD") && isHostedOriginalImage(pathname)) {
+      return new Response("Not Found", { status: 404 });
     }
 
     const staticRoutePath = request.method === "GET" || request.method === "HEAD"
