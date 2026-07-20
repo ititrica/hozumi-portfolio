@@ -131,10 +131,7 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
         />
 
         {/* Render Active Image with close capabilities */}
-        <div 
-          className="relative max-w-full max-h-full flex items-center justify-center select-none"
-          data-cursor="close"
-        >
+        <div className="relative max-w-full max-h-full flex items-center justify-center select-none">
           <AnimatePresence mode="wait">
             <motion.img
               key={photo.id}
@@ -144,7 +141,12 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
               decoding="async"
               draggable={false}
               referrerPolicy="no-referrer"
-              className="object-contain rounded-none shadow-2xl max-h-[75vh] max-w-[85vw]"
+              className="object-contain rounded-none shadow-2xl max-h-[75vh] max-w-[85vw] z-30 cursor-pointer pointer-events-auto"
+              data-cursor="close"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCloseClick();
+              }}
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.97 }}
