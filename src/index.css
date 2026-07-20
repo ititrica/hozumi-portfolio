@@ -70,11 +70,15 @@ html, body {
   width: 100%;
   background-color: #fdfdfd;
   color: #171717;
+  --active-tick-color: rgb(10, 10, 10);
+  --inactive-tick-color: rgb(212, 212, 212);
 }
 
 html.dark, html.dark body {
   background-color: #0e0c0b;
   color: #f5f5f5;
+  --active-tick-color: rgb(255, 255, 255);
+  --inactive-tick-color: rgb(64, 64, 64);
 }
 
 /* Global ultra-minimalist architectural scrollbar */
@@ -135,4 +139,8 @@ html.dark, html.dark * {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.progress-tick {
+  background-color: color-mix(in srgb, var(--active-tick-color) calc(var(--tick-factor) * 100%), var(--inactive-tick-color));
 }

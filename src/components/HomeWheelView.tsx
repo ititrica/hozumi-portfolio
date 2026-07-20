@@ -256,7 +256,7 @@ const WheelCard = React.memo(function WheelCard({
 
         {/* Card info overlay for timeline view */}
         <motion.div
-          className="px-3 py-2.5 bg-white text-neutral-900 border-t border-neutral-100 shadow-md"
+          className="px-3 py-2.5 bg-white dark:bg-[#181614] text-neutral-900 dark:text-neutral-100 border-t border-neutral-100 dark:border-neutral-800/60 shadow-md"
           style={{
             opacity: timelineTransition,
             height: useTransform(timelineTransition, (trans) => trans * 56),
@@ -863,34 +863,20 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
               return 0.25 + 0.75 * Math.exp(-Math.pow(distance / 4.0, 2));
             });
 
-            const tickColor = useTransform(peakIndex, (peak) => {
+            const tickFactor = useTransform(peakIndex, (peak) => {
               const distance = Math.abs(tick.index - (peak as number));
-              const isDark = document.documentElement.classList.contains("dark");
-              const r1 = isDark ? 64 : 212;
-              const g1 = isDark ? 64 : 212;
-              const b1 = isDark ? 64 : 212;
-
-              const r2 = isDark ? 255 : 10;
-              const g2 = isDark ? 255 : 10;
-              const b2 = isDark ? 255 : 10;
-
-              const factor = Math.max(0, Math.min(1, Math.exp(-Math.pow(distance / 3.0, 2))));
-              const r = Math.round(r1 + (r2 - r1) * factor);
-              const g = Math.round(g1 + (g2 - g1) * factor);
-              const b = Math.round(b1 + (b2 - b1) * factor);
-
-              return `rgb(${r}, ${g}, ${b})`;
+              return Math.max(0, Math.min(1, Math.exp(-Math.pow(distance / 3.0, 2))));
             });
 
             return (
               <motion.div
                 key={tick.id}
-                className="w-[2px] rounded-full"
+                className="w-[2px] rounded-full progress-tick"
                 style={{
                   height: tickHeight,
                   opacity: tickOpacity,
-                  backgroundColor: tickColor,
-                }}
+                  "--tick-factor": tickFactor,
+                } as any}
               />
             );
           })}

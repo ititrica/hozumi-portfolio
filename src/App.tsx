@@ -72,7 +72,7 @@ export default function App() {
     return "wheel";
   });
 
-  const effectiveTheme = homeViewMode === "timeline" && location.pathname === "/" ? "light" : theme;
+  const effectiveTheme = theme;
 
   useEffect(() => {
     if (typeof sessionStorage !== "undefined") {
