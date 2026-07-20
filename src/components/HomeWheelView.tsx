@@ -229,7 +229,30 @@ const WheelTitle = React.memo(function WheelTitle({
 export default function HomeWheelView({ onSelectSeries, photographyData, lang }: HomeWheelViewProps) {
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = dimensions.width < 768;
   const location = useLocation();
+
+  // Parallax background translation values based on cursor movement
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+  const parallaxX = useSpring(mouseX, { damping: 50, stiffness: 200, mass: 0.5 });
+  const parallaxY = useSpring(mouseY, { damping: 50, stiffness: 200, mass: 0.5 });
+
+  // Map to opposite direction displacement range (e.g., -24px to 24px)
+  const bgTranslateX = useTransform(parallaxX, [0, 1], ["24px", "-24px"]);
+  const bgTranslateY = useTransform(parallaxY, [0, 1], ["24px", "-24px"]);
+
+  useEffect(() => {
+    if (isMobile) return;
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX / window.innerWidth);
+      mouseY.set(e.clientY / window.innerHeight);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [isMobile, mouseX, mouseY]);
 
   // Restore scroll position only when returning via BACK button action
   const restoreWheel = location.state?.restoreWheel === true;
@@ -408,7 +431,6 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
     });
   };
 
-  const isMobile = dimensions.width < 768;
 
   return (
     <div
@@ -433,8 +455,14 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
         </p>
       </div>
 
-      {/* Immersive blurred ambient background cross-fade */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-70 dark:opacity-40 transition-opacity duration-1000">
+      {/* Immersive blurred ambient background cross-fade with mouse parallax */}
+      <motion.div
+        className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-70 dark:opacity-40 transition-opacity duration-1000"
+        style={{
+          x: bgTranslateX,
+          y: bgTranslateY,
+        }}
+      >
         {photographyData.map((series, idx) => {
           const distance = Math.abs(currentVal - idx);
           // Only render background images that are close to the current view to optimize GPU memory
@@ -475,7 +503,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
           );
         })}
         <div className="absolute inset-0 bg-white/10 dark:bg-neutral-950/50 transition-all duration-1000" />
-      </div>
+      </motion.div>
 
       {/* Background ambient lighting vignette */}
       <div className="absolute inset-0 bg-radial-gradient from-transparent via-neutral-100/10 to-[#fdfdfd] pointer-events-none z-0 transition-opacity duration-1000 opacity-100 dark:opacity-0" />
