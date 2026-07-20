@@ -253,6 +253,12 @@ export default function Header({
                 />
               </div>
 
+              {/* Keeps the hover state alive across the visual gap above the player. */}
+              <div
+                className="absolute top-full left-1/2 -translate-x-1/2 w-72 h-3"
+                aria-hidden="true"
+              />
+
               <AnimatePresence>
                 {isPlayerVisible && (
                   <MusicPlayerDropdown
