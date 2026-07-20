@@ -30,6 +30,16 @@ const AboutContact = lazy(() => import("./components/AboutContact"));
 const loadPlaygroundView = () => import("./components/Playground");
 const Playground = lazy(loadPlaygroundView);
 
+function getRandomTrackIndex(currentIndex = -1) {
+  if (PLAYLIST.length <= 1) return 0;
+
+  let nextIndex = currentIndex;
+  while (nextIndex === currentIndex) {
+    nextIndex = Math.floor(Math.random() * PLAYLIST.length);
+  }
+  return nextIndex;
+}
+
 type RouteTransitionPhase =
   | "idle"
   | "page-exit"
@@ -74,7 +84,7 @@ export default function App() {
     return "wheel";
   });
 
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(() => getRandomTrackIndex());
 
   const effectiveTheme = theme;
 
@@ -246,10 +256,16 @@ export default function App() {
     }
     return 0.20;
   });
+  const lastAudibleVolumeRef = useRef(volume > 0 ? volume : 0.20);
+  const isPlayingRef = useRef(false);
+  const initialPlaybackAttemptedRef = useRef(false);
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('musicVolume', volume.toString());
+    }
+    if (volume > 0) {
+      lastAudibleVolumeRef.current = volume;
     }
   }, [volume]);
 
@@ -305,51 +321,63 @@ export default function App() {
   };
 
   const toggleMute = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      const nextMute = !isMuted;
-      setIsMuted(nextMute);
-      
-      if (typeof sessionStorage !== 'undefined') {
-        sessionStorage.setItem('isMutedPreference', nextMute ? 'true' : 'false');
-      }
+    const nextMute = !isMuted;
+    if (!nextMute && volume === 0) {
+      setVolume(lastAudibleVolumeRef.current);
+    }
+    setIsMuted(nextMute);
 
-      if (!nextMute) {
-        if (audio.paused) {
-          audio.volume = 0;
-          audio.play()
-            .then(() => fadeAudio(volume))
-            .catch((err) => console.log("Safari sync play blocked:", err));
-        } else {
-          fadeAudio(volume);
-        }
-      } else {
-        fadeAudio(0, () => {
-          audio.pause();
-        });
-      }
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('isMutedPreference', nextMute ? 'true' : 'false');
+    }
+  };
+
+  useEffect(() => {
+    if (!hasEnteredSession || isMuted || initialPlaybackAttemptedRef.current) return;
+
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    initialPlaybackAttemptedRef.current = true;
+    isPlayingRef.current = true;
+    audio.volume = 0;
+    audio.play()
+      .then(() => fadeAudio(volume))
+      .catch((err) => {
+        isPlayingRef.current = false;
+        console.log("Audio autoplay blocked on mount:", err);
+      });
+  }, [hasEnteredSession, isMuted, volume]);
+
+  const togglePlayback = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      isPlayingRef.current = true;
+      audio.play().catch((err) => {
+        isPlayingRef.current = false;
+        console.log("Audio play failed:", err);
+      });
+    } else {
+      isPlayingRef.current = false;
+      audio.pause();
     }
   };
 
   const handleVolumeChange = (newVolume: number) => {
     setVolume(newVolume);
     const audio = audioRef.current;
+    const nextMuted = newVolume === 0;
+
     if (audio) {
-      audio.volume = newVolume;
-      if (newVolume > 0 && isMuted) {
-        setIsMuted(false);
-        if (typeof sessionStorage !== 'undefined') {
-          sessionStorage.setItem('isMutedPreference', 'false');
-        }
-        if (audio.paused) {
-          audio.play().catch(err => console.log("Audio play failed:", err));
-        }
-      } else if (newVolume === 0 && !isMuted) {
-        setIsMuted(true);
-        if (typeof sessionStorage !== 'undefined') {
-          sessionStorage.setItem('isMutedPreference', 'true');
-        }
-        audio.pause();
+      audio.volume = nextMuted ? 0 : newVolume;
+    }
+
+    if (nextMuted !== isMuted) {
+      setIsMuted(nextMuted);
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('isMutedPreference', nextMuted ? 'true' : 'false');
       }
     }
   };
@@ -363,29 +391,29 @@ export default function App() {
     };
   }, []);
 
-  // Sync state and handle browser autoplay constraints with unified state effect
+  // Sync mute state without changing whether the track is playing.
+  useEffect(() => {
+    fadeAudio(isMuted ? 0 : volume);
+  }, [isMuted, volume]);
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (!isMuted) {
-      if (audio.paused) {
-        audio.volume = 0;
-        audio.play()
-          .then(() => fadeAudio(volume))
-          .catch((err) => {
-            // Autoplay blocked by browser. User gesture on entry button will trigger play.
-            console.log("Audio play blocked on mount:", err);
-          });
-      } else {
-        fadeAudio(volume);
-      }
-    } else {
-      fadeAudio(0, () => {
-        audio.pause();
-      });
-    }
-  }, [isMuted]);
+    const handlePlay = () => {
+      isPlayingRef.current = true;
+    };
+    const handlePause = () => {
+      isPlayingRef.current = false;
+    };
+
+    audio.addEventListener("play", handlePlay);
+    audio.addEventListener("pause", handlePause);
+    return () => {
+      audio.removeEventListener("play", handlePlay);
+      audio.removeEventListener("pause", handlePause);
+    };
+  }, []);
 
   // Automatic playlist advance when a track ends
   useEffect(() => {
@@ -393,7 +421,8 @@ export default function App() {
     if (!audio) return;
 
     const handleEnded = () => {
-      setCurrentTrackIndex((prev) => (prev + 1) % PLAYLIST.length);
+      isPlayingRef.current = true;
+      setCurrentTrackIndex((prev) => getRandomTrackIndex(prev));
     };
 
     audio.addEventListener("ended", handleEnded);
@@ -402,22 +431,22 @@ export default function App() {
     };
   }, []);
 
-  // Track switch effect: loads and plays the new track if not muted
+  // Track switch effect: preserve play/pause state while loading a random track.
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (!isMuted) {
-      audio.load();
+    const shouldResume = isPlayingRef.current;
+    audio.load();
+    if (shouldResume) {
+      audio.volume = 0;
       audio.play()
         .then(() => {
-          audio.volume = volume;
+          fadeAudio(isMuted ? 0 : volume);
         })
         .catch((err) => {
           console.log("Audio play switch blocked:", err);
         });
-    } else {
-      audio.load();
     }
   }, [currentTrackIndex]);
 
@@ -426,9 +455,13 @@ export default function App() {
     const resumeAudio = () => {
       const audio = audioRef.current;
       if (audio && !isMuted && audio.paused) {
+        isPlayingRef.current = true;
         audio.play()
-          .then(() => fadeAudio(0.20))
-          .catch((err) => console.log("Failed to play audio on interaction:", err));
+          .then(() => fadeAudio(volume))
+          .catch((err) => {
+            isPlayingRef.current = false;
+            console.log("Failed to play audio on interaction:", err);
+          });
         
         removeListeners();
       }
@@ -449,7 +482,7 @@ export default function App() {
     return () => {
       removeListeners();
     };
-  }, [isMuted]);
+  }, [isMuted, volume]);
 
   const shouldLoadRoute = (path: string) => {
     return path.startsWith("/series") || path === "/playground";
@@ -568,6 +601,7 @@ export default function App() {
   const handleEnterSite = () => {
     if (isExpanding) return;
     setIsMuted(false);
+    isPlayingRef.current = true;
     setIsExpanding(true);
     if (typeof sessionStorage !== 'undefined') {
       sessionStorage.setItem('hasEnteredSite', 'true');
@@ -579,8 +613,11 @@ export default function App() {
     if (audio && audio.paused) {
       audio.volume = 0;
       audio.play()
-        .then(() => fadeAudio(0.20))
-        .catch((err) => console.log("Audio play blocked on enter site:", err));
+        .then(() => fadeAudio(volume))
+        .catch((err) => {
+          isPlayingRef.current = false;
+          console.log("Audio play blocked on enter site:", err);
+        });
     }
 
     // Trigger hasEntered at 350ms (midway through expansion) so loading animation mounts and starts playing earlier
@@ -841,13 +878,14 @@ export default function App() {
               setLang={setLang}
               isMuted={isMuted}
               toggleMute={toggleMute}
+              togglePlayback={togglePlayback}
               volume={volume}
               onVolumeChange={handleVolumeChange}
               onNavigate={handleHeaderNavigate}
               currentMode={homeViewMode}
               currentTrack={PLAYLIST[currentTrackIndex]}
               onPrevTrack={() => setCurrentTrackIndex((prev) => (prev - 1 + PLAYLIST.length) % PLAYLIST.length)}
-              onNextTrack={() => setCurrentTrackIndex((prev) => (prev + 1) % PLAYLIST.length)}
+              onNextTrack={() => setCurrentTrackIndex((prev) => getRandomTrackIndex(prev))}
             />
           </div>
 

@@ -8,14 +8,14 @@ import { Play, Pause, Rewind, FastForward } from "lucide-react";
 import { motion } from "motion/react";
 
 interface MusicPlayerDropdownProps {
-  toggleMute: () => void;
+  togglePlayback: () => void;
   currentTrack?: { title: string; artist: string; file: string };
   onPrevTrack?: () => void;
   onNextTrack?: () => void;
 }
 
 export default function MusicPlayerDropdown({
-  toggleMute,
+  togglePlayback,
   currentTrack,
   onPrevTrack,
   onNextTrack,
@@ -133,7 +133,7 @@ export default function MusicPlayerDropdown({
 
   const handlePlayPause = (e: React.MouseEvent) => {
     e.stopPropagation();
-    toggleMute();
+    togglePlayback();
   };
 
   const handlePrev = (e: React.MouseEvent) => {

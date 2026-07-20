@@ -17,6 +17,7 @@ interface HeaderProps {
   setLang: (lang: Language) => void;
   isMuted: boolean;
   toggleMute: () => void;
+  togglePlayback: () => void;
   volume: number;
   onVolumeChange: (vol: number) => void;
   onNavigate?: (path: string) => void;
@@ -33,6 +34,7 @@ export default function Header({
   setLang,
   isMuted,
   toggleMute,
+  togglePlayback,
   volume,
   onVolumeChange,
   onNavigate,
@@ -262,7 +264,7 @@ export default function Header({
               <AnimatePresence>
                 {isPlayerVisible && (
                   <MusicPlayerDropdown
-                    toggleMute={toggleMute}
+                    togglePlayback={togglePlayback}
                     currentTrack={currentTrack}
                     onPrevTrack={onPrevTrack}
                     onNextTrack={onNextTrack}
