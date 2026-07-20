@@ -117,7 +117,7 @@ export default function Header({
             </div>
 
             {/* Dial & Timeline selectors */}
-            <div className="hidden md:flex items-center space-x-6 border-l border-neutral-200 dark:border-neutral-800 pl-6 md:pl-8 transition-colors duration-1000">
+            <div className="hidden md:flex items-center space-x-6">
               <button
                 onClick={() => handleNavClick("/")}
                 className={`relative py-2 font-mono text-[11px] tracking-[0.14em] font-medium uppercase transition-colors duration-1000 ${
