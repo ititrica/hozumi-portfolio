@@ -27,6 +27,8 @@ const Lightbox = lazy(() => import("./components/Lightbox"));
 const AboutContact = lazy(() => import("./components/AboutContact"));
 const loadPlaygroundView = () => import("./components/Playground");
 const Playground = lazy(loadPlaygroundView);
+const loadTimelineView = () => import("./components/TimelineView");
+const TimelineView = lazy(loadTimelineView);
 
 type RouteTransitionPhase =
   | "idle"
@@ -167,12 +169,21 @@ export default function App() {
       return;
     }
 
+    if (path === "/timeline") {
+      startRouteTransition(loadTimelineView, path);
+      return;
+    }
+
     if (path === "/" && location.pathname.startsWith("/series")) {
       navigate("/", { state: { restoreWheel: true } });
     } else {
       navigate(path);
     }
   }, [location.pathname, navigate, startRouteTransition]);
+
+  const handleTimelineClick = useCallback(() => {
+    startRouteTransition(loadTimelineView, "/timeline");
+  }, [startRouteTransition]);
 
   const handleRoutePageReady = useCallback(() => {
     setRoutePageReady(true);
@@ -343,7 +354,7 @@ export default function App() {
   }, [isMuted]);
 
   const shouldLoadRoute = (path: string) => {
-    return path.startsWith("/series") || path === "/playground";
+    return path.startsWith("/series") || path === "/playground" || path === "/timeline";
   };
 
   // Keep the previous route mounted while the transition layer is visible.
@@ -775,6 +786,7 @@ export default function App() {
                         onSelectSeries={handleSelectSeries}
                         photographyData={localizedData}
                         lang={lang}
+                        onTimelineClick={handleTimelineClick}
                       />
                     </motion.div>
                   }
@@ -841,6 +853,28 @@ export default function App() {
                       <SeriesRouteWrapper
                         localizedData={localizedData}
                         onSelectPhoto={handleSelectPhoto}
+                        lang={lang}
+                        onReady={handleRoutePageReady}
+                      />
+                    </motion.div>
+                  }
+                />
+
+                {/* Timeline View */}
+                <Route
+                  path="/timeline"
+                  element={
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={pageTransition}
+                      style={safariTransitionFix}
+                      className="fixed inset-0 w-full h-full overflow-hidden"
+                    >
+                      <TimelineView
+                        photographyData={localizedData}
+                        onSelectSeries={handleSelectSeries}
                         lang={lang}
                         onReady={handleRoutePageReady}
                       />

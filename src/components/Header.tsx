@@ -49,6 +49,7 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
     { label: t.selectedWork, path: "/" },
     { label: t.biography, path: "/about" },
     { label: t.playground, path: "/playground" },
+    { label: t.timelineNav, path: "/timeline" },
   ];
 
   const handleNavClick = (path: string) => {

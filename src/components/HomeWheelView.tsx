@@ -7,13 +7,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, MotionValue, useMotionValue, useSpring, useTransform, animate } from "motion/react";
 import { useLocation } from "react-router-dom";
 import { PhotographySeries } from "../types";
-import { Language } from "../i18n";
+import { Language, UI_TRANSLATIONS } from "../i18n";
 import { playButtonFeedback } from "../utils/uiSound";
 
 interface HomeWheelViewProps {
   onSelectSeries: (series: PhotographySeries) => void;
   photographyData: PhotographySeries[];
   lang: Language;
+  onTimelineClick?: () => void;
 }
 
 // Categories list for the top-center filter menu (excluding the "ALL" button)
@@ -229,7 +230,8 @@ const WheelTitle = React.memo(function WheelTitle({
   );
 });
 
-export default function HomeWheelView({ onSelectSeries, photographyData, lang }: HomeWheelViewProps) {
+export default function HomeWheelView({ onSelectSeries, photographyData, lang, onTimelineClick }: HomeWheelViewProps) {
+  const t = UI_TRANSLATIONS[lang];
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = dimensions.width < 768;
@@ -571,6 +573,19 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
             {activeSeries.category} — {activeSeries.year}
           </span>
         </div>
+      )}
+      {/* Timeline mode button — bottom right */}
+      {onTimelineClick && (
+        <button
+          onClick={onTimelineClick}
+          className="absolute bottom-6 right-6 z-30 group focus:outline-none pointer-events-auto"
+          data-cursor="nav"
+        >
+          <span className="relative inline-block font-mono text-[11px] tracking-[0.22em] uppercase text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-300">
+            {t.timelineNav}
+            <span className="absolute left-0 right-0 bottom-[-2px] h-[1px] bg-neutral-900 dark:bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left block" />
+          </span>
+        </button>
       )}
     </div>
   );

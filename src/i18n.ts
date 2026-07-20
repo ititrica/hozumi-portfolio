@@ -53,7 +53,8 @@ export const UI_TRANSLATIONS = {
     copyright: "© 2026 HOZUMI. ALL RIGHTS RESERVED.",
     cursorEnter: "ENTER",
     cursorBack: "BACK",
-    cursorView: "VIEW"
+    cursorView: "VIEW",
+    timelineNav: "TIMELINE"
   },
   zh: {
     selectedWork: "精选作品",
@@ -99,7 +100,8 @@ export const UI_TRANSLATIONS = {
     copyright: "© 2026 HOZUMI. 保留所有权利。",
     cursorEnter: "进入",
     cursorBack: "返回",
-    cursorView: "查看"
+    cursorView: "查看",
+    timelineNav: "时间线"
   },
   ja: {
     selectedWork: "作品選",
@@ -145,7 +147,8 @@ export const UI_TRANSLATIONS = {
     copyright: "© 2026 HOZUMI. ALL RIGHTS RESERVED.",
     cursorEnter: "入る",
     cursorBack: "戻る",
-    cursorView: "見る"
+    cursorView: "見る",
+    timelineNav: "タイムライン"
   }
 };
 
