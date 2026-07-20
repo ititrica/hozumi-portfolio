@@ -5,6 +5,7 @@
 
 import { motion } from "motion/react";
 import { Language, UI_TRANSLATIONS } from "../i18n";
+import { getMediaUrl } from "../utils/media";
 
 interface AboutContactProps {
   lang: Language;
@@ -70,7 +71,7 @@ export default function AboutContact({ lang }: AboutContactProps) {
         <div className="lg:col-span-5 flex flex-col space-y-6">
           <div className="aspect-[4/5] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-900 rounded-none">
             <img
-              src="/images/about-profile.webp"
+              src={getMediaUrl("/images/about-profile.webp")}
               alt="Hozumi Portrait"
               loading="lazy"
               decoding="async"

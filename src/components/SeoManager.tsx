@@ -99,7 +99,7 @@ export default function SeoManager({ photographyData, lang }: SeoManagerProps) {
         : routePath === "/playground"
           ? copy.playgroundDescription
           : copy.homeDescription;
-    const image = series ? absoluteUrl(series.coverImage) : `${SITE_URL}/images/about-profile.webp`;
+    const image = series ? absoluteUrl(series.coverImage) : absoluteUrl("/images/about-profile.webp");
     const imageAlt = series
       ? `${series.title} ${lang === "zh" ? "摄影系列封面" : lang === "ja" ? "写真シリーズのカバー" : "photography series cover"}`
       : copy.imageAlt;
@@ -147,7 +147,7 @@ export default function SeoManager({ photographyData, lang }: SeoManagerProps) {
           name: "Hozumi",
           alternateName: "hozumifolio",
           url: `${SITE_URL}/about`,
-          image: `${SITE_URL}/images/about-profile.webp`,
+          image: absoluteUrl("/images/about-profile.webp"),
           jobTitle: lang === "zh" ? "摄影师与视觉艺术家" : lang === "ja" ? "写真家・ビジュアルアーティスト" : "Photographer and Visual Artist",
           knowsAbout: ["Photography", "Visual Art", "Street Photography", "Architecture Photography", "Portrait Photography"],
         },

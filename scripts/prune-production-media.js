@@ -22,7 +22,6 @@ async function walkDir(dir) {
 const imageFiles = await walkDir(DIST_IMAGES_DIR);
 const originalFiles = imageFiles.filter((filePath) =>
   filePath.endsWith(".webp") &&
-  path.basename(filePath) !== "about-profile.webp" &&
   !/(?:-thumb|-card|-display)\.webp$/.test(filePath),
 );
 

@@ -4,7 +4,6 @@ const R2_MEDIA_PREFIX = "/media/";
 function isHostedOriginalImage(pathname) {
   return pathname.startsWith("/images/") &&
     pathname.endsWith(".webp") &&
-    pathname !== "/images/about-profile.webp" &&
     !/(?:-thumb|-card|-display)\.webp$/.test(pathname);
 }
 
