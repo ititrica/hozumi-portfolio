@@ -568,6 +568,15 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
     });
   };
 
+  const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickRatio = Math.max(0, Math.min(1, clickX / rect.width));
+    const targetIndex = clickRatio * (photographyData.length - 1);
+    scrollToIndex(targetIndex);
+    playButtonFeedback();
+  };
+
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
 
@@ -842,14 +851,18 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
         </button>
       )}
 
-      {/* Dynamic Tick Marks Ruler Progress Bar (Timeline Mode Only) */}
+      {/* Unified Progress Ruler and Year Navigation Container */}
       <motion.div
-        className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30 flex items-end h-8 pointer-events-none w-[75%]"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col pointer-events-auto w-[75%] cursor-pointer group/ruler"
         style={{
           opacity: timelineTransition,
+          pointerEvents: useTransform(timelineTransition, (trans) => trans > 0.5 ? "auto" : "none"),
         }}
+        onClick={handleProgressBarClick}
+        data-cursor="nav"
       >
-        <div className="flex items-end justify-between w-full h-full">
+        {/* Ticks Row */}
+        <div className="flex items-end justify-between w-full h-8">
           {ticks.map((tick) => {
             const tickHeight = useTransform(peakIndex, (peak) => {
               const distance = Math.abs(tick.index - (peak as number));
@@ -893,40 +906,28 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
             );
           })}
         </div>
-      </motion.div>
 
-      {/* Bottom Horizontal Year Navigation List (Timeline Mode Only) */}
-      <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-6 md:gap-8 pointer-events-auto"
-        style={{
-          opacity: timelineTransition,
-          pointerEvents: useTransform(timelineTransition, (trans) => trans > 0.5 ? "auto" : "none"),
-        }}
-      >
-        {uniqueYears.map(({ year, firstIdx }) => {
-          const isActive = activeSeries?.year === year;
-          return (
-            <button
-              key={year}
-              onClick={() => {
-                playButtonFeedback();
-                scrollToIndex(firstIdx);
-              }}
-              className="relative py-1 focus:outline-none group"
-              data-cursor="nav"
-            >
-              <span
-                className={`font-mono text-[11px] tracking-[0.2em] transition-colors duration-300 ${
+        {/* Years Labels Container */}
+        <div className="relative w-full h-6 mt-3">
+          {uniqueYears.map(({ year, firstIdx }) => {
+            const ratio = maxIndex > 0 ? firstIdx / maxIndex : 0;
+            const percent = ratio * 100;
+            const isActive = activeSeries?.year === year;
+            return (
+              <div
+                key={year}
+                className={`absolute -translate-x-1/2 font-mono text-[11px] tracking-[0.2em] transition-colors duration-500 select-none ${
                   isActive
                     ? "text-neutral-900 dark:text-white font-medium"
-                    : "text-neutral-400 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-300"
+                    : "text-neutral-400 dark:text-neutral-500"
                 }`}
+                style={{ left: `${percent}%` }}
               >
                 {year}
-              </span>
-            </button>
-          );
-        })}
+              </div>
+            );
+          })}
+        </div>
       </motion.div>
     </div>
   );
