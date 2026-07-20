@@ -531,7 +531,13 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
       </div>
 
       {/* Right-side vertical series title list — hidden on mobile, active one highlighted on desktop */}
-      <div className="hidden md:flex absolute top-[calc(50%-40px)] -translate-y-1/2 right-14 z-30 flex-col w-56 h-[360px] overflow-hidden pointer-events-none">
+      <div
+        className="hidden md:flex absolute top-[calc(50%-40px)] -translate-y-1/2 right-14 z-30 flex-col w-56 h-[360px] overflow-hidden pointer-events-none"
+        style={{
+          maskImage: "linear-gradient(to bottom, transparent, black 16%, black 84%, transparent)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 16%, black 84%, transparent)"
+        }}
+      >
         <motion.div
           className="flex flex-col w-full"
           style={{
