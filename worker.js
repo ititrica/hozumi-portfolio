@@ -24,9 +24,20 @@ async function serveMedia(request, env, pathname) {
   object.writeHttpMetadata(headers);
   headers.set("etag", object.httpEtag);
   headers.set("Cache-Control", "public, max-age=31536000, immutable");
+  headers.set("Accept-Ranges", "bytes");
+
+  const isPartial = object.range !== undefined;
+  if (isPartial) {
+    const offset = object.range.offset;
+    const length = object.range.length ?? object.size - offset;
+    headers.set("Content-Length", String(length));
+    headers.set("Content-Range", `bytes ${offset}-${offset + length - 1}/${object.size}`);
+  } else {
+    headers.set("Content-Length", String(object.size));
+  }
 
   return new Response(request.method === "HEAD" ? null : object.body, {
-    status: request.headers.has("range") ? 206 : 200,
+    status: isPartial ? 206 : 200,
     headers,
   });
 }
