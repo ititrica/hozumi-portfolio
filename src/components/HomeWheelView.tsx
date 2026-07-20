@@ -457,7 +457,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
 
       {/* Immersive blurred ambient background cross-fade with mouse parallax */}
       <motion.div
-        className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-70 dark:opacity-40 transition-opacity duration-1000"
+        className="absolute -top-12 -bottom-12 -left-12 -right-12 z-0 overflow-hidden pointer-events-none opacity-70 dark:opacity-40 transition-opacity duration-1000"
         style={{
           x: bgTranslateX,
           y: bgTranslateY,
