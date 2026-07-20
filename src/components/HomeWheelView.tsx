@@ -410,6 +410,24 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
     return years.sort((a, b) => a.year.localeCompare(b.year));
   }, [photographyData]);
 
+  const ticks = useMemo(() => {
+    const arr = [];
+    // 4 padding ticks on the left
+    for (let i = -4; i < 0; i++) {
+      arr.push({ index: i, isPadding: true, id: `pad-l-${i}` });
+    }
+    // actual series ticks
+    photographyData.forEach((s, idx) => {
+      arr.push({ index: idx, isPadding: false, id: s.id });
+    });
+    // 4 padding ticks on the right
+    for (let i = 0; i < 4; i++) {
+      const idx = photographyData.length + i;
+      arr.push({ index: idx, isPadding: true, id: `pad-r-${idx}` });
+    }
+    return arr;
+  }, [photographyData]);
+
   // Framer Motion spring scroll state for buttery kinetic movement
   const scrollProgress = useMotionValue(initialIndex);
   const smoothProgress = useSpring(scrollProgress, {
@@ -826,6 +844,45 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
           </span>
         </button>
       )}
+
+      {/* Dynamic Tick Marks Ruler Progress Bar (Timeline Mode Only) */}
+      <motion.div
+        className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30 flex items-end justify-center h-8 pointer-events-none"
+        style={{
+          opacity: timelineTransition,
+        }}
+      >
+        <div className="flex items-end gap-[8px]">
+          {ticks.map((tick) => {
+            const tickHeight = useTransform(smoothProgress, (prog) => {
+              const distance = Math.abs(tick.index - (prog as number));
+              return 8 + 14 * Math.exp(-Math.pow(distance / 1.8, 2));
+            });
+
+            const tickOpacity = useTransform(smoothProgress, (prog) => {
+              const distance = Math.abs(tick.index - (prog as number));
+              return 0.25 + 0.75 * Math.exp(-Math.pow(distance / 1.8, 2));
+            });
+
+            const isActive = activeIndex === tick.index;
+
+            return (
+              <motion.div
+                key={tick.id}
+                className={`w-[2px] transition-colors duration-300 rounded-full ${
+                  isActive
+                    ? "bg-neutral-950 dark:bg-white"
+                    : "bg-neutral-300 dark:bg-neutral-700"
+                }`}
+                style={{
+                  height: tickHeight,
+                  opacity: tickOpacity,
+                }}
+              />
+            );
+          })}
+        </div>
+      </motion.div>
 
       {/* Bottom Horizontal Year Navigation List (Timeline Mode Only) */}
       <motion.div
