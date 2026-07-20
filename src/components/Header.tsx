@@ -50,32 +50,6 @@ export default function Header({
   const [localTime, setLocalTime] = useState("");
   const [isPlayerVisible, setIsPlayerVisible] = useState(false);
 
-  const handleVolumeMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-
-    const slider = e.currentTarget;
-    const updateVolume = (moveEvent: MouseEvent) => {
-      const rect = slider.getBoundingClientRect();
-      const clickX = moveEvent.clientX - rect.left;
-      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-      onVolumeChange(ratio);
-    };
-
-    updateVolume(e.nativeEvent);
-
-    const handleMouseMove = (moveEvent: MouseEvent) => {
-      updateVolume(moveEvent);
-    };
-
-    const handleMouseUp = () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  };
-
   // Live Beijing clock ticking
   useEffect(() => {
     const updateTime = () => {
@@ -240,21 +214,6 @@ export default function Header({
                 {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
               </button>
 
-              {/* Volume Slider */}
-              <div
-                onMouseDown={handleVolumeMouseDown}
-                className="w-16 h-1 bg-neutral-200 dark:bg-neutral-800 rounded-full relative cursor-pointer mr-2 flex items-center select-none group/vol-slider"
-              >
-                <div
-                  className="bg-neutral-900 dark:bg-white h-full rounded-full transition-all duration-75"
-                  style={{ width: `${isMuted ? 0 : volume * 100}%` }}
-                />
-                <div
-                  className="absolute w-2.5 h-2.5 rounded-full bg-neutral-900 dark:bg-white shadow-[0_1px_3px_rgba(0,0,0,0.2)] transition-transform group-hover/vol-slider:scale-125"
-                  style={{ left: `calc(${isMuted ? 0 : volume * 100}% - 5px)` }}
-                />
-              </div>
-
               {/* Keeps the hover state alive across the visual gap above the player. */}
               <div
                 className="absolute top-full left-1/2 -translate-x-1/2 w-72 h-3"
@@ -265,6 +224,10 @@ export default function Header({
                 {isPlayerVisible && (
                   <MusicPlayerDropdown
                     togglePlayback={togglePlayback}
+                    isMuted={isMuted}
+                    toggleMute={toggleMute}
+                    volume={volume}
+                    onVolumeChange={onVolumeChange}
                     currentTrack={currentTrack}
                     onPrevTrack={onPrevTrack}
                     onNextTrack={onNextTrack}

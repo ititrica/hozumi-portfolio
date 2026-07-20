@@ -4,11 +4,15 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Play, Pause, Rewind, FastForward } from "lucide-react";
+import { Play, Pause, Rewind, FastForward, Volume2, VolumeX } from "lucide-react";
 import { motion } from "motion/react";
 
 interface MusicPlayerDropdownProps {
   togglePlayback: () => void;
+  isMuted: boolean;
+  toggleMute: () => void;
+  volume: number;
+  onVolumeChange: (vol: number) => void;
   currentTrack?: { title: string; artist: string; file: string };
   onPrevTrack?: () => void;
   onNextTrack?: () => void;
@@ -16,6 +20,10 @@ interface MusicPlayerDropdownProps {
 
 export default function MusicPlayerDropdown({
   togglePlayback,
+  isMuted,
+  toggleMute,
+  volume,
+  onVolumeChange,
   currentTrack,
   onPrevTrack,
   onNextTrack,
@@ -27,9 +35,9 @@ export default function MusicPlayerDropdown({
 
   useEffect(() => {
     // Generate the liquid glass displacement map
-    const width = 288; // card width (w-72 = 18rem = 288px)
-    const height = 160; // card height (160px)
-    const radius = 16;  // rounded-2xl = 16px
+    const width = 256; // card width (w-64 = 16rem = 256px)
+    const height = 144; // compact player height
+    const radius = 12;  // rounded-xl = 12px
     
     const canvas = document.createElement("canvas");
     canvas.width = width;
@@ -188,6 +196,31 @@ export default function MusicPlayerDropdown({
     document.addEventListener("mouseup", handleMouseUp);
   };
 
+  const handleVolumeMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+
+    const track = e.currentTarget;
+    const updateVolume = (clientX: number) => {
+      const rect = track.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      onVolumeChange(ratio);
+    };
+
+    updateVolume(e.clientX);
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      updateVolume(moveEvent.clientX);
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
   const formatTime = (time: number) => {
     if (isNaN(time)) return "0:00";
     const minutes = Math.floor(time / 60);
@@ -235,7 +268,7 @@ export default function MusicPlayerDropdown({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 12, scale: 0.96 }}
         transition={{ duration: 0.25, ease: [0.215, 0.61, 0.355, 1] }}
-        className="absolute top-full left-1/2 mt-3 z-50 w-72 -translate-x-1/2 p-5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] bg-white/20 dark:bg-[#181614]/30 border border-white/25 dark:border-neutral-800/40 transition-colors duration-1000 flex flex-col items-center pointer-events-auto"
+        className="absolute top-full left-1/2 mt-3 z-50 w-64 -translate-x-1/2 p-4 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] bg-white/20 dark:bg-[#181614]/30 border border-white/25 dark:border-neutral-800/40 transition-colors duration-1000 flex flex-col items-center pointer-events-auto"
         style={{
           transformOrigin: "top center",
           backdropFilter: `url(#${filterId}) blur(24px)`,
@@ -244,7 +277,7 @@ export default function MusicPlayerDropdown({
         onClick={(e) => e.stopPropagation()}
       >
       {/* Song Info */}
-      <div className="text-center w-full mt-1 mb-4 select-none">
+      <div className="text-center w-full mb-3 select-none">
         <h4 className="font-sans text-[13px] font-semibold tracking-wide text-neutral-900 dark:text-neutral-100 uppercase truncate">
           {songTitle}
         </h4>
@@ -254,7 +287,7 @@ export default function MusicPlayerDropdown({
       </div>
 
       {/* Progress Track */}
-      <div className="flex items-center w-full select-none mb-4">
+      <div className="flex items-center w-full select-none mb-3">
         <span className="font-mono text-[9px] tracking-wider text-neutral-400 dark:text-neutral-500 w-8 text-left">
           {formatTime(currentTime)}
         </span>
@@ -278,11 +311,12 @@ export default function MusicPlayerDropdown({
         </span>
       </div>
 
-      {/* Controls */}
-      <div className="flex items-center justify-center space-x-8 w-full select-none">
+      {/* Playback and volume controls */}
+      <div className="flex items-center justify-between gap-4 w-full select-none">
+        <div className="flex items-center gap-2 shrink-0">
         <button
           onClick={handlePrev}
-          className="p-2 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
+          className="p-1 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
           data-cursor="nav"
           aria-label="Previous"
         >
@@ -291,7 +325,7 @@ export default function MusicPlayerDropdown({
 
         <button
           onClick={handlePlayPause}
-          className="p-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-full hover:scale-105 active:scale-95 transition-all focus:outline-none flex items-center justify-center shadow-sm"
+          className="p-1 text-neutral-900 dark:text-white hover:scale-110 active:scale-90 transition-transform focus:outline-none"
           data-cursor="nav"
           aria-label={isPlaying ? "Pause" : "Play"}
         >
@@ -304,12 +338,42 @@ export default function MusicPlayerDropdown({
 
         <button
           onClick={handleNext}
-          className="p-2 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
+          className="p-1 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
           data-cursor="nav"
           aria-label="Next"
         >
           <FastForward className="w-4 h-4 fill-current" />
         </button>
+        </div>
+
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleMute();
+            }}
+            className="shrink-0 p-1 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
+            data-cursor="nav"
+            aria-label={isMuted ? "Unmute Music" : "Mute Music"}
+          >
+            {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+          </button>
+
+          <div
+            onMouseDown={handleVolumeMouseDown}
+            className="flex-1 min-w-[56px] h-1 bg-neutral-200 dark:bg-neutral-800 rounded-full relative cursor-pointer group/volume-slider"
+            aria-label="Volume"
+          >
+            <div
+              className="bg-neutral-900 dark:bg-white h-full rounded-full transition-all duration-75"
+              style={{ width: `${isMuted ? 0 : volume * 100}%` }}
+            />
+            <div
+              className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-neutral-900 dark:bg-white opacity-0 group-hover/volume-slider:opacity-100 transition-opacity"
+              style={{ left: `calc(${isMuted ? 0 : volume * 100}% - 4px)` }}
+            />
+          </div>
+        </div>
       </div>
     </motion.div>
   </>
