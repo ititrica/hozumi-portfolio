@@ -485,6 +485,24 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
     };
   }, []);
 
+  // Prevent browser from auto-scrolling container when off-screen elements are clicked or focused
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      if (container.scrollLeft !== 0) {
+        container.scrollLeft = 0;
+      }
+      if (container.scrollTop !== 0) {
+        container.scrollTop = 0;
+      }
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const activeAnimationRef = useRef<any | null>(null);
   const isMouseDownRef = useRef(false);
