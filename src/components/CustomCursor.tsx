@@ -139,15 +139,26 @@ export default function CustomCursor({ lang }: { lang: Language }) {
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
     
-    const handleMouseLeaveWindow = () => {
+    const handleMouseLeaveWindow = (e: MouseEvent) => {
       lastHoverTarget = null;
-      setIsVisible(false);
+      // Clamp coordinates to stay visible on the window edges
+      const clampedX = Math.max(0, Math.min(window.innerWidth, e.clientX));
+      const clampedY = Math.max(0, Math.min(window.innerHeight, e.clientY));
+      mouseX.set(clampedX);
+      mouseY.set(clampedY);
+
+      // Revert hover styling back to default small dot
+      setIsHovered(false);
+      setCursorText("");
+      setCursorType("");
+      setIsCursorHidden(false);
       document.body.style.cursor = "auto";
     };
 
     const handleMouseEnterWindow = (e: MouseEvent) => {
-      mouseX.jump(e.clientX);
-      mouseY.jump(e.clientY);
+      // Smoothly transition from the edge to the new pointer position using .set instead of .jump
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
       if (hasMoved) {
         setIsVisible(true);
         document.body.style.cursor = "none";
