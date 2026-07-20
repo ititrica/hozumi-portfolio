@@ -16,6 +16,45 @@ export default function CustomCursor({ lang }: { lang: Language }) {
   const [isClicking, setIsClicking] = useState(false);
   const [isCursorHidden, setIsCursorHidden] = useState(false);
   const [cursorType, setCursorType] = useState("");
+  const [displacementMapUrl, setDisplacementMapUrl] = useState("");
+
+  const cursorGlassFilterId = "liquid-glass-custom-cursor";
+  const cursorGlassSize = 34;
+
+  useEffect(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width = cursorGlassSize;
+    canvas.height = cursorGlassSize;
+
+    const context = canvas.getContext("2d");
+    if (!context) return;
+
+    const imageData = context.createImageData(cursorGlassSize, cursorGlassSize);
+    const data = imageData.data;
+    const center = cursorGlassSize / 2;
+    const radius = cursorGlassSize * 0.44;
+
+    for (let y = 0; y < cursorGlassSize; y += 1) {
+      for (let x = 0; x < cursorGlassSize; x += 1) {
+        const dx = x - center;
+        const dy = y - center;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const edgeDistance = Math.abs(distance - radius);
+        const edgeStrength = Math.max(0, 1 - edgeDistance / 5);
+        const normalX = distance > 0 ? dx / distance : 0;
+        const normalY = distance > 0 ? dy / distance : 0;
+        const index = (y * cursorGlassSize + x) * 4;
+
+        data[index] = Math.max(0, Math.min(255, 128 + normalX * edgeStrength * 42));
+        data[index + 1] = Math.max(0, Math.min(255, 128 + normalY * edgeStrength * 42));
+        data[index + 2] = 128;
+        data[index + 3] = 255;
+      }
+    }
+
+    context.putImageData(imageData, 0, 0);
+    setDisplacementMapUrl(canvas.toDataURL());
+  }, []);
 
   // Main cursor motion values
   const mouseX = useMotionValue(-100);
@@ -243,9 +282,44 @@ export default function CustomCursor({ lang }: { lang: Language }) {
 
   return (
     <>
+      <svg
+        width="0"
+        height="0"
+        className="fixed pointer-events-none"
+        aria-hidden="true"
+      >
+        <defs>
+          <filter
+            id={cursorGlassFilterId}
+            x="-50%"
+            y="-50%"
+            width="200%"
+            height="200%"
+            filterUnits="userSpaceOnUse"
+            colorInterpolationFilters="sRGB"
+          >
+            {displacementMapUrl && (
+              <feImage
+                href={displacementMapUrl}
+                width={cursorGlassSize}
+                height={cursorGlassSize}
+                result="cursor-displacement-map"
+              />
+            )}
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="cursor-displacement-map"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              scale="8"
+            />
+          </filter>
+        </defs>
+      </svg>
+
       {/* Main cursor dot */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[100005] flex items-center justify-center mix-blend-difference -translate-x-1/2 -translate-y-1/2"
+        className="fixed top-0 left-0 pointer-events-none z-[100005] flex items-center justify-center -translate-x-1/2 -translate-y-1/2"
         style={{
           x: cursorX,
           y: cursorY,
@@ -261,10 +335,20 @@ export default function CustomCursor({ lang }: { lang: Language }) {
         }}
         transition={{ type: "tween", duration: 0.15 }}
       >
-        <div className="relative flex items-center justify-center">
+        <div className="relative flex items-center justify-center w-[34px] h-[34px]">
+          {/* SVG displacement map + backdrop filter create the liquid-glass lens. */}
+          <div
+            className="absolute inset-0 rounded-full border border-white/55 bg-white/10 shadow-[0_0_14px_rgba(255,255,255,0.22),inset_0_0_8px_rgba(255,255,255,0.28)]"
+            style={{
+              backdropFilter: "url(#" + cursorGlassFilterId + ") blur(1.5px) contrast(1.2) brightness(1.08) saturate(1.15)",
+              WebkitBackdropFilter: "url(#" + cursorGlassFilterId + ") blur(1.5px) contrast(1.2) brightness(1.08) saturate(1.15)",
+            }}
+          />
+
+          <div className="absolute top-[5px] left-[8px] w-[9px] h-[4px] rounded-full bg-white/55 blur-[1px]" />
           {/* Main circle — shrinks to 0 when arrow is visible */}
           <motion.div
-            className="rounded-full bg-white absolute"
+            className="rounded-full bg-white absolute z-10 shadow-[0_0_5px_rgba(255,255,255,0.75)]"
             animate={{
               width: isArrowHover ? 0 : 12,
               height: isArrowHover ? 0 : 12,
