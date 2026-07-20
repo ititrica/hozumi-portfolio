@@ -629,7 +629,12 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
     if (viewMode === "timeline") {
       onSelectSeries(series);
     } else {
-      if (index === activeIndex) {
+      const currentIndex = Math.max(
+        0,
+        Math.min(photographyData.length - 1, Math.round(smoothProgress.get()))
+      );
+
+      if (index === currentIndex) {
         onSelectSeries(series);
       } else {
         scrollToIndex(index);
