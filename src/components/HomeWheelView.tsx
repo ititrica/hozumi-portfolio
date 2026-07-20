@@ -531,11 +531,11 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang }:
       </div>
 
       {/* Right-side vertical series title list — hidden on mobile, active one highlighted on desktop */}
-      <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-14 z-30 flex-col w-56 h-[396px] overflow-hidden pointer-events-none">
+      <div className="hidden md:flex absolute top-[calc(50%-40px)] -translate-y-1/2 right-14 z-30 flex-col w-56 h-[360px] overflow-hidden pointer-events-none">
         <motion.div
           className="flex flex-col w-full"
           style={{
-            y: useTransform(smoothProgress, (val) => (5 - val) * 36)
+            y: useTransform(smoothProgress, (val) => (4 - val) * 36)
           }}
         >
           {photographyData.map((series, idx) => (
