@@ -49,18 +49,18 @@
   --font-mono: "DM Sans", "DM Sans Local", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", monospace;
 }
 
-/* Chinese (zh) — switch to Plus Jakarta Sans */
+/* Chinese (zh) — switch to DM Sans for English */
 html[lang="zh"] body {
-  --font-sans: "Plus Jakarta Sans Local", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
-  --font-serif: "Plus Jakarta Sans Local", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", serif;
-  --font-mono: "Plus Jakarta Sans Local", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", monospace;
+  --font-sans: "DM Sans", "DM Sans Local", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  --font-serif: "DM Sans", "DM Sans Local", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", serif;
+  --font-mono: "DM Sans", "DM Sans Local", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", monospace;
 }
 
-/* Japanese (ja) — switch to Tsukushi Mincho */
+/* Japanese (ja) — switch to Tsukushi Mincho with DM Sans for English */
 html[lang="ja"] body {
-  --font-sans: "Tsukushi Mincho", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "MS PGothic", sans-serif;
-  --font-serif: "Tsukushi Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "Yu Mincho", "MS PMincho", serif;
-  --font-mono: "Tsukushi Mincho", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "MS PGothic", monospace;
+  --font-sans: "DM Sans", "DM Sans Local", "Tsukushi Mincho", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "MS PGothic", sans-serif;
+  --font-serif: "DM Sans", "DM Sans Local", "Tsukushi Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "Yu Mincho", "MS PMincho", serif;
+  --font-mono: "DM Sans", "DM Sans Local", "Tsukushi Mincho", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "MS PGothic", monospace;
 }
 
 /* Force lock document body/html height and disable system-level global scrollbar */

@@ -30,7 +30,7 @@
     --bg-color: #000000;
     --text-color: #ffffff;
     --font-mono: 'DM Sans Local', 'DM Sans', 'JetBrains Mono', 'Fira Code', monospace;
-    --font-sans: 'Inter', sans-serif;
+    --font-sans: 'DM Sans Local', 'DM Sans', 'Inter', sans-serif;
 }
 
 * {
