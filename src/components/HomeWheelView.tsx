@@ -176,7 +176,7 @@ const WheelTitle = React.memo(function WheelTitle({
     const titleDistance = Math.abs(current - idx);
     const titleFocus = Math.exp(-Math.pow(titleDistance / 0.5, 2));
     const fadeFactor = Math.max(0, 1 - Math.pow(titleDistance / 6, 2));
-    return fadeFactor * (0.28 + titleFocus * 0.72);
+    return fadeFactor * (0.48 + titleFocus * 0.52);
   });
 
   const pointerEvents = useTransform(progress, (current) => {
@@ -210,7 +210,7 @@ const WheelTitle = React.memo(function WheelTitle({
         className={`font-serif uppercase leading-none text-right transition-all duration-300 ${
           isActive 
             ? "text-black dark:text-white" 
-            : "text-neutral-500 dark:text-neutral-400"
+            : "text-neutral-700 dark:text-neutral-400"
         }`}
         style={{
           fontSize: lang === "ja" ? "0.81rem" : "0.78rem",
