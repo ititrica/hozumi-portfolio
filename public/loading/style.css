@@ -1,14 +1,12 @@
 /*
  * 字体配置与全局变量
  */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@700&display=swap');
-
 @font-face {
     font-family: 'Tsukushi Mincho';
     src: url('/筑紫明朝-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
 }
 
 @font-face {
@@ -16,7 +14,7 @@
     src: url('/筑紫明朝-Medium.ttf') format('truetype');
     font-weight: 300;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
 }
 
 @font-face {
@@ -24,7 +22,7 @@
     src: url('/DMSans-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
 }
 :root {
     --bg-color: #fdfdfd;

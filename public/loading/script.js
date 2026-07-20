@@ -36,8 +36,17 @@ const STEPS = [
 
 let activeChars = ["", "", "", ""];
 
+function waitForLoadingFonts() {
+    if (!document.fonts) return Promise.resolve();
+
+    return Promise.all([
+        document.fonts.load("400 96px 'DM Sans Local'"),
+        document.fonts.load("300 96px 'Tsukushi Mincho'")
+    ]).catch(() => undefined);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    runStep(0);
+    waitForLoadingFonts().then(() => runStep(0));
 });
 
 function runStep(index) {
