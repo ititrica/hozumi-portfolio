@@ -589,7 +589,7 @@ export default function App() {
     <div className="font-sans bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 dark:selection:bg-white selection:text-white dark:selection:text-neutral-900 transition-colors duration-1000 min-h-screen flex flex-col isolate">
       <SeoManager photographyData={localizedData} lang={lang} />
       {/* Background Audio Node - always mounted so it's ready to play */}
-      <audio ref={audioRef} src="/music.mp3" loop playsInline preload="none" />
+      <audio ref={audioRef} src="/audio/music.mp3" loop playsInline preload="none" />
 
       {/* Premium Interactive Cursor */}
       <CustomCursor lang={lang} />
