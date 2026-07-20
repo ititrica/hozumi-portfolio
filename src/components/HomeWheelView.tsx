@@ -864,19 +864,33 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
               return 0.25 + 0.75 * Math.exp(-Math.pow(distance / 1.8, 2));
             });
 
-            const isActive = activeIndex === tick.index;
+            const tickColor = useTransform(smoothProgress, (prog) => {
+              const distance = Math.abs(tick.index - (prog as number));
+              const isDark = document.documentElement.classList.contains("dark");
+              const r1 = isDark ? 64 : 212;
+              const g1 = isDark ? 64 : 212;
+              const b1 = isDark ? 64 : 212;
+
+              const r2 = isDark ? 255 : 10;
+              const g2 = isDark ? 255 : 10;
+              const b2 = isDark ? 255 : 10;
+
+              const factor = Math.max(0, Math.min(1, Math.exp(-Math.pow(distance / 1.5, 2))));
+              const r = Math.round(r1 + (r2 - r1) * factor);
+              const g = Math.round(g1 + (g2 - g1) * factor);
+              const b = Math.round(b1 + (b2 - b1) * factor);
+
+              return `rgb(${r}, ${g}, ${b})`;
+            });
 
             return (
               <motion.div
                 key={tick.id}
-                className={`w-[2px] transition-colors duration-300 rounded-full ${
-                  isActive
-                    ? "bg-neutral-950 dark:bg-white"
-                    : "bg-neutral-300 dark:bg-neutral-700"
-                }`}
+                className="w-[2px] rounded-full"
                 style={{
                   height: tickHeight,
                   opacity: tickOpacity,
+                  backgroundColor: tickColor,
                 }}
               />
             );
@@ -913,16 +927,6 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
               >
                 {year}
               </span>
-              {/* Active year animated line indicator */}
-              <motion.div
-                className="absolute bottom-0 left-0 right-0 h-[1px] bg-neutral-900 dark:bg-white"
-                initial={false}
-                animate={{
-                  scaleX: isActive ? 1 : 0,
-                  opacity: isActive ? 1 : 0,
-                }}
-                transition={{ type: "spring", stiffness: 120, damping: 18 }}
-              />
             </button>
           );
         })}
