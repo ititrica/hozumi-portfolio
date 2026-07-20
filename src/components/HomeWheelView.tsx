@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion, MotionValue, useMotionValue, useSpring, useTransform, animate } from "motion/react";
 import { useLocation } from "react-router-dom";
 import { PhotographySeries } from "../types";
@@ -15,6 +15,7 @@ interface HomeWheelViewProps {
   photographyData: PhotographySeries[];
   lang: Language;
   onTimelineClick?: () => void;
+  viewMode?: "wheel" | "timeline";
 }
 
 // Categories list for the top-center filter menu (excluding the "ALL" button)
@@ -60,6 +61,7 @@ interface WheelCardProps {
   progress: MotionValue<number>;
   onSelectSeries: (series: PhotographySeries) => void;
   onFocusCard: (index: number) => void;
+  timelineTransition: MotionValue<number>;
 }
 
 const WheelCard = React.memo(function WheelCard({
@@ -70,43 +72,127 @@ const WheelCard = React.memo(function WheelCard({
   progress,
   onSelectSeries,
   onFocusCard,
+  timelineTransition,
 }: WheelCardProps) {
   const isMobile = dimensions.width < 768;
   const baseWidth = getBaseSize(index, dimensions.width, isMobile);
   const displayWidth = series.id === "xiao-yuanhang" ? baseWidth * 0.8 : baseWidth;
 
-  const x = useTransform(progress, (current) => getCardCoords(index - current, dimensions.width, isMobile).x);
-  const y = useTransform(progress, (current) => {
-    const rawY = -getCardCoords(index - current, dimensions.width, isMobile).y;
-    return isMobile ? rawY - dimensions.height * 0.12 : rawY;
+  const timelineWidth = isMobile ? 180 : 220;
+
+  const combinedWidth = useTransform(timelineTransition, (trans) => {
+    return (1 - trans) * displayWidth + trans * timelineWidth;
   });
-  const opacity = useTransform(progress, (current) => Math.max(0, Math.min(1, 1.1 - Math.abs(index - current) / 3.2)));
-  const zIndex = useTransform(progress, (current) => Math.round(90 - Math.abs(index - current) * 16));
-  const scale = useTransform(progress, (current) => {
-    const diff = Math.abs(index - current);
-    return 0.28 + 0.72 * Math.exp(-Math.pow(diff / 1.35, 2));
+
+  const x = useTransform(
+    [progress, timelineTransition],
+    ([current, trans]) => {
+      const wheelX = getCardCoords(index - (current as number), dimensions.width, isMobile).x;
+      const cardWidth = (1 - (trans as number)) * displayWidth + (trans as number) * timelineWidth;
+      const centerX = (dimensions.width - cardWidth) / 2;
+      const timelineX = centerX + (index - (current as number)) * (timelineWidth + 48);
+      return (1 - (trans as number)) * wheelX + (trans as number) * timelineX;
+    }
+  );
+
+  const isAbove = index % 2 === 0;
+  const y = useTransform(
+    [progress, timelineTransition],
+    ([current, trans]) => {
+      const rawY = -getCardCoords(index - (current as number), dimensions.width, isMobile).y;
+      const wheelY = isMobile ? rawY - dimensions.height * 0.12 : rawY;
+
+      const centerY = dimensions.height / 2;
+      const timelineHeight = isMobile ? 180 : 220;
+      const timelineY = isAbove
+        ? -(centerY + 24)
+        : -(centerY - 24 - timelineHeight);
+
+      return (1 - (trans as number)) * wheelY + (trans as number) * timelineY;
+    }
+  );
+
+  const opacity = useTransform(
+    [progress, timelineTransition],
+    ([current, trans]) => {
+      const diff = Math.abs(index - (current as number));
+      const wheelOpacity = Math.max(0, Math.min(1, 1.1 - diff / 3.2));
+      const timelineOpacity = Math.max(0, Math.min(1, 1.3 - diff / 5.0));
+      return (1 - (trans as number)) * wheelOpacity + (trans as number) * timelineOpacity;
+    }
+  );
+
+  const zIndex = useTransform(
+    [progress, timelineTransition],
+    ([current, trans]) => {
+      const wheelZ = Math.round(90 - Math.abs(index - (current as number)) * 16);
+      const timelineZ = 10;
+      return Math.round((1 - (trans as number)) * wheelZ + (trans as number) * timelineZ);
+    }
+  );
+
+  const scale = useTransform(
+    [progress, timelineTransition],
+    ([current, trans]) => {
+      const diff = Math.abs(index - (current as number));
+      const wheelScale = 0.28 + 0.72 * Math.exp(-Math.pow(diff / 1.35, 2));
+      return (1 - (trans as number)) * wheelScale + (trans as number) * 1.0;
+    }
+  );
+
+  const imageTransform = useTransform(
+    [progress, timelineTransition],
+    ([current, trans]) => {
+      const diff = Math.abs(index - (current as number));
+      const offset = Math.max(-1.3, Math.min(1.3, index - (current as number)));
+      const parallaxX = Math.max(0, offset) * 28;
+      const parallaxY = Math.min(0, offset) * 28;
+      const imageScale = 1.2 - 0.07 * Math.exp(-Math.pow(diff / 0.5, 2));
+      
+      const tScale = 1.0;
+      const scaleVal = (1 - (trans as number)) * imageScale + (trans as number) * tScale;
+      const tx = (1 - (trans as number)) * parallaxX;
+      const ty = (1 - (trans as number)) * parallaxY;
+      return `translateX(${tx}px) translateY(${ty}px) scale(${scaleVal})`;
+    }
+  );
+
+  const imageFilter = useTransform(
+    [progress, timelineTransition],
+    ([current, trans]) => {
+      const diff = Math.abs(index - (current as number));
+      const blur = Math.min(8, Math.pow(diff, 2) * 8);
+      const grayscale = 40 * (1 - Math.exp(-Math.pow(diff / 0.9, 2)));
+      const wFilter = `blur(${blur}px) grayscale(${grayscale}%)`;
+      return (trans as number) > 0.5 ? "none" : wFilter;
+    }
+  );
+
+  const imageOpacity = useTransform(
+    [progress, timelineTransition],
+    ([current, trans]) => {
+      const diff = Math.abs(index - (current as number));
+      const wOpacity = 0.6 + 0.4 * Math.exp(-Math.pow(diff / 0.9, 2));
+      return (1 - (trans as number)) * wOpacity + (trans as number) * 1.0;
+    }
+  );
+
+  const pointerEvents = useTransform(
+    [progress, timelineTransition],
+    ([current, trans]) => {
+      const diff = Math.abs(index - (current as number));
+      if ((trans as number) > 0.5) {
+        return diff <= 5.0 ? "auto" : "none";
+      }
+      return diff <= 3.2 ? "auto" : "none";
+    }
+  );
+
+  const combinedImageHeight = useTransform(timelineTransition, (trans) => {
+    const wheelImgHeight = displayWidth * 0.67;
+    const timelineImgHeight = isMobile ? 110 : 140;
+    return (1 - trans) * wheelImgHeight + trans * timelineImgHeight;
   });
-  const imageTransform = useTransform(progress, (current) => {
-    const offset = Math.max(-1.3, Math.min(1.3, index - current));
-    const diff = Math.abs(index - current);
-    const parallaxX = Math.max(0, offset) * 28;
-    const parallaxY = Math.min(0, offset) * 28;
-    const imageScale = 1.2 - 0.07 * Math.exp(-Math.pow(diff / 0.5, 2));
-    return `translateX(${parallaxX}px) translateY(${parallaxY}px) scale(${imageScale})`;
-  });
-  const imageFilter = useTransform(progress, (current) => {
-    const diff = Math.abs(index - current);
-    const blur = Math.min(8, Math.pow(diff, 2) * 8);
-    const grayscale = 40 * (1 - Math.exp(-Math.pow(diff / 0.9, 2)));
-    return `blur(${blur}px) grayscale(${grayscale}%)`;
-  });
-  const imageOpacity = useTransform(progress, (current) => {
-    const diff = Math.abs(index - current);
-    return 0.6 + 0.4 * Math.exp(-Math.pow(diff / 0.9, 2));
-  });
-  const pointerEvents = useTransform(progress, (current) => (
-    Math.abs(index - current) <= 3.2 ? "auto" : "none"
-  ));
 
   const handleClick = () => {
     playButtonFeedback();
@@ -123,7 +209,7 @@ const WheelCard = React.memo(function WheelCard({
       onClick={handleClick}
       className="absolute pointer-events-auto transition-shadow duration-500"
       style={{
-        width: displayWidth,
+        width: combinedWidth,
         left: 0,
         bottom: 0,
         x,
@@ -137,11 +223,26 @@ const WheelCard = React.memo(function WheelCard({
       data-cursor="home-card"
       data-card-index={index}
     >
+      {/* Connector line from card to axis */}
+      <motion.div
+        className={`absolute left-1/2 w-px bg-neutral-300 dark:bg-neutral-600 transition-colors duration-1000 pointer-events-none ${
+          isAbove ? "bottom-0 translate-y-full" : "top-0 -translate-y-full"
+        }`}
+        style={{
+          height: 24,
+          transform: `translateX(-0.5px) ${isAbove ? "translateY(100%)" : "translateY(-100%)"}`,
+          opacity: timelineTransition,
+        }}
+      />
+
       <motion.div
         className="relative"
         style={{ scale, transformOrigin: "bottom left", willChange: "transform" }}
       >
-        <div className="relative w-full overflow-hidden bg-neutral-950 shadow-2xl group">
+        <div 
+          className="relative w-full overflow-hidden bg-neutral-950 shadow-2xl group"
+          style={{ height: combinedImageHeight }}
+        >
           <img
             src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
             alt={series.title}
@@ -149,11 +250,34 @@ const WheelCard = React.memo(function WheelCard({
             decoding="async"
             draggable={false}
             referrerPolicy="no-referrer"
-            className="w-full block select-none pointer-events-none"
+            className="w-full h-full object-cover select-none pointer-events-none"
             style={{ filter: imageFilter, transform: imageTransform, opacity: imageOpacity }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-60 pointer-events-none" />
         </div>
+
+        {/* Card info overlay for timeline view */}
+        <motion.div
+          className="px-3 py-2.5 bg-white text-neutral-900 border-t border-neutral-100 shadow-md"
+          style={{
+            opacity: timelineTransition,
+            height: useTransform(timelineTransition, (trans) => trans * 56),
+            overflow: "hidden",
+            pointerEvents: "none",
+          }}
+        >
+          <h3 className="font-sans text-[11px] tracking-[0.08em] font-medium uppercase truncate">
+            {series.title}
+          </h3>
+          <div className="flex items-center justify-between mt-1">
+            <span className="font-mono text-[8px] tracking-[0.15em] text-neutral-400 uppercase">
+              {series.category}
+            </span>
+            <span className="font-mono text-[8px] tracking-[0.15em] text-neutral-400">
+              {series.images.length} plates
+            </span>
+          </div>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
@@ -230,9 +354,19 @@ const WheelTitle = React.memo(function WheelTitle({
   );
 });
 
-export default function HomeWheelView({ onSelectSeries, photographyData, lang, onTimelineClick }: HomeWheelViewProps) {
+export default function HomeWheelView({ onSelectSeries, photographyData, lang, onTimelineClick, viewMode = "wheel" }: HomeWheelViewProps) {
   const t = UI_TRANSLATIONS[lang];
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
+  const timelineTransition = useMotionValue(viewMode === "timeline" ? 1 : 0);
+
+  useEffect(() => {
+    animate(timelineTransition, viewMode === "timeline" ? 1 : 0, {
+      type: "spring",
+      stiffness: 80,
+      damping: 20,
+      mass: 0.8,
+    });
+  }, [viewMode, timelineTransition]);
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = dimensions.width < 768;
   const location = useLocation();
@@ -265,6 +399,18 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
     ? parseFloat(sessionStorage.getItem('wheelIndex') || '0')
     : 0;
   const initialIndex = Math.max(0, Math.min(photographyData.length - 1, Math.round(savedIndex)));
+
+  const uniqueYears = useMemo(() => {
+    const years: { year: string; firstIdx: number }[] = [];
+    const seen = new Set<string>();
+    photographyData.forEach((s, idx) => {
+      if (!seen.has(s.year)) {
+        seen.add(s.year);
+        years.push({ year: s.year, firstIdx: idx });
+      }
+    });
+    return years.sort((a, b) => a.year.localeCompare(b.year));
+  }, [photographyData]);
 
   // Framer Motion spring scroll state for buttery kinetic movement
   const scrollProgress = useMotionValue(initialIndex);
@@ -462,7 +608,9 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
 
       {/* Immersive blurred ambient background cross-fade with mouse parallax */}
       <motion.div
-        className="absolute -top-12 -bottom-12 -left-12 -right-12 z-0 overflow-hidden pointer-events-none opacity-70 dark:opacity-40 transition-opacity duration-1000"
+        className={`absolute -top-12 -bottom-12 -left-12 -right-12 z-0 overflow-hidden pointer-events-none transition-opacity duration-1000 ${
+          viewMode === "timeline" ? "opacity-0" : "opacity-70 dark:opacity-40"
+        }`}
         style={{
           x: bgTranslateX,
           y: bgTranslateY,
@@ -511,11 +659,62 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
       </motion.div>
 
       {/* Background ambient lighting vignette */}
-      <div className="absolute inset-0 bg-radial-gradient from-transparent via-neutral-100/10 to-[#fdfdfd] pointer-events-none z-0 transition-opacity duration-1000 opacity-100 dark:opacity-0" />
-      <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#12100e]/30 to-[#0e0c0b] pointer-events-none z-0 transition-opacity duration-1000 opacity-0 dark:opacity-100" />
+      <div className={`absolute inset-0 bg-radial-gradient from-transparent via-neutral-100/10 to-[#fdfdfd] pointer-events-none z-0 transition-opacity duration-1000 dark:opacity-0 ${
+        viewMode === "timeline" ? "opacity-0" : "opacity-100"
+      }`} />
+      <div className={`absolute inset-0 bg-radial-gradient from-transparent via-[#12100e]/30 to-[#0e0c0b] pointer-events-none z-0 transition-opacity duration-1000 ${
+        viewMode === "timeline" ? "opacity-0" : "opacity-0 dark:opacity-100"
+      }`} />
 
       {/* Main Interactive Stage: The L-Shape Corner Curve */}
       <div className="absolute inset-0 z-10 overflow-visible pointer-events-none">
+        {/* Central horizontal timeline axis */}
+        <motion.div
+          className="absolute left-0 right-0 bg-neutral-300 dark:bg-neutral-700 transition-colors duration-1000 z-0 pointer-events-none"
+          style={{
+            top: "50%",
+            height: 1,
+            transform: "translateY(-0.5px)",
+            opacity: timelineTransition,
+          }}
+        />
+
+        {/* Year markers */}
+        {uniqueYears.map(({ year, firstIdx }) => {
+          const markerX = useTransform(
+            [smoothProgress, timelineTransition],
+            ([prog, trans]) => {
+              const timelineWidth = isMobile ? 180 : 220;
+              const displayWidth = getBaseSize(firstIdx, dimensions.width, isMobile);
+              const cardWidth = (1 - (trans as number)) * displayWidth + (trans as number) * timelineWidth;
+              const centerX = (dimensions.width - cardWidth) / 2;
+              const xVal = centerX + (firstIdx - (prog as number)) * (timelineWidth + 48);
+              return xVal;
+            }
+          );
+
+          return (
+            <motion.div
+              key={year}
+              className="absolute flex flex-col items-center pointer-events-none"
+              style={{
+                x: markerX,
+                top: "50%",
+                y: "-50%",
+                left: -40,
+                opacity: timelineTransition,
+              }}
+            >
+              {/* Year dot on the line */}
+              <div className="w-2 h-2 rounded-full bg-neutral-400 dark:bg-neutral-500 transition-colors duration-1000" />
+              {/* Year label */}
+              <span className="absolute top-5 font-mono text-[11px] tracking-[0.3em] text-neutral-400 dark:text-neutral-500 uppercase whitespace-nowrap transition-colors duration-1000">
+                {year}
+              </span>
+            </motion.div>
+          );
+        })}
+
         {photographyData.map((series, index) => {
           return (
             <WheelCard
@@ -527,17 +726,19 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
               progress={smoothProgress}
               onSelectSeries={onSelectSeries}
               onFocusCard={scrollToIndex}
+              timelineTransition={timelineTransition}
             />
           );
         })}
       </div>
 
       {/* Right-side vertical series title list — hidden on mobile, active one highlighted on desktop */}
-      <div
+      <motion.div
         className="hidden md:flex absolute top-[calc(50%-40px)] -translate-y-1/2 right-14 z-30 flex-col w-56 h-[360px] overflow-hidden pointer-events-none"
         style={{
           maskImage: "linear-gradient(to bottom, transparent, black 16%, black 84%, transparent)",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 16%, black 84%, transparent)"
+          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 16%, black 84%, transparent)",
+          opacity: useTransform(timelineTransition, (trans) => 1 - trans),
         }}
       >
         <motion.div
@@ -558,11 +759,16 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
             />
           ))}
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Mobile Title display anchored in the top-middle area */}
       {isMobile && activeSeries && (
-        <div className="absolute top-[21vh] left-0 right-0 z-30 flex flex-col items-center text-center px-6 select-text pointer-events-none">
+        <motion.div 
+          className="absolute top-[21vh] left-0 right-0 z-30 flex flex-col items-center text-center px-6 select-text pointer-events-none"
+          style={{
+            opacity: useTransform(timelineTransition, (trans) => 1 - trans),
+          }}
+        >
           <span className="font-mono text-[9px] tracking-[0.25em] text-neutral-400 dark:text-neutral-500 mb-2 uppercase">
             {activeIndex + 1 < 10 ? `0${activeIndex + 1}` : activeIndex + 1} / {photographyData.length}
           </span>
@@ -572,7 +778,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
           <span className="font-mono text-[8px] tracking-[0.2em] text-neutral-450 dark:text-neutral-500 uppercase mt-3">
             {activeSeries.category} — {activeSeries.year}
           </span>
-        </div>
+        </motion.div>
       )}
       {/* Timeline mode button — bottom right */}
       {onTimelineClick && (
@@ -582,7 +788,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
           data-cursor="nav"
         >
           <span className="relative inline-block font-mono text-[11px] tracking-[0.22em] uppercase text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-300">
-            {t.timelineNav}
+            {viewMode === "timeline" ? t.wheelNav : t.timelineNav}
             <span className="absolute left-0 right-0 bottom-[-2px] h-[1px] bg-neutral-900 dark:bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left block" />
           </span>
         </button>

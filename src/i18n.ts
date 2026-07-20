@@ -54,7 +54,8 @@ export const UI_TRANSLATIONS = {
     cursorEnter: "ENTER",
     cursorBack: "BACK",
     cursorView: "VIEW",
-    timelineNav: "TIMELINE"
+    timelineNav: "TIMELINE",
+    wheelNav: "WHEEL"
   },
   zh: {
     selectedWork: "精选作品",
@@ -101,7 +102,8 @@ export const UI_TRANSLATIONS = {
     cursorEnter: "进入",
     cursorBack: "返回",
     cursorView: "查看",
-    timelineNav: "时间线"
+    timelineNav: "时间线",
+    wheelNav: "轮盘"
   },
   ja: {
     selectedWork: "作品選",
@@ -148,7 +150,8 @@ export const UI_TRANSLATIONS = {
     cursorEnter: "入る",
     cursorBack: "戻る",
     cursorView: "見る",
-    timelineNav: "タイムライン"
+    timelineNav: "タイムライン",
+    wheelNav: "ホイール"
   }
 };
 

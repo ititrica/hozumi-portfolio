@@ -17,9 +17,19 @@ interface HeaderProps {
   isMuted: boolean;
   toggleMute: () => void;
   onNavigate?: (path: string) => void;
+  currentMode?: "wheel" | "timeline";
 }
 
-export default function Header({ theme, setTheme, lang, setLang, isMuted, toggleMute, onNavigate }: HeaderProps) {
+export default function Header({
+  theme,
+  setTheme,
+  lang,
+  setLang,
+  isMuted,
+  toggleMute,
+  onNavigate,
+  currentMode,
+}: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -71,7 +81,10 @@ export default function Header({ theme, setTheme, lang, setLang, isMuted, toggle
 
   const isActive = (path: string) => {
     if (path === "/") {
-      return location.pathname === "/" || location.pathname.startsWith("/series");
+      return (location.pathname === "/" || location.pathname.startsWith("/series")) && currentMode !== "timeline";
+    }
+    if (path === "/timeline") {
+      return (location.pathname === "/" || location.pathname.startsWith("/series")) && currentMode === "timeline";
     }
     return location.pathname === path;
   };

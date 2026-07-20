@@ -27,8 +27,6 @@ const Lightbox = lazy(() => import("./components/Lightbox"));
 const AboutContact = lazy(() => import("./components/AboutContact"));
 const loadPlaygroundView = () => import("./components/Playground");
 const Playground = lazy(loadPlaygroundView);
-const loadTimelineView = () => import("./components/TimelineView");
-const TimelineView = lazy(loadTimelineView);
 
 type RouteTransitionPhase =
   | "idle"
@@ -66,6 +64,22 @@ export default function App() {
     }
     return "light";
   });
+  const [homeViewMode, setHomeViewMode] = useState<"wheel" | "timeline">(() => {
+    if (typeof sessionStorage !== "undefined") {
+      const saved = sessionStorage.getItem("homeViewMode");
+      if (saved === "wheel" || saved === "timeline") return saved;
+    }
+    return "wheel";
+  });
+
+  const effectiveTheme = homeViewMode === "timeline" && location.pathname === "/" ? "light" : theme;
+
+  useEffect(() => {
+    if (typeof sessionStorage !== "undefined") {
+      sessionStorage.setItem("homeViewMode", homeViewMode);
+    }
+  }, [homeViewMode]);
+
   const [lang, setLang] = useState<Language>("en");
 
   const localizedData = useMemo(() => getLocalizedData(lang), [lang]);
@@ -121,13 +135,13 @@ export default function App() {
 
   // Toggle dark class on document when theme changes
   useEffect(() => {
-    if (theme === "dark") {
+    if (effectiveTheme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
     localStorage.setItem('themePreference', theme);
-  }, [theme]);
+  }, [effectiveTheme, theme]);
 
   // Update html lang attribute for CSS font switching
   useEffect(() => {
@@ -170,20 +184,27 @@ export default function App() {
     }
 
     if (path === "/timeline") {
-      startRouteTransition(loadTimelineView, path);
+      setHomeViewMode("timeline");
+      if (location.pathname !== "/") {
+        navigate("/");
+      }
       return;
     }
 
-    if (path === "/" && location.pathname.startsWith("/series")) {
-      navigate("/", { state: { restoreWheel: true } });
-    } else {
-      navigate(path);
+    if (path === "/") {
+      setHomeViewMode("wheel");
+      if (location.pathname !== "/") {
+        navigate("/", { state: { restoreWheel: true } });
+      }
+      return;
     }
+
+    navigate(path);
   }, [location.pathname, navigate, startRouteTransition]);
 
   const handleTimelineClick = useCallback(() => {
-    startRouteTransition(loadTimelineView, "/timeline");
-  }, [startRouteTransition]);
+    setHomeViewMode((prev) => (prev === "timeline" ? "wheel" : "timeline"));
+  }, []);
 
   const handleRoutePageReady = useCallback(() => {
     setRoutePageReady(true);
@@ -354,7 +375,7 @@ export default function App() {
   }, [isMuted]);
 
   const shouldLoadRoute = (path: string) => {
-    return path.startsWith("/series") || path === "/playground" || path === "/timeline";
+    return path.startsWith("/series") || path === "/playground";
   };
 
   // Keep the previous route mounted while the transition layer is visible.
@@ -737,13 +758,14 @@ export default function App() {
             }}
           >
             <Header
-              theme={theme}
+              theme={effectiveTheme}
               setTheme={setTheme}
               lang={lang}
               setLang={setLang}
               isMuted={isMuted}
               toggleMute={toggleMute}
               onNavigate={handleHeaderNavigate}
+              currentMode={homeViewMode}
             />
           </div>
 
@@ -787,6 +809,7 @@ export default function App() {
                         photographyData={localizedData}
                         lang={lang}
                         onTimelineClick={handleTimelineClick}
+                        viewMode={homeViewMode}
                       />
                     </motion.div>
                   }
@@ -860,27 +883,6 @@ export default function App() {
                   }
                 />
 
-                {/* Timeline View */}
-                <Route
-                  path="/timeline"
-                  element={
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={pageTransition}
-                      style={safariTransitionFix}
-                      className="fixed inset-0 w-full h-full overflow-hidden"
-                    >
-                      <TimelineView
-                        photographyData={localizedData}
-                        onSelectSeries={handleSelectSeries}
-                        lang={lang}
-                        onReady={handleRoutePageReady}
-                      />
-                    </motion.div>
-                  }
-                />
                     </Routes>
                   </Suspense>
                 </motion.div>
