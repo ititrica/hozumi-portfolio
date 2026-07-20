@@ -347,16 +347,6 @@ export default function CustomCursor({ lang }: { lang: Language }) {
 
           <div className="absolute top-[5px] left-[8px] w-[9px] h-[4px] rounded-full bg-white/55 blur-[1px]" />
           {/* Main circle — shrinks to 0 when arrow is visible */}
-          <motion.div
-            className="rounded-full bg-white absolute z-10 shadow-[0_0_5px_rgba(255,255,255,0.75)]"
-            animate={{
-              width: isArrowHover ? 0 : 12,
-              height: isArrowHover ? 0 : 12,
-              opacity: isArrowHover ? 0 : 1,
-            }}
-            transition={{ type: "spring", stiffness: 250, damping: 22 }}
-          />
-
           {/* Left Arrow Icon */}
           <motion.div
             className="absolute flex items-center justify-center text-white"
