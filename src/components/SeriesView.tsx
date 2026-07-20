@@ -108,15 +108,45 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang, onRead
     }
   };
 
-  // Thumbnail size derived from gutter width (clamped 64–160px wide, 4:3 ratio)
+  // Thumbnail size derived from gutter width (clamped 64–160px wide)
   const thumbW = Math.max(64, Math.min(160, Math.floor(gutterInfo.width * 0.7)));
-  const thumbH = Math.round(thumbW * 0.75);
+  const thumbH = Math.round(thumbW * 0.75); // Fallback height
   const framePad = 4; // gap between indicator frame and thumbnail edge
 
+  // Determine thumbnail heights dynamically based on photo's aspect ratio to prevent clipping
+  const thumbMetrics = useMemo(() => {
+    const getThumbHeight = (photo: Photo) => {
+      if (photo.aspectRatio === "portrait") return Math.round(thumbW * 1.35);
+      if (photo.aspectRatio === "square") return thumbW;
+      return Math.round(thumbW * 0.667); // landscape
+    };
+
+    let currentY = 0;
+    const metrics = allPhotos.map((photo) => {
+      const h = getThumbHeight(photo);
+      const y = currentY;
+      currentY += h;
+      return { height: h, y };
+    });
+    return { metrics, totalHeight: currentY };
+  }, [allPhotos, thumbW]);
+
   // Scale strip down if total height exceeds viewport
-  const totalStripH = allPhotos.length * thumbH;
+  const totalStripH = thumbMetrics.totalHeight;
   const maxStripH = gutterInfo.vpHeight * 0.78;
   const stripScale = totalStripH > maxStripH ? maxStripH / totalStripH : 1;
+
+  // Dynamically interpolate the active frame indicator's height based on scroll progress
+  const currentFrameHeight = useMemo(() => {
+    if (allPhotos.length === 0) return thumbH;
+    const activeIndexFloat = scrollProgress * (allPhotos.length - 1);
+    const lowerIndex = Math.floor(activeIndexFloat);
+    const upperIndex = Math.min(allPhotos.length - 1, Math.ceil(activeIndexFloat));
+    const ratio = activeIndexFloat - lowerIndex;
+    const lowerHeight = thumbMetrics.metrics[lowerIndex]?.height ?? thumbH;
+    const upperHeight = thumbMetrics.metrics[upperIndex]?.height ?? thumbH;
+    return lowerHeight * (1 - ratio) + upperHeight * ratio;
+  }, [allPhotos, scrollProgress, thumbMetrics.metrics, thumbH]);
 
   const photosList = useMemo(() => {
     return (
@@ -255,35 +285,44 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang, onRead
             }}
           >
             <div className="relative flex flex-col space-y-0">
-              {allPhotos.map((photo, index) => (
-                <button
-                  key={`thumb-${photo.id}`}
-                  onClick={() => scrollToPhoto(index)}
-                  className="overflow-hidden opacity-50 hover:opacity-85 transition-opacity block focus:outline-none"
-                  style={{ width: thumbW, height: thumbH }}
-                  data-cursor="nav"
-                >
-                  <img
-                    src={photo.url.replace(/\.webp$/, "-thumb.webp")}
-                    alt={`Thumbnail ${index}`}
-                    loading="lazy"
-                    decoding="async"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
+              {allPhotos.map((photo, index) => {
+                const metric = thumbMetrics.metrics[index];
+                return (
+                  <button
+                    key={`thumb-${photo.id}`}
+                    onClick={() => scrollToPhoto(index)}
+                    className="overflow-hidden opacity-50 hover:opacity-85 transition-opacity block focus:outline-none"
+                    style={{ width: thumbW, height: metric.height }}
+                    data-cursor="nav"
+                  >
+                    <img
+                      src={photo.url.replace(/\.webp$/, "-thumb.webp")}
+                      alt={`Thumbnail ${index}`}
+                      loading="lazy"
+                      decoding="async"
+                      referrerPolicy="no-referrer"
+                      onError={(event) => {
+                        const image = event.currentTarget;
+                        if (image.src.endsWith("-thumb.webp")) image.src = photo.url;
+                      }}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                );
+              })}
 
               {/* Freely moving stepless indicator frame — larger than thumb with inner gap */}
               <motion.div
                 className="absolute border border-neutral-950 dark:border-white pointer-events-none z-10"
                 style={{
                   width: thumbW + framePad * 2,
-                  height: thumbH + framePad * 2,
                   left: -framePad,
                   top: -framePad,
                 }}
-                animate={{ y: scrollProgress * (allPhotos.length - 1) * thumbH }}
+                animate={{
+                  y: allPhotos.length > 1 ? scrollProgress * thumbMetrics.metrics[allPhotos.length - 1].y : 0,
+                  height: currentFrameHeight + framePad * 2
+                }}
                 transition={{ type: "spring", stiffness: 180, damping: 25, mass: 0.35 }}
               />
             </div>
