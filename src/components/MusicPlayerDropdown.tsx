@@ -160,15 +160,32 @@ export default function MusicPlayerDropdown({
     }
   };
 
-  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+  const updateSeekPosition = (clientX: number, track: HTMLDivElement) => {
     const audio = document.getElementById("bg-audio") as HTMLAudioElement;
-    if (audio && audio.duration) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-      audio.currentTime = ratio * audio.duration;
-    }
+    if (!audio || !audio.duration) return;
+
+    const rect = track.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    audio.currentTime = ratio * audio.duration;
+  };
+
+  const handleSeekMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+
+    const track = e.currentTarget;
+    updateSeekPosition(e.clientX, track);
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      updateSeekPosition(moveEvent.clientX, track);
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
   };
 
   const formatTime = (time: number) => {
@@ -218,9 +235,9 @@ export default function MusicPlayerDropdown({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 12, scale: 0.96 }}
         transition={{ duration: 0.25, ease: [0.215, 0.61, 0.355, 1] }}
-        className="absolute top-12 right-0 z-50 w-72 p-5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] bg-white/20 dark:bg-[#181614]/30 border border-white/25 dark:border-neutral-800/40 transition-colors duration-1000 flex flex-col items-center pointer-events-auto"
+        className="absolute top-full left-1/2 mt-3 z-50 w-72 -translate-x-1/2 p-5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] bg-white/20 dark:bg-[#181614]/30 border border-white/25 dark:border-neutral-800/40 transition-colors duration-1000 flex flex-col items-center pointer-events-auto"
         style={{
-          transformOrigin: "top right",
+          transformOrigin: "top center",
           backdropFilter: `url(#${filterId}) blur(24px)`,
           WebkitBackdropFilter: "blur(24px)",
         }}
@@ -243,7 +260,7 @@ export default function MusicPlayerDropdown({
         </span>
 
         <div
-          onClick={handleSeek}
+          onMouseDown={handleSeekMouseDown}
           className="flex-1 h-1 bg-neutral-200 dark:bg-neutral-800 rounded-full relative cursor-pointer group"
         >
           <div
