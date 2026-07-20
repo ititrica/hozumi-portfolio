@@ -505,10 +505,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
 
   const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const activeAnimationRef = useRef<any | null>(null);
-  const isMouseDownRef = useRef(false);
-  const dragStartXRef = useRef(0);
   const scrollStartRef = useRef(0);
-  const hasDraggedRef = useRef(false);
 
   // Wheel Scroll handler with automatic snapping timeout (native non-passive for Safari compatibility)
   useEffect(() => {
@@ -601,50 +598,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
     });
   };
 
-  // Mouse drag handlers for desktop timeline mode (and optional wheel mode kinetic scroll)
-  const handleMouseDown = (e: React.MouseEvent) => {
-    // Only support left button drag
-    if (e.button !== 0) return;
-    if (activeAnimationRef.current) {
-      activeAnimationRef.current.stop();
-      activeAnimationRef.current = null;
-    }
-    isMouseDownRef.current = true;
-    dragStartXRef.current = e.clientX;
-    scrollStartRef.current = scrollProgress.get();
-    hasDraggedRef.current = false;
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isMouseDownRef.current) return;
-    const deltaX = dragStartXRef.current - e.clientX;
-    if (Math.abs(deltaX) > 4) {
-      hasDraggedRef.current = true;
-    }
-
-    const cardWidth = isMobile ? 180 : 220;
-    const stepSize = viewMode === "timeline" ? (cardWidth + 48) : (dimensions.width / 3.0);
-    const scrollDelta = deltaX / stepSize;
-    const newTarget = Math.max(0, Math.min(photographyData.length - 1, scrollStartRef.current + scrollDelta));
-    scrollProgress.set(newTarget);
-  };
-
-  const handleMouseUp = () => {
-    if (!isMouseDownRef.current) return;
-    isMouseDownRef.current = false;
-    
-    const nearest = Math.round(scrollProgress.get());
-    activeAnimationRef.current = animate(scrollProgress, nearest, {
-      type: "spring",
-      stiffness: 90,
-      damping: 18,
-    });
-  };
-
   const handleCardClick = (index: number, series: PhotographySeries) => {
-    // If the mouse was dragged, discard the click
-    if (hasDraggedRef.current) return;
-
     playButtonFeedback();
     sessionStorage.setItem("wheelIndex", String(index));
 
@@ -666,14 +620,9 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
       className="relative w-full h-full overflow-hidden select-none bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-200 cursor-default flex flex-col justify-between transition-colors duration-1000"
       id="home-wheel-viewport"
       data-active-card={interactiveIndex}
-      data-cursor={viewMode === "timeline" ? "drag" : ""}
     >
       <div className="sr-only">
         <h1>Hozumi Photography Portfolio</h1>
@@ -877,6 +826,50 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
           </span>
         </button>
       )}
+
+      {/* Bottom Horizontal Year Navigation List (Timeline Mode Only) */}
+      <motion.div
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-6 md:gap-8 pointer-events-auto"
+        style={{
+          opacity: timelineTransition,
+          pointerEvents: useTransform(timelineTransition, (trans) => trans > 0.5 ? "auto" : "none"),
+        }}
+      >
+        {uniqueYears.map(({ year, firstIdx }) => {
+          const isActive = activeSeries?.year === year;
+          return (
+            <button
+              key={year}
+              onClick={() => {
+                playButtonFeedback();
+                scrollToIndex(firstIdx);
+              }}
+              className="relative py-1 focus:outline-none group"
+              data-cursor="nav"
+            >
+              <span
+                className={`font-mono text-[11px] tracking-[0.2em] transition-colors duration-300 ${
+                  isActive
+                    ? "text-neutral-900 dark:text-white font-medium"
+                    : "text-neutral-400 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-300"
+                }`}
+              >
+                {year}
+              </span>
+              {/* Active year animated line indicator */}
+              <motion.div
+                className="absolute bottom-0 left-0 right-0 h-[1px] bg-neutral-900 dark:bg-white"
+                initial={false}
+                animate={{
+                  scaleX: isActive ? 1 : 0,
+                  opacity: isActive ? 1 : 0,
+                }}
+                transition={{ type: "spring", stiffness: 120, damping: 18 }}
+              />
+            </button>
+          );
+        })}
+      </motion.div>
     </div>
   );
 }
