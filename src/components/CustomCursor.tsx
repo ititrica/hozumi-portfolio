@@ -22,6 +22,19 @@ export default function CustomCursor({ lang }: { lang: Language }) {
   const cursorGlassSize = 34;
 
   useEffect(() => {
+    const smoothStep = (edge0: number, edge1: number, value: number) => {
+      const t = Math.max(0, Math.min(1, (value - edge0) / (edge1 - edge0)));
+      return t * t * (3 - 2 * t);
+    };
+
+    const length = (x: number, y: number) => Math.sqrt(x * x + y * y);
+
+    const roundedRectSDF = (x: number, y: number, width: number, height: number, radius: number) => {
+      const qx = Math.abs(x) - width + radius;
+      const qy = Math.abs(y) - height + radius;
+      return Math.min(Math.max(qx, qy), 0) + length(Math.max(qx, 0), Math.max(qy, 0)) - radius;
+    };
+
     const canvas = document.createElement("canvas");
     canvas.width = cursorGlassSize;
     canvas.height = cursorGlassSize;
@@ -31,25 +44,35 @@ export default function CustomCursor({ lang }: { lang: Language }) {
 
     const imageData = context.createImageData(cursorGlassSize, cursorGlassSize);
     const data = imageData.data;
-    const center = cursorGlassSize / 2;
-    const radius = cursorGlassSize * 0.44;
+    const rawValues: number[] = [];
+    let maxScale = 0;
 
-    for (let y = 0; y < cursorGlassSize; y += 1) {
-      for (let x = 0; x < cursorGlassSize; x += 1) {
-        const dx = x - center;
-        const dy = y - center;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const edgeDistance = Math.abs(distance - radius);
-        const edgeStrength = Math.max(0, 1 - edgeDistance / 5);
-        const normalX = distance > 0 ? dx / distance : 0;
-        const normalY = distance > 0 ? dy / distance : 0;
-        const index = (y * cursorGlassSize + x) * 4;
+    for (let index = 0; index < data.length; index += 4) {
+      const x = (index / 4) % cursorGlassSize;
+      const y = Math.floor(index / 4 / cursorGlassSize);
+      const uvX = x / cursorGlassSize;
+      const uvY = y / cursorGlassSize;
+      const ix = uvX - 0.5;
+      const iy = uvY - 0.5;
+      const distanceToEdge = roundedRectSDF(ix, iy, 0.3, 0.3, 0.6);
+      const displacement = smoothStep(0.8, 0, distanceToEdge - 0.15);
+      const scaled = smoothStep(0, 1, displacement);
+      const targetX = (ix * scaled + 0.5) * cursorGlassSize;
+      const targetY = (iy * scaled + 0.5) * cursorGlassSize;
+      const dx = targetX - x;
+      const dy = targetY - y;
 
-        data[index] = Math.max(0, Math.min(255, 128 + normalX * edgeStrength * 42));
-        data[index + 1] = Math.max(0, Math.min(255, 128 + normalY * edgeStrength * 42));
-        data[index + 2] = 128;
-        data[index + 3] = 255;
-      }
+      maxScale = Math.max(maxScale, Math.abs(dx), Math.abs(dy));
+      rawValues.push(dx, dy);
+    }
+
+    maxScale *= 0.5;
+    let rawIndex = 0;
+    for (let index = 0; index < data.length; index += 4) {
+      data[index] = ((rawValues[rawIndex++] / maxScale) + 0.5) * 255;
+      data[index + 1] = ((rawValues[rawIndex++] / maxScale) + 0.5) * 255;
+      data[index + 2] = 0;
+      data[index + 3] = 255;
     }
 
     context.putImageData(imageData, 0, 0);
@@ -291,16 +314,18 @@ export default function CustomCursor({ lang }: { lang: Language }) {
         <defs>
           <filter
             id={cursorGlassFilterId}
-            x="-50%"
-            y="-50%"
-            width="200%"
-            height="200%"
+            x="0"
+            y="0"
+            width={cursorGlassSize}
+            height={cursorGlassSize}
             filterUnits="userSpaceOnUse"
             colorInterpolationFilters="sRGB"
           >
             {displacementMapUrl && (
               <feImage
                 href={displacementMapUrl}
+                x="0"
+                y="0"
                 width={cursorGlassSize}
                 height={cursorGlassSize}
                 result="cursor-displacement-map"
@@ -338,14 +363,14 @@ export default function CustomCursor({ lang }: { lang: Language }) {
         <div className="relative flex items-center justify-center w-[34px] h-[34px]">
           {/* SVG displacement map + backdrop filter create the liquid-glass lens. */}
           <div
-            className="absolute inset-0 rounded-full border border-white/55 bg-white/10 shadow-[0_0_14px_rgba(255,255,255,0.22),inset_0_0_8px_rgba(255,255,255,0.28)]"
+            className="absolute inset-0 rounded-full border border-white/45 bg-transparent shadow-[0_4px_8px_rgba(0,0,0,0.22),inset_0_-10px_25px_rgba(0,0,0,0.15)]"
             style={{
-              backdropFilter: "url(#" + cursorGlassFilterId + ") blur(1.5px) contrast(1.2) brightness(1.08) saturate(1.15)",
-              WebkitBackdropFilter: "url(#" + cursorGlassFilterId + ") blur(1.5px) contrast(1.2) brightness(1.08) saturate(1.15)",
+              backdropFilter: "url(#" + cursorGlassFilterId + ") contrast(1.2) brightness(1.05) saturate(1.1)",
+              WebkitBackdropFilter: "url(#" + cursorGlassFilterId + ") contrast(1.2) brightness(1.05) saturate(1.1)",
             }}
           />
 
-          <div className="absolute top-[5px] left-[8px] w-[9px] h-[4px] rounded-full bg-white/55 blur-[1px]" />
+          <div className="absolute top-[5px] left-[8px] w-[9px] h-[4px] rounded-full bg-white/30" />
           {/* Main circle — shrinks to 0 when arrow is visible */}
           {/* Left Arrow Icon */}
           <motion.div
