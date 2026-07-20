@@ -223,7 +223,7 @@ const WheelCard = React.memo(function WheelCard({
     >
       {/* Connector line from card to axis */}
       <motion.div
-        className={`absolute left-1/2 w-px bg-neutral-300 dark:bg-neutral-600 transition-colors duration-1000 pointer-events-none ${
+        className={`absolute left-1/2 w-px bg-neutral-300 dark:bg-neutral-450 transition-colors duration-1000 pointer-events-none ${
           isAbove ? "bottom-0 translate-y-full" : "top-0 -translate-y-full"
         }`}
         style={{
@@ -726,7 +726,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
       <div className="absolute inset-0 z-10 overflow-visible pointer-events-none">
         {/* Central horizontal timeline axis */}
         <motion.div
-          className="absolute left-0 right-0 bg-neutral-300 dark:bg-neutral-700 transition-colors duration-1000 z-0 pointer-events-none"
+          className="absolute left-0 right-0 bg-neutral-300 dark:bg-neutral-500 transition-colors duration-1000 z-0 pointer-events-none"
           style={{
             top: "50%",
             height: 1,
@@ -762,9 +762,9 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
               }}
             >
               {/* Year dot on the line */}
-              <div className="w-2 h-2 rounded-full bg-neutral-400 dark:bg-neutral-500 transition-colors duration-1000" />
+              <div className="w-2 h-2 rounded-full bg-neutral-400 dark:bg-neutral-400 transition-colors duration-1000" />
               {/* Year label */}
-              <span className="absolute top-5 font-mono text-[11px] tracking-[0.3em] text-neutral-400 dark:text-neutral-500 uppercase whitespace-nowrap transition-colors duration-1000">
+              <span className="absolute top-5 font-mono text-[11px] tracking-[0.3em] text-neutral-400 dark:text-neutral-400 uppercase whitespace-nowrap transition-colors duration-1000">
                 {year}
               </span>
             </motion.div>
@@ -894,7 +894,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
                 className={`absolute -translate-x-1/2 font-mono text-[11px] tracking-[0.2em] transition-colors duration-500 select-none ${
                   isActive
                     ? "text-neutral-900 dark:text-white font-medium"
-                    : "text-neutral-400 dark:text-neutral-500"
+                    : "text-neutral-400 dark:text-neutral-400"
                 }`}
                 style={{ left: `${percent}%` }}
               >
