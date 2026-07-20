@@ -17,6 +17,8 @@ interface HeaderProps {
   setLang: (lang: Language) => void;
   isMuted: boolean;
   toggleMute: () => void;
+  volume: number;
+  onVolumeChange: (vol: number) => void;
   onNavigate?: (path: string) => void;
   currentMode?: "wheel" | "timeline";
   currentTrack?: { title: string; artist: string; file: string };
@@ -31,6 +33,8 @@ export default function Header({
   setLang,
   isMuted,
   toggleMute,
+  volume,
+  onVolumeChange,
   onNavigate,
   currentMode,
   currentTrack,
@@ -43,6 +47,32 @@ export default function Header({
   const [logoHovered, setLogoHovered] = useState(false);
   const [localTime, setLocalTime] = useState("");
   const [isPlayerVisible, setIsPlayerVisible] = useState(false);
+
+  const handleVolumeMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+
+    const slider = e.currentTarget;
+    const updateVolume = (moveEvent: MouseEvent) => {
+      const rect = slider.getBoundingClientRect();
+      const clickX = moveEvent.clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+      onVolumeChange(ratio);
+    };
+
+    updateVolume(e.nativeEvent);
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      updateVolume(moveEvent);
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
 
   // Live Beijing clock ticking
   useEffect(() => {
@@ -193,19 +223,9 @@ export default function Header({
               );
             })}
 
-            {/* Theme Toggle Button */}
-            <button
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="p-2 text-neutral-700 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-1000 ml-2"
-              aria-label="Toggle Theme"
-              data-cursor="nav"
-            >
-              {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
-            </button>
-
             {/* Volume Button & Music Player Dropdown container */}
             <div
-              className="relative ml-1 flex items-center h-full"
+              className="relative ml-2 flex items-center h-full group/volume"
               onMouseEnter={() => setIsPlayerVisible(true)}
               onMouseLeave={() => setIsPlayerVisible(false)}
             >
@@ -218,6 +238,21 @@ export default function Header({
                 {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
               </button>
 
+              {/* Volume Slider */}
+              <div
+                onMouseDown={handleVolumeMouseDown}
+                className="w-16 h-1 bg-neutral-200 dark:bg-neutral-800 rounded-full relative cursor-pointer mr-2 flex items-center select-none group/vol-slider"
+              >
+                <div
+                  className="bg-neutral-900 dark:bg-white h-full rounded-full transition-all duration-75"
+                  style={{ width: `${isMuted ? 0 : volume * 100}%` }}
+                />
+                <div
+                  className="absolute w-2.5 h-2.5 rounded-full bg-neutral-900 dark:bg-white shadow-[0_1px_3px_rgba(0,0,0,0.2)] transition-transform group-hover/vol-slider:scale-125"
+                  style={{ left: `calc(${isMuted ? 0 : volume * 100}% - 5px)` }}
+                />
+              </div>
+
               <AnimatePresence>
                 {isPlayerVisible && (
                   <MusicPlayerDropdown
@@ -229,6 +264,16 @@ export default function Header({
                 )}
               </AnimatePresence>
             </div>
+
+            {/* Theme Toggle Button */}
+            <button
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="p-2 text-neutral-700 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-1000 ml-2"
+              aria-label="Toggle Theme"
+              data-cursor="nav"
+            >
+              {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+            </button>
 
             {/* Language Switcher */}
             <div className="flex items-center space-x-5 ml-6 relative select-none" style={{ fontFamily: "'DM Sans', 'DM Sans Local', sans-serif" }}>
