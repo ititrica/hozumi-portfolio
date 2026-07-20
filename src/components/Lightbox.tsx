@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import { motion, AnimatePresence } from "motion/react";
 import { Photo } from "../types";
 import { Language, UI_TRANSLATIONS } from "../i18n";
@@ -116,23 +116,19 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
 
       {/* Main Content Area */}
       <div className="relative flex-1 flex items-center justify-center overflow-hidden px-12">
-        
-        {/* Navigation Arrows */}
-        <button
+        {/* Left navigation hit target */}
+        <div
           onClick={handlePrev}
-          className="absolute left-6 p-4 rounded-none bg-neutral-900/30 border border-neutral-800/10 text-neutral-400 hover:text-white hover:bg-neutral-900/80 transition-all duration-300 z-30"
-          data-cursor="nav"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
+          className="absolute left-0 top-0 w-1/2 h-full z-20"
+          data-cursor="prev"
+        />
 
-        <button
+        {/* Right navigation hit target */}
+        <div
           onClick={handleNext}
-          className="absolute right-6 p-4 rounded-none bg-neutral-900/30 border border-neutral-800/10 text-neutral-400 hover:text-white hover:bg-neutral-900/80 transition-all duration-300 z-30"
-          data-cursor="nav"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
+          className="absolute right-0 top-0 w-1/2 h-full z-20"
+          data-cursor="next"
+        />
 
         {/* Render Active Image with close capabilities */}
         <div 

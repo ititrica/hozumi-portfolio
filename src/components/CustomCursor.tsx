@@ -5,6 +5,7 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Language, UI_TRANSLATIONS } from "../i18n";
 
 export default function CustomCursor({ lang }: { lang: Language }) {
@@ -224,6 +225,9 @@ export default function CustomCursor({ lang }: { lang: Language }) {
   const isCardHover = cursorType === "home-card";
   const isViewHover = cursorType === "view";
   const isCloseHover = cursorType === "close";
+  const isPrevHover = cursorType === "prev";
+  const isNextHover = cursorType === "next";
+  const isArrowHover = isPrevHover || isNextHover;
   const isLabelHover = isCardHover || isViewHover || isCloseHover;
   const labelText = isCardHover ? t.cursorEnter : isViewHover ? t.cursorView : isCloseHover ? "CLOSE" : "";
 
@@ -239,17 +243,53 @@ export default function CustomCursor({ lang }: { lang: Language }) {
         animate={{
           scale: isClicking
             ? 0.8
-            : (isLabelHover || isHovered)
-              ? 2.2
-              : 1,
+            : isArrowHover
+              ? 1
+              : (isLabelHover || isHovered)
+                ? 2.2
+                : 1,
         }}
         transition={{ type: "tween", duration: 0.15 }}
       >
         <div className="relative flex items-center justify-center">
-          {/* Main circle — uniform size and style for all states */}
-          <div
-            className="rounded-full transition-all duration-300 relative overflow-hidden flex items-center justify-center bg-white w-3 h-3"
+          {/* Main circle — shrinks to 0 when arrow is visible */}
+          <motion.div
+            className="rounded-full bg-white absolute"
+            animate={{
+              width: isArrowHover ? 0 : 12,
+              height: isArrowHover ? 0 : 12,
+              opacity: isArrowHover ? 0 : 1,
+            }}
+            transition={{ type: "spring", stiffness: 250, damping: 22 }}
           />
+
+          {/* Left Arrow Icon */}
+          <motion.div
+            className="absolute flex items-center justify-center text-white"
+            initial={{ scale: 0, opacity: 0, rotate: -45 }}
+            animate={{
+              scale: isPrevHover ? 1.4 : 0,
+              opacity: isPrevHover ? 1 : 0,
+              rotate: isPrevHover ? 0 : -45,
+            }}
+            transition={{ type: "spring", stiffness: 250, damping: 22 }}
+          >
+            <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
+          </motion.div>
+
+          {/* Right Arrow Icon */}
+          <motion.div
+            className="absolute flex items-center justify-center text-white"
+            initial={{ scale: 0, opacity: 0, rotate: 45 }}
+            animate={{
+              scale: isNextHover ? 1.4 : 0,
+              opacity: isNextHover ? 1 : 0,
+              rotate: isNextHover ? 0 : 45,
+            }}
+            transition={{ type: "spring", stiffness: 250, damping: 22 }}
+          >
+            <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+          </motion.div>
         </div>
       </motion.div>
 
