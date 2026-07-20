@@ -8,6 +8,7 @@ import { Sun, Moon, Menu, X, Volume2, VolumeX } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Language, UI_TRANSLATIONS } from "../i18n";
+import MusicPlayerDropdown from "./MusicPlayerDropdown";
 
 interface HeaderProps {
   theme: "light" | "dark";
@@ -18,6 +19,9 @@ interface HeaderProps {
   toggleMute: () => void;
   onNavigate?: (path: string) => void;
   currentMode?: "wheel" | "timeline";
+  currentTrack?: { title: string; artist: string; file: string };
+  onPrevTrack?: () => void;
+  onNextTrack?: () => void;
 }
 
 export default function Header({
@@ -29,12 +33,16 @@ export default function Header({
   toggleMute,
   onNavigate,
   currentMode,
+  currentTrack,
+  onPrevTrack,
+  onNextTrack,
 }: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
   const [localTime, setLocalTime] = useState("");
+  const [isPlayerVisible, setIsPlayerVisible] = useState(false);
 
   // Live Beijing clock ticking
   useEffect(() => {
@@ -195,15 +203,32 @@ export default function Header({
               {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             </button>
 
-            {/* Mute/Unmute Button */}
-            <button
-              onClick={toggleMute}
-              className="p-2 text-neutral-700 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-1000 ml-1"
-              aria-label={isMuted ? "Unmute Music" : "Mute Music"}
-              data-cursor="nav"
+            {/* Volume Button & Music Player Dropdown container */}
+            <div
+              className="relative ml-1 flex items-center h-full"
+              onMouseEnter={() => setIsPlayerVisible(true)}
+              onMouseLeave={() => setIsPlayerVisible(false)}
             >
-              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-            </button>
+              <button
+                onClick={toggleMute}
+                className="p-2 text-neutral-700 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-1000 focus:outline-none"
+                aria-label={isMuted ? "Unmute Music" : "Mute Music"}
+                data-cursor="nav"
+              >
+                {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+              </button>
+
+              <AnimatePresence>
+                {isPlayerVisible && (
+                  <MusicPlayerDropdown
+                    toggleMute={toggleMute}
+                    currentTrack={currentTrack}
+                    onPrevTrack={onPrevTrack}
+                    onNextTrack={onNextTrack}
+                  />
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Language Switcher */}
             <div className="flex items-center space-x-5 ml-6 relative select-none" style={{ fontFamily: "'DM Sans', 'DM Sans Local', sans-serif" }}>

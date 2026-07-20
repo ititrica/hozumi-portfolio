@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Instagram, Twitter, Mail, ArrowUp } from "lucide-react";
 
 import { PHOTOGRAPHY_DATA } from "./data";
+import { PLAYLIST } from "./data/music";
 
 // Types
 import { PhotographySeries, Photo } from "./types";
@@ -71,6 +72,8 @@ export default function App() {
     }
     return "wheel";
   });
+
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
   const effectiveTheme = theme;
 
@@ -344,6 +347,40 @@ export default function App() {
     }
   }, [isMuted]);
 
+  // Automatic playlist advance when a track ends
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleEnded = () => {
+      setCurrentTrackIndex((prev) => (prev + 1) % PLAYLIST.length);
+    };
+
+    audio.addEventListener("ended", handleEnded);
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, []);
+
+  // Track switch effect: loads and plays the new track if not muted
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (!isMuted) {
+      audio.load();
+      audio.play()
+        .then(() => {
+          audio.volume = 0.20;
+        })
+        .catch((err) => {
+          console.log("Audio play switch blocked:", err);
+        });
+    } else {
+      audio.load();
+    }
+  }, [currentTrackIndex]);
+
   // Global interaction listener to resume audio if autoplay was blocked on mount/refresh
   useEffect(() => {
     const resumeAudio = () => {
@@ -589,7 +626,7 @@ export default function App() {
     <div className="font-sans bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 dark:selection:bg-white selection:text-white dark:selection:text-neutral-900 transition-colors duration-1000 min-h-screen flex flex-col isolate">
       <SeoManager photographyData={localizedData} lang={lang} />
       {/* Background Audio Node - always mounted so it's ready to play */}
-      <audio ref={audioRef} src="/audio/music.mp3" loop playsInline preload="none" />
+      <audio id="bg-audio" ref={audioRef} src={`/audio/${PLAYLIST[currentTrackIndex].file}`} playsInline preload="none" />
 
       {/* Premium Interactive Cursor */}
       <CustomCursor lang={lang} />
@@ -766,6 +803,9 @@ export default function App() {
               toggleMute={toggleMute}
               onNavigate={handleHeaderNavigate}
               currentMode={homeViewMode}
+              currentTrack={PLAYLIST[currentTrackIndex]}
+              onPrevTrack={() => setCurrentTrackIndex((prev) => (prev - 1 + PLAYLIST.length) % PLAYLIST.length)}
+              onNextTrack={() => setCurrentTrackIndex((prev) => (prev + 1) % PLAYLIST.length)}
             />
           </div>
 
