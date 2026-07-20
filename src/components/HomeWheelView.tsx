@@ -410,23 +410,14 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
     return years.sort((a, b) => a.year.localeCompare(b.year));
   }, [photographyData]);
 
+  const NUM_TICKS = 81;
   const ticks = useMemo(() => {
     const arr = [];
-    // 4 padding ticks on the left
-    for (let i = -4; i < 0; i++) {
-      arr.push({ index: i, isPadding: true, id: `pad-l-${i}` });
-    }
-    // actual series ticks
-    photographyData.forEach((s, idx) => {
-      arr.push({ index: idx, isPadding: false, id: s.id });
-    });
-    // 4 padding ticks on the right
-    for (let i = 0; i < 4; i++) {
-      const idx = photographyData.length + i;
-      arr.push({ index: idx, isPadding: true, id: `pad-r-${idx}` });
+    for (let i = 0; i < NUM_TICKS; i++) {
+      arr.push({ index: i, id: `tick-${i}` });
     }
     return arr;
-  }, [photographyData]);
+  }, []);
 
   // Framer Motion spring scroll state for buttery kinetic movement
   const scrollProgress = useMotionValue(initialIndex);
@@ -434,6 +425,12 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
     stiffness: 75,
     damping: 20,
     mass: 0.8,
+  });
+
+  const maxIndex = photographyData.length - 1;
+  const peakIndex = useTransform(smoothProgress, (prog) => {
+    const ratio = maxIndex > 0 ? (prog as number) / maxIndex : 0;
+    return ratio * (NUM_TICKS - 1);
   });
 
   const [currentVal, setCurrentVal] = useState(initialIndex);
@@ -854,18 +851,18 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
       >
         <div className="flex items-end justify-between w-full h-full">
           {ticks.map((tick) => {
-            const tickHeight = useTransform(smoothProgress, (prog) => {
-              const distance = Math.abs(tick.index - (prog as number));
-              return 8 + 14 * Math.exp(-Math.pow(distance / 1.8, 2));
+            const tickHeight = useTransform(peakIndex, (peak) => {
+              const distance = Math.abs(tick.index - (peak as number));
+              return 8 + 14 * Math.exp(-Math.pow(distance / 4.0, 2));
             });
 
-            const tickOpacity = useTransform(smoothProgress, (prog) => {
-              const distance = Math.abs(tick.index - (prog as number));
-              return 0.25 + 0.75 * Math.exp(-Math.pow(distance / 1.8, 2));
+            const tickOpacity = useTransform(peakIndex, (peak) => {
+              const distance = Math.abs(tick.index - (peak as number));
+              return 0.25 + 0.75 * Math.exp(-Math.pow(distance / 4.0, 2));
             });
 
-            const tickColor = useTransform(smoothProgress, (prog) => {
-              const distance = Math.abs(tick.index - (prog as number));
+            const tickColor = useTransform(peakIndex, (peak) => {
+              const distance = Math.abs(tick.index - (peak as number));
               const isDark = document.documentElement.classList.contains("dark");
               const r1 = isDark ? 64 : 212;
               const g1 = isDark ? 64 : 212;
@@ -875,7 +872,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
               const g2 = isDark ? 255 : 10;
               const b2 = isDark ? 255 : 10;
 
-              const factor = Math.max(0, Math.min(1, Math.exp(-Math.pow(distance / 1.5, 2))));
+              const factor = Math.max(0, Math.min(1, Math.exp(-Math.pow(distance / 3.0, 2))));
               const r = Math.round(r1 + (r2 - r1) * factor);
               const g = Math.round(g1 + (g2 - g1) * factor);
               const b = Math.round(b1 + (b2 - b1) * factor);
