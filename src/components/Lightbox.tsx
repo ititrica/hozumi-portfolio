@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect } from "react";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Photo } from "../types";
 import { Language, UI_TRANSLATIONS } from "../i18n";
@@ -100,15 +100,16 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center">
           {/* Close Button */}
           <button
             onClick={handleCloseClick}
-            className="p-2 rounded-none bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
+            className="relative font-mono text-[11px] tracking-[0.22em] uppercase text-neutral-400 hover:text-white transition-colors duration-300 focus:outline-none py-1 group"
             data-cursor="nav"
             data-sound-handled="true"
           >
-            <X className="w-4 h-4" />
+            <span>CLOSE</span>
+            <span className="absolute left-0 right-0 bottom-0 h-[1px] bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left block" />
           </button>
         </div>
       </div>
