@@ -647,6 +647,7 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
       className="relative w-full h-full overflow-hidden select-none bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-200 cursor-default flex flex-col justify-between transition-colors duration-1000"
       id="home-wheel-viewport"
       data-active-card={interactiveIndex}
+      data-view-mode={viewMode}
     >
       <div className="sr-only">
         <h1>Hozumi Photography Portfolio</h1>

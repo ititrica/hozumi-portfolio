@@ -50,15 +50,25 @@ export default function CustomCursor({ lang }: { lang: Language }) {
 
       if (type === "home-card") {
         const homeViewport = interactiveEl.closest("#home-wheel-viewport");
-        const cardIndex = interactiveEl.getAttribute("data-card-index");
-        const activeCardIndex = homeViewport?.getAttribute("data-active-card");
+        const viewMode = homeViewport?.getAttribute("data-view-mode");
 
-        if (homeViewport && cardIndex !== activeCardIndex) {
+        if (viewMode === "timeline") {
           setIsCursorHidden(false);
-          setIsHovered(false);
-          setCursorText("");
-          setCursorType("");
+          setIsHovered(true);
+          setCursorType("view");
+          setCursorText("ENTER");
           return;
+        } else {
+          const cardIndex = interactiveEl.getAttribute("data-card-index");
+          const activeCardIndex = homeViewport?.getAttribute("data-active-card");
+
+          if (homeViewport && cardIndex !== activeCardIndex) {
+            setIsCursorHidden(false);
+            setIsHovered(false);
+            setCursorText("");
+            setCursorType("");
+            return;
+          }
         }
       }
 
