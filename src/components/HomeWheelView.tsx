@@ -62,6 +62,8 @@ interface WheelCardProps {
   onSelectSeries: (series: PhotographySeries) => void;
   onFocusCard: (index: number) => void;
   timelineTransition: MotionValue<number>;
+  viewMode: "wheel" | "timeline";
+  onCardClick: (index: number, series: PhotographySeries) => void;
 }
 
 const WheelCard = React.memo(function WheelCard({
@@ -73,6 +75,8 @@ const WheelCard = React.memo(function WheelCard({
   onSelectSeries,
   onFocusCard,
   timelineTransition,
+  viewMode,
+  onCardClick,
 }: WheelCardProps) {
   const isMobile = dimensions.width < 768;
   const baseWidth = getBaseSize(index, dimensions.width, isMobile);
@@ -195,13 +199,7 @@ const WheelCard = React.memo(function WheelCard({
   });
 
   const handleClick = () => {
-    playButtonFeedback();
-    sessionStorage.setItem("wheelIndex", String(index));
-    if (index === activeIndex) {
-      onSelectSeries(series);
-    } else {
-      onFocusCard(index);
-    }
+    onCardClick(index, series);
   };
 
   return (
@@ -489,6 +487,10 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
 
   const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const activeAnimationRef = useRef<any | null>(null);
+  const isMouseDownRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const scrollStartRef = useRef(0);
+  const hasDraggedRef = useRef(false);
 
   // Wheel Scroll handler with automatic snapping timeout (native non-passive for Safari compatibility)
   useEffect(() => {
@@ -538,7 +540,6 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
 
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
-  const scrollStartRef = useRef<number>(0);
 
   // Swipe / Drag Gestures support for mobile browsers (supporting both horizontal and vertical swipes)
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -582,6 +583,64 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
     });
   };
 
+  // Mouse drag handlers for desktop timeline mode (and optional wheel mode kinetic scroll)
+  const handleMouseDown = (e: React.MouseEvent) => {
+    // Only support left button drag
+    if (e.button !== 0) return;
+    if (activeAnimationRef.current) {
+      activeAnimationRef.current.stop();
+      activeAnimationRef.current = null;
+    }
+    isMouseDownRef.current = true;
+    dragStartXRef.current = e.clientX;
+    scrollStartRef.current = scrollProgress.get();
+    hasDraggedRef.current = false;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDownRef.current) return;
+    const deltaX = dragStartXRef.current - e.clientX;
+    if (Math.abs(deltaX) > 4) {
+      hasDraggedRef.current = true;
+    }
+
+    const cardWidth = isMobile ? 180 : 220;
+    const stepSize = viewMode === "timeline" ? (cardWidth + 48) : (dimensions.width / 3.0);
+    const scrollDelta = deltaX / stepSize;
+    const newTarget = Math.max(0, Math.min(photographyData.length - 1, scrollStartRef.current + scrollDelta));
+    scrollProgress.set(newTarget);
+  };
+
+  const handleMouseUp = () => {
+    if (!isMouseDownRef.current) return;
+    isMouseDownRef.current = false;
+    
+    const nearest = Math.round(scrollProgress.get());
+    activeAnimationRef.current = animate(scrollProgress, nearest, {
+      type: "spring",
+      stiffness: 90,
+      damping: 18,
+    });
+  };
+
+  const handleCardClick = (index: number, series: PhotographySeries) => {
+    // If the mouse was dragged, discard the click
+    if (hasDraggedRef.current) return;
+
+    playButtonFeedback();
+    sessionStorage.setItem("wheelIndex", String(index));
+
+    if (viewMode === "timeline") {
+      onSelectSeries(series);
+    } else {
+      if (index === activeIndex) {
+        onSelectSeries(series);
+      } else {
+        scrollToIndex(index);
+      }
+    }
+  };
+
 
   return (
     <div
@@ -589,9 +648,14 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
       className="relative w-full h-full overflow-hidden select-none bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-200 cursor-default flex flex-col justify-between transition-colors duration-1000"
       id="home-wheel-viewport"
-       data-active-card={interactiveIndex}
+      data-active-card={interactiveIndex}
+      data-cursor={viewMode === "timeline" ? "drag" : ""}
     >
       <div className="sr-only">
         <h1>Hozumi Photography Portfolio</h1>
@@ -727,6 +791,8 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
               onSelectSeries={onSelectSeries}
               onFocusCard={scrollToIndex}
               timelineTransition={timelineTransition}
+              viewMode={viewMode}
+              onCardClick={handleCardClick}
             />
           );
         })}
