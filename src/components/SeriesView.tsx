@@ -8,6 +8,7 @@ import { motion } from "motion/react";
 import { PhotographySeries, Photo } from "../types";
 import { Language, UI_TRANSLATIONS } from "../i18n";
 import { playButtonFeedback } from "../utils/uiSound";
+import { getMediaUrl } from "../utils/media";
 
 interface SeriesViewProps {
   series: PhotographySeries;
@@ -200,7 +201,7 @@ export default function SeriesView({ series, onBack, onSelectPhoto, lang, onRead
                   referrerPolicy="no-referrer"
                   onError={(event) => {
                     const image = event.currentTarget;
-                    if (image.src.endsWith("-display.webp")) image.src = photo.url;
+                    if (image.src.endsWith("-display.webp")) image.src = getMediaUrl(photo.url);
                   }}
                   className="w-full h-auto block transition-transform duration-[1.2s] group-hover:scale-101.5"
                 />

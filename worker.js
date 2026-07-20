@@ -1,4 +1,29 @@
-const CACHEABLE_PATHS = ["/images/", "/assets/"];
+const CACHEABLE_PATHS = ["/images/", "/assets/", "/media/"];
+const R2_MEDIA_PREFIX = "/media/";
+
+async function serveMedia(request, env, pathname) {
+  if (!env.MEDIA_BUCKET) {
+    return new Response("R2 media binding is not configured.", { status: 500 });
+  }
+
+  const key = decodeURIComponent(pathname.slice(R2_MEDIA_PREFIX.length));
+  if (!key) return new Response("Media key is required.", { status: 400 });
+
+  const object = await env.MEDIA_BUCKET.get(key, {
+    range: request.headers,
+  });
+  if (!object) return new Response("Media object not found.", { status: 404 });
+
+  const headers = new Headers();
+  object.writeHttpMetadata(headers);
+  headers.set("etag", object.httpEtag);
+  headers.set("Cache-Control", "public, max-age=31536000, immutable");
+
+  return new Response(request.method === "HEAD" ? null : object.body, {
+    status: request.headers.has("range") ? 206 : 200,
+    headers,
+  });
+}
 
 function getStaticRoutePath(pathname) {
   const normalizedPath = pathname.length > 1 && pathname.endsWith("/")
@@ -19,6 +44,11 @@ function getStaticRoutePath(pathname) {
 export default {
   async fetch(request, env) {
     const pathname = new URL(request.url).pathname;
+
+    if ((request.method === "GET" || request.method === "HEAD") && pathname.startsWith(R2_MEDIA_PREFIX)) {
+      return serveMedia(request, env, pathname);
+    }
+
     const staticRoutePath = request.method === "GET" || request.method === "HEAD"
       ? getStaticRoutePath(pathname)
       : null;

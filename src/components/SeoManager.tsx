@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import { PhotographySeries } from "../types";
 import { Language } from "../i18n";
+import { getMediaUrl } from "../utils/media";
 
 const SITE_URL = "https://hozumifolio.uk";
 
@@ -66,7 +67,7 @@ function setCanonical(url: string) {
 }
 
 function absoluteUrl(value: string) {
-  return value.startsWith("http") ? value : `${SITE_URL}${value}`;
+  return value.startsWith("http") ? value : SITE_URL + getMediaUrl(value);
 }
 
 interface SeoManagerProps {

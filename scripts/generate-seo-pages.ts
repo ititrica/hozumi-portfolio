@@ -31,7 +31,9 @@ function escapeRegExp(value: string) {
 }
 
 function absoluteUrl(value: string) {
-  return value.startsWith("http") ? value : `${SITE_URL}${value}`;
+  if (value.startsWith("http")) return value;
+  const mediaPath = value.startsWith("/images/") ? "/media" + value : value;
+  return SITE_URL + mediaPath;
 }
 
 function replaceMeta(html: string, attribute: "name" | "property", key: string, value: string) {

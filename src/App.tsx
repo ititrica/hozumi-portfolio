@@ -20,6 +20,7 @@ import Header from "./components/Header";
 import SeoManager from "./components/SeoManager";
 import { Language, getLocalizedData, UI_TRANSLATIONS } from "./i18n";
 import { playButtonFeedback } from "./utils/uiSound";
+import { getMediaUrl } from "./utils/media";
 
 const HomeWheelView = lazy(() => import("./components/HomeWheelView"));
 const loadSeriesView = () => import("./components/SeriesView");
@@ -235,6 +236,22 @@ export default function App() {
     return true;
   });
   const fadeIntervalRef = useRef<number | null>(null);
+  const [volume, setVolume] = useState<number>(() => {
+    if (typeof localStorage !== 'undefined') {
+      const saved = localStorage.getItem('musicVolume');
+      if (saved !== null) {
+        const val = parseFloat(saved);
+        if (!isNaN(val) && val >= 0 && val <= 1) return val;
+      }
+    }
+    return 0.20;
+  });
+
+  useEffect(() => {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('musicVolume', volume.toString());
+    }
+  }, [volume]);
 
   useEffect(() => {
     const handleButtonClick = (event: MouseEvent) => {
@@ -301,15 +318,38 @@ export default function App() {
         if (audio.paused) {
           audio.volume = 0;
           audio.play()
-            .then(() => fadeAudio(0.20))
+            .then(() => fadeAudio(volume))
             .catch((err) => console.log("Safari sync play blocked:", err));
         } else {
-          fadeAudio(0.20);
+          fadeAudio(volume);
         }
       } else {
         fadeAudio(0, () => {
           audio.pause();
         });
+      }
+    }
+  };
+
+  const handleVolumeChange = (newVolume: number) => {
+    setVolume(newVolume);
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = newVolume;
+      if (newVolume > 0 && isMuted) {
+        setIsMuted(false);
+        if (typeof sessionStorage !== 'undefined') {
+          sessionStorage.setItem('isMutedPreference', 'false');
+        }
+        if (audio.paused) {
+          audio.play().catch(err => console.log("Audio play failed:", err));
+        }
+      } else if (newVolume === 0 && !isMuted) {
+        setIsMuted(true);
+        if (typeof sessionStorage !== 'undefined') {
+          sessionStorage.setItem('isMutedPreference', 'true');
+        }
+        audio.pause();
       }
     }
   };
@@ -332,13 +372,13 @@ export default function App() {
       if (audio.paused) {
         audio.volume = 0;
         audio.play()
-          .then(() => fadeAudio(0.20))
+          .then(() => fadeAudio(volume))
           .catch((err) => {
             // Autoplay blocked by browser. User gesture on entry button will trigger play.
             console.log("Audio play blocked on mount:", err);
           });
       } else {
-        fadeAudio(0.20);
+        fadeAudio(volume);
       }
     } else {
       fadeAudio(0, () => {
@@ -371,7 +411,7 @@ export default function App() {
       audio.load();
       audio.play()
         .then(() => {
-          audio.volume = 0.20;
+          audio.volume = volume;
         })
         .catch((err) => {
           console.log("Audio play switch blocked:", err);
@@ -626,7 +666,7 @@ export default function App() {
     <div className="font-sans bg-[#fdfdfd] dark:bg-[#0e0c0b] text-neutral-900 dark:text-neutral-100 selection:bg-neutral-900 dark:selection:bg-white selection:text-white dark:selection:text-neutral-900 transition-colors duration-1000 min-h-screen flex flex-col isolate">
       <SeoManager photographyData={localizedData} lang={lang} />
       {/* Background Audio Node - always mounted so it's ready to play */}
-      <audio id="bg-audio" ref={audioRef} src={`/audio/${PLAYLIST[currentTrackIndex].file}`} playsInline preload="none" />
+      <audio id="bg-audio" ref={audioRef} src={getMediaUrl("/audio/" + PLAYLIST[currentTrackIndex].file)} playsInline preload="none" />
 
       {/* Premium Interactive Cursor */}
       <CustomCursor lang={lang} />
@@ -801,6 +841,8 @@ export default function App() {
               setLang={setLang}
               isMuted={isMuted}
               toggleMute={toggleMute}
+              volume={volume}
+              onVolumeChange={handleVolumeChange}
               onNavigate={handleHeaderNavigate}
               currentMode={homeViewMode}
               currentTrack={PLAYLIST[currentTrackIndex]}

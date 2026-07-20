@@ -11,6 +11,12 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application"
   },
+  "r2_buckets": [
+    {
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "hozumi-portfolio-media"
+    }
+  ],
   "compatibility_flags": [
     "nodejs_compat"
   ]

@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build && npm run generate:seo",
+    "build": "vite build && npm run generate:seo && npm run prune:production-media",
     "generate:seo": "tsx scripts/generate-seo-pages.ts",
+    "prune:production-media": "node scripts/prune-production-media.js",
     "preview": "vite preview",
     "images:display": "node scripts/generate-display-images.js",
     "clean": "rm -rf dist server.js",

@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Photo } from "../types";
 import { Language, UI_TRANSLATIONS } from "../i18n";
 import { playButtonFeedback } from "../utils/uiSound";
+import { getMediaUrl } from "../utils/media";
 
 interface LightboxProps {
   photo: Photo;
@@ -64,7 +65,7 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
     if (!nextPhoto) return;
     const image = new Image();
     image.decoding = "async";
-    image.src = nextPhoto.url;
+    image.src = getMediaUrl(nextPhoto.url);
   }, [currentIndex, photos]);
 
   return (
@@ -135,7 +136,7 @@ export default function Lightbox({ photo, photos, onClose, onNavigate, lang }: L
           <AnimatePresence mode="wait">
             <motion.img
               key={photo.id}
-              src={photo.url}
+              src={getMediaUrl(photo.url)}
               alt={photo.title}
               loading="eager"
               decoding="async"
