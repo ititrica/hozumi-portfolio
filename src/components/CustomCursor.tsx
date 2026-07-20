@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Language, UI_TRANSLATIONS } from "../i18n";
@@ -17,9 +17,11 @@ export default function CustomCursor({ lang }: { lang: Language }) {
   const [isCursorHidden, setIsCursorHidden] = useState(false);
   const [cursorType, setCursorType] = useState("");
   const [displacementMapUrl, setDisplacementMapUrl] = useState("");
+  const [magneticTarget, setMagneticTarget] = useState<{ width: number; height: number } | null>(null);
+  const magneticTargetRef = useRef<HTMLElement | null>(null);
 
   const cursorGlassFilterId = "liquid-glass-custom-cursor";
-  const cursorGlassSize = 34;
+  const cursorGlassSize = 20;
 
   useEffect(() => {
     const smoothStep = (edge0: number, edge1: number, value: number) => {
@@ -190,8 +192,49 @@ export default function CustomCursor({ lang }: { lang: Language }) {
     `;
 
     const moveMouse = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+      const rawX = e.clientX;
+      const rawY = e.clientY;
+      const magneticThreshold = 44;
+      let nearestTarget: HTMLElement | null = null;
+      let nearestDistance = magneticThreshold;
+
+      document.querySelectorAll<HTMLElement>("button, a, [role='button']").forEach((element) => {
+        if (element.dataset.magnetic === "false") return;
+
+        const rect = element.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+
+        const closestX = Math.max(rect.left, Math.min(rawX, rect.right));
+        const closestY = Math.max(rect.top, Math.min(rawY, rect.bottom));
+        const distance = Math.hypot(rawX - closestX, rawY - closestY);
+        if (distance < nearestDistance) {
+          nearestTarget = element;
+          nearestDistance = distance;
+        }
+      });
+
+      if (nearestTarget) {
+        const targetRect = nearestTarget.getBoundingClientRect();
+        const targetCenterX = targetRect.left + targetRect.width / 2;
+        const targetCenterY = targetRect.top + targetRect.height / 2;
+        const attraction = 0.28 + 0.22 * (1 - nearestDistance / magneticThreshold);
+
+        mouseX.set(rawX + (targetCenterX - rawX) * attraction);
+        mouseY.set(rawY + (targetCenterY - rawY) * attraction);
+
+        if (magneticTargetRef.current !== nearestTarget) {
+          magneticTargetRef.current = nearestTarget;
+          setMagneticTarget({
+            width: Math.min(180, Math.max(cursorGlassSize, targetRect.width + 10)),
+            height: Math.min(64, Math.max(cursorGlassSize, targetRect.height + 10)),
+          });
+        }
+      } else {
+        magneticTargetRef.current = null;
+        setMagneticTarget(null);
+        mouseX.set(rawX);
+        mouseY.set(rawY);
+      }
 
       if (!hasMoved) {
         hasMoved = true;
@@ -225,6 +268,8 @@ export default function CustomCursor({ lang }: { lang: Language }) {
       setCursorText("");
       setCursorType("");
       setIsCursorHidden(false);
+      magneticTargetRef.current = null;
+      setMagneticTarget(null);
       document.body.style.cursor = "auto";
     };
 
@@ -352,25 +397,33 @@ export default function CustomCursor({ lang }: { lang: Language }) {
         animate={{
           scale: isClicking
             ? 0.8
+            : magneticTarget
+              ? 1
             : isArrowHover
               ? 1
               : (isLabelHover || isHovered)
-                ? 2.2
+                ? 1.28
                 : 1,
         }}
         transition={{ type: "tween", duration: 0.15 }}
       >
-        <div className="relative flex items-center justify-center w-[34px] h-[34px]">
+        <motion.div
+          className="relative flex items-center justify-center"
+          animate={{
+            width: magneticTarget?.width ?? cursorGlassSize,
+            height: magneticTarget?.height ?? cursorGlassSize,
+          }}
+          transition={{ type: "spring", stiffness: 420, damping: 30, mass: 0.35 }}
+        >
           {/* SVG displacement map + backdrop filter create the liquid-glass lens. */}
           <div
-            className="absolute inset-0 rounded-full border border-white/45 bg-transparent shadow-[0_4px_8px_rgba(0,0,0,0.22),inset_0_-10px_25px_rgba(0,0,0,0.15)]"
+            className="absolute inset-0 bg-transparent shadow-[0_4px_8px_rgba(0,0,0,0.22),inset_0_-10px_25px_rgba(0,0,0,0.15)]"
             style={{
+              borderRadius: magneticTarget ? "8px" : "9999px",
               backdropFilter: "url(#" + cursorGlassFilterId + ") contrast(1.2) brightness(1.05) saturate(1.1)",
               WebkitBackdropFilter: "url(#" + cursorGlassFilterId + ") contrast(1.2) brightness(1.05) saturate(1.1)",
             }}
           />
-
-          <div className="absolute top-[5px] left-[8px] w-[9px] h-[4px] rounded-full bg-white/30" />
           {/* Main circle — shrinks to 0 when arrow is visible */}
           {/* Left Arrow Icon */}
           <motion.div
@@ -399,7 +452,7 @@ export default function CustomCursor({ lang }: { lang: Language }) {
           >
             <ChevronRight className="w-5 h-5 stroke-[2.5]" />
           </motion.div>
-        </div>
+        </motion.div>
       </motion.div>
 
       {/* Lagging label — ENTER on cards, VIEW on photos, BACK on lightbox background/image */}
