@@ -23,7 +23,6 @@ interface HeaderProps {
   onNavigate?: (path: string) => void;
   currentMode?: "wheel" | "timeline";
   currentTrack?: { title: string; artist: string; file: string };
-  onPrevTrack?: () => void;
   onNextTrack?: () => void;
 }
 
@@ -40,7 +39,6 @@ export default function Header({
   onNavigate,
   currentMode,
   currentTrack,
-  onPrevTrack,
   onNextTrack,
 }: HeaderProps) {
   const navigate = useNavigate();
@@ -229,7 +227,6 @@ export default function Header({
                     volume={volume}
                     onVolumeChange={onVolumeChange}
                     currentTrack={currentTrack}
-                    onPrevTrack={onPrevTrack}
                     onNextTrack={onNextTrack}
                   />
                 )}

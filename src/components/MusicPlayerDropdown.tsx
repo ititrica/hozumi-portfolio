@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Play, Pause, Rewind, FastForward, Volume2, VolumeX } from "lucide-react";
+import { Play, Pause, FastForward, Volume2, VolumeX } from "lucide-react";
 import { motion } from "motion/react";
 
 interface MusicPlayerDropdownProps {
@@ -14,7 +14,6 @@ interface MusicPlayerDropdownProps {
   volume: number;
   onVolumeChange: (vol: number) => void;
   currentTrack?: { title: string; artist: string; file: string };
-  onPrevTrack?: () => void;
   onNextTrack?: () => void;
 }
 
@@ -25,7 +24,6 @@ export default function MusicPlayerDropdown({
   volume,
   onVolumeChange,
   currentTrack,
-  onPrevTrack,
   onNextTrack,
 }: MusicPlayerDropdownProps) {
   const [currentTime, setCurrentTime] = useState(0);
@@ -144,18 +142,6 @@ export default function MusicPlayerDropdown({
     togglePlayback();
   };
 
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onPrevTrack) {
-      onPrevTrack();
-    } else {
-      const audio = document.getElementById("bg-audio") as HTMLAudioElement;
-      if (audio) {
-        audio.currentTime = Math.max(0, audio.currentTime - 10);
-      }
-    }
-  };
-
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (onNextTrack) {
@@ -237,8 +223,6 @@ export default function MusicPlayerDropdown({
   };
 
   const songTitle = currentTrack?.title || "正義の味方";
-  const songArtist = currentTrack?.artist || "玉置浩二";
-  const songAlbum = currentTrack?.file ? "Ryuichi Sakamoto" : "STAR - Single";
 
   const filterId = "liquid-glass-music-player";
 
@@ -268,7 +252,7 @@ export default function MusicPlayerDropdown({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 12, scale: 0.96 }}
         transition={{ duration: 0.25, ease: [0.215, 0.61, 0.355, 1] }}
-        className="absolute top-full left-1/2 mt-3 z-50 w-64 -translate-x-1/2 p-4 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] bg-white/20 dark:bg-[#181614]/30 border border-white/25 dark:border-neutral-800/40 transition-colors duration-1000 flex flex-col items-center pointer-events-auto"
+        className="absolute top-full left-1/2 mt-3 z-50 w-60 -translate-x-1/2 p-3 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] bg-white/20 dark:bg-[#181614]/30 border border-white/25 dark:border-neutral-800/40 transition-colors duration-1000 flex flex-col items-center pointer-events-auto"
         style={{
           transformOrigin: "top center",
           backdropFilter: `url(#${filterId}) blur(24px)`,
@@ -276,18 +260,15 @@ export default function MusicPlayerDropdown({
         }}
         onClick={(e) => e.stopPropagation()}
       >
-      {/* Song Info */}
-      <div className="text-center w-full mb-3 select-none">
-        <h4 className="font-sans text-[13px] font-semibold tracking-wide text-neutral-900 dark:text-neutral-100 uppercase truncate">
+      {/* Track title */}
+      <div className="text-center w-full mb-2 select-none">
+        <h4 className="font-sans text-[12px] font-semibold tracking-wide text-neutral-900 dark:text-neutral-100 uppercase truncate">
           {songTitle}
         </h4>
-        <p className="font-sans text-[10px] tracking-wider text-neutral-400 dark:text-neutral-500 mt-1 truncate">
-          {songArtist} — {songAlbum}
-        </p>
       </div>
 
       {/* Progress Track */}
-      <div className="flex items-center w-full select-none mb-3">
+      <div className="flex items-center w-full select-none mb-2.5">
         <span className="font-mono text-[9px] tracking-wider text-neutral-400 dark:text-neutral-500 w-8 text-left">
           {formatTime(currentTime)}
         </span>
@@ -312,17 +293,8 @@ export default function MusicPlayerDropdown({
       </div>
 
       {/* Playback and volume controls */}
-      <div className="flex items-center justify-between gap-4 w-full select-none">
-        <div className="flex items-center gap-2 shrink-0">
-        <button
-          onClick={handlePrev}
-          className="p-1 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
-          data-cursor="nav"
-          aria-label="Previous"
-        >
-          <Rewind className="w-4 h-4 fill-current" />
-        </button>
-
+      <div className="flex items-center justify-between gap-3 w-full select-none">
+        <div className="flex items-center gap-3 shrink-0">
         <button
           onClick={handlePlayPause}
           className="p-1 text-neutral-900 dark:text-white hover:scale-110 active:scale-90 transition-transform focus:outline-none"
@@ -346,7 +318,7 @@ export default function MusicPlayerDropdown({
         </button>
         </div>
 
-        <div className="flex items-center gap-2 min-w-0 flex-1">
+        <div className="flex items-center gap-1.5 min-w-0 flex-1">
           <button
             onClick={(e) => {
               e.stopPropagation();
