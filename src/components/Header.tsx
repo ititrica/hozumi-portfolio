@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Sun, Moon, Menu, X, Volume2, VolumeX } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -24,6 +24,67 @@ interface HeaderProps {
   currentMode?: "wheel" | "timeline";
   currentTrack?: { title: string; artist: string; file: string };
   onNextTrack?: () => void;
+}
+
+function MusicTrackMarquee({ title }: { title?: string }) {
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const measurementRef = useRef<HTMLSpanElement>(null);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const trackTitle = title || "No track";
+
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    const measurement = measurementRef.current;
+    if (!viewport || !measurement) return;
+
+    const updateOverflow = () => {
+      setIsOverflowing(measurement.scrollWidth > viewport.clientWidth);
+    };
+
+    updateOverflow();
+    const observer = new ResizeObserver(updateOverflow);
+    observer.observe(viewport);
+    observer.observe(measurement);
+    return () => observer.disconnect();
+  }, [trackTitle]);
+
+  return (
+    <div
+      ref={viewportRef}
+      className="relative w-28 md:w-36 h-8 overflow-hidden flex items-center select-none"
+      aria-label={`Current track: ${trackTitle}`}
+      data-cursor="nav"
+    >
+      <span
+        ref={measurementRef}
+        className="absolute whitespace-nowrap invisible pointer-events-none font-mono text-[10px] tracking-[0.12em]"
+        aria-hidden="true"
+      >
+        {trackTitle}
+      </span>
+
+      {isOverflowing ? (
+        <motion.div
+          className="flex w-max shrink-0 items-center gap-8 font-mono text-[10px] tracking-[0.12em] text-neutral-700 dark:text-neutral-300"
+          animate={{ x: ["0%", "0%", "-50%", "-50%"] }}
+          transition={{
+            duration: Math.max(8, trackTitle.length * 0.45),
+            repeat: Infinity,
+            repeatDelay: 1.5,
+            ease: "linear",
+            times: [0, 0.12, 0.62, 1],
+          }}
+        >
+          <span>{trackTitle}</span>
+          <span aria-hidden="true">{trackTitle}</span>
+        </motion.div>
+      ) : (
+        <span className="block w-full truncate font-mono text-[10px] tracking-[0.12em] text-neutral-700 dark:text-neutral-300">
+          {trackTitle}
+        </span>
+      )}
+    </div>
+  );
 }
 
 export default function Header({
@@ -197,20 +258,13 @@ export default function Header({
               );
             })}
 
-            {/* Volume Button & Music Player Dropdown container */}
+            {/* Track title & Music Player Dropdown container */}
             <div
               className="relative ml-2 flex items-center h-full group/volume"
               onMouseEnter={() => setIsPlayerVisible(true)}
               onMouseLeave={() => setIsPlayerVisible(false)}
             >
-              <button
-                onClick={toggleMute}
-                className="p-2 text-neutral-700 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-1000 focus:outline-none"
-                aria-label={isMuted ? "Unmute Music" : "Mute Music"}
-                data-cursor="nav"
-              >
-                {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-              </button>
+              <MusicTrackMarquee title={currentTrack?.title} />
 
               {/* Keeps the hover state alive across the visual gap above the player. */}
               <div
