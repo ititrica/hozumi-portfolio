@@ -38,7 +38,7 @@ function HeaderVolumeSlider({
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
-  const segmentCount = 12;
+  const segmentCount = 24;
   const displayedVolume = isMuted ? 0 : volume;
 
   const updateFromClientX = (clientX: number) => {
@@ -103,7 +103,7 @@ function HeaderVolumeSlider({
         return (
           <span
             key={index}
-            className={`h-[3px] flex-1 transition-colors duration-200 ${
+            className={`h-2 flex-1 transition-colors duration-200 ${
               isActive
                 ? "bg-neutral-900 dark:bg-white"
                 : "bg-neutral-200 dark:bg-neutral-800"
