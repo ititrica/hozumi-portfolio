@@ -38,7 +38,7 @@ function HeaderVolumeSlider({
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
-  const segmentCount = 24;
+  const segmentCount = 20;
   const displayedVolume = isMuted ? 0 : volume;
 
   const updateFromClientX = (clientX: number) => {
@@ -91,7 +91,7 @@ function HeaderVolumeSlider({
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(displayedVolume * 100)}
-      className="flex h-6 w-[108px] shrink-0 cursor-pointer items-center gap-[2px] outline-none focus-visible:ring-1 focus-visible:ring-neutral-500"
+      className="flex h-6 w-[108px] shrink-0 cursor-pointer items-center justify-between outline-none focus-visible:ring-1 focus-visible:ring-neutral-500"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={stopDragging}
@@ -103,7 +103,7 @@ function HeaderVolumeSlider({
         return (
           <span
             key={index}
-            className={`h-2 flex-1 transition-colors duration-200 ${
+            className={`h-2 w-[3px] shrink-0 transition-colors duration-200 ${
               isActive
                 ? "bg-neutral-900 dark:bg-white"
                 : "bg-neutral-200 dark:bg-neutral-800"
