@@ -4,25 +4,17 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Play, Pause, FastForward, Volume2, VolumeX } from "lucide-react";
+import { Play, Pause, FastForward } from "lucide-react";
 import { motion } from "motion/react";
 
 interface MusicPlayerDropdownProps {
   togglePlayback: () => void;
-  isMuted: boolean;
-  toggleMute: () => void;
-  volume: number;
-  onVolumeChange: (vol: number) => void;
   currentTrack?: { title: string; artist: string; file: string };
   onNextTrack?: () => void;
 }
 
 export default function MusicPlayerDropdown({
   togglePlayback,
-  isMuted,
-  toggleMute,
-  volume,
-  onVolumeChange,
   currentTrack,
   onNextTrack,
 }: MusicPlayerDropdownProps) {
@@ -182,31 +174,6 @@ export default function MusicPlayerDropdown({
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const handleVolumeMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-
-    const track = e.currentTarget;
-    const updateVolume = (clientX: number) => {
-      const rect = track.getBoundingClientRect();
-      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-      onVolumeChange(ratio);
-    };
-
-    updateVolume(e.clientX);
-
-    const handleMouseMove = (moveEvent: MouseEvent) => {
-      updateVolume(moveEvent.clientX);
-    };
-
-    const handleMouseUp = () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  };
-
   const formatTime = (time: number) => {
     if (isNaN(time)) return "0:00";
     const minutes = Math.floor(time / 60);
@@ -292,9 +259,8 @@ export default function MusicPlayerDropdown({
         </span>
       </div>
 
-      {/* Playback and volume controls */}
-      <div className="flex items-center justify-between gap-3 w-full select-none">
-        <div className="flex items-center gap-3 shrink-0">
+      {/* Playback controls */}
+      <div className="flex items-center justify-center gap-4 w-full select-none">
         <button
           onClick={handlePlayPause}
           className="p-1 text-neutral-900 dark:text-white hover:scale-110 active:scale-90 transition-transform focus:outline-none"
@@ -316,36 +282,6 @@ export default function MusicPlayerDropdown({
         >
           <FastForward className="w-4 h-4 fill-current" />
         </button>
-        </div>
-
-        <div className="flex items-center gap-1.5 min-w-0 flex-1">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleMute();
-            }}
-            className="shrink-0 p-1 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
-            data-cursor="nav"
-            aria-label={isMuted ? "Unmute Music" : "Mute Music"}
-          >
-            {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-          </button>
-
-          <div
-            onMouseDown={handleVolumeMouseDown}
-            className="flex-1 min-w-[56px] h-1 bg-neutral-200 dark:bg-neutral-800 rounded-full relative cursor-pointer group/volume-slider"
-            aria-label="Volume"
-          >
-            <div
-              className="bg-neutral-900 dark:bg-white h-full rounded-full transition-all duration-75"
-              style={{ width: `${isMuted ? 0 : volume * 100}%` }}
-            />
-            <div
-              className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-neutral-900 dark:bg-white opacity-0 group-hover/volume-slider:opacity-100 transition-opacity"
-              style={{ left: `calc(${isMuted ? 0 : volume * 100}% - 4px)` }}
-            />
-          </div>
-        </div>
       </div>
     </motion.div>
   </>

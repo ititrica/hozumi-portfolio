@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Sun, Moon, Menu, X, Volume2, VolumeX } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -26,63 +26,90 @@ interface HeaderProps {
   onNextTrack?: () => void;
 }
 
-function MusicTrackMarquee({ title }: { title?: string }) {
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const measurementRef = useRef<HTMLSpanElement>(null);
-  const [isOverflowing, setIsOverflowing] = useState(false);
-  const trackTitle = title || "No track";
+function HeaderVolumeSlider({
+  volume,
+  isMuted,
+  onVolumeChange,
+}: {
+  volume: number;
+  isMuted: boolean;
+  onVolumeChange: (volume: number) => void;
+}) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const isDraggingRef = useRef(false);
+  const segmentCount = 12;
+  const displayedVolume = isMuted ? 0 : volume;
 
-  useLayoutEffect(() => {
-    const viewport = viewportRef.current;
-    const measurement = measurementRef.current;
-    if (!viewport || !measurement) return;
+  const updateFromClientX = (clientX: number) => {
+    const track = trackRef.current;
+    if (!track) return;
 
-    const updateOverflow = () => {
-      setIsOverflowing(measurement.scrollWidth > viewport.clientWidth);
-    };
+    const rect = track.getBoundingClientRect();
+    const nextVolume = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    onVolumeChange(nextVolume);
+  };
 
-    updateOverflow();
-    const observer = new ResizeObserver(updateOverflow);
-    observer.observe(viewport);
-    observer.observe(measurement);
-    return () => observer.disconnect();
-  }, [trackTitle]);
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    isDraggingRef.current = true;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    updateFromClientX(event.clientX);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (isDraggingRef.current) {
+      updateFromClientX(event.clientX);
+    }
+  };
+
+  const stopDragging = (event: React.PointerEvent<HTMLDivElement>) => {
+    isDraggingRef.current = false;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const step = event.shiftKey ? 0.1 : 0.05;
+    if (event.key === "ArrowRight" || event.key === "ArrowUp") {
+      event.preventDefault();
+      onVolumeChange(Math.min(1, volume + step));
+    }
+    if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
+      event.preventDefault();
+      onVolumeChange(Math.max(0, volume - step));
+    }
+  };
 
   return (
     <div
-      ref={viewportRef}
-      className="relative w-28 md:w-36 h-8 overflow-hidden flex items-center select-none"
-      aria-label={`Current track: ${trackTitle}`}
-      data-cursor="nav"
+      ref={trackRef}
+      role="slider"
+      tabIndex={0}
+      aria-label="Volume"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(displayedVolume * 100)}
+      className="flex h-6 w-[108px] shrink-0 cursor-pointer items-center gap-[3px] outline-none focus-visible:ring-1 focus-visible:ring-neutral-500"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={stopDragging}
+      onPointerCancel={stopDragging}
+      onKeyDown={handleKeyDown}
     >
-      <span
-        ref={measurementRef}
-        className="absolute whitespace-nowrap invisible pointer-events-none font-mono text-[10px] tracking-[0.12em]"
-        aria-hidden="true"
-      >
-        {trackTitle}
-      </span>
-
-      {isOverflowing ? (
-        <motion.div
-          className="flex w-max shrink-0 items-center gap-8 font-mono text-[10px] tracking-[0.12em] text-neutral-700 dark:text-neutral-300"
-          animate={{ x: ["0%", "0%", "-50%", "-50%"] }}
-          transition={{
-            duration: Math.max(8, trackTitle.length * 0.45),
-            repeat: Infinity,
-            repeatDelay: 1.5,
-            ease: "linear",
-            times: [0, 0.12, 0.62, 1],
-          }}
-        >
-          <span>{trackTitle}</span>
-          <span aria-hidden="true">{trackTitle}</span>
-        </motion.div>
-      ) : (
-        <span className="block w-full truncate font-mono text-[10px] tracking-[0.12em] text-neutral-700 dark:text-neutral-300">
-          {trackTitle}
-        </span>
-      )}
+      {Array.from({ length: segmentCount }, (_, index) => {
+        const isActive = index < Math.round(displayedVolume * segmentCount);
+        return (
+          <span
+            key={index}
+            className={`h-2 flex-1 transition-colors duration-200 ${
+              isActive
+                ? "bg-neutral-900 dark:bg-white"
+                : "bg-neutral-200 dark:bg-neutral-800"
+            }`}
+          />
+        );
+      })}
     </div>
   );
 }
@@ -258,13 +285,28 @@ export default function Header({
               );
             })}
 
-            {/* Track title & Music Player Dropdown container */}
+            {/* Volume control & Music Player Dropdown container */}
             <div
               className="relative ml-2 flex items-center h-full group/volume"
               onMouseEnter={() => setIsPlayerVisible(true)}
               onMouseLeave={() => setIsPlayerVisible(false)}
             >
-              <MusicTrackMarquee title={currentTrack?.title} />
+              <button
+                onClick={toggleMute}
+                className="relative z-10 shrink-0 p-2 text-neutral-700 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors duration-1000 focus:outline-none"
+                aria-label={isMuted ? "Unmute Music" : "Mute Music"}
+                data-cursor="nav"
+              >
+                {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+              </button>
+
+              <div className="w-0 overflow-hidden opacity-0 transition-[width,opacity,margin] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/volume:ml-2 group-hover/volume:w-[108px] group-hover/volume:opacity-100">
+                <HeaderVolumeSlider
+                  volume={volume}
+                  isMuted={isMuted}
+                  onVolumeChange={onVolumeChange}
+                />
+              </div>
 
               {/* Keeps the hover state alive across the visual gap above the player. */}
               <div
@@ -276,10 +318,6 @@ export default function Header({
                 {isPlayerVisible && (
                   <MusicPlayerDropdown
                     togglePlayback={togglePlayback}
-                    isMuted={isMuted}
-                    toggleMute={toggleMute}
-                    volume={volume}
-                    onVolumeChange={onVolumeChange}
                     currentTrack={currentTrack}
                     onNextTrack={onNextTrack}
                   />
