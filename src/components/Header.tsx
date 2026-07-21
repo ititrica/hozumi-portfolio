@@ -91,7 +91,7 @@ function HeaderVolumeSlider({
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(displayedVolume * 100)}
-      className="flex h-6 w-[108px] shrink-0 cursor-pointer items-center justify-between outline-none focus-visible:ring-1 focus-visible:ring-neutral-500"
+      className="flex h-8 w-[116px] shrink-0 cursor-pointer items-center justify-between outline-none focus-visible:ring-1 focus-visible:ring-neutral-500"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={stopDragging}
@@ -302,7 +302,7 @@ export default function Header({
                 {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
               </button>
 
-              <div className="w-0 overflow-hidden opacity-0 transition-[width,opacity,margin] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/volume:ml-2 group-hover/volume:w-[108px] group-hover/volume:opacity-100">
+              <div className="w-0 overflow-hidden opacity-0 transition-[width,opacity,margin] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/volume:ml-2 group-hover/volume:w-[116px] group-hover/volume:opacity-100">
                 <HeaderVolumeSlider
                   volume={volume}
                   isMuted={isMuted}

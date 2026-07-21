@@ -30,14 +30,20 @@ const AboutContact = lazy(() => import("./components/AboutContact"));
 const loadPlaygroundView = () => import("./components/Playground");
 const Playground = lazy(loadPlaygroundView);
 
-function getRandomTrackIndex(currentIndex = -1) {
-  if (PLAYLIST.length <= 1) return 0;
+function createShuffledTrackQueue(excludeIndex = -1) {
+  const queue = Array.from({ length: PLAYLIST.length }, (_, index) => index);
 
-  let nextIndex = currentIndex;
-  while (nextIndex === currentIndex) {
-    nextIndex = Math.floor(Math.random() * PLAYLIST.length);
+  for (let index = queue.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [queue[index], queue[swapIndex]] = [queue[swapIndex], queue[index]];
   }
-  return nextIndex;
+
+  // Avoid repeating the final track of the previous round at the boundary.
+  if (queue.length > 1 && queue[0] === excludeIndex) {
+    [queue[0], queue[1]] = [queue[1], queue[0]];
+  }
+
+  return queue;
 }
 
 type RouteTransitionPhase =
@@ -84,7 +90,25 @@ export default function App() {
     return "wheel";
   });
 
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(() => getRandomTrackIndex());
+  const [playbackQueue, setPlaybackQueue] = useState<number[]>(() => createShuffledTrackQueue());
+  const [playbackPosition, setPlaybackPosition] = useState(0);
+  const currentTrackIndex = playbackQueue[playbackPosition] ?? 0;
+
+  const moveToNextTrack = useCallback(() => {
+    const nextPosition = playbackPosition + 1;
+    if (nextPosition < playbackQueue.length) {
+      setPlaybackPosition(nextPosition);
+      return;
+    }
+
+    const nextQueue = createShuffledTrackQueue(currentTrackIndex);
+    setPlaybackQueue(nextQueue);
+    setPlaybackPosition(0);
+  }, [currentTrackIndex, playbackPosition, playbackQueue.length]);
+
+  const moveToPreviousTrack = useCallback(() => {
+    setPlaybackPosition((position) => Math.max(0, position - 1));
+  }, []);
 
   const effectiveTheme = theme;
 
@@ -422,14 +446,14 @@ export default function App() {
 
     const handleEnded = () => {
       isPlayingRef.current = true;
-      setCurrentTrackIndex((prev) => getRandomTrackIndex(prev));
+      moveToNextTrack();
     };
 
     audio.addEventListener("ended", handleEnded);
     return () => {
       audio.removeEventListener("ended", handleEnded);
     };
-  }, []);
+  }, [moveToNextTrack]);
 
   // Track switch effect: preserve play/pause state while loading a random track.
   useEffect(() => {
@@ -884,8 +908,8 @@ export default function App() {
               onNavigate={handleHeaderNavigate}
               currentMode={homeViewMode}
               currentTrack={PLAYLIST[currentTrackIndex]}
-              onPrevTrack={() => setCurrentTrackIndex((prev) => (prev - 1 + PLAYLIST.length) % PLAYLIST.length)}
-              onNextTrack={() => setCurrentTrackIndex((prev) => getRandomTrackIndex(prev))}
+              onPrevTrack={moveToPreviousTrack}
+              onNextTrack={moveToNextTrack}
             />
           </div>
 
