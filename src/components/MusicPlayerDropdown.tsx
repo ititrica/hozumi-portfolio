@@ -4,18 +4,20 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Play, Pause, FastForward } from "lucide-react";
+import { Play, Pause, Rewind, FastForward } from "lucide-react";
 import { motion } from "motion/react";
 
 interface MusicPlayerDropdownProps {
   togglePlayback: () => void;
   currentTrack?: { title: string; artist: string; file: string };
+  onPrevTrack?: () => void;
   onNextTrack?: () => void;
 }
 
 export default function MusicPlayerDropdown({
   togglePlayback,
   currentTrack,
+  onPrevTrack,
   onNextTrack,
 }: MusicPlayerDropdownProps) {
   const [currentTime, setCurrentTime] = useState(0);
@@ -132,6 +134,18 @@ export default function MusicPlayerDropdown({
   const handlePlayPause = (e: React.MouseEvent) => {
     e.stopPropagation();
     togglePlayback();
+  };
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onPrevTrack) {
+      onPrevTrack();
+    } else {
+      const audio = document.getElementById("bg-audio") as HTMLAudioElement;
+      if (audio) {
+        audio.currentTime = Math.max(0, audio.currentTime - 10);
+      }
+    }
   };
 
   const handleNext = (e: React.MouseEvent) => {
@@ -260,7 +274,16 @@ export default function MusicPlayerDropdown({
       </div>
 
       {/* Playback controls */}
-      <div className="flex items-center justify-center gap-4 w-full select-none">
+      <div className="grid grid-cols-3 items-center justify-items-center w-full max-w-28 select-none">
+        <button
+          onClick={handlePrev}
+          className="p-1 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
+          data-cursor="nav"
+          aria-label="Previous"
+        >
+          <Rewind className="w-4 h-4 fill-current" />
+        </button>
+
         <button
           onClick={handlePlayPause}
           className="p-1 text-neutral-900 dark:text-white hover:scale-110 active:scale-90 transition-transform focus:outline-none"

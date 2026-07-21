@@ -884,6 +884,7 @@ export default function App() {
               onNavigate={handleHeaderNavigate}
               currentMode={homeViewMode}
               currentTrack={PLAYLIST[currentTrackIndex]}
+              onPrevTrack={() => setCurrentTrackIndex((prev) => (prev - 1 + PLAYLIST.length) % PLAYLIST.length)}
               onNextTrack={() => setCurrentTrackIndex((prev) => getRandomTrackIndex(prev))}
             />
           </div>

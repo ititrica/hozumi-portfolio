@@ -23,6 +23,7 @@ interface HeaderProps {
   onNavigate?: (path: string) => void;
   currentMode?: "wheel" | "timeline";
   currentTrack?: { title: string; artist: string; file: string };
+  onPrevTrack?: () => void;
   onNextTrack?: () => void;
 }
 
@@ -90,7 +91,7 @@ function HeaderVolumeSlider({
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(displayedVolume * 100)}
-      className="flex h-6 w-[108px] shrink-0 cursor-pointer items-center gap-[3px] outline-none focus-visible:ring-1 focus-visible:ring-neutral-500"
+      className="flex h-6 w-[108px] shrink-0 cursor-pointer items-center gap-[2px] outline-none focus-visible:ring-1 focus-visible:ring-neutral-500"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={stopDragging}
@@ -102,7 +103,7 @@ function HeaderVolumeSlider({
         return (
           <span
             key={index}
-            className={`h-2 flex-1 transition-colors duration-200 ${
+            className={`h-[3px] flex-1 transition-colors duration-200 ${
               isActive
                 ? "bg-neutral-900 dark:bg-white"
                 : "bg-neutral-200 dark:bg-neutral-800"
@@ -127,6 +128,7 @@ export default function Header({
   onNavigate,
   currentMode,
   currentTrack,
+  onPrevTrack,
   onNextTrack,
 }: HeaderProps) {
   const navigate = useNavigate();
@@ -319,6 +321,7 @@ export default function Header({
                   <MusicPlayerDropdown
                     togglePlayback={togglePlayback}
                     currentTrack={currentTrack}
+                    onPrevTrack={onPrevTrack}
                     onNextTrack={onNextTrack}
                   />
                 )}
