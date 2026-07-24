@@ -41,7 +41,7 @@ function TrackTitleMarquee({ title }: { title?: string }) {
   return (
     <div
       ref={viewportRef}
-      className="relative flex h-8 w-full items-center justify-center overflow-hidden select-none"
+      className="relative flex h-8 min-w-0 flex-1 items-center justify-center overflow-hidden select-none"
       aria-label={`Current track: ${trackTitle}`}
     >
       <span
@@ -225,12 +225,12 @@ export default function MusicPlayerDropdown({
         }}
         onClick={(e) => e.stopPropagation()}
       >
-      <div className="flex w-full max-w-[196px] flex-col items-center gap-2.5 select-none">
+      <div className="flex w-full items-center gap-3 select-none">
         <TrackTitleMarquee title={songTitle} />
 
         <button
           onClick={handlePlayPause}
-          className="p-1 text-neutral-900 dark:text-white hover:scale-110 active:scale-90 transition-transform focus:outline-none"
+          className="shrink-0 p-1 text-neutral-900 dark:text-white hover:scale-110 active:scale-90 transition-transform focus:outline-none"
           data-cursor="nav"
           aria-label={isPlaying ? "Pause" : "Play"}
         >
@@ -243,7 +243,7 @@ export default function MusicPlayerDropdown({
 
         <button
           onClick={handleNext}
-          className="p-1 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
+          className="shrink-0 p-1 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
           data-cursor="nav"
           aria-label="Next"
         >
