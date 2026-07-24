@@ -245,6 +245,7 @@ const WheelCard = React.memo(function WheelCard({
             src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
             alt={series.title}
             loading="eager"
+            fetchPriority={index === 0 ? "high" : "auto"}
             decoding="async"
             draggable={false}
             referrerPolicy="no-referrer"

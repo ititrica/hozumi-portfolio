@@ -120,10 +120,10 @@ export default function App() {
       series.cardImage ?? series.coverImage
     ).replace(/\.webp$/, "-card.webp"))));
   }, []);
-  const [homeAssetsReady, setHomeAssetsReady] = useState(false);
+  const [homePrimaryAssetReady, setHomePrimaryAssetReady] = useState(false);
 
-  // Warm every homepage card while the entry screen is visible so large wheel jumps never
-  // wait for a newly mounted image. Decode completion is included where supported.
+  // Prioritize the first card for the initial render, while warming the remaining cards
+  // in the background so the wheel remains responsive after the entrance screen.
   useEffect(() => {
     let cancelled = false;
 
@@ -148,9 +148,16 @@ export default function App() {
       if (image.complete) finish();
     });
 
-    Promise.all(homeCardUrls.map(preloadCard)).then(() => {
-      if (!cancelled) setHomeAssetsReady(true);
-    });
+    const primaryCardUrl = homeCardUrls[0];
+    if (primaryCardUrl) {
+      void preloadCard(primaryCardUrl).then(() => {
+        if (!cancelled) setHomePrimaryAssetReady(true);
+      });
+    } else {
+      setHomePrimaryAssetReady(true);
+    }
+
+    void Promise.all(homeCardUrls.slice(1).map(preloadCard));
 
     return () => {
       cancelled = true;
@@ -158,10 +165,10 @@ export default function App() {
   }, [homeCardUrls]);
 
   useEffect(() => {
-    if (entranceSequenceDone && homeAssetsReady) {
+    if (entranceSequenceDone && homePrimaryAssetReady) {
       setLoading(false);
     }
-  }, [entranceSequenceDone, homeAssetsReady]);
+  }, [entranceSequenceDone, homePrimaryAssetReady]);
 
   useEffect(() => {
     const handleLoadingComplete = (event: MessageEvent) => {
