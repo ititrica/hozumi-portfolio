@@ -102,10 +102,6 @@ export default function App() {
     setPlaybackPosition(0);
   }, [currentTrackIndex, playbackPosition, playbackQueue.length]);
 
-  const moveToPreviousTrack = useCallback(() => {
-    setPlaybackPosition((position) => Math.max(0, position - 1));
-  }, []);
-
   const effectiveTheme = theme;
 
   useEffect(() => {
@@ -742,7 +738,6 @@ export default function App() {
               onNavigate={handleHeaderNavigate}
               currentMode={homeViewMode}
               currentTrack={PLAYLIST[currentTrackIndex]}
-              onPrevTrack={moveToPreviousTrack}
               onNextTrack={moveToNextTrack}
             />
           </div>

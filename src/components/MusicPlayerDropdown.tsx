@@ -3,32 +3,91 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useState } from "react";
-import { Play, Pause, Rewind, FastForward } from "lucide-react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Play, Pause, FastForward } from "lucide-react";
 import { motion } from "motion/react";
 
 interface MusicPlayerDropdownProps {
   togglePlayback: () => void;
   currentTrack?: { title: string; artist: string; file: string };
-  onPrevTrack?: () => void;
   onNextTrack?: () => void;
+}
+
+function TrackTitleMarquee({ title }: { title?: string }) {
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const measurementRef = useRef<HTMLSpanElement>(null);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const [textWidth, setTextWidth] = useState(0);
+  const trackTitle = title || "No track";
+
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    const measurement = measurementRef.current;
+    if (!viewport || !measurement) return;
+
+    const updateOverflow = () => {
+      const width = measurement.getBoundingClientRect().width;
+      setTextWidth(width);
+      setIsOverflowing(width > viewport.clientWidth);
+    };
+
+    updateOverflow();
+    const observer = new ResizeObserver(updateOverflow);
+    observer.observe(viewport);
+    observer.observe(measurement);
+    return () => observer.disconnect();
+  }, [trackTitle]);
+
+  return (
+    <div
+      ref={viewportRef}
+      className="relative flex h-8 w-full items-center justify-center overflow-hidden select-none"
+      aria-label={`Current track: ${trackTitle}`}
+    >
+      <span
+        ref={measurementRef}
+        className="absolute whitespace-nowrap invisible pointer-events-none font-sans text-[12px] font-semibold tracking-wide"
+        aria-hidden="true"
+      >
+        {trackTitle}
+      </span>
+
+      {isOverflowing ? (
+        <motion.div
+          className="flex w-max shrink-0 items-center gap-8 font-sans text-[12px] font-semibold tracking-wide text-neutral-900 dark:text-neutral-100"
+          animate={{ x: [0, 0, -(textWidth + 32), -(textWidth + 32)] }}
+          transition={{
+            duration: Math.max(8, trackTitle.length * 0.45),
+            repeat: Infinity,
+            repeatDelay: 1.5,
+            ease: "linear",
+            times: [0, 0.12, 0.62, 1],
+          }}
+        >
+          <span>{trackTitle}</span>
+          <span aria-hidden="true">{trackTitle}</span>
+        </motion.div>
+      ) : (
+        <span className="block w-full truncate text-center font-sans text-[12px] font-semibold tracking-wide text-neutral-900 dark:text-neutral-100">
+          {trackTitle}
+        </span>
+      )}
+    </div>
+  );
 }
 
 export default function MusicPlayerDropdown({
   togglePlayback,
   currentTrack,
-  onPrevTrack,
   onNextTrack,
 }: MusicPlayerDropdownProps) {
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [displacementMapUrl, setDisplacementMapUrl] = useState<string>("");
 
   useEffect(() => {
     // Generate the liquid glass displacement map
-    const width = 256; // card width (w-64 = 16rem = 256px)
-    const height = 144; // compact player height
+    const width = 240; // card width (w-60 = 15rem = 240px)
+    const height = 136; // single-column player height
     const radius = 12;  // rounded-xl = 12px
     
     const canvas = document.createElement("canvas");
@@ -97,18 +156,7 @@ export default function MusicPlayerDropdown({
     const audio = document.getElementById("bg-audio") as HTMLAudioElement;
     if (!audio) return;
 
-    // Read initial state
-    setCurrentTime(audio.currentTime);
-    setDuration(audio.duration || 0);
     setIsPlaying(!audio.paused);
-
-    const handleTimeUpdate = () => {
-      setCurrentTime(audio.currentTime);
-    };
-
-    const handleDurationChange = () => {
-      setDuration(audio.duration || 0);
-    };
 
     const handlePlay = () => {
       setIsPlaying(true);
@@ -118,14 +166,10 @@ export default function MusicPlayerDropdown({
       setIsPlaying(false);
     };
 
-    audio.addEventListener("timeupdate", handleTimeUpdate);
-    audio.addEventListener("durationchange", handleDurationChange);
     audio.addEventListener("play", handlePlay);
     audio.addEventListener("pause", handlePause);
 
     return () => {
-      audio.removeEventListener("timeupdate", handleTimeUpdate);
-      audio.removeEventListener("durationchange", handleDurationChange);
       audio.removeEventListener("play", handlePlay);
       audio.removeEventListener("pause", handlePause);
     };
@@ -136,71 +180,11 @@ export default function MusicPlayerDropdown({
     togglePlayback();
   };
 
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onPrevTrack) {
-      onPrevTrack();
-    } else {
-      const audio = document.getElementById("bg-audio") as HTMLAudioElement;
-      if (audio) {
-        audio.currentTime = Math.max(0, audio.currentTime - 10);
-      }
-    }
-  };
-
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (onNextTrack) {
       onNextTrack();
-    } else {
-      const audio = document.getElementById("bg-audio") as HTMLAudioElement;
-      if (audio) {
-        audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10);
-      }
     }
-  };
-
-  const updateSeekPosition = (clientX: number, track: HTMLDivElement) => {
-    const audio = document.getElementById("bg-audio") as HTMLAudioElement;
-    if (!audio || !audio.duration) return;
-
-    const rect = track.getBoundingClientRect();
-    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-    audio.currentTime = ratio * audio.duration;
-  };
-
-  const handleSeekMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-
-    const track = e.currentTarget;
-    updateSeekPosition(e.clientX, track);
-
-    const handleMouseMove = (moveEvent: MouseEvent) => {
-      updateSeekPosition(moveEvent.clientX, track);
-    };
-
-    const handleMouseUp = () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  };
-
-  const formatTime = (time: number) => {
-    if (isNaN(time)) return "0:00";
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  };
-
-  const formatRemainingTime = (time: number, dur: number) => {
-    if (isNaN(time) || isNaN(dur)) return "0:00";
-    const remaining = Math.max(0, dur - time);
-    const minutes = Math.floor(remaining / 60);
-    const seconds = Math.floor(remaining % 60);
-    return `-${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
   const songTitle = currentTrack?.title || "正義の味方";
@@ -241,48 +225,8 @@ export default function MusicPlayerDropdown({
         }}
         onClick={(e) => e.stopPropagation()}
       >
-      {/* Track title */}
-      <div className="text-center w-full mb-2 select-none">
-        <h4 className="font-sans text-[12px] font-semibold tracking-wide text-neutral-900 dark:text-neutral-100 uppercase truncate">
-          {songTitle}
-        </h4>
-      </div>
-
-      {/* Progress Track */}
-      <div className="flex items-center w-full select-none mb-2.5">
-        <span className="font-mono text-[9px] tracking-wider text-neutral-400 dark:text-neutral-500 w-8 text-left">
-          {formatTime(currentTime)}
-        </span>
-
-        <div
-          onMouseDown={handleSeekMouseDown}
-          className="flex-1 h-1 bg-neutral-200 dark:bg-neutral-800 rounded-full relative cursor-pointer group"
-        >
-          <div
-            className="bg-neutral-900 dark:bg-white h-full rounded-full transition-all duration-75 ease-out"
-            style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
-          />
-          <div
-            className="absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-neutral-900 dark:bg-white opacity-0 group-hover:opacity-100 transition-opacity"
-            style={{ left: `calc(${duration > 0 ? (currentTime / duration) * 100 : 0}% - 5px)` }}
-          />
-        </div>
-
-        <span className="font-mono text-[9px] tracking-wider text-neutral-400 dark:text-neutral-500 w-10 text-right">
-          {formatRemainingTime(currentTime, duration)}
-        </span>
-      </div>
-
-      {/* Playback controls */}
-      <div className="grid grid-cols-3 items-center justify-items-center w-full max-w-28 select-none">
-        <button
-          onClick={handlePrev}
-          className="p-1 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors focus:outline-none"
-          data-cursor="nav"
-          aria-label="Previous"
-        >
-          <Rewind className="w-4 h-4 fill-current" />
-        </button>
+      <div className="flex w-full max-w-[196px] flex-col items-center gap-2.5 select-none">
+        <TrackTitleMarquee title={songTitle} />
 
         <button
           onClick={handlePlayPause}
