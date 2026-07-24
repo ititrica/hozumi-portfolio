@@ -20,7 +20,6 @@ export const PLAYLIST: Track[] = [
   { title: "Energy Flow", artist: "Ryuichi Sakamoto", file: "9. Energy Flow.mp3" },
   { title: "The Sheltering Sky", artist: "Ryuichi Sakamoto", file: "10. The Sheltering Sky.mp3" },
   { title: "The Last Emperor", artist: "Ryuichi Sakamoto", file: "11. The Last Emperor.mp3" },
-  { title: "The Seed And The Sower", artist: "Ryuichi Sakamoto", file: "12. The Seed And The Sower.mp3" },
   { title: "Merry Christmas Mr. Lawrence", artist: "Ryuichi Sakamoto", file: "13. Merry Christmas Mr. Lawrence.mp3" },
   { title: "A Sense of Symmetry (Day 2)", artist: "Ludovico Einaudi", file: "16.orig.mp3" }
 ];
