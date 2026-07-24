@@ -60,15 +60,11 @@ const LOADER_PLAY_DURATION = LOADER_TOTAL_DURATION - LOADER_FADE_DURATION;
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
-  const hasEnteredSession = typeof sessionStorage !== "undefined" && sessionStorage.getItem("hasEnteredSite") === "true";
-
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [lightboxPhotos, setLightboxPhotos] = useState<Photo[]>([]);
-  const [hasEntered, setHasEntered] = useState(hasEnteredSession);
-  const [isExpanding, setIsExpanding] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [headerVisible, setHeaderVisible] = useState(hasEnteredSession);
-  const [entranceSequenceDone, setEntranceSequenceDone] = useState(hasEnteredSession);
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const [entranceSequenceDone, setEntranceSequenceDone] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [routeTransitionPhase, setRouteTransitionPhase] = useState<RouteTransitionPhase>("idle");
   const [seriesChunkReady, setSeriesChunkReady] = useState(false);
@@ -171,6 +167,17 @@ export default function App() {
     }
   }, [entranceSequenceDone, homeAssetsReady]);
 
+  useEffect(() => {
+    const handleLoadingComplete = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type !== "hozumi-loading-complete") return;
+      setEntranceSequenceDone(true);
+    };
+
+    window.addEventListener("message", handleLoadingComplete);
+    return () => window.removeEventListener("message", handleLoadingComplete);
+  }, []);
+
   // Toggle dark class on document when theme changes
   useEffect(() => {
     if (effectiveTheme === "dark") {
@@ -262,12 +269,9 @@ export default function App() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isMuted, setIsMuted] = useState(() => {
     if (typeof sessionStorage !== 'undefined') {
-      const hasEnteredBefore = sessionStorage.getItem('hasEnteredSite') === 'true';
-      if (hasEnteredBefore) {
-        return sessionStorage.getItem('isMutedPreference') === 'true';
-      }
+      return sessionStorage.getItem('isMutedPreference') === 'true';
     }
-    return true;
+    return false;
   });
   const fadeIntervalRef = useRef<number | null>(null);
   const [volume, setVolume] = useState<number>(() => {
@@ -344,6 +348,17 @@ export default function App() {
     }, intervalTime);
   };
 
+  const playAudioWithFade = () => {
+    const audio = audioRef.current;
+    if (!audio) return Promise.reject(new Error("Audio element is unavailable."));
+
+    audio.volume = 0;
+    isPlayingRef.current = true;
+    return audio.play().then(() => {
+      fadeAudio(isMuted ? 0 : volume);
+    });
+  };
+
   const toggleMute = () => {
     const nextMute = !isMuted;
     if (!nextMute && volume === 0) {
@@ -357,35 +372,30 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (!hasEnteredSession || isMuted || initialPlaybackAttemptedRef.current) return;
+    if (loading || isMuted || initialPlaybackAttemptedRef.current) return;
 
-    const audio = audioRef.current;
-    if (!audio) return;
+    if (!audioRef.current) return;
 
     initialPlaybackAttemptedRef.current = true;
-    isPlayingRef.current = true;
-    audio.volume = 0;
-    audio.play()
-      .then(() => fadeAudio(volume))
+    void playAudioWithFade()
       .catch((err) => {
         isPlayingRef.current = false;
-        console.log("Audio autoplay blocked on mount:", err);
+        console.log("Audio autoplay blocked after loading:", err);
       });
-  }, [hasEnteredSession, isMuted, volume]);
+  }, [loading, isMuted, volume]);
 
   const togglePlayback = () => {
     const audio = audioRef.current;
     if (!audio) return;
 
     if (audio.paused) {
-      isPlayingRef.current = true;
-      audio.play().catch((err) => {
+      void playAudioWithFade().catch((err) => {
         isPlayingRef.current = false;
         console.log("Audio play failed:", err);
       });
     } else {
       isPlayingRef.current = false;
-      audio.pause();
+      fadeAudio(0, () => audio.pause());
     }
   };
 
@@ -463,11 +473,7 @@ export default function App() {
     const shouldResume = isPlayingRef.current;
     audio.load();
     if (shouldResume) {
-      audio.volume = 0;
-      audio.play()
-        .then(() => {
-          fadeAudio(isMuted ? 0 : volume);
-        })
+      void playAudioWithFade()
         .catch((err) => {
           console.log("Audio play switch blocked:", err);
         });
@@ -479,15 +485,12 @@ export default function App() {
     const resumeAudio = () => {
       const audio = audioRef.current;
       if (audio && !isMuted && audio.paused) {
-        isPlayingRef.current = true;
-        audio.play()
-          .then(() => fadeAudio(volume))
+        void playAudioWithFade()
+          .then(() => removeListeners())
           .catch((err) => {
             isPlayingRef.current = false;
             console.log("Failed to play audio on interaction:", err);
           });
-        
-        removeListeners();
       }
     };
 
@@ -622,39 +625,6 @@ export default function App() {
     WebkitTransform: "translate3d(0, 0, 0)"
   };
 
-  const handleEnterSite = () => {
-    if (isExpanding) return;
-    setIsMuted(false);
-    isPlayingRef.current = true;
-    setIsExpanding(true);
-    if (typeof sessionStorage !== 'undefined') {
-      sessionStorage.setItem('hasEnteredSite', 'true');
-      sessionStorage.setItem('isMutedPreference', 'false');
-    }
-    
-    // Play audio synchronously on click to satisfy iOS Safari
-    const audio = audioRef.current;
-    if (audio && audio.paused) {
-      audio.volume = 0;
-      audio.play()
-        .then(() => fadeAudio(volume))
-        .catch((err) => {
-          isPlayingRef.current = false;
-          console.log("Audio play blocked on enter site:", err);
-        });
-    }
-
-    // Trigger hasEntered at 350ms (midway through expansion) so loading animation mounts and starts playing earlier
-    setTimeout(() => {
-      setHasEntered(true);
-      // Keep the outer loading layer aligned with the shortened text animation.
-      setTimeout(() => {
-        setEntranceSequenceDone(true);
-      }, 2950);
-    }, 350);
-  };
-
-
   // Footer component reused across About page
   const Footer = () => (
     <footer className="border-t border-neutral-500/10 py-16 bg-neutral-100/40 dark:bg-neutral-950/20 transition-colors duration-1000">
@@ -732,144 +702,8 @@ export default function App() {
       {/* Premium Interactive Cursor */}
       <CustomCursor lang={lang} />
 
-      <AnimatePresence mode="wait">
-        {!hasEntered && (
-          <motion.div
-            key="enter-splash"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            onClick={handleEnterSite}
-            className="fixed inset-0 z-[10000] flex items-center justify-center bg-[#ffffff] select-none cursor-pointer"
-          >
-            {/* Center Layout wrapper */}
-            <div className="relative flex items-center justify-center">
-              {/* Dynamic Cursor Click & Ripple Guide Animation (Centered, Black) */}
-              <div className="flex items-center justify-center pointer-events-none select-none">
-                 {/* Mock Circular Cursor Dot */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1, 0.68, 1.08, 1],
-                  }}
-                  transition={{
-                    duration: 4.2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    times: [0, 0.35, 0.38, 0.46, 1],
-                    repeatDelay: 1.0
-                  }}
-                  className="w-5 h-5 bg-black rounded-full z-20 shadow-md"
-                />
-
-                {/* Concentric Organic Ripple - Layer 1 (Instantly triggered at the start of click) */}
-                <motion.div
-                  animate={{
-                    scale: [0.1, 0.1, 0.15, 7.0, 7.0],
-                    opacity: [0, 0, 0.65, 0, 0],
-                    rotate: [0, 15, 30, 45, 45],
-                  }}
-                  transition={{
-                    duration: 4.2,
-                    repeat: Infinity,
-                    ease: "easeOut",
-                    times: [0, 0.35, 0.36, 0.90, 1],
-                    repeatDelay: 1.0
-                  }}
-                  className="absolute w-[12vmax] h-[12vmax] border-2 border-black/28 z-10"
-                  style={{ borderRadius: "48% 52% 51% 49% / 50% 49% 52% 51%" }}
-                />
-
-                {/* Concentric Organic Ripple - Layer 2 */}
-                <motion.div
-                  animate={{
-                    scale: [0.1, 0.1, 0.15, 7.0, 7.0],
-                    opacity: [0, 0, 0.55, 0, 0],
-                    rotate: [15, 30, 45, 60, 60],
-                  }}
-                  transition={{
-                    duration: 4.2,
-                    repeat: Infinity,
-                    ease: "easeOut",
-                    times: [0, 0.37, 0.38, 0.92, 1],
-                    repeatDelay: 1.0
-                  }}
-                  className="absolute w-[12vmax] h-[12vmax] border-2 border-black/22 z-10"
-                  style={{ borderRadius: "51% 49% 52% 48% / 48% 52% 50% 50%" }}
-                />
-
-                {/* Concentric Organic Ripple - Layer 3 */}
-                <motion.div
-                  animate={{
-                    scale: [0.1, 0.1, 0.15, 7.0, 7.0],
-                    opacity: [0, 0, 0.45, 0, 0],
-                    rotate: [30, 45, 60, 75, 75],
-                  }}
-                  transition={{
-                    duration: 4.2,
-                    repeat: Infinity,
-                    ease: "easeOut",
-                    times: [0, 0.39, 0.40, 0.94, 1],
-                    repeatDelay: 1.0
-                  }}
-                  className="absolute w-[12vmax] h-[12vmax] border-2 border-black/16 z-10"
-                  style={{ borderRadius: "49% 51% 48% 52% / 52% 48% 51% 49%" }}
-                />
-
-                {/* Concentric Organic Ripple - Layer 4 */}
-                <motion.div
-                  animate={{
-                    scale: [0.1, 0.1, 0.15, 7.0, 7.0],
-                    opacity: [0, 0, 0.35, 0, 0],
-                    rotate: [45, 60, 75, 90, 90],
-                  }}
-                  transition={{
-                    duration: 4.2,
-                    repeat: Infinity,
-                    ease: "easeOut",
-                    times: [0, 0.41, 0.42, 0.96, 1],
-                    repeatDelay: 1.0
-                  }}
-                  className="absolute w-[12vmax] h-[12vmax] border-2 border-black/10 z-10"
-                  style={{ borderRadius: "52% 48% 50% 50% / 49% 51% 48% 52%" }}
-                />
-
-                {/* "CLICK" Text Hint - Shrinks & expands in sync with the cursor dot */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1, 0.68, 1.08, 1],
-                  }}
-                  transition={{
-                    duration: 4.2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    times: [0, 0.35, 0.38, 0.46, 1],
-                    repeatDelay: 1.0
-                  }}
-                  className="absolute font-mono text-[13px] sm:text-[16px] md:text-[19px] tracking-[0.35em] text-black font-black uppercase z-30 whitespace-nowrap"
-                  style={{ y: 42 }}
-                >
-                  CLICK
-                </motion.div>
-              </div>
-
-              {/* Expanding Black Circle Overlay for Entrance Transition */}
-              {isExpanding && (
-                <motion.div
-                  initial={{ width: 20, height: 20 }}
-                  animate={{ width: "300vmax", height: "300vmax" }}
-                  transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-                  className="absolute bg-black rounded-full z-[100] pointer-events-none -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
-                />
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Main site contents, mounted only after entering */}
-      {hasEntered && (
-        <>
-          {/* Entrance loading iframe on top */}
+      {/* Main site contents */}
+      {/* Entrance loading iframe on top */}
           <AnimatePresence>
             {loading && (
               <motion.div
@@ -1088,8 +922,6 @@ export default function App() {
               </motion.div>
             )}
           </AnimatePresence>
-        </>
-      )}
     </div>
   );
 }

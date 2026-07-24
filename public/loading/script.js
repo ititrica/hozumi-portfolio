@@ -123,6 +123,7 @@ function finishPreloader() {
         setTimeout(() => {
             document.body.classList.add("loaded");
             overlay.remove();
+            window.parent.postMessage({ type: "hozumi-loading-complete" }, window.location.origin);
         }, 400);
     }
 }
