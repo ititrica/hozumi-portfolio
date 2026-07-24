@@ -4,7 +4,7 @@ const R2_MEDIA_PREFIX = "/media/";
 function isHostedOriginalImage(pathname) {
   return pathname.startsWith("/images/") &&
     pathname.endsWith(".webp") &&
-    !/(?:[-.]thumb|[-.]card|[-.]display)\.webp$/.test(pathname);
+    !/(?:[-.]thumb|[-.]card(?:-\d+)?|[-.]display)\.webp$/.test(pathname);
 }
 
 async function serveMedia(request, env, pathname) {

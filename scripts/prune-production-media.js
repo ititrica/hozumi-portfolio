@@ -22,7 +22,7 @@ async function walkDir(dir) {
 const imageFiles = await walkDir(DIST_IMAGES_DIR);
 const originalFiles = imageFiles.filter((filePath) =>
   filePath.endsWith(".webp") &&
-  !/(?:[-.]thumb|[-.]card|[-.]display)\.webp$/.test(filePath),
+  !/(?:[-.]thumb|[-.]card(?:-\d+)?|[-.]display)\.webp$/.test(filePath),
 );
 
 await Promise.all(originalFiles.map((filePath) => rm(filePath)));
