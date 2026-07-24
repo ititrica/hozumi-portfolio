@@ -252,7 +252,8 @@ const WheelCard = React.memo(function WheelCard({
           <picture>
             <source
               media="(min-width: 768px)"
-              srcSet={`${getDesktopCardImagePath(getCardImagePath(series.cardImage ?? series.coverImage))} 1x, ${getCardImagePath(series.cardImage ?? series.coverImage)} 2x`}
+              srcSet={`${getDesktopCardImagePath(getCardImagePath(series.cardImage ?? series.coverImage))} 640w, ${getCardImagePath(series.cardImage ?? series.coverImage)} 1000w`}
+              sizes="36.3vw"
             />
             <img
               src={getCardImagePath(series.cardImage ?? series.coverImage)}
@@ -714,7 +715,8 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
               <picture>
                 <source
                   media="(min-width: 768px)"
-                  srcSet={`${getDesktopCardImagePath(getCardImagePath(series.cardImage ?? series.coverImage))} 1x, ${getCardImagePath(series.cardImage ?? series.coverImage)} 2x`}
+                  srcSet={`${getDesktopCardImagePath(getCardImagePath(series.cardImage ?? series.coverImage))} 640w, ${getCardImagePath(series.cardImage ?? series.coverImage)} 1000w`}
+                  sizes="36.3vw"
                 />
                 <img
                   src={getCardImagePath(series.cardImage ?? series.coverImage)}
