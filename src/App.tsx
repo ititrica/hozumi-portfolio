@@ -115,11 +115,14 @@ export default function App() {
   const localizedData = useMemo(() => getLocalizedData(lang), [lang]);
   const t = UI_TRANSLATIONS[lang];
 
+  const [isDesktopViewport] = useState(() => (
+    typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
+  ));
   const homeCardUrls = useMemo(() => {
     return Array.from(new Set(PHOTOGRAPHY_DATA.map((series) => (
       series.cardImage ?? series.coverImage
-    ).replace(/\.webp$/, "-card.webp"))));
-  }, []);
+    ).replace(/\.webp$/, isDesktopViewport ? "-card-640.webp" : "-card.webp"))));
+  }, [isDesktopViewport]);
   const [homePrimaryAssetReady, setHomePrimaryAssetReady] = useState(false);
 
   // Prioritize the first card for the initial render, while warming the remaining cards

@@ -10,6 +10,7 @@
     "prune:production-media": "node scripts/prune-production-media.js",
     "preview": "vite preview",
     "images:display": "node scripts/generate-display-images.js",
+    "images:card-variants": "node scripts/generate-card-variants.js",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
   },

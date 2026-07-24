@@ -18,6 +18,14 @@ interface HomeWheelViewProps {
   viewMode?: "wheel" | "timeline";
 }
 
+function getCardImagePath(path: string) {
+  return path.replace(/\.webp$/, "-card.webp");
+}
+
+function getDesktopCardImagePath(path: string) {
+  return path.replace(/-card\.webp$/, "-card-640.webp");
+}
+
 // Categories list for the top-center filter menu (excluding the "ALL" button)
 const CATEGORIES = [
   { label: "建筑 ARCHITECTURE", value: "ARCHITECTURE" },
@@ -241,17 +249,23 @@ const WheelCard = React.memo(function WheelCard({
           className="relative w-full overflow-hidden bg-neutral-950 shadow-2xl group"
           style={{ height: combinedImageHeight }}
         >
-          <img
-            src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
-            alt={series.title}
-            loading="eager"
-            fetchPriority={index === 0 ? "high" : "auto"}
-            decoding="async"
-            draggable={false}
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover select-none pointer-events-none"
-            style={{ filter: imageFilter, transform: imageTransform, opacity: imageOpacity }}
-          />
+          <picture>
+            <source
+              media="(min-width: 768px)"
+              srcSet={`${getDesktopCardImagePath(getCardImagePath(series.cardImage ?? series.coverImage))} 1x, ${getCardImagePath(series.cardImage ?? series.coverImage)} 2x`}
+            />
+            <img
+              src={getCardImagePath(series.cardImage ?? series.coverImage)}
+              alt={series.title}
+              loading="eager"
+              fetchPriority={index === 0 ? "high" : "auto"}
+              decoding="async"
+              draggable={false}
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover select-none pointer-events-none"
+              style={{ filter: imageFilter, transform: imageTransform, opacity: imageOpacity }}
+            />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-60 pointer-events-none" />
         </div>
 
@@ -697,23 +711,29 @@ export default function HomeWheelView({ onSelectSeries, photographyData, lang, o
                 WebkitTransform: "translate3d(0, 0, 0)",
               }}
             >
-              <img
-                src={(series.cardImage ?? series.coverImage).replace(/\.webp$/, "-card.webp")}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover grayscale-[30%]"
-                style={{
-                  filter: "blur(30px)",
-                  WebkitFilter: "blur(30px)",
-                  willChange: "transform",
-                  backfaceVisibility: "hidden",
-                  WebkitBackfaceVisibility: "hidden",
-                  transform: "scale(1.15) translate3d(0, 0, 0)",
-                  WebkitTransform: "scale(1.15) translate3d(0, 0, 0)",
-                }}
-              />
+              <picture>
+                <source
+                  media="(min-width: 768px)"
+                  srcSet={`${getDesktopCardImagePath(getCardImagePath(series.cardImage ?? series.coverImage))} 1x, ${getCardImagePath(series.cardImage ?? series.coverImage)} 2x`}
+                />
+                <img
+                  src={getCardImagePath(series.cardImage ?? series.coverImage)}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover grayscale-[30%]"
+                  style={{
+                    filter: "blur(30px)",
+                    WebkitFilter: "blur(30px)",
+                    willChange: "transform",
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                    transform: "scale(1.15) translate3d(0, 0, 0)",
+                    WebkitTransform: "scale(1.15) translate3d(0, 0, 0)",
+                  }}
+                />
+              </picture>
             </div>
           );
         })}
